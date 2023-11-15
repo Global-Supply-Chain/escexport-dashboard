@@ -1,14 +1,15 @@
-import { endpoints } from "../../helpers/endpoints";
-import { PromotionList } from "../auth/view/PromotionList";
+
+import { paths } from "../../constants/paths";
+import { PromotionList } from "./view/PromotionList";
 import { CreatePromotion } from "./entry/CreatePromotion";
 
 export const promotionRoutes = [
     {
-        path: endpoints.promotionCreate,
+        path: paths.promotionCreate,
         element: <CreatePromotion />
     },
     {
-        path: endpoints.promotion,
+        path: paths.promotion,
         element: <PromotionList />
     }
 ]

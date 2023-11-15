@@ -2,7 +2,7 @@ import { Card } from "primereact/card";
 import { InputText } from 'primereact/inputtext';
 import { Button } from "primereact/button";
 import { useState } from "react";
-import { payloadHandler } from "../../../helpers/payloadHandler";
+import { payloadHandler } from "../../../helpers/handler";
 import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
@@ -16,7 +16,7 @@ export const Login = () => {
     
     /**
      * Admin Login
-     * Payload - username, password
+     * Payload - [username, password]
      * @returns 
      */
     const submitLogin = () => {

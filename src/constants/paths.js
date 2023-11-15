@@ -1,4 +1,4 @@
-export const endpoints = {
+export const paths = {
     promotion: "/promotion",
     promotionCreate: "/promotion/new"
 }

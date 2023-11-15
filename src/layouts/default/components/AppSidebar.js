@@ -1,5 +1,5 @@
 import { TieredMenu } from 'primereact/tieredmenu';
-import { endpoints } from '../../../helpers/endpoints';
+import { paths } from '../../../constants/paths';
 
 export const AppSidebar = () => {
 
@@ -16,12 +16,12 @@ export const AppSidebar = () => {
                 {
                     label: 'New',
                     icon: 'pi pi-fw pi-plus',
-                    url: endpoints.promotionCreate
+                    url: paths.promotionCreate
                 },
                 {
                     label: 'List',
                     icon: 'pi pi-fw pi-external-link',
-                    url: endpoints.promotion
+                    url: paths.promotion
                 }
             ]
         },

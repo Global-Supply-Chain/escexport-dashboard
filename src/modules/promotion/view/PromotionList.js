@@ -3,16 +3,21 @@ import { Card } from 'primereact/card';
 import { DataTable } from 'primereact/datatable';
 import { Paginator } from 'primereact/paginator';
 import { Column } from 'primereact/column';
+import { useDispatch, useSelector } from 'react-redux';
+import { useCallback, useEffect, useState } from 'react';
 
-import { endpoints } from '../../../helpers/endpoints';
+import { paths } from '../../../constants/paths';
 import { Search } from '../../../shares/Search';
+import { getRequest } from '../../../helpers/api';
 
 
 export const PromotionList = () => {
 
+    const [params, setParams ] = useState(null);
+
     const breadcrumbs = [
         { label: "Dashboard" , url: "/" },
-        { label: "Promotion", url: endpoints.promotion },
+        { label: "Promotion", url: paths.promotion },
     ];
 
     const columns = [
@@ -20,6 +25,32 @@ export const PromotionList = () => {
         {field: 'url', header: 'Url'},
         {field: 'status', header: 'Status'},
     ];
+
+    const state = useSelector(state => state.promotion);
+    const dispatch = useDispatch();
+
+    /**
+     * Loading state
+     */
+    const loadingState = useCallback(() => {
+        if(state && state.params)  setParams(state.params);
+    },[state, setParams]);
+
+    /**
+     * Loading Data
+     */
+    const loadingData = useCallback(async () => {
+        const result = await getRequest(paths.promotion);
+        console.log(result);
+    },[]);
+
+    useEffect(() => {
+       loadingState(); 
+    },[loadingState]);
+
+    useEffect(() => {
+        loadingData();
+    },[loadingData])
 
     const PromotionHeader = () => {
         return (
