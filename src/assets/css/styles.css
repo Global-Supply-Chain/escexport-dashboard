@@ -37,10 +37,10 @@ body{
 }
 
 .app-content {
-    width: calc(100% - 50px);
+    width: calc(100% - 200px);
     height: 100vh;
     background: #f7f7f7;
-    margin-left: 50px;
+    margin-left: 200px;
 }
 
 /** Button **/
@@ -65,7 +65,7 @@ body{
 }
 
 .p-tieredmenu {
-    width: 50px;
+    width: 200px;
     height: 100vh;
     position: fixed;
     background: #a81c1c;
@@ -90,7 +90,6 @@ body{
 
 .p-menuitem-link > svg {
     color: #fff;
-    display: none;
 }
 
 .p-menuitem-icon {
@@ -104,4 +103,9 @@ body{
 
 .p-menuitem-text {
     color: #fff;
+}
+
+
+.p-breadcrumb-list > li > a > span {
+    color: #000;
 }
