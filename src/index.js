@@ -6,12 +6,18 @@ import './assets/css/styles.css';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import { RouterProvider } from "react-router-dom";
+import { Provider } from 'react-redux'
+
+
 import { routers } from './routers';
+import { stores } from './stores';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
-  <RouterProvider router={routers}>
-  </RouterProvider>
+  <Provider store={stores}>
+  <RouterProvider router={routers} />
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
