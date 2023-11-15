@@ -1,0 +1,107 @@
+body{
+    padding: 0px;
+    margin: 0px;
+}
+
+.primary-color {
+    background: #EA2B4A;
+    color: #fff;
+}
+
+.logo {
+    width: 30px;
+    height: 30px;
+}
+
+.title {
+    font-weight: 600;
+}
+
+/** Layout **/
+.wrapper {
+    width: 100%;
+    position: absolute;
+}
+
+.app-toolbar {
+    width: 100%;
+    position: fixed;
+    z-index: 99;
+}
+
+.app-container {
+    width: 100%;
+    height: 100vh;
+    color: #fff;
+    margin-top: 50px;
+}
+
+.app-content {
+    width: calc(100% - 50px);
+    height: 100vh;
+    background: #f7f7f7;
+    margin-left: 50px;
+}
+
+/** Button **/
+
+.btn-menu:hover {
+    background: #a81c1c;
+}
+
+/** Overwrite CSS **/
+.grid {
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+}
+
+.toolbar {
+    width: 100%;
+    border-radius: 0px;
+    min-height: 50px;
+    padding: 0px;
+    border: 0px;
+}
+
+.p-tieredmenu {
+    width: 50px;
+    height: 100vh;
+    position: fixed;
+    background: #a81c1c;
+    border: 0px;
+    z-index: 98;
+    
+}
+
+.p-tieredmenu .p-menuitem-link {
+    background: #a81c1c!important;
+    outline: none;
+}
+
+.p-submenu-list {
+    background: #a81c1c!important;
+    margin-left: 5px;
+}
+
+.p-tieredmenu .p-menuitem-link:focus {
+    box-shadow: none;
+}
+
+.p-menuitem-link > svg {
+    color: #fff;
+    display: none;
+}
+
+.p-menuitem-icon {
+    color: #fff;
+}
+
+.p-menuitem {
+    left: -5px;
+}
+
+
+.p-menuitem-text {
+    color: #fff;
+}
