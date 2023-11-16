@@ -18,10 +18,10 @@ export const BlankTemplate = () => {
     return(
         <>
             { !token && (
-                <>
+                <div style={{background: "#f7f7f7", height: "100vh"}}>
                     <Notification />
                     <Outlet />
-                </>
+                </div>
             )}
         </>
     )
