@@ -53,7 +53,7 @@ export const putRequest = async (path, payload) => {
  */
 export const delRequest = async (path) => {
     try {
-        const result = await http.put(path);
+        const result = await http.delete(path);
         return httpResponseHandler(result);
     } catch (error) {
         return httpErrorHandler(error);

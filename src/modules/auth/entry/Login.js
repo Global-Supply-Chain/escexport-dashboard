@@ -4,25 +4,36 @@ import { Button } from "primereact/button";
 import { useState } from "react";
 import { payloadHandler } from "../../../helpers/handler";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authService } from "../authService";
+import { paths } from "../../../constants/paths";
+import { ValidationMessage } from "../../../shares/ValidationMessage";
 
 export const Login = () => {
 
+    const [loading, setLoading] = useState(false);
     const [payload, setPayload] = useState({
-        username: "",
+        name: "",
         password: ""
     });
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     
     /**
      * Admin Login
      * Payload - [username, password]
      * @returns 
      */
-    const submitLogin = () => {
-        console.log(payload);
-        navigate('/')
-        return;
+    const submitLogin = async () => {
+        setLoading(true);
+
+        const result = await authService.login(payload, dispatch);
+        setLoading(false);
+
+        if(result.status === 200) {
+            navigate(paths.user);
+        }
     }
 
     return(
@@ -32,40 +43,50 @@ export const Login = () => {
                     title="Login"
                     subTitle="Administrator Login"
                 >
-                    <div className="p-inputgroup flex-1 my-5">
-                        <span className="p-inputgroup-addon">
-                            <i className="pi pi-user"></i>
-                        </span>
+                    <div className="my-5">
+                        <div className="p-inputgroup flex-1">
+                            <span className="p-inputgroup-addon">
+                                <i className="pi pi-user"></i>
+                            </span>
 
-                        <InputText 
-                            value={payload.username}
-                            placeholder="Enter user account"
-                            onChange={(e) => payloadHandler(payload, e.target.value, 'username', (updateValue) => {
-                                setPayload(updateValue);
-                            })}
-                        />
+                            <InputText 
+                                value={payload.name}
+                                disabled={loading}
+                                placeholder="Enter user account"
+                                onChange={(e) => payloadHandler(payload, e.target.value, 'name', (updateValue) => {
+                                    setPayload(updateValue);
+                                })}
+                            />
+                        </div>
+                        <ValidationMessage field={"name"} />
                     </div>
 
-                    <div className="p-inputgroup flex-1 my-5">
-                        <span className="p-inputgroup-addon">
-                            <i className="pi pi-lock"></i>
-                        </span>
+                    <div className="my-5">
+                        <div className="p-inputgroup flex-1">
+                            <span className="p-inputgroup-addon">
+                                <i className="pi pi-lock"></i>
+                            </span>
 
-                        <InputText 
-                            type="password"
-                            placeholder="Enter password"
-                            value={payload.password}
-                            onChange={(e) => payloadHandler(payload, e.target.value, 'password', (updateValue) => {
-                                setPayload(updateValue);
-                            })}
-                        />
+                            <InputText 
+                                type="password"
+                                placeholder="Enter password"
+                                value={payload.password}
+                                disabled={loading}
+                                onChange={(e) => payloadHandler(payload, e.target.value, 'password', (updateValue) => {
+                                    setPayload(updateValue);
+                                })}
+                            />
+                        </div>
+                        <ValidationMessage field={"password"} />
                     </div>
+
 
                     <div className="flex flex-row align-items-center justify-content-between w-full">
                         <a href="/auth/forget-password"> Forget Password? </a>
                         <Button 
                             severity="danger"
                             label="LOGIN"
+                            disabled={loading}
                             onClick={() => submitLogin() }
                         />
                     </div>
