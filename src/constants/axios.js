@@ -10,9 +10,19 @@ const http = axios.create({
 
 http.interceptors.request.use(
     (config) => {
-        const token = getData(keys.API_TOKEN);
-        config.headers.Authorization = "Bearer " + token;
+
+        const token = getData(keys.API_TOKEN) ? getData(keys.API_TOKEN) : null;
+
+        if (token) {
+
+            config.headers = {
+                ...config.headers,
+                authorization: `Bearer ${token}`,
+                Accept: "application/json"
+            };
+        }
         return config;
+
     },
     (error) => {
         return Promise.reject(error)

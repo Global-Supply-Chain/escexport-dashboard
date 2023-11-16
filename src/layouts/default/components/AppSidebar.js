@@ -25,6 +25,22 @@ export const AppSidebar = () => {
                 }
             ]
         },
+        {
+            icon: 'pi pi-fw pi-ticket',
+            label: "User",
+            items: [
+                {
+                    label: 'New',
+                    icon: 'pi pi-fw pi-plus',
+                    url: paths.userCreate
+                },
+                {
+                    label: 'List',
+                    icon: 'pi pi-fw pi-external-link',
+                    url: paths.user
+                }
+            ]
+        },
     ];
 
     return(

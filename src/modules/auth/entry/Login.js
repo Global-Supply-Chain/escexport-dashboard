@@ -4,13 +4,21 @@ import { Button } from "primereact/button";
 import { useState } from "react";
 import { payloadHandler } from "../../../helpers/handler";
 import { useNavigate } from "react-router-dom";
+import { paths } from "../../../constants/paths";
+import { postRequest } from "../../../helpers/api";
+import { getData, setData } from "../../../helpers/localstorage";
+import { keys } from "../../../constants/config";
 
 export const Login = () => {
 
     const [payload, setPayload] = useState({
-        username: "",
+        name: "",
         password: ""
     });
+    const [token, setToken]= useState('');
+    const [errors, setErrors] = useState(null);
+    const [loading, setLoading] = useState(false);
+
 
     const navigate = useNavigate();
     
@@ -19,10 +27,54 @@ export const Login = () => {
      * Payload - [username, password]
      * @returns 
      */
-    const submitLogin = () => {
-        console.log(payload);
-        navigate('/')
+    const submitLogin = async () => {
+        setLoading(true);
+        setErrors(null);
+
+        // console.log(payload);
+        // return
+        const response = await postRequest(paths.login, payload);
+        console.log(response);
+        
+        if(response && response.status === 200) {
+            setData("TOKEN",response.data.data.access_token);
+            setToken(response.data.data.access_token);
+            // dispatch(updateNotification({
+            //     title: "Login Success",
+            //     message: response.message,
+            //     status: 'success'
+            // }));
+            setLoading(false);
+            if(getData(keys.API_TOKEN)) {
+                navigate("/user")
+            }
+            return;
+        }
+
+        if(response && response.errors && response.errors.message) {
+            // dispatch(updateNotification({
+            //     title: "Login Fail",
+            //     message: response.errors.message,
+            //     status: 'fail'
+            // }));  
+            setLoading(false);
+            return;
+        }
+
+        if(response && response.errors) {
+            setErrors(response.errors);
+            setLoading(false);
+            return;
+        }
+
+        // dispatch(updateNotification({
+        //     title: "Login Fail",
+        //     message: response.message,
+        //     status: 'fail'
+        // }));  
+        setLoading(false);
         return;
+
     }
 
     return(
@@ -40,7 +92,7 @@ export const Login = () => {
                         <InputText 
                             value={payload.username}
                             placeholder="Enter user account"
-                            onChange={(e) => payloadHandler(payload, e.target.value, 'username', (updateValue) => {
+                            onChange={(e) => payloadHandler(payload, e.target.value, 'name', (updateValue) => {
                                 setPayload(updateValue);
                             })}
                         />
