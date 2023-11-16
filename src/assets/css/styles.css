@@ -43,6 +43,21 @@ body{
     margin-left: 200px;
 }
 
+/** Chip Color **/
+.chip-success { 
+    background: #21a321; 
+    color: #fff; 
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.chip-danger {
+    background: #DC2626; 
+    color: #fff; 
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
 /** Button **/
 .btn-menu:hover {
     background: #a81c1c;
@@ -112,5 +127,9 @@ body{
 
 
 .p-breadcrumb-list > li > a > span {
+    color: #000;
+}
+
+.p-menu-overlay > ul > li > a > span {
     color: #000;
 }

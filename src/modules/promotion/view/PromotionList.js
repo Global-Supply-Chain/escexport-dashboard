@@ -3,12 +3,13 @@ import { Card } from 'primereact/card';
 import { DataTable } from 'primereact/datatable';
 import { Paginator } from 'primereact/paginator';
 import { Column } from 'primereact/column';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useCallback, useEffect, useState } from 'react';
 
 import { paths } from '../../../constants/paths';
 import { Search } from '../../../shares/Search';
 import { getRequest } from '../../../helpers/api';
+import { ActionButton } from '../../../shares/ActionButton';
 
 
 export const PromotionList = () => {
@@ -27,7 +28,6 @@ export const PromotionList = () => {
     ];
 
     const state = useSelector(state => state.promotion);
-    const dispatch = useDispatch();
 
     /**
      * Loading state
@@ -54,13 +54,15 @@ export const PromotionList = () => {
 
     const PromotionHeader = () => {
         return (
-            <div className='grid px-2'>
+            <div className='flex flex-row align-items-center justify-content-between px-2'>
                 <Search 
                     placeholder="Search Promotion"
                     onSearch={(e) => {
                         console.log(e);
                     }}
                 />
+
+                <ActionButton />
             </div>
         )
     }

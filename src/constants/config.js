@@ -15,6 +15,8 @@ export const keys = {
  * Notification Options
  * serverity ["error" | "success" | "info" | "warn"]
  * sticky [boolean | default -> true ]
+ * life [number]
+ * closeable [boolean | default -> true]
  */
 export const notificationOptions = {
     severity: "info",
@@ -23,3 +25,10 @@ export const notificationOptions = {
     closable: true,
     icon: "pi pi-info-circle",
 }
+
+export const statusOptions = [
+    { status: "ACTIVE", color: "chip-success" },
+    { status: "DISABLE", color: "chip-default" },
+    { status: "PENDING", color: "chip-warn" },
+    { status: "BLOCK", color: "chip-danger" }
+];

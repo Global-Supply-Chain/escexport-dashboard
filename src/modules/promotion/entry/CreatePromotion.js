@@ -17,6 +17,7 @@ export const CreatePromotion = () => {
                 <BreadCrumb model={breadcrumbs} />
             </div>
 
+
             <div className="col-12">
                 <Card
                     title="Create Promotion"

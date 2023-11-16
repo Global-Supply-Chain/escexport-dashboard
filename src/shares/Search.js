@@ -9,6 +9,7 @@ export const Search = ({ onSearch, placeholder }) => {
              <label> Press <b> Enter</b> key to search </label>
             <div className="p-inputgroup flex-1 mt-1">
                 <InputText 
+                    className="p-inputtext-sm"
                     placeholder={placeholder}
                     value={keyword}
                     onChange={(e) => setKeyword(e.target.value)}

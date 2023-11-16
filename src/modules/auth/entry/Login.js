@@ -38,7 +38,7 @@ export const Login = () => {
 
     return(
         <div className="grid">
-            <div className="col-12 md:col-6 lg:col-6 md:col-offset-3 my-8">
+            <div className="col-12 md:col-4 lg:col-4 md:col-offset-4 my-8">
                 <Card
                     title="Login"
                     subTitle="Administrator Login"
@@ -50,6 +50,7 @@ export const Login = () => {
                             </span>
 
                             <InputText 
+                                className="p-inputtext-sm"
                                 value={payload.name}
                                 disabled={loading}
                                 placeholder="Enter user account"
@@ -68,6 +69,7 @@ export const Login = () => {
                             </span>
 
                             <InputText 
+                                className="p-inputtext-sm"
                                 type="password"
                                 placeholder="Enter password"
                                 value={payload.password}
@@ -88,6 +90,7 @@ export const Login = () => {
                             label="LOGIN"
                             disabled={loading}
                             onClick={() => submitLogin() }
+                            size="small"
                         />
                     </div>
                 </Card>
