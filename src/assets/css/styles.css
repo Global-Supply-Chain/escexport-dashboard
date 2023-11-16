@@ -44,9 +44,14 @@ body{
 }
 
 /** Button **/
-
 .btn-menu:hover {
     background: #a81c1c;
+}
+
+.error-message {
+    color: #ec2929;
+    font-size: small;
+    font-weight: 400;
 }
 
 /** Overwrite CSS **/

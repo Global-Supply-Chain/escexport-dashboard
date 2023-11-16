@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getData } from '../helpers/localstorage';
 import { keys } from './config';
 
-const baseUrl = "http://localhost:8000/api";
+const baseUrl = "http://localhost:8000/dashboard";
 
 const http = axios.create({
     baseURL: baseUrl
@@ -10,9 +10,19 @@ const http = axios.create({
 
 http.interceptors.request.use(
     (config) => {
-        const token = getData(keys.API_TOKEN);
-        config.headers.Authorization = "Bearer " + token;
+
+        const token = getData(keys.API_TOKEN) ? getData(keys.API_TOKEN) : null;
+
+        if (token) {
+            config.headers = {
+                ...config.headers,
+                authorization: `Bearer ${token}`,
+                Accept: "Application/json"
+            };
+        }
+
         return config;
+
     },
     (error) => {
         return Promise.reject(error)
