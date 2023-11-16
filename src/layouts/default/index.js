@@ -5,6 +5,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { getData } from '../../helpers/localstorage';
 import { keys } from '../../constants/config';
 import { useEffect } from 'react';
+import { Notification } from '../../shares/Notification';
 
 const layoutOptions = {
     cssTransition: true,
@@ -18,7 +19,7 @@ export const DefaultLayout = () => {
 
     useEffect(() => {
         if(!token) {
-            navigate('/auth/login');
+           navigate('/auth/login');
         }
     },[token, navigate]);
 
@@ -26,6 +27,7 @@ export const DefaultLayout = () => {
         <> 
             { token && (
                 <PrimeReactProvider value={layoutOptions}>
+                    <Notification />
                     <div className="wrapper">
                         <AppToolbar />
                         <div className='app-container'>

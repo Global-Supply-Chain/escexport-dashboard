@@ -1,3 +1,6 @@
+import { keys } from "../constants/config";
+import { removeData } from "./localstorage";
+
 /**
  * Payload handler for update state
  * @param {*} payload 
@@ -19,7 +22,41 @@ export const payloadHandler = (payload, value, field, fn) => {
 export const httpErrorHandler = (error) =>  {
     
     if(error.code === 'ERR_NETWORK') {
-        return { message: error.message, status: 0 }
+        return { 
+            message: error.message, 
+            status: 0,
+            notification: {
+                show: true,
+                summary: "Network Error!",
+                severity: "error",
+                detail: "Please check internet connection"
+            } 
+        }
+    }
+
+    const {status, data } = error.response;
+
+    if(status === 400 || status === 500) {
+        return { 
+            status: status, 
+            message : data.message,
+            notification: {
+                show: true,
+                severity: "warn",
+                summary: "Error Message",
+                detail: data.message
+            }
+        }
+    }
+
+    if(status === 422) {
+        return { status: status, error: data.data }
+    }
+
+    if(status === 401) {
+        removeData(keys.API_TOKEN);
+        //window.location.reload('/auth/login');
+        return;
     }
 }
 
@@ -29,5 +66,8 @@ export const httpErrorHandler = (error) =>  {
  * @returns 
  */
 export const httpResponseHandler = (result) => {
-    return result;
+    return {
+        status: result.status,
+        data: result.data.data
+    }
 }

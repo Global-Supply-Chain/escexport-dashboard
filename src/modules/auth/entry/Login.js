@@ -4,23 +4,21 @@ import { Button } from "primereact/button";
 import { useState } from "react";
 import { payloadHandler } from "../../../helpers/handler";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authService } from "../authService";
 import { paths } from "../../../constants/paths";
-import { postRequest } from "../../../helpers/api";
-import { getData, setData } from "../../../helpers/localstorage";
-import { keys } from "../../../constants/config";
+import { ValidationMessage } from "../../../shares/ValidationMessage";
 
 export const Login = () => {
 
+    const [loading, setLoading] = useState(false);
     const [payload, setPayload] = useState({
         name: "",
         password: ""
     });
-    const [token, setToken]= useState('');
-    const [errors, setErrors] = useState(null);
-    const [loading, setLoading] = useState(false);
-
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     
     /**
      * Admin Login
@@ -29,52 +27,13 @@ export const Login = () => {
      */
     const submitLogin = async () => {
         setLoading(true);
-        setErrors(null);
 
-        // console.log(payload);
-        // return
-        const response = await postRequest(paths.login, payload);
-        console.log(response);
-        
-        if(response && response.status === 200) {
-            setData("TOKEN",response.data.data.access_token);
-            setToken(response.data.data.access_token);
-            // dispatch(updateNotification({
-            //     title: "Login Success",
-            //     message: response.message,
-            //     status: 'success'
-            // }));
-            setLoading(false);
-            if(getData(keys.API_TOKEN)) {
-                navigate("/user")
-            }
-            return;
-        }
-
-        if(response && response.errors && response.errors.message) {
-            // dispatch(updateNotification({
-            //     title: "Login Fail",
-            //     message: response.errors.message,
-            //     status: 'fail'
-            // }));  
-            setLoading(false);
-            return;
-        }
-
-        if(response && response.errors) {
-            setErrors(response.errors);
-            setLoading(false);
-            return;
-        }
-
-        // dispatch(updateNotification({
-        //     title: "Login Fail",
-        //     message: response.message,
-        //     status: 'fail'
-        // }));  
+        const result = await authService.login(payload, dispatch);
         setLoading(false);
-        return;
 
+        if(result.status === 200) {
+            navigate(paths.user);
+        }
     }
 
     return(
@@ -84,40 +43,50 @@ export const Login = () => {
                     title="Login"
                     subTitle="Administrator Login"
                 >
-                    <div className="p-inputgroup flex-1 my-5">
-                        <span className="p-inputgroup-addon">
-                            <i className="pi pi-user"></i>
-                        </span>
+                    <div className="my-5">
+                        <div className="p-inputgroup flex-1">
+                            <span className="p-inputgroup-addon">
+                                <i className="pi pi-user"></i>
+                            </span>
 
-                        <InputText 
-                            value={payload.username}
-                            placeholder="Enter user account"
-                            onChange={(e) => payloadHandler(payload, e.target.value, 'name', (updateValue) => {
-                                setPayload(updateValue);
-                            })}
-                        />
+                            <InputText 
+                                value={payload.name}
+                                disabled={loading}
+                                placeholder="Enter user account"
+                                onChange={(e) => payloadHandler(payload, e.target.value, 'name', (updateValue) => {
+                                    setPayload(updateValue);
+                                })}
+                            />
+                        </div>
+                        <ValidationMessage field={"name"} />
                     </div>
 
-                    <div className="p-inputgroup flex-1 my-5">
-                        <span className="p-inputgroup-addon">
-                            <i className="pi pi-lock"></i>
-                        </span>
+                    <div className="my-5">
+                        <div className="p-inputgroup flex-1">
+                            <span className="p-inputgroup-addon">
+                                <i className="pi pi-lock"></i>
+                            </span>
 
-                        <InputText 
-                            type="password"
-                            placeholder="Enter password"
-                            value={payload.password}
-                            onChange={(e) => payloadHandler(payload, e.target.value, 'password', (updateValue) => {
-                                setPayload(updateValue);
-                            })}
-                        />
+                            <InputText 
+                                type="password"
+                                placeholder="Enter password"
+                                value={payload.password}
+                                disabled={loading}
+                                onChange={(e) => payloadHandler(payload, e.target.value, 'password', (updateValue) => {
+                                    setPayload(updateValue);
+                                })}
+                            />
+                        </div>
+                        <ValidationMessage field={"password"} />
                     </div>
+
 
                     <div className="flex flex-row align-items-center justify-content-between w-full">
                         <a href="/auth/forget-password"> Forget Password? </a>
                         <Button 
                             severity="danger"
                             label="LOGIN"
+                            disabled={loading}
                             onClick={() => submitLogin() }
                         />
                     </div>
