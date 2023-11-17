@@ -44,8 +44,8 @@ export const UserList = () => {
     const loadingData = useCallback(async () => {
         const response = await getRequest('/user');
 
-        if(response && response.status == 200){
-            setData(response.data.data);
+        if(response && response.status === 200){
+            setData(response.data);
         }
 
 
@@ -81,6 +81,9 @@ export const UserList = () => {
             <div className='col-12'>
                 <Card title="User List" header={<PromotionHeader />}>
                     <DataTable
+                    onRowClick={(e) => {
+                        console.log(e.data);
+                    }}
                     value={data}
                     >
                         {columns.map((col) => (

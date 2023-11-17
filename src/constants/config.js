@@ -32,3 +32,7 @@ export const statusOptions = [
     { status: "PENDING", color: "chip-warn" },
     { status: "BLOCK", color: "chip-danger" }
 ];
+
+export const tooltipOptions = {
+   position: 'top'
+}
