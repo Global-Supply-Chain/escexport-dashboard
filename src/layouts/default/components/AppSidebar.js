@@ -7,7 +7,6 @@ import { sidebarToggle } from '../../../shares/shareSlice';
 import logo from "../../../assets/images/logo.jpeg";
 import { useState } from 'react';
 import { items } from '../defaultPaths';
-import { paths } from '../../../constants/paths';
 
 const SidebarHeader = () => {
     return(
@@ -51,46 +50,6 @@ export const AppSidebar = () => {
 
     const state = useSelector(state => state.share);
     const { showSidebar } = state;
-
-    const items = [
-        {
-            icon: "pi pi-fw pi-desktop",
-            label: "Dashboard",
-            url: "/"
-        },
-        {
-            icon: 'pi pi-fw pi-ticket',
-            label: "Promotion",
-            items: [
-                {
-                    label: 'New',
-                    icon: 'pi pi-fw pi-plus',
-                    url: paths.promotionCreate
-                },
-                {
-                    label: 'List',
-                    icon: 'pi pi-fw pi-external-link',
-                    url: paths.promotion
-                }
-            ]
-        },
-        {
-            icon: 'pi pi-fw pi-user',
-            label: "User",
-            items: [
-                {
-                    label: 'New',
-                    icon: 'pi pi-fw pi-plus',
-                    url: paths.userCreate
-                },
-                {
-                    label: 'List',
-                    icon: 'pi pi-fw pi-external-link',
-                    url: paths.user
-                }
-            ]
-        },
-    ];
 
     return(
         <Sidebar 
