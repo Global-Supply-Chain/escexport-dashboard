@@ -86,6 +86,7 @@ export const UserCreate = () => {
                                 <div className="flex flex-column gap-2">
                                     <label htmlFor="name">Name</label>
                                     <InputText
+                                        className="p-inputtext-sm"
                                         id="name"
                                         aria-describedby="name-help"
                                         tooltip='user name'
@@ -123,10 +124,11 @@ export const UserCreate = () => {
                             </div>
                         </div> */}
 
-                            <div className=' col-12 md:col-6 lg:col-4 py-2'>
+                            <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
                                     <label htmlFor="email">Email</label>
                                     <InputText
+                                        className="p-inputtext-sm"
                                         keyfilter={'email'}
                                         id="email"
                                         aria-describedby="email-help"
@@ -141,10 +143,11 @@ export const UserCreate = () => {
                                     <ValidationMessage field={"email"} />
                                 </div>
                             </div>
-                            <div className=' col-12 md:col-6 lg:col-4 py-2'>
+                            <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
                                     <label htmlFor="phone">Phone</label>
                                     <InputText
+                                        className="p-inputtext-sm"
                                         keyfilter={'num'}
                                         id="phone"
                                         aria-describedby="phone-help"
@@ -160,10 +163,11 @@ export const UserCreate = () => {
                                 </div>
                             </div>
 
-                            <div className=' col-12 md:col-6 lg:col-4 py-2'>
+                            <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
                                     <label htmlFor="password">Password</label>
                                     <Password
+                                        className="p-inputtext-sm"
                                         name={'password'}
                                         disabled={loading}
                                         onChange={(e) => payloadHandler(payload, e.target.value, 'password', (updateValue) => {
@@ -175,10 +179,11 @@ export const UserCreate = () => {
                                     <ValidationMessage field={"password"} />
                                 </div>
                             </div>
-                            <div className=' col-12 md:col-6 lg:col-4 py-2'>
+                            <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
                                     <label htmlFor="con_password">Confirm Password</label>
                                     <Password
+                                        className="p-inputtext-sm"
                                         name={'con_password'}
                                         disabled={loading}
                                         onChange={(e) => payloadHandler(payload, e.target.value, 'confirm_password', (updateValue) => {
@@ -191,7 +196,7 @@ export const UserCreate = () => {
                                 </div>
                             </div>
 
-                            <div className=' md:col-12'>
+                            <div className=' md:col-12 mx-2 my-3'>
                                 <div className=' flex align-items-center justify-content-end'>
                                     <div className=' flex align-items-center justify-content-between gap-3'>
 
