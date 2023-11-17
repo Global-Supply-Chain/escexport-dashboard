@@ -26,7 +26,7 @@ export const AppSidebar = () => {
             ]
         },
         {
-            icon: 'pi pi-fw pi-ticket',
+            icon: 'pi pi-fw pi-user',
             label: "User",
             items: [
                 {
