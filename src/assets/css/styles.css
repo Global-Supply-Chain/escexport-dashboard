@@ -8,6 +8,10 @@ body{
     color: #fff;
 }
 
+.text-black {
+    color: #000 !important;
+}
+
 .title {
     font-weight: 600;
 }
