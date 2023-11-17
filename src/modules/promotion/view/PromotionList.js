@@ -11,7 +11,6 @@ import { Search } from '../../../shares/Search';
 import { getRequest } from '../../../helpers/api';
 import { ActionButton } from '../../../shares/ActionButton';
 
-
 export const PromotionList = () => {
 
     const [params, setParams ] = useState(null);
