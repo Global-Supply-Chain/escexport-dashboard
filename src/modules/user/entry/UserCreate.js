@@ -83,7 +83,7 @@ export const UserCreate = () => {
 
                             <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="name" className=' font-bold'>Name</label>
+                                    <label htmlFor="name" className=' text-black'>Name</label>
                                     <InputText
                                         className="p-inputtext-sm text-black"
                                         id="name"
@@ -125,7 +125,7 @@ export const UserCreate = () => {
 
                             <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="email" className=' font-bold'>Email</label>
+                                    <label htmlFor="email" className=' text-black'>Email</label>
                                     <InputText
                                         className="p-inputtext-sm text-black"
                                         keyfilter={'email'}
@@ -144,7 +144,7 @@ export const UserCreate = () => {
                             </div>
                             <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="phone" className=' font-bold'>Phone</label>
+                                    <label htmlFor="phone" className=' text-black'>Phone</label>
                                     <InputText
                                         className="p-inputtext-sm text-black"
                                         keyfilter={'num'}
@@ -164,7 +164,7 @@ export const UserCreate = () => {
 
                             <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="password" className=' font-bold'>Password</label>
+                                    <label htmlFor="password" className=' text-black'>Password</label>
                                     <Password
                                         className="p-inputtext-sm text-black"
                                         name={'password'}
@@ -180,7 +180,7 @@ export const UserCreate = () => {
                             </div>
                             <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="con_password" className=' font-bold'>Confirm Password</label>
+                                    <label htmlFor="con_password" className=' text-black'>Confirm Password</label>
                                     <Password
                                         className="p-inputtext-sm text-black"
                                         name={'con_password'}
