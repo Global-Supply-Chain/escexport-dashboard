@@ -2,7 +2,6 @@ import { BreadCrumb } from 'primereact/breadcrumb';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { InputText } from 'primereact/inputtext';
-import { FileUpload } from 'primereact/fileupload';
 import { Password } from 'primereact/password';
 import { paths } from '../../../constants/paths';
 import { useState } from 'react';
@@ -82,11 +81,11 @@ export const UserCreate = () => {
 
                             </div>
 
-                            <div className=' col-12 md:col-6 lg:col-4 py-2'>
+                            <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="name">Name</label>
+                                    <label htmlFor="name" className=' font-bold'>Name</label>
                                     <InputText
-                                        className="p-inputtext-sm"
+                                        className="p-inputtext-sm text-black"
                                         id="name"
                                         aria-describedby="name-help"
                                         tooltip='user name'
@@ -126,9 +125,9 @@ export const UserCreate = () => {
 
                             <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="email">Email</label>
+                                    <label htmlFor="email" className=' font-bold'>Email</label>
                                     <InputText
-                                        className="p-inputtext-sm"
+                                        className="p-inputtext-sm text-black"
                                         keyfilter={'email'}
                                         id="email"
                                         aria-describedby="email-help"
@@ -145,9 +144,9 @@ export const UserCreate = () => {
                             </div>
                             <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="phone">Phone</label>
+                                    <label htmlFor="phone" className=' font-bold'>Phone</label>
                                     <InputText
-                                        className="p-inputtext-sm"
+                                        className="p-inputtext-sm text-black"
                                         keyfilter={'num'}
                                         id="phone"
                                         aria-describedby="phone-help"
@@ -165,9 +164,9 @@ export const UserCreate = () => {
 
                             <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="password">Password</label>
+                                    <label htmlFor="password" className=' font-bold'>Password</label>
                                     <Password
-                                        className="p-inputtext-sm"
+                                        className="p-inputtext-sm text-black"
                                         name={'password'}
                                         disabled={loading}
                                         onChange={(e) => payloadHandler(payload, e.target.value, 'password', (updateValue) => {
@@ -181,9 +180,9 @@ export const UserCreate = () => {
                             </div>
                             <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="con_password">Confirm Password</label>
+                                    <label htmlFor="con_password" className=' font-bold'>Confirm Password</label>
                                     <Password
-                                        className="p-inputtext-sm"
+                                        className="p-inputtext-sm text-black"
                                         name={'con_password'}
                                         disabled={loading}
                                         onChange={(e) => payloadHandler(payload, e.target.value, 'confirm_password', (updateValue) => {
@@ -196,7 +195,7 @@ export const UserCreate = () => {
                                 </div>
                             </div>
 
-                            <div className=' md:col-12 mx-2 my-3'>
+                            <div className=' md:col-12 mx-2 md:mx-0 my-3'>
                                 <div className=' flex align-items-center justify-content-end'>
                                     <div className=' flex align-items-center justify-content-between gap-3'>
 
@@ -211,6 +210,7 @@ export const UserCreate = () => {
                                         <Button
                                             severity="danger"
                                             size='small'
+                                            disabled={loading}
                                             label="SUBMIT"
                                             onClick={() => submitUser()}
                                         />
