@@ -7,6 +7,7 @@ import { sidebarToggle } from '../../../shares/shareSlice';
 import logo from "../../../assets/images/logo.jpeg";
 import { useState } from 'react';
 import { items } from '../defaultPaths';
+import { paths } from '../../../constants/paths';
 
 const SidebarHeader = () => {
     return(
