@@ -195,7 +195,7 @@ export const UserCreate = () => {
                                 </div>
                             </div>
 
-                            <div className=' md:col-12 mx-2 my-3'>
+                            <div className=' md:col-12 mx-2 md:mx-0 my-3'>
                                 <div className=' flex align-items-center justify-content-end'>
                                     <div className=' flex align-items-center justify-content-between gap-3'>
 
