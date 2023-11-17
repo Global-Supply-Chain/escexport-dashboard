@@ -1,7 +1,55 @@
-import { TieredMenu } from 'primereact/tieredmenu';
-import { paths } from '../../../constants/paths';
+import { Sidebar } from 'primereact/sidebar';
+import { Image } from 'primereact/image';
+import { Tree } from 'primereact/tree';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { sidebarToggle } from '../../../shares/shareSlice';
+import logo from "../../../assets/images/logo.jpeg";
+import { useState } from 'react';
+import { items } from '../defaultPaths';
+
+const SidebarHeader = () => {
+    return(
+        <div className='w-full flex flex-row justify-content-start align-items-center'>
+            <Image 
+                width='50px'
+                height='50px'
+                src={logo} 
+                alt='GSC Export' 
+                title='GSC Export' 
+            />
+
+            <div className='mx-2 sidebar-header'>
+                <h3> GSC Export </h3>
+                <small> Management </small>
+            </div>
+        </div>
+    )
+}
 
 export const AppSidebar = () => {
+
+    let itemList = [];
+
+    items.map((value) => {
+        if(value.children) {
+            value.children.map((child) => {
+                itemList.push(child);
+                return child;
+            })
+        } else {
+            itemList.push(value);
+        }
+        return value;
+    });
+
+    const [selectedKeys, setSelectedKeys] = useState(null);
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const state = useSelector(state => state.share);
+    const { showSidebar } = state;
 
     const items = [
         {
@@ -44,8 +92,25 @@ export const AppSidebar = () => {
     ];
 
     return(
-        <TieredMenu 
-            model={items}
-        /> 
+        <Sidebar 
+            visible={showSidebar} 
+            onHide={() => dispatch(sidebarToggle())}
+            header={<SidebarHeader />}
+        >
+            <Tree 
+                value={items} 
+                selectionMode="single" 
+                selectionKeys={selectedKeys} 
+                onSelectionChange={(e) => {
+                    const getItem = itemList.filter(value => value.key === e.value)[0];
+                    if(getItem) {
+                        navigate(getItem.url);
+                        dispatch(sidebarToggle());
+                    }
+
+                    setSelectedKeys(e.value)
+                }}
+            />
+        </Sidebar>
     )
 }
