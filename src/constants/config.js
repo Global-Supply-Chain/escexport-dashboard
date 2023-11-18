@@ -1,9 +1,18 @@
+import { Button } from "primereact/button";
+
+const paginatorLeft = <Button type="button" icon="pi pi-refresh" text />;
+const paginatorRight = <Button type="button" icon="pi pi-download" text />;
+
+
 export const paginateOptions = {
-    page: 1,
-    per_page: 10,
-    search: "",
-    order: "id",
-    sort: "DESC"
+    rows: 50,
+    rowsPerPageOptions: [50,100,150,500,1000],
+    total: 0,
+    paginatorTemplate: "RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink",
+    currentPageReportTemplate: "{first} to {last} of {totalRecords}",
+    paginatorLeft: paginatorLeft, 
+    paginatorRight: paginatorRight,
+    sortMode: "multiple"
 }
 
 export const keys = {

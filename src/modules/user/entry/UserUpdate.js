@@ -1,7 +1,7 @@
 import { Avatar } from 'primereact/avatar';
 import { Card } from 'primereact/card';
 import { InputText } from 'primereact/inputtext';
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { ValidationMessage } from '../../../shares/ValidationMessage';
 import { payloadHandler } from '../../../helpers/handler';
 import { Button } from 'primereact/button';
@@ -12,19 +12,13 @@ import { getRequest } from '../../../helpers/api';
 import { useDispatch } from 'react-redux';
 import { Dropdown } from 'primereact/dropdown';
 import { userService } from '../userService';
+import { userPayload } from '../userPayload';
 
 const UserUpdate = ({ dataSource }) => {
 
-    console.log(dataSource);
     const [loading, setLoading] = useState(false);
     const [userStatus, setUserStatus] = useState([]);
-    const [payload, setPayload] = useState({
-        name:  "",
-        profile: "",
-        email: "",
-        phone: "",
-        status : ""
-    });
+    const [payload, setPayload] = useState(userPayload.update);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -81,6 +75,10 @@ const UserUpdate = ({ dataSource }) => {
     useEffect(() => {
         loadingDataSource();
     },[loadingDataSource]);
+
+    useEffect(() => {
+        userService.show('360833533268745');
+    },[]);
 
 
     return (

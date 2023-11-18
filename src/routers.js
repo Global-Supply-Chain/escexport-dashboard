@@ -5,6 +5,7 @@ import { BlankTemplate } from "./layouts/default/pages/BlankTemplate";
 import { Login } from "./modules/auth/entry/Login";
 import { promotionRoutes } from "./modules/promotion/routes";
 import { userRoutes } from "./modules/user/routes";
+import { adminRoutes } from "./modules/admin/adminRoutes";
 
 export const routers = createBrowserRouter([
     {
@@ -13,7 +14,8 @@ export const routers = createBrowserRouter([
         errorElement: <NotFound />,
         children: [
             ...promotionRoutes,
-            ...userRoutes
+            ...userRoutes,
+            ...adminRoutes
         ]
     },
     {

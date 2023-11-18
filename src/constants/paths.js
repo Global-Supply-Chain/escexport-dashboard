@@ -1,6 +1,7 @@
 export const paths = {
 
-    login : "auth/login",
+    admin: "/admin",
+    adminCreate: "/admin/new",
 
     promotion: "/promotion",
     promotionCreate: "/promotion/new",

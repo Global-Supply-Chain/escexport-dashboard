@@ -1,5 +1,5 @@
 import { paths } from "../../constants/paths"
-import { postRequest, putRequest } from "../../helpers/api"
+import { getRequest, postRequest, putRequest } from "../../helpers/api"
 import { updateError, updateNotification } from "../../shares/shareSlice";
 
 
@@ -35,6 +35,7 @@ export const userService = {
         return response;
 
     },
+    
     updateUser: async (payload, dispatch, navigate,dataSource) => {
 
         const response = await putRequest(`${paths.user}/${dataSource?.id}`, payload);
@@ -66,6 +67,11 @@ export const userService = {
 
         return response;
 
+    },
+
+    show: async (id, dispatch) => {
+        const response = await getRequest(`${paths.user}/${id}`);
+        console.log(response);
     }
 
 }
