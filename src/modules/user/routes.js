@@ -1,6 +1,7 @@
 import { paths } from "../../constants/paths";
 import { UserList } from "./view/UserList";
 import { UserCreate } from "./entry/UserCreate";
+import UserDetail from "./view/UserDetail";
 
 
 export const userRoutes = [
@@ -11,5 +12,9 @@ export const userRoutes = [
     {
         path: paths.userCreate,
         element : <UserCreate />
+    },
+    {
+        path : paths.userDetail,
+        element : <UserDetail />
     }
 ]

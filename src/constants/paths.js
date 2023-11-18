@@ -7,4 +7,5 @@ export const paths = {
 
     user: "/user",
     userCreate : "/user/new",
+    userDetail : "user/:id"
 }
