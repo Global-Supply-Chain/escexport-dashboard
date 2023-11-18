@@ -12,6 +12,10 @@ body{
     color: #000 !important;
 }
 
+.input-label {
+    color: #000;
+}
+
 .title {
     font-weight: 600;
 }
@@ -141,4 +145,50 @@ body{
     border: 1px dashed #dee2e6;
     border-radius: 50%;
     transform: translate(-50%,-50%);
+}
+
+/** --Breadcrumb--  **/
+.breadcrumbs-card,
+.breadcrumbs-card > .p-card-body,
+.breadcrumbs-card > .p-card-body > .p-card-content {
+    padding: 0px;
+    margin: 0px;
+}
+
+.breadcrumbs-card {
+    margin-top: 5px;
+    color: #495057;
+}
+
+.breadcrumbs-card > .p-card-body > .p-card-content {
+    padding: 10px;
+}
+
+.breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.breadcrumb-item {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.breadcrumb-item > label {
+    cursor: pointer;
+}
+
+.breadcrumb-item > label:hover {
+    text-decoration: underline;
+    color: blue;
+}
+/** --End of breadcrumb--  **/
+
+/** Card **/
+.p-card-subtitle,
+.p-card-title {
+    padding: 0 0.5rem;
 }

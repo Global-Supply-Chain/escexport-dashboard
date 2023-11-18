@@ -13,7 +13,7 @@ export const Login = () => {
 
     const [loading, setLoading] = useState(false);
     const [payload, setPayload] = useState({
-        name: "",
+        email: "",
         password: ""
     });
 
@@ -50,16 +50,17 @@ export const Login = () => {
                             </span>
 
                             <InputText 
+                                type="email"
                                 className="p-inputtext-sm"
-                                value={payload.name}
+                                value={payload.email}
                                 disabled={loading}
-                                placeholder="Enter user account"
-                                onChange={(e) => payloadHandler(payload, e.target.value, 'name', (updateValue) => {
+                                placeholder="Enter email address"
+                                onChange={(e) => payloadHandler(payload, e.target.value, 'email', (updateValue) => {
                                     setPayload(updateValue);
                                 })}
                             />
                         </div>
-                        <ValidationMessage field={"name"} />
+                        <ValidationMessage field={"email"} />
                     </div>
 
                     <div className="my-5">

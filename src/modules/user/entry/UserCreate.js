@@ -62,7 +62,6 @@ export const UserCreate = () => {
                     <Card title="User Create">
 
                         <div className=' grid'>
-
                             <div className=' col-12 flex align-items-center justify-content-center'>
                                 
                                 <form>
@@ -81,7 +80,7 @@ export const UserCreate = () => {
 
                             </div>
 
-                            <div className=' col-12 md:col-6 lg:col-4 py-3'>
+                            <div className=' col-12 md:col-6 lg:col-4 my-3'>
                                 <div className="flex flex-column gap-2">
                                     <label htmlFor="name" className=' text-black'>Name</label>
                                     <InputText
