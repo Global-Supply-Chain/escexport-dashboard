@@ -1,25 +1,26 @@
 
 import { keys } from "../../constants/config";
-import { paths } from "../../constants/paths"
+import { endpoints } from "../../constants/endpoints";
 import { postRequest } from "../../helpers/api"
+import { httpServiceHandler } from "../../helpers/handler";
 import { setData } from "../../helpers/localstorage";
-import { updateError, updateNotification } from "../../shares/shareSlice";
+import { updateNotification } from "../../shares/shareSlice";
 
 export const authService = {
     login: async (payload, dispatch) => {
-        const response = await postRequest(paths.login, payload);
+        const response = await postRequest(endpoints.login, payload);
 
-        if(response.status === 400 || response.status === 0) {
-            dispatch(updateNotification(response.notification));
-        }
-
-        if(response.status === 422) {
-            dispatch(updateError(response.error));
-        }
+        await httpServiceHandler(dispatch, response);
 
         if(response.status === 200) {
             setData(keys.API_TOKEN, response.data.access_token);
             setData(keys.USER, response.data.user);
+            dispatch(updateNotification({
+                show: true,
+                detail: response.message,
+                severity: "success",
+                summary: "Login Success"
+            }))
         }
         
         return response;

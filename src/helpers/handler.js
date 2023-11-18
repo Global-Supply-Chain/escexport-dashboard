@@ -1,4 +1,5 @@
 import { keys } from "../constants/config";
+import { updateError, updateNotification } from "../shares/shareSlice";
 import { removeData } from "./localstorage";
 
 /**
@@ -20,7 +21,7 @@ export const payloadHandler = (payload, value, field, fn) => {
  * @returns 
  */
 export const httpErrorHandler = (error) =>  {
-    
+
     if(error.code === 'ERR_NETWORK') {
         return { 
             message: error.message, 
@@ -68,6 +69,28 @@ export const httpErrorHandler = (error) =>  {
 export const httpResponseHandler = (result) => {
     return {
         status: result.status,
-        data: result.data.data
+        data: result.data.data,
+        message: result.data.message
     }
+}
+
+/**
+ * Http status handler from service
+ * @param {*} dispatch 
+ * @param {*} result 
+ * @returns 
+ */
+export const httpServiceHandler = async (dispatch, result) => {
+
+    await dispatch(updateError(null));
+
+    if(result.status === 400 || result.status === 0 || result.status === 500) {
+        await dispatch(updateNotification(result.notification));
+    }
+
+    if(result.status === 422) {
+        await dispatch(updateError(result.error));
+    }
+
+    return;
 }

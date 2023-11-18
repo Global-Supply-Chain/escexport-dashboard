@@ -8,13 +8,22 @@ body{
     color: #fff;
 }
 
-.logo {
-    width: 30px;
-    height: 30px;
+.text-black {
+    color: #000 !important;
+}
+
+.input-label {
+    color: #000;
 }
 
 .title {
     font-weight: 600;
+}
+
+.sidebar-header > h3,
+.sidebar-header > small {
+    padding: 0px;
+    margin: 0px;
 }
 
 /** Layout **/
@@ -37,10 +46,9 @@ body{
 }
 
 .app-content {
-    width: calc(100% - 200px);
+    width: 100%;
     height: 100vh;
     background: #f7f7f7;
-    margin-left: 200px;
 }
 
 /** Chip Color **/
@@ -59,8 +67,10 @@ body{
 }
 
 /** Button **/
-.btn-menu:hover {
-    background: #a81c1c;
+.menu-btn {
+    margin-left: 10px;
+    margin-right: 10px;
+    color: #fff;
 }
 
 .error-message {
@@ -84,52 +94,101 @@ body{
     border: 0px;
 }
 
-.p-tieredmenu {
-    width: 200px;
-    height: 100vh;
-    position: fixed;
-    background: #a81c1c;
+.p-sidebar {
+    box-shadow: 0px 2px 3px 0px rgba(247, 247, 247,1);
+    -webkit-box-shadow: 0px 2px 3px 0px rgba(247, 247, 247,1);
+    -moz-box-shadow: 0px 2px 3px 0px rgba(247, 247, 247,1);
+}
+
+.p-sidebar-header {
+    padding: 10px;
+    font-weight: 500;
+    box-shadow: 0px 2px 3px 0px rgba(247, 247, 247,1);
+    -webkit-box-shadow: 0px 2px 3px 0px rgba(247, 247, 247,1);
+    -moz-box-shadow: 0px 2px 3px 0px rgba(247, 247, 247,1);
+}
+
+.p-sidebar-content {
+    padding: 0px;
+    padding-top: 10px;
+}
+
+.p-tree {
     border: 0px;
-    z-index: 98;
-    
-}
-
-.p-tieredmenu .p-menuitem-link {
-    background: #a81c1c!important;
-    outline: none;
-}
-
-.p-submenu-list {
-    background: #a81c1c!important;
-    margin-left: 5px;
-}
-
-.p-tieredmenu .p-menuitem-link:focus {
-    box-shadow: none;
-}
-
-.p-menuitem-link > svg {
-    color: #fff;
-}
-
-.p-menuitem-icon {
-    color: #fff;
-}
-
-.p-menuitem {
-    left: -5px;
-}
-
-
-.p-menuitem-text {
-    color: #fff;
-}
-
-
-.p-breadcrumb-list > li > a > span {
-    color: #000;
 }
 
 .p-menu-overlay > ul > li > a > span {
     color: #000;
+}
+
+.p-inputtext {
+    color: #000;
+    width: 100%;
+}
+
+.p-avatar {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.p-avatar::after {
+    content:  '';
+    width: 120px;
+    height: 120px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    border: 1px dashed #dee2e6;
+    border-radius: 50%;
+    transform: translate(-50%,-50%);
+}
+
+/** --Breadcrumb--  **/
+.breadcrumbs-card,
+.breadcrumbs-card > .p-card-body,
+.breadcrumbs-card > .p-card-body > .p-card-content {
+    padding: 0px;
+    margin: 0px;
+}
+
+.breadcrumbs-card {
+    margin-top: 5px;
+    color: #495057;
+}
+
+.breadcrumbs-card > .p-card-body > .p-card-content {
+    padding: 10px;
+}
+
+.breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.breadcrumb-item {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.breadcrumb-item > label {
+    cursor: pointer;
+}
+
+.breadcrumb-item > label:hover {
+    text-decoration: underline;
+    color: blue;
+}
+/** --End of breadcrumb--  **/
+
+/** Card **/
+.p-card-subtitle,
+.p-card-title {
+    padding: 0 0.5rem;
 }
