@@ -42,7 +42,7 @@ export const UserCreate = () => {
      * **/
     const submitUser = async () => {
         setLoading(true);
-        const result = await userService.createUser(payload, dispatch, navigate);
+        await userService.createUser(payload, dispatch, navigate);
 
         setLoading(false);
     }
