@@ -1,8 +1,10 @@
 import { Button } from "primereact/button";
+import { Checkbox } from "primereact/checkbox";
+import { useState } from "react";
+import { PaginatorRight } from "../shares/PaginatorRight";
 
 const paginatorLeft = <Button type="button" icon="pi pi-refresh" text />;
-const paginatorRight = <Button type="button" icon="pi pi-download" text />;
-
+// const paginatorRight = <Button type="button" icon="pi pi-download" text />;
 
 export const paginateOptions = {
     rows: 50,
@@ -11,7 +13,6 @@ export const paginateOptions = {
     paginatorTemplate: "RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink",
     currentPageReportTemplate: "{first} to {last} of {totalRecords}",
     paginatorLeft: paginatorLeft, 
-    paginatorRight: paginatorRight,
     sortMode: "multiple"
 }
 
@@ -45,3 +46,10 @@ export const statusOptions = [
 export const tooltipOptions = {
    position: 'top'
 }
+
+export const auditColumns = [
+    { field: "created_by", header: "Created By" },
+    { field: "updated_by", header: "Updated By" },
+    { field: "created_at", header: "Created At" },
+    { field: "updated_at", header: "Updated At" }
+]

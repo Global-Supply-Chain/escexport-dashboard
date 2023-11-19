@@ -169,7 +169,6 @@ export const UserList = () => {
                             navigate(`/user/${e.data.id}`)
                         }}
                         value={data}
-
                     >
                         {columns.map((col) => (
                             <Column
