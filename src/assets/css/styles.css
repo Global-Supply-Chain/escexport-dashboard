@@ -40,30 +40,22 @@ body{
 
 .app-container {
     width: 100%;
-    height: 100vh;
     color: #fff;
     margin-top: 50px;
 }
 
 .app-content {
     width: 100%;
-    height: 100vh;
     background: #f7f7f7;
 }
 
-/** Chip Color **/
-.chip-success { 
-    background: #21a321; 
-    color: #fff; 
-    font-size: 0.8rem;
-    font-weight: 500;
+.nav-link {
+    color: #4338CA;
+    cursor: pointer;
 }
 
-.chip-danger {
-    background: #DC2626; 
-    color: #fff; 
-    font-size: 0.8rem;
-    font-weight: 500;
+.nav-link:hover {
+    text-decoration: underline;
 }
 
 /** Button **/
@@ -191,4 +183,25 @@ body{
 .p-card-subtitle,
 .p-card-title {
     padding: 0 0.5rem;
+}
+
+/** Chip **/
+.p-chip .p-chip-text {
+    font-size: small;
+    font-weight: 500;
+}
+
+.chip-success { 
+    background: #21a321; 
+    color: #fff; 
+}
+
+.chip-danger {
+    background: #DC2626; 
+    color: #fff; 
+}
+
+.chip-warn {
+    background-color: #eec137;
+    color: #fff;
 }
