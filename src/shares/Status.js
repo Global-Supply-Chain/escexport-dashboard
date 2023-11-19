@@ -19,6 +19,7 @@ export const Status = ({ status }) => {
                 <Chip 
                     className={dataSource.color}
                     label={dataSource.status}
+
                 />
             )}  
         </>
