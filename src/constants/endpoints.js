@@ -1,4 +1,6 @@
 export const endpoints = {
     login: "auth/login",
-    admin: "admin"
+    admin: "admin",
+    user: "user",
+    promotion: "promotion"
 }

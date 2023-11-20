@@ -30,8 +30,8 @@ const UserUpdate = ({ dataSource }) => {
      * **/
     const submitUpdateUser = async () => {
         setLoading(true);
-
-        await userService.updateUser(payload,dispatch,navigate,dataSource)
+        
+        await userService.updateUser(payload,dispatch,dataSource)
 
         setLoading(false)
 
@@ -114,7 +114,7 @@ const UserUpdate = ({ dataSource }) => {
                                 id="name"
                                 aria-describedby="name-help"
                                 tooltip='user name'
-                                value={payload?.name}
+                                value={payload?.name ? payload?.name : ""}
                                 tooltipOptions={{ ...tooltipOptions }}
                                 placeholder='Enter user name'
                                 disabled={loading}
@@ -158,7 +158,7 @@ const UserUpdate = ({ dataSource }) => {
                                 id="email"
                                 aria-describedby="email-help"
                                 tooltip='user email'
-                                value={payload?.email}
+                                value={payload?.email ? payload?.email : ""}
                                 tooltipOptions={{ ...tooltipOptions }}
                                 placeholder='Enter user email'
                                 disabled={loading}
@@ -178,7 +178,7 @@ const UserUpdate = ({ dataSource }) => {
                                 id="phone"
                                 aria-describedby="phone-help"
                                 tooltip='user phone'
-                                value={payload?.phone}
+                                value={payload?.phone ? payload.phone : ""}
                                 tooltipOptions={{ ...tooltipOptions }}
                                 placeholder='Enter user phone'
                                 disabled={loading}
