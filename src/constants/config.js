@@ -13,7 +13,9 @@ export const paginateOptions = {
     paginatorTemplate: "RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink",
     currentPageReportTemplate: "{first} to {last} of {totalRecords}",
     paginatorLeft: paginatorLeft, 
-    sortMode: "multiple"
+    sortMode: "single",
+    resizableColumns: true,
+    lazy: true
 }
 
 export const keys = {
@@ -51,5 +53,6 @@ export const auditColumns = [
     { field: "created_by", header: "Created By" },
     { field: "updated_by", header: "Updated By" },
     { field: "created_at", header: "Created At" },
-    { field: "updated_at", header: "Updated At" }
-]
+    { field: "updated_at", header: "Updated At" },
+    { field: "deleted_at", header: "Deleted At" },
+];
