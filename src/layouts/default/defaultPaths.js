@@ -16,7 +16,7 @@ export const items = [
         children: [
             {
                 key: '1-1',
-                label: 'User List',
+                label: 'List',
                 icon: 'pi pi-fw pi-list',
                 url: paths.user
             },
