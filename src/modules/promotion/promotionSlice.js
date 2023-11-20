@@ -12,7 +12,8 @@ const promotionSlice = createSlice({
         }
     },
     reducers: {
-        index: state => {
+        index: (state,action) => {
+            state = action.payload
             return state;
         },
         update: state => {

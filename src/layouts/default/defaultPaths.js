@@ -46,5 +46,24 @@ export const items = [
                 url: paths.adminCreate
             }
         ]
+    },
+    {
+        key: '3',
+        label: 'Promotion',
+        icon: 'pi pi-fw pi-users',
+        children: [
+            {
+                key: '3-1',
+                label: 'List',
+                icon: 'pi pi-fw pi-list',
+                url: paths.promotion
+            },
+            {
+                key: '3-2',
+                label: 'Create',
+                icon: 'pi pi-fw pi-plus',
+                url: paths.promotionCreate
+            }
+        ]
     }
 ];

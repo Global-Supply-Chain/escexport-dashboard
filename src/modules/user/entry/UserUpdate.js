@@ -31,7 +31,7 @@ const UserUpdate = ({ dataSource }) => {
     const submitUpdateUser = async () => {
         setLoading(true);
 
-        await userService.updateUser(payload,dispatch,navigate,dataSource)
+        await userService.updateUser(payload,dispatch,dataSource)
 
         setLoading(false)
 

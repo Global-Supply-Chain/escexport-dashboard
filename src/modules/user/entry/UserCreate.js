@@ -1,4 +1,4 @@
-import { BreadCrumb } from 'primereact/breadcrumb';
+
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { InputText } from 'primereact/inputtext';
@@ -12,6 +12,7 @@ import { ValidationMessage } from '../../../shares/ValidationMessage';
 import { payloadHandler } from '../../../helpers/handler';
 import { tooltipOptions } from '../../../constants/config';
 import { Avatar } from 'primereact/avatar';
+import { BreadCrumb } from '../../../shares/BreadCrumb';
 
 
 export const UserCreate = () => {
@@ -26,12 +27,6 @@ export const UserCreate = () => {
         confirm_password: ""
     });
 
-    const breadcrumbs = [
-        { label: "Dashboard", url: "/" },
-        { label: "User", url: paths.user },
-        { label: "Create", url: paths.userCreate },
-    ];
-
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -42,7 +37,7 @@ export const UserCreate = () => {
      * **/
     const submitUser = async () => {
         setLoading(true);
-        await userService.createUser(payload, dispatch, navigate);
+        await userService.createUser(payload, dispatch);
 
         setLoading(false);
     }
@@ -54,12 +49,15 @@ export const UserCreate = () => {
             <div className=" grid">
 
                 <div className="col-12">
-                    <BreadCrumb model={breadcrumbs} />
+                    <BreadCrumb />
                 </div>
 
                 <div className=' col-12'>
 
-                    <Card title="User Create">
+                    <Card 
+                    title="User Create"
+                    subTitle="User account is purposing for website ui management"
+                    >
 
                         <div className=' grid'>
                             <div className=' col-12 flex align-items-center justify-content-center'>
@@ -82,12 +80,12 @@ export const UserCreate = () => {
 
                             <div className=' col-12 md:col-6 lg:col-4 my-3'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="name" className=' text-black'>Name</label>
+                                    <label htmlFor="name" className=' text-black'>Name (required)</label>
                                     <InputText
                                         className="p-inputtext-sm text-black"
                                         id="name"
                                         aria-describedby="name-help"
-                                        tooltip='user name'
+                                        tooltip='User full name'
                                         tooltipOptions={{...tooltipOptions}}
                                         placeholder='Enter user name'
                                         disabled={loading}
@@ -124,13 +122,13 @@ export const UserCreate = () => {
 
                             <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="email" className=' text-black'>Email</label>
+                                    <label htmlFor="email" className=' text-black'>Email (required)</label>
                                     <InputText
                                         className="p-inputtext-sm text-black"
                                         keyfilter={'email'}
                                         id="email"
                                         aria-describedby="email-help"
-                                        tooltip='user email'
+                                        tooltip='User email'
                                         tooltipOptions={{...tooltipOptions}}
                                         placeholder='Enter user email'
                                         disabled={loading}
@@ -143,13 +141,13 @@ export const UserCreate = () => {
                             </div>
                             <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="phone" className=' text-black'>Phone</label>
+                                    <label htmlFor="phone" className=' text-black'>Phone (required)</label>
                                     <InputText
                                         className="p-inputtext-sm text-black"
                                         keyfilter={'num'}
                                         id="phone"
                                         aria-describedby="phone-help"
-                                        tooltip='user phone'
+                                        tooltip='User phone'
                                         tooltipOptions={{...tooltipOptions}}
                                         placeholder='Enter user phone'
                                         disabled={loading}
@@ -163,10 +161,12 @@ export const UserCreate = () => {
 
                             <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="password" className=' text-black'>Password</label>
+                                    <label htmlFor="password" className=' text-black'>Password (required)</label>
                                     <Password
                                         className="p-inputtext-sm text-black"
                                         name={'password'}
+                                        tooltip="Password must be contain special chars"
+                                        tooltipOptions={{...tooltipOptions}}
                                         disabled={loading}
                                         onChange={(e) => payloadHandler(payload, e.target.value, 'password', (updateValue) => {
                                             setPayload(updateValue);
@@ -179,10 +179,12 @@ export const UserCreate = () => {
                             </div>
                             <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="con_password" className=' text-black'>Confirm Password</label>
+                                    <label htmlFor="con_password" className=' text-black'>Confirm Password (required)</label>
                                     <Password
                                         className="p-inputtext-sm text-black"
                                         name={'con_password'}
+                                        tooltip="Confirm password must be same password"
+                                        tooltipOptions={{...tooltipOptions}}
                                         disabled={loading}
                                         onChange={(e) => payloadHandler(payload, e.target.value, 'confirm_password', (updateValue) => {
                                             setPayload(updateValue);

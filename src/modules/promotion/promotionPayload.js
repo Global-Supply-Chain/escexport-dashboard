@@ -1,13 +1,7 @@
 import { paginateOptions } from "../../constants/config";
 
-export const userPayload = {
-    update: {
-        name: "",
-        profile: "",
-        email: "",
-        phone: "",
-        status : ""
-    },
+
+export const promotionPayload = {
     columns: [
         { field: "id", header: "ID", sortable: true, show: true },
         { field: "name", header: "Full Name", sortable: true, show: true },

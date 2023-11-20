@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { paginateOptions } from "../../constants/config";
 
-const promotionSlice = createSlice({
+const userSlice = createSlice({
     name: 'user',
     initialState: {
         users: [],
@@ -12,7 +12,8 @@ const promotionSlice = createSlice({
         }
     },
     reducers: {
-        index: state => {
+        index: (state, action) => {
+            state = action.payload
             return state;
         },
         update: state => {
@@ -30,5 +31,5 @@ const promotionSlice = createSlice({
     }
 });
 
-export const { index, update, show, destroy, store } = promotionSlice.actions;
-export default promotionSlice.reducer;
+export const { index, update, show, destroy, store } = userSlice.actions;
+export default userSlice.reducer;
