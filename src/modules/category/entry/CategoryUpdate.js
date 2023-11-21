@@ -110,6 +110,7 @@ const CategoryUpdate = ({ dataSource }) => {
                         <Button
                             size='small'
                             severity='danger'
+                            outlined
                             onClick={() => setVisible(true)}
                         >
                             <i className=' pi pi-trash'></i>
@@ -174,7 +175,7 @@ const CategoryUpdate = ({ dataSource }) => {
                                     className="p-inputtext-sm"
                                 />
                             </div>
-                            <ValidationMessage field="phone" />
+                            <ValidationMessage field="category_id" />
                         </div>
                     )
                 }

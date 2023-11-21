@@ -13,4 +13,10 @@ export const paths = {
     category: "/category",
     categoryCreate: "/category/new",
     categoryDetail : "/category/:id",
+
+    item: "/item",
+    itemCreate: "/item/new",
+    itemDetail: "item/:id",
+
+    delivery: "delivery"
 }

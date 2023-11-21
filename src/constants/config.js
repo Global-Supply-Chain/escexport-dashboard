@@ -1,7 +1,4 @@
 import { Button } from "primereact/button";
-import { Checkbox } from "primereact/checkbox";
-import { useState } from "react";
-import { PaginatorRight } from "../shares/PaginatorRight";
 
 const paginatorLeft = <Button type="button" icon="pi pi-refresh" text />;
 // const paginatorRight = <Button type="button" icon="pi pi-download" text />;
@@ -41,6 +38,7 @@ export const notificationOptions = {
 export const statusOptions = [
     { status: "ACTIVE", color: "chip-success" },
     { status: "DISABLE", color: "chip-default" },
+    { status: "DELETED", color: "chip-info" },
     { status: "PENDING", color: "chip-warn" },
     { status: "BLOCK", color: "chip-danger" }
 ];

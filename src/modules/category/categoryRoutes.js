@@ -42,7 +42,6 @@ export const categoryRoutes = [
                 breadcrumbs: [
                     { label: "Dashboard", url: "/" },
                     { label: "List", url: paths.category },
-                    { label: "Detail", url: paths.categoryDetail },
                 ]
             }
         }

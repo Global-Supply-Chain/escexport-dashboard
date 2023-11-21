@@ -1,7 +1,7 @@
 import { paths } from "../../constants/paths";
 import { UserList } from "./view/UserList";
 import { UserCreate } from "./entry/UserCreate";
-import UserDetail from "./view/UserDetail";
+import { UserDetail } from "./view/UserDetail";
 
 
 export const userRoutes = [
@@ -37,6 +37,15 @@ export const userRoutes = [
     {
         id: "userDetail",
         path : paths.userDetail,
-        element : <UserDetail />
+        element : <UserDetail />,
+        loader: () => {
+            return{
+                breadcrumbs: [
+                    { label: "Dashboard", url: "/" },
+                    { label: "List", url: paths.user },
+                ],
+                role: ['ADMINISTRATOR']
+            }
+        }
     }
 ]

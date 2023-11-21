@@ -6,22 +6,41 @@ import { ValidationMessage } from '../../../shares/ValidationMessage';
 import { payloadHandler } from '../../../helpers/handler';
 import { Button } from 'primereact/button';
 import { paths } from '../../../constants/paths';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { tooltipOptions } from '../../../constants/config';
 import { getRequest } from '../../../helpers/api';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Dropdown } from 'primereact/dropdown';
 import { userService } from '../userService';
 import { userPayload } from '../userPayload';
+import { endpoints } from '../../../constants/endpoints';
+import { uploadFile } from '../../../helpers/uploadFile';
 
-const UserUpdate = ({ dataSource }) => {
+export const UserUpdate = ({ dataSource }) => {
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const params = useParams();
+
+    const { user } = useSelector(state => state.user);
 
     const [loading, setLoading] = useState(false);
     const [userStatus, setUserStatus] = useState([]);
     const [payload, setPayload] = useState(userPayload.update);
+    
+    /**
+     * Loading Data
+     */
+    const loadingData = useCallback(async () => {
+        setLoading(true);
+        await userService.show(dispatch, params.id);
 
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+        const response = await getRequest(`${endpoints.status}?type=user`);
+        if(response.status === 200) {
+            setUserStatus(response.data.user);
+        };
+        setLoading(false);
+    },[dispatch, params.id]);
 
     /**
      * user update
@@ -30,210 +49,160 @@ const UserUpdate = ({ dataSource }) => {
      * **/
     const submitUpdateUser = async () => {
         setLoading(true);
-        
-        await userService.updateUser(payload,dispatch,dataSource)
-
+        await userService.update(dispatch, params.id, payload)
         setLoading(false)
-
     }
 
-    /**
-     * Loading User Status
-     * @returns
-     * **/
-    const loadingUserStatus = useCallback(async () =>    {
-
-        const response = await getRequest(`/status?type=user`);
-
-        if(response){
-
-            const formateData = response.data.user?.map((item) => {
-                return {
-                    label : item, 
-                    value: item
-                }
-            })
-
-            setUserStatus(formateData);
-        }
-
-    }, []);
-
-    const loadingDataSource = useCallback(() => {
-        if(dataSource) {
-            setPayload(dataSource);
-        }
-    }, [dataSource]);
-
+    useEffect(() => {
+        loadingData();
+    }, [loadingData]);
 
     useEffect(() => {
-
-        loadingUserStatus();
-
-    }, [loadingUserStatus]);
-
-    useEffect(() => {
-        loadingDataSource();
-    },[loadingDataSource]);
-
+        if(user) {
+            setPayload(user);
+        }
+    },[user])
 
     return (
-        <>
+        <Card 
+            title="Update User Account"
+            subTitle="Manage enduser account"
+        >
+            <div className='grid'>
+                <div className='col-12 flex align-items-center justify-content-center'>
+                    <form className="w-full flex flex-column justify-content-center align-items-center">
+                        <Avatar 
+                            className="mb-3"
+                            icon="pi pi-user" 
+                            size="xlarge" 
+                            shape="circle"
+                            image={payload.profile ? `${endpoints.image}/${payload.profile}` : null}
+                            onClick={() => {
+                                document.getElementById('profile').click();
+                            }}
+                        />
+                        <input 
+                            className='hidden'
+                            id="profile" 
+                            type='file' 
+                            accept="image/*"
+                            onChange={async (e) => {
+                                const result = await uploadFile.image(dispatch, e.target.files[0], 'ADMIN_PROIFLE');
+                                if(result.status === 200) {
+                                    payloadHandler(payload, result.data.id, 'profile', (updateValue) => {
+                                        setPayload(updateValue);
+                                    });
+                                }
+                            }}
+                        />
 
-            <Card title="User Update" >
+                        <ValidationMessage field={'profile'} />
+                        <ValidationMessage field={'file'} />
+                    </form>
+                </div>
 
-                <div className=' grid'>
-
-                    <div className=' col-12 flex align-items-center justify-content-center'>
-
-                        <form>
-
-                            <Avatar
-                                icon="pi pi-user"
-                                size="xlarge"
-                                shape="circle"
-                                onClick={() => {
-                                    document.getElementById('profile').click();
-                                }}
-                            />
-                            <input id="profile" type='file' className=' hidden' />
-
-                        </form>
-
+                <div className=' col-12 md:col-6 lg:col-4 py-3'>
+                    <div className="flex flex-column gap-2">
+                        <label htmlFor="name" className=' text-black'>Name</label>
+                        <InputText
+                            className="p-inputtext-sm text-black"
+                            id="name"
+                            aria-describedby="name-help"
+                            tooltip='user name'
+                            value={payload?.name ? payload?.name : ""}
+                            tooltipOptions={{ ...tooltipOptions }}
+                            placeholder='Enter user name'
+                            disabled={loading}
+                            onChange={(e) => payloadHandler(payload, e.target.value, 'name', (updateValue) => {
+                                setPayload(updateValue);
+                            })}
+                        />
+                        <ValidationMessage field={"name"} />
                     </div>
+                </div>
 
-                    <div className=' col-12 md:col-6 lg:col-4 py-3'>
-                        <div className="flex flex-column gap-2">
-                            <label htmlFor="name" className=' text-black'>Name</label>
-                            <InputText
-                                className="p-inputtext-sm text-black"
-                                id="name"
-                                aria-describedby="name-help"
-                                tooltip='user name'
-                                value={payload?.name ? payload?.name : ""}
-                                tooltipOptions={{ ...tooltipOptions }}
-                                placeholder='Enter user name'
-                                disabled={loading}
-                                onChange={(e) => payloadHandler(payload, e.target.value, 'name', (updateValue) => {
-                                    setPayload(updateValue);
-                                })}
-                            />
-                            <ValidationMessage field={"name"} />
-                        </div>
+                <div className=' col-12 md:col-6 lg:col-4 py-3'>
+                    <div className="flex flex-column gap-2">
+                        <label htmlFor="email" className=' text-black'>Email</label>
+                        <InputText
+                            className="p-inputtext-sm text-black"
+                            keyfilter={'email'}
+                            id="email"
+                            aria-describedby="email-help"
+                            tooltip='user email'
+                            value={payload?.email ? payload?.email : ""}
+                            tooltipOptions={{ ...tooltipOptions }}
+                            placeholder='Enter user email'
+                            disabled={loading}
+                            onChange={(e) => payloadHandler(payload, e.target.value, 'email', (updateValue) => {
+                                setPayload(updateValue);
+                            })}
+                        />
+                        <ValidationMessage field={"email"} />
                     </div>
+                </div>
 
-                    {/* <div className=' md:col-6'>
-    <div className="flex flex-column gap-2">
-        <label htmlFor="rewardPoint">Reward Point</label>
-        <InputNumber
-            id="rewardPoint"
-            aria-describedby="rewardPoint-help"
-            tooltip='user reward point'
-            placeholder='Enter user reward point'
-        />
-    </div>
-</div> */}
-                    {/* <div className=' md:col-6'>
-    <div className="flex flex-column gap-2">
-        <label htmlFor="profile">Profile</label>
-        <InputText
-            id="profile"
-            aria-describedby="profile-help"
-            tooltip='user profile'
-            placeholder='Enter user profile'
-        />
-    </div>
-</div> */}
-
-                    <div className=' col-12 md:col-6 lg:col-4 py-3'>
-                        <div className="flex flex-column gap-2">
-                            <label htmlFor="email" className=' text-black'>Email</label>
-                            <InputText
-                                className="p-inputtext-sm text-black"
-                                keyfilter={'email'}
-                                id="email"
-                                aria-describedby="email-help"
-                                tooltip='user email'
-                                value={payload?.email ? payload?.email : ""}
-                                tooltipOptions={{ ...tooltipOptions }}
-                                placeholder='Enter user email'
-                                disabled={loading}
-                                onChange={(e) => payloadHandler(payload, e.target.value, 'email', (updateValue) => {
-                                    setPayload(updateValue);
-                                })}
-                            />
-                            <ValidationMessage field={"email"} />
-                        </div>
+                <div className=' col-12 md:col-6 lg:col-4 py-3'>
+                    <div className="flex flex-column gap-2">
+                        <label htmlFor="phone" className=' text-black'>Phone</label>
+                        <InputText
+                            className="p-inputtext-sm text-black"
+                            keyfilter={'num'}
+                            id="phone"
+                            aria-describedby="phone-help"
+                            tooltip='user phone'
+                            value={payload?.phone ? payload.phone : ""}
+                            tooltipOptions={{ ...tooltipOptions }}
+                            placeholder='Enter user phone'
+                            disabled={loading}
+                            onChange={(e) => payloadHandler(payload, e.target.value, 'phone', (updateValue) => {
+                                setPayload(updateValue);
+                            })}
+                        />
+                        <ValidationMessage field={"phone"} />
                     </div>
-                    <div className=' col-12 md:col-6 lg:col-4 py-3'>
-                        <div className="flex flex-column gap-2">
-                            <label htmlFor="phone" className=' text-black'>Phone</label>
-                            <InputText
-                                className="p-inputtext-sm text-black"
-                                keyfilter={'num'}
-                                id="phone"
-                                aria-describedby="phone-help"
-                                tooltip='user phone'
-                                value={payload?.phone ? payload.phone : ""}
-                                tooltipOptions={{ ...tooltipOptions }}
-                                placeholder='Enter user phone'
-                                disabled={loading}
-                                onChange={(e) => payloadHandler(payload, e.target.value, 'phone', (updateValue) => {
-                                    setPayload(updateValue);
-                                })}
-                            />
-                            <ValidationMessage field={"phone"} />
-                        </div>
-                    </div>
+                </div>
 
-                    <div className=' col-12 md:col-6 lg:col-4 py-3'>
-                        <div className="flex flex-column gap-2">
-                            <label htmlFor="phone" className=' text-black'>Status</label>
-                            <Dropdown 
+                <div className=' col-12 md:col-6 lg:col-4 py-3'>
+                    <div className="flex flex-column gap-2">
+                        <label htmlFor="phone" className=' text-black'>Status</label>
+                        <Dropdown 
+                            className="p-inputtext-sm text-black"
                             options={userStatus} 
                             placeholder="Select a user status" 
                             disabled={loading}
                             value={payload.status}
-                            className=' text-black'
                             onChange={(e) => payloadHandler(payload, e.value, 'status', (updateValue) => {
                                 setPayload(updateValue);
                             })}
-                            />
- 
-                            <ValidationMessage field={"status"} />
-                        </div>
+                        />
+
+                        <ValidationMessage field={"status"} />
                     </div>
-
-                    <div className=' md:col-12 mx-2 md:mx-0 my-3'>
-                        <div className=' flex align-items-center justify-content-end'>
-                            <div className=' flex align-items-center justify-content-between gap-3'>
-
-                                <Button
-                                    label="CANCEL"
-                                    severity="secondary"
-                                    outlined
-                                    size='small'
-                                    onClick={() => navigate(paths.user)}
-                                />
-
-                                <Button
-                                    severity="danger"
-                                    size='small'
-                                    disabled={loading}
-                                    label="SUBMIT"
-                                    onClick={() => submitUpdateUser()}
-                                />
-
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
 
-            </Card>
+                <div className=' md:col-12 mx-2 md:mx-0 my-3'>
+                    <div className=' flex align-items-center justify-content-end'>
+                        <div className=' flex align-items-center justify-content-between gap-3'>
+                            <Button
+                                label="CANCEL"
+                                severity="secondary"
+                                outlined
+                                size='small'
+                                onClick={() => navigate(paths.user)}
+                            />
 
-        </>
+                            <Button
+                                severity="danger"
+                                size='small'
+                                disabled={loading}
+                                label="UPDATE"
+                                onClick={() => submitUpdateUser()}
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Card>
     )
 }
-
-export default UserUpdate
