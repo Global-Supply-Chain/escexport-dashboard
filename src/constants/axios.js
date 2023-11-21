@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { getData } from '../helpers/localstorage';
 import { keys } from './config';
+import { baseURL } from './endpoints';
 
-const baseUrl = "http://localhost:8000/dashboard";
 
 const http = axios.create({
-    baseURL: baseUrl
+    baseURL: baseURL
 });
 
 http.interceptors.request.use(

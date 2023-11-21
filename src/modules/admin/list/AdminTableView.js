@@ -10,9 +10,12 @@ import { Button } from "primereact/button";
 import { PaginatorRight } from "../../../shares/PaginatorRight";
 import { datetime } from "../../../helpers/datetime";
 import { Status } from '../../../shares/Status';
+import { paths } from "../../../constants/paths";
+import { useNavigate } from "react-router-dom";
 
 export const AdminTableView = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const state = useSelector(state => state.admin);
 
     const [loading, setLoading] = useState(false);
@@ -102,7 +105,14 @@ export const AdminTableView = () => {
                             }
 
                             if(col.field === 'id') {
-                                return(<label className="nav-link"> {value[col.field]} </label>)
+                                return(
+                                    <label 
+                                        className="nav-link" 
+                                        onClick={() => navigate(`${paths.admin}/${value[col.field]}`)}
+                                    > 
+                                        {value[col.field]} 
+                                    </label>
+                                )
                             }
 
                             return value[col.field];

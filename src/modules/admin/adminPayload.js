@@ -9,6 +9,14 @@ export const adminPayload = {
         password: "",
         confirm_password: ""
     },
+    update: {
+        name: "",
+        profile: "",
+        email: "",
+        phone: "",
+        password: "",
+        status: ""  
+    },
     columns: [
         { field: "id", header: "ID", sortable: true, show: true },
         { field: "name", header: "Full Name", sortable: true, show: true },
