@@ -76,10 +76,6 @@ const UserUpdate = ({ dataSource }) => {
         loadingDataSource();
     },[loadingDataSource]);
 
-    useEffect(() => {
-        userService.show('360833533268745');
-    },[]);
-
 
     return (
         <>

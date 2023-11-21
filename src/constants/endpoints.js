@@ -7,4 +7,5 @@ export const endpoints = {
     promotion: "promotion",
     image: `${baseURL}/media`,
     status: "status",
+    category: "category"
 }

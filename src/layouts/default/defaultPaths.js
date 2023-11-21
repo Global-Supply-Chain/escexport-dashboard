@@ -65,5 +65,24 @@ export const items = [
                 url: paths.promotionCreate
             }
         ]
+    },
+    {
+        key: '4',
+        label: 'Category',
+        icon: 'pi pi-fw pi-users',
+        children: [
+            {
+                key: '4-1',
+                label: 'List',
+                icon: 'pi pi-fw pi-list',
+                url: paths.category
+            },
+            {
+                key: '4-2',
+                label: 'Create',
+                icon: 'pi pi-fw pi-plus',
+                url: paths.categoryCreate
+            }
+        ]
     }
 ];

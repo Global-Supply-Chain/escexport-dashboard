@@ -8,5 +8,9 @@ export const paths = {
 
     user: "/user",
     userCreate : "/user/new",
-    userDetail : "user/:id"
+    userDetail : "user/:id",
+
+    category: "/category",
+    categoryCreate: "/category/new",
+    categoryDetail : "/category/:id",
 }
