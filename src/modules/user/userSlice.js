@@ -1,35 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { paginateOptions } from "../../constants/config";
 
 const userSlice = createSlice({
     name: 'user',
     initialState: {
         users: [],
         user: null,
-        params: {
-            columns: "id,title,url,status",
-            ...paginateOptions,
-        }
     },
     reducers: {
         index: (state, action) => {
-            state = action.payload
+            state.users = action.payload;
             return state;
         },
-        update: state => {
+        update: (state, action) => {
+            state.user = action.payload;
             return state;
-        },
-        show: state => {
-            return state;
-        },
-        destroy: state => {
-            return state;
-        },
-        store: state => {
-            return state
         }
     }
 });
 
-export const { index, update, show, destroy, store } = userSlice.actions;
+export const { index, update } = userSlice.actions;
 export default userSlice.reducer;

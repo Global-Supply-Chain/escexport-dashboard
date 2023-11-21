@@ -15,16 +15,16 @@ import { datetime } from '../../../helpers/datetime';
 import { paths } from '../../../constants/paths';
 import { useNavigate } from 'react-router-dom';
 
-const UserTableView = () => {
+export const UserTableView = () => {
 
     const dispatch = useDispatch();
-    const state = useSelector(state => state.user);
+    const { users } = useSelector(state => state.user);
     const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
 
-    const userList = useRef(state.user);
+    const userList = useRef(users);
     const columns = useRef(userPayload.columns);
     const showColumns = useRef(columns.current.filter(col => col.show === true));
 
@@ -105,6 +105,10 @@ const UserTableView = () => {
                                 return (<Status status={value[col.field]} />)
                             }
 
+                            if(col.field === 'email_verified_at' || col.field === 'phone_verified_at') {
+                                return (<label> { datetime.long(value[col.field])} </label>)
+                            }
+
                             if (col.field === 'id') {
                                 return (<label className="nav-link" onClick={() => navigate(`${paths.user}/${value[col.field]}`)}> {value[col.field]} </label>)
                             }
@@ -119,16 +123,20 @@ const UserTableView = () => {
                 return (
                     <Column
                         key={`audit_column_key_${index}`}
-                        style={{ minWidth: "250px" }}
-                        field={col.field}
+                        style={{ minWidth: "250px"}}
+                        field={col.field} 
                         header={col.header}
                         sortable
-                        body={(value) => <label> {datetime.long(value[col.field])} </label>}
+                        body={(value) => {
+                            if(col.field === 'created_at' || col.field === 'updated_at' || col.field === 'deleted_at') {
+                                return <label> { datetime.long(value[col.field])} </label>
+                            } else {
+                                return <label> {value[col.field] && value[col.field].name} </label>
+                            }
+                        }}
                     />
                 )
             })}
         </DataTable>
     )
 }
-
-export default UserTableView
