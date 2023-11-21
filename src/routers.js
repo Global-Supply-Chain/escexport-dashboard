@@ -7,6 +7,7 @@ import { promotionRoutes } from "./modules/promotion/promotionRoutes";
 import { userRoutes } from "./modules/user/userRoutes";
 import { adminRoutes } from "./modules/admin/adminRoutes";
 import { categoryRoutes } from "./modules/category/categoryRoutes";
+import { itemRoutes } from "./modules/item/itemRoutes";
 
 export const routers = createBrowserRouter([
     {
@@ -17,7 +18,8 @@ export const routers = createBrowserRouter([
             ...promotionRoutes,
             ...userRoutes,
             ...adminRoutes,
-            ...categoryRoutes
+            ...categoryRoutes,
+            ...itemRoutes
         ]
     },
     {

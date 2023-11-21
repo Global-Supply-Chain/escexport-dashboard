@@ -3,5 +3,6 @@ export const endpoints = {
     admin: "admin",
     user: "user",
     promotion: "promotion",
-    category: "category"
+    category: "category",
+    item: "item"
 }

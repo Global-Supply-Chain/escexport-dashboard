@@ -174,7 +174,7 @@ const CategoryUpdate = ({ dataSource }) => {
                                     className="p-inputtext-sm"
                                 />
                             </div>
-                            <ValidationMessage field="phone" />
+                            <ValidationMessage field="category_id" />
                         </div>
                     )
                 }
