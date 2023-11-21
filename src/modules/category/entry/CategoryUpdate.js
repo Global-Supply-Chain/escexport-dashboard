@@ -12,11 +12,13 @@ import { Dropdown } from 'primereact/dropdown';
 import { categoryService } from '../categoryService';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { getRequest } from '../../../helpers/api';
 
 const CategoryUpdate = ({ dataSource }) => {
 
     const [visible, setVisible] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [generalStatus, setGeneralStatus] = useState([]);
     const [payload, setPayload] = useState(categoryPayload.update);
     const [categoryList, setCategoryList] = useState([{ label: categoryPayload.update.title, code: categoryPayload.update.id }]);
 
@@ -55,9 +57,31 @@ const CategoryUpdate = ({ dataSource }) => {
         setLoading(false);
     }, [dispatch]);
 
+    const loadingGeneralStatus = useCallback(async () =>    {
+
+        const response = await getRequest(`/status?type=general`);
+
+        if(response){
+
+            const formateData = response.data.general?.map((item) => {
+                return {
+                    label : item, 
+                    value: item
+                }
+            })
+
+            setGeneralStatus(formateData);
+        }
+
+    }, []);
+
     useEffect(() => {
         loadingData()
     }, [loadingData])
+
+    useEffect(() => {
+        loadingGeneralStatus()
+    }, [loadingGeneralStatus])
 
     const submitUpdateCategory = async () => {
         setLoading(true);
@@ -176,6 +200,24 @@ const CategoryUpdate = ({ dataSource }) => {
                     <ValidationMessage field="description" />
                 </div>
 
+                <div className=' col-12 md:col-6 lg:col-4 py-3'>
+                        <div className="flex flex-column gap-2">
+                            <label htmlFor="phone" className=' text-black'>Status</label>
+                            <Dropdown 
+                            options={generalStatus} 
+                            placeholder="Select a general status" 
+                            disabled={loading}
+                            value={payload.status}
+                            className="p-inputtext-sm text-black"
+                            onChange={(e) => payloadHandler(payload, e.value, 'status', (updateValue) => {
+                                setPayload(updateValue);
+                            })}
+                            />
+ 
+                            <ValidationMessage field={"status"} />
+                        </div>
+                    </div>
+
                 <div className="col-12">
                     <div className="flex flex-row justify-content-end align-items-center">
                         <Button
@@ -190,7 +232,7 @@ const CategoryUpdate = ({ dataSource }) => {
 
                         <Button
                             className="mx-2"
-                            label="CREATE"
+                            label="UPDATE"
                             severity="danger"
                             size='small'
                             disabled={loading}
