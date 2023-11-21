@@ -110,6 +110,7 @@ const CategoryUpdate = ({ dataSource }) => {
                         <Button
                             size='small'
                             severity='danger'
+                            outlined
                             onClick={() => setVisible(true)}
                         >
                             <i className=' pi pi-trash'></i>

@@ -41,6 +41,7 @@ export const notificationOptions = {
 export const statusOptions = [
     { status: "ACTIVE", color: "chip-success" },
     { status: "DISABLE", color: "chip-default" },
+    { status: "DELETED", color: "chip-info" },
     { status: "PENDING", color: "chip-warn" },
     { status: "BLOCK", color: "chip-danger" }
 ];

@@ -14,6 +14,7 @@ import { paths } from '../../../constants/paths';
 import { datetime } from '../../../helpers/datetime';
 import { Search } from '../../../shares/Search';
 import { Button } from 'primereact/button';
+import { Badge } from 'primereact/badge';
 
 const ItemTableView = () => {
 
@@ -103,6 +104,14 @@ const ItemTableView = () => {
                         body={(value) => {
                             if (col.field === 'status') {
                                 return (<Status status={value[col.field]} />)
+                            }
+
+                            if(col.field === "out_of_stock") {
+                                if(value[col.field] == 1){
+                                    return (<Badge value={'Instock'} severity={'success'}></Badge>)
+                                }else {
+                                    return (<Badge value={'Outstock'} severity={'danger'}></Badge>)
+                                }
                             }
 
                             if (col.field === 'id') {

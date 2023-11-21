@@ -6,8 +6,7 @@ export const endpoints = {
     user: "user",
     promotion: "promotion",
     category: "category",
-    item: "item"
+    item: "item",
     image: `${baseURL}/media`,
     status: "status",
-    category: "category"
 }

@@ -1,5 +1,6 @@
 import { paths } from "../../constants/paths"
 import ItemCreate from "./entry/ItemCreate"
+import ItemDetail from "./view/ItemDetail"
 import ItemList from "./view/ItemList"
 
 
@@ -27,10 +28,22 @@ export const itemRoutes = [
                 breadcrumbs: [
                     { label: "Dashboard", url: "/" },
                     { label: "List", url: paths.item },
-                    { label: "Create", url: paths.itemCreate },
                 ],
                 role: ['ADMINISTRATOR']
             }
         }
     },
+    {
+        id: "itemDetail",
+        path: paths.itemDetail,
+        element : <ItemDetail />,
+        loader: () => {
+            return {
+                breadcrumbs: [
+                    { label: "Dashboard", url: "/" },
+                    { label: "List", url: paths.item },
+                ]
+            }
+        }
+    }
 ]

@@ -22,10 +22,8 @@ const DeleteDialogButton = ({
 
         if(response?.status === 200){
             navigate(url);
+            toast.current.show({ severity: 'success', summary: 'Confirmed', detail: response.message, life: 3000 });
         }
-
-
-        toast.current.show({ severity: 'success', summary: 'Confirmed', detail: response.message, life: 3000 });
     }
 
     return (
