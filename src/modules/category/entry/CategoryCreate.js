@@ -27,7 +27,18 @@ const CategoryCreate = () => {
 
     const submitCategoryCreate = async () => {
         setLoading(true);
-        await categoryService.store(payload, dispatch)
+        const result = await categoryService.store(payload, dispatch);
+
+        if(result.status === 200){
+
+            categoryList.push({
+                label : result.data?.title,
+                value : result.data?.id
+            })
+
+            setCategoryList(categoryList);
+        }
+
         setLoading(false);
     }
 
@@ -121,7 +132,8 @@ const CategoryCreate = () => {
                                 })}
                                 options={categoryList} 
                                 placeholder="Select a category" 
-                                className="w-full md:w-14rem" 
+                                disabled={loading}
+                                className="p-inputtext-sm" 
                                 />
                                 </div>
                                 <ValidationMessage field="phone" />
@@ -159,7 +171,7 @@ const CategoryCreate = () => {
                                     outlined
                                     size='small'
                                     disabled={loading}
-                                    onClick={() => navigate(paths.admin)}
+                                    onClick={() => navigate(paths.category)}
                                 />
 
                                 <Button
