@@ -1,17 +1,20 @@
 
-import { Card } from "primereact/card"
-import { BreadCrumb } from "../../../shares/BreadCrumb"
-import { InputText } from "primereact/inputtext"
-import { useState } from "react"
+import { Card } from "primereact/card";
+import { Button } from "primereact/button";
+import { InputText } from "primereact/inputtext";
+import { Avatar } from "primereact/avatar";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { adminPayload } from "../adminPayload"
-import { tooltipOptions } from "../../../constants/config"
-import { payloadHandler } from "../../../helpers/handler"
-import { Button } from "primereact/button"
-import { useNavigate } from "react-router-dom"
-import { paths } from "../../../constants/paths"
-import { adminService } from "../adminService"
-import { useDispatch } from "react-redux"
-import { ValidationMessage } from "../../../shares/ValidationMessage"
+import { BreadCrumb } from "../../../shares/BreadCrumb";
+import { tooltipOptions } from "../../../constants/config";
+import { payloadHandler } from "../../../helpers/handler";
+import { paths } from "../../../constants/paths";
+import { adminService } from "../adminService";
+import { ValidationMessage } from "../../../shares/ValidationMessage";
+import { uploadFile } from "../../../helpers/uploadFile";
+import { endpoints } from "../../../constants/endpoints";
 
 export const AdminCreate = () => {
 
@@ -21,6 +24,9 @@ export const AdminCreate = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    /**
+     * Create Admin Account
+     */
     const submitCreateAdmin = async () => {
         setLoading(true);
         await adminService.store(payload,dispatch);
@@ -39,6 +45,37 @@ export const AdminCreate = () => {
                     subTitle="Administrator account is purposing for system management"
                 >
                     <div className="grid">
+                        <div className='col-12 flex align-items-center justify-content-center'>
+                            <form className="w-full flex flex-column justify-content-center align-items-center">
+                                <Avatar 
+                                    className="mb-3"
+                                    icon="pi pi-user" 
+                                    size="xlarge" 
+                                    shape="circle"
+                                    image={payload.profile ? `${endpoints.image}/${payload.profile}` : null}
+                                    onClick={() => {
+                                        document.getElementById('profile').click();
+                                    }}
+                                />
+                                <input 
+                                    className='hidden'
+                                    id="profile" 
+                                    type='file' 
+                                    accept="image/*"
+                                    onChange={async (e) => {
+                                        const result = await uploadFile.image(dispatch, e.target.files[0], 'ADMIN_PROIFLE');
+                                        if(result.status === 200) {
+                                            payloadHandler(payload, result.data.id, 'profile', (updateValue) => {
+                                                setPayload(updateValue);
+                                            });
+                                        }
+                                    }}
+                                />
+
+                                <ValidationMessage field={'file'} />
+                            </form>
+                        </div>
+
                         <div className="col-12 md:col-4 lg:col-4 my-3">
                             <label htmlFor="name" className='input-label'>Full Name (required)</label>
                             <div className="p-inputgroup mt-2">

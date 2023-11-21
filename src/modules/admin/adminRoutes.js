@@ -1,5 +1,6 @@
 import { paths } from "../../constants/paths";
 import { AdminCreate } from "./entry/AdminCreate";
+import { AdminDetail } from "./view/AdminDetail";
 import { AdminList } from "./view/AdminList";
 
 export const adminRoutes = [
@@ -29,6 +30,19 @@ export const adminRoutes = [
                     { label: "List", url: paths.admin },
                 ],
                 role: ['ADMINISTRATOR']
+            }
+        }
+    },
+    {
+        id: "adminDetail",
+        path: `/${paths.admin}/:id`,
+        element: <AdminDetail />,
+        loader: () => {
+            return {
+                breadcrumbs: [
+                    { label: "Dashboard", url: "/" },
+                    { label: "List", url: paths.admin }
+                ]
             }
         }
     }
