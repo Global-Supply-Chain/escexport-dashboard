@@ -16,5 +16,7 @@ export const paths = {
 
     item: "/item",
     itemCreate: "/item/new",
-    itemDetail: "item/:id"
+    itemDetail: "item/:id",
+
+    delivery: "delivery"
 }

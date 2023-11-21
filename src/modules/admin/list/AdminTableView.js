@@ -121,7 +121,7 @@ export const AdminTableView = () => {
                 )
            })}
 
-           { showAuditColumn && auditColumns.map((col, index) => {
+           {showAuditColumn && auditColumns.map((col, index) => {
                 return(
                     <Column
                         key={`audit_column_key_${index}`}
@@ -138,7 +138,7 @@ export const AdminTableView = () => {
                         }}
                     />
                 )
-           }) }
+           })}
         </DataTable>
     )
 }
