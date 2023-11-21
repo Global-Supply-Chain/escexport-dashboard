@@ -21,7 +21,7 @@ const CategoryDetail = () => {
         }
 
 
-    }, [dispatch])
+    }, [dispatch, params.id])
 
     useEffect(() => {
         loadingData();

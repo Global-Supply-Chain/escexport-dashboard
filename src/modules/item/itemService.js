@@ -1,6 +1,6 @@
 import { endpoints } from "../../constants/endpoints";
 import { paths } from "../../constants/paths";
-import { getRequest, postRequest } from "../../helpers/api";
+import { getRequest, postRequest, putRequest } from "../../helpers/api";
 import { httpServiceHandler } from "../../helpers/handler";
 import { updateNotification } from "../../shares/shareSlice";
 import { index } from "./itemSlice";
@@ -30,7 +30,7 @@ export const itemService = {
 
         return response;
     },
-    show: async (id, dispatch) => {
+    show: async (dispatch, id) => {
         const response = await getRequest(`${paths.item}/${id}`);
         await httpServiceHandler(dispatch,response);
 
@@ -44,5 +44,21 @@ export const itemService = {
         }
 
         return response;
+    },
+    update: async (dispatch,id,payload) => {
+        const response = await putRequest(`${endpoints.item}/${id}`,payload);
+        await httpServiceHandler(dispatch,response);
+
+        if(response.status === 200) {
+            dispatch(updateNotification( {
+                show: true,
+                summary: "Success",
+                severity: "success",
+                detail: response.message
+            }));
+        }
+
+        return response;
+
     }
 }

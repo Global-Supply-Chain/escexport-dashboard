@@ -200,6 +200,10 @@ body{
     background: #DC2626; 
     color: #fff; 
 }
+.chip-info {
+    background: #21a392;
+    color: #fff;
+}
 
 .chip-warn {
     background-color: #eec137;

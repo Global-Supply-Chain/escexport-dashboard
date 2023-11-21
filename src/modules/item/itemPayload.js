@@ -12,6 +12,17 @@ export const itemPayload = {
         sell_price : "",
         out_of_stock: ""
     },
+    update: {
+        category_id: "",
+        name : "",
+        code : "",
+        description : "",
+        content : "",
+        price : "",
+        sell_price : "",
+        out_of_stock: "",
+        status : ""
+    },
     columns: [
         { field: "id", header: "ID", sortable: true, show: true },
         { field: "name", header: "Full Name", sortable: true, show: true },

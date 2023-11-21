@@ -1,8 +1,7 @@
 import React, { useRef } from 'react'
-import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
+import { ConfirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
 import { delRequest } from '../helpers/api';
-import { paths } from '../constants/paths';
 import { useNavigate } from 'react-router-dom';
 
 const DeleteDialogButton = ({
@@ -22,10 +21,8 @@ const DeleteDialogButton = ({
 
         if(response?.status === 200){
             navigate(url);
+            toast.current.show({ severity: 'success', summary: 'Confirmed', detail: response.message, life: 3000 });
         }
-
-
-        toast.current.show({ severity: 'success', summary: 'Confirmed', detail: response.message, life: 3000 });
     }
 
     return (
