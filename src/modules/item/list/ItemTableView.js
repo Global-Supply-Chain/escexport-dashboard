@@ -107,7 +107,7 @@ const ItemTableView = () => {
                             }
 
                             if(col.field === "out_of_stock") {
-                                if(value[col.field] == 1){
+                                if(value[col.field] === 1){
                                     return (<Badge value={'Instock'} severity={'success'}></Badge>)
                                 }else {
                                     return (<Badge value={'Outstock'} severity={'danger'}></Badge>)

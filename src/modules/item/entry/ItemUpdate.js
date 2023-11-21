@@ -261,7 +261,7 @@ const ItemUpdate = ({ dataSource }) => {
                             tooltipOptions={{ ...tooltipOptions }}
                             placeholder='Enter item sell price'
                             disabled={loading}
-                            checked={payload?.out_of_stock == 1 ? true : false}
+                            checked={payload?.out_of_stock === 1 ? true : false}
                             // value={payload.out_of_stock ? payload.out_of_stock : false}
                             onChange={(e) => payloadHandler(payload, e.checked, 'out_of_stock', (updateValue) => {
                                 setPayload(updateValue);

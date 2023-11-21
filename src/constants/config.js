@@ -1,7 +1,4 @@
 import { Button } from "primereact/button";
-import { Checkbox } from "primereact/checkbox";
-import { useState } from "react";
-import { PaginatorRight } from "../shares/PaginatorRight";
 
 const paginatorLeft = <Button type="button" icon="pi pi-refresh" text />;
 // const paginatorRight = <Button type="button" icon="pi pi-download" text />;
