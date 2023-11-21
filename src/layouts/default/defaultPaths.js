@@ -103,5 +103,24 @@ export const items = [
                 url: paths.itemCreate
             }
         ]
+    },
+    {
+        key: '6',
+        label: 'Delivery',
+        icon: 'pi pi-fw pi-car',
+        children: [
+            {
+                key: '6-1',
+                label: 'List',
+                icon: 'pi pi-fw pi-list',
+                url: paths.delivery
+            },
+            // {
+            //     key: '6-2',
+            //     label: 'Create',
+            //     icon: 'pi pi-fw pi-plus',
+            //     url: paths.itemCreate
+            // }
+        ]
     }
 ];

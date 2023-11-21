@@ -2,11 +2,11 @@ import { endpoints } from "../../constants/endpoints"
 import { getRequest, postRequest, putRequest } from "../../helpers/api"
 import { httpServiceHandler } from "../../helpers/handler";
 import { updateNotification } from "../../shares/shareSlice";
-import { index, update } from "./userSlice";
+import { index, update } from "./deliverySlice";
 
-export const userService = {
+export const deliveryService = {
     store: async (payload, dispatch) => {
-        const response = await postRequest(endpoints.user, payload);
+        const response = await postRequest(endpoints.delivery, payload);
         await httpServiceHandler(dispatch, response);
 
         if(response.status === 200) {
@@ -21,7 +21,7 @@ export const userService = {
     },
 
     index: async (dispatch, params) => {
-        const response = await getRequest(endpoints.user, params);
+        const response = await getRequest(endpoints.delivery, params);
         await httpServiceHandler(dispatch, response);
 
         if(response.status === 200) {
@@ -31,7 +31,7 @@ export const userService = {
     },
 
     update: async (dispatch, id, payload) => {
-        const response = await putRequest(`${endpoints.user}/${id}`, payload);
+        const response = await putRequest(`${endpoints.delivery}/${id}`, payload);
         await httpServiceHandler(dispatch, response);
 
         if(response.status === 200) {
@@ -47,7 +47,7 @@ export const userService = {
     },
 
     show: async (dispatch, id) => {
-        const response = await getRequest(`${endpoints.user}/${id}`);
+        const response = await getRequest(`${endpoints.delivery}/${id}`);
         await httpServiceHandler(dispatch, response);
 
         if(response.status === 200) {
