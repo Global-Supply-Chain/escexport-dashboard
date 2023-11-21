@@ -68,10 +68,16 @@ export const AdminTableView = () => {
             dataKey="id"
             size="normal"
             value={adminList.current}
+            lazy={paginateOptions.lazy}
+            loading={loading}
+            resizableColumns={paginateOptions.resizableColumns}
+            emptyMessage="No admin accounts found."
+            globalFilterFields={adminPayload.columns}
             paginator
             rows={paginateOptions.rows}
             rowsPerPageOptions={paginateOptions.rowsPerPageOptions} 
             paginatorTemplate={paginateOptions.paginatorTemplate}
+            sortMode={paginateOptions.sortMode}
             paginatorLeft={paginateOptions.paginatorLeft}
             paginatorRight={
                 <PaginatorRight 
@@ -79,11 +85,8 @@ export const AdminTableView = () => {
                     onHandler={(e) => setShowAuditColumn(e)}
                 />
             }
-            sortMode={paginateOptions.sortMode}
-            loading={loading}
-            emptyMessage="No admin accounts found."
-            globalFilterFields={adminPayload.columns}
             header={<HeaderRender />}
+            onSort={(e) => console.log(e)}
         >
            { showColumns.current.map((col, index) => {
                 return(
@@ -101,8 +104,8 @@ export const AdminTableView = () => {
                             if(col.field === 'id') {
                                 return(<label className="nav-link"> {value[col.field]} </label>)
                             }
-                            return value[col.field]
-                            
+
+                            return value[col.field];
                         }}
                     />
                 )
@@ -110,13 +113,19 @@ export const AdminTableView = () => {
 
            { showAuditColumn && auditColumns.map((col, index) => {
                 return(
-                    <Column 
+                    <Column
                         key={`audit_column_key_${index}`}
                         style={{ minWidth: "250px"}}
                         field={col.field} 
                         header={col.header}
                         sortable
-                        body={(value) => <label> { datetime.long(value[col.field])} </label>}
+                        body={(value) => {
+                            if(col.field === 'created_at' || col.field === 'updated_at' || col.field === 'deleted_at') {
+                                return <label> { datetime.long(value[col.field])} </label>
+                            } else {
+                                return <label> {value[col.field] && value[col.field].name} </label>
+                            }
+                        }}
                     />
                 )
            }) }
