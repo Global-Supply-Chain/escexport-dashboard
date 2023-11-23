@@ -122,5 +122,24 @@ export const items = [
             //     url: paths.itemCreate
             // }
         ]
+    },
+    {
+        key: '7',
+        label: 'Media',
+        icon: 'pi pi-fw pi-images',
+        children: [
+            {
+                key: '7-1',
+                label: 'List',
+                icon: 'pi pi-fw pi-list',
+                url: paths.media
+            },
+            // {
+            //     key: '6-2',
+            //     label: 'Create',
+            //     icon: 'pi pi-fw pi-plus',
+            //     url: paths.itemCreate
+            // }
+        ]
     }
 ];
