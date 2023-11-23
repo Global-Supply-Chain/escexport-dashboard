@@ -5,6 +5,7 @@ export const itemPayload = {
     create: {
         category_id: "",
         name : "",
+        image : [],
         code : "",
         description : "",
         content : "",
