@@ -6,6 +6,7 @@ import userSlice from "./modules/user/userSlice";
 import categorySlice from "./modules/category/categorySlice";
 import itemSlice from "./modules/item/itemSlice";
 import deliverySlice from "./modules/delivery/deliverySlice";
+import mediaSlice from "./modules/media/mediaSlice";
 
 export const stores = configureStore({
    reducer: {
@@ -15,7 +16,8 @@ export const stores = configureStore({
     user: userSlice,
     category: categorySlice,
     item: itemSlice,
-    delivery: deliverySlice
+    delivery: deliverySlice,
+    media: mediaSlice
    },
    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
       serializableCheck: false

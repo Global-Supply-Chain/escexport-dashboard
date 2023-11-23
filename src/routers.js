@@ -9,6 +9,7 @@ import { adminRoutes } from "./modules/admin/adminRoutes";
 import { categoryRoutes } from "./modules/category/categoryRoutes";
 import { itemRoutes } from "./modules/item/itemRoutes";
 import { deliveryRoutes } from "./modules/delivery/deliveryRoutes";
+import { mediaRoutes } from "./modules/media/mediaRoute";
 
 export const routers = createBrowserRouter([
     {
@@ -21,7 +22,8 @@ export const routers = createBrowserRouter([
             ...adminRoutes,
             ...categoryRoutes,
             ...itemRoutes,
-            ...deliveryRoutes
+            ...deliveryRoutes,
+            ...mediaRoutes
         ]
     },
     {

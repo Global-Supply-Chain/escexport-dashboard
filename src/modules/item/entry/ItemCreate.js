@@ -1,7 +1,7 @@
 import { Card } from 'primereact/card'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { categoryService } from '../../category/categoryService';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { itemPayload } from '../itemPayload';
 import { Dropdown } from 'primereact/dropdown';
 import { payloadHandler } from '../../../helpers/handler';
@@ -15,15 +15,44 @@ import { Button } from 'primereact/button';
 import { paths } from '../../../constants/paths';
 import { useNavigate } from 'react-router-dom';
 import { itemService } from '../itemService';
+import { mediaService } from '../../media/mediaService';
+import { endpoints } from '../../../constants/endpoints';
+import { Galleria } from 'primereact/galleria';
 
 const ItemCreate = () => {
 
     const [loading, setLoading] = useState(false);
     const [categoryList, setCategoryList] = useState([]);
     const [payload, setPayload] = useState(itemPayload.create);
+    const [activeIndex, setActiveIndex] = useState(0);
+    const [mediaList, setMediaList] = useState([])
 
+    const mediaRef = useRef();
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const responsiveOptions = [
+        {
+            breakpoint: '991px',
+            numVisible: 4
+        },
+        {
+            breakpoint: '767px',
+            numVisible: 3
+        },
+        {
+            breakpoint: '575px',
+            numVisible: 1
+        }
+    ];
+
+    const itemTemplate = (item) => {
+        return <img src={item?.itemImageSrc} alt={'GSC Export'} style={{ width: '100%', minHeight: '368px',display: 'block' }} />;
+    }
+
+    const thumbnailTemplate = (item) => {
+        return <img width={100} height={80} src={item.thumbnailImageSrc} alt={item.alt} style={{ display: 'block' }} />;
+    }
 
     /**
      * Create item
@@ -31,9 +60,9 @@ const ItemCreate = () => {
      * **/
     const submitItemCreate = async () => {
         setLoading(false);
-
-        const result = await itemService.store(dispatch,payload);
-
+        console.log(payload);
+        return;
+        const result = await itemService.store(dispatch, payload);
         setLoading(false);
     }
 
@@ -61,6 +90,44 @@ const ItemCreate = () => {
         loadingCategoryData()
     }, [loadingCategoryData])
 
+    /**
+     * loading image list
+     * **/
+    const loadingImageData = useCallback(async () => {
+        setLoading(true);
+        const result = await mediaService.list(dispatch);
+        if (result.status === 200) {
+            const formatData = result.data?.map((img,index) => {
+                return {
+                    itemImageSrc: `${endpoints.image}/${img.id}`,
+                    thumbnailImageSrc: `${endpoints.image}/${img.id}`,
+                    alt: 'GSC Export',
+                    title: 'Title 1',
+                    id: img?.id,
+                    index: index
+                }
+            })
+            setMediaList(formatData);
+        }
+        setLoading(false);
+    }, []);
+
+    /**
+     * handle gallery payload
+     * **/
+    const filterPayload = useCallback((value,index) => {
+        if(value){
+            const filter = value?.filter(img => img.index === index);
+            console.log(filter);
+        }   
+    }, [])
+
+    useEffect(() => {
+        loadingImageData()
+    }, [loadingImageData])
+    console.log(activeIndex);
+
+
     return (
         <div className=' grid'>
 
@@ -76,6 +143,26 @@ const ItemCreate = () => {
                 >
 
                     <div className=' grid'>
+
+                        <div className=' col-12'>
+                            <div className=' flex align-items-center justify-content-center'>
+                                <Galleria
+                                    ref={mediaRef}
+                                    value={mediaList}
+                                    activeIndex={activeIndex}
+                                    onItemChange={(e) => {
+                                        setActiveIndex(e.index);
+                                        filterPayload(mediaRef.current.props.value,e.index);
+                                    }}
+                                    responsiveOptions={responsiveOptions}
+                                    numVisible={5}
+                                    item={itemTemplate}
+                                    // onClick={(e) => filterPayload(mediaRef.current.props.value)}
+                                    thumbnail={thumbnailTemplate}
+                                    style={{ maxWidth: '640px', minHeight: '471px' }}
+                                />
+                            </div>
+                        </div>
 
                         <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
                             <label htmlFor="phone" className='input-label'> Category (required*) </label>
@@ -176,44 +263,44 @@ const ItemCreate = () => {
                         </div>
 
                         <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
-                                <div className="flex flex-column gap-2">
-                                    <label htmlFor="sell_price" className=' text-black'>Sell Price (required*)</label>
-                                    <InputText
-                                        className="p-inputtext-sm text-black"
-                                        id="sell_price"
-                                        aria-describedby="sell_price-help"
-                                        tooltip='Item sell price'
-                                        tooltipOptions={{...tooltipOptions}}
-                                        placeholder='Enter item sell price'
-                                        disabled={loading}
-                                        rows={5} 
-                                        cols={30}
-                                        onChange={(e) => payloadHandler(payload, e.target.value, 'sell_price', (updateValue) => {
-                                            setPayload(updateValue);
-                                        })}
-                                    />
-                                    <ValidationMessage field={"sell_price"} />
-                                </div>
+                            <div className="flex flex-column gap-2">
+                                <label htmlFor="sell_price" className=' text-black'>Sell Price (required*)</label>
+                                <InputText
+                                    className="p-inputtext-sm text-black"
+                                    id="sell_price"
+                                    aria-describedby="sell_price-help"
+                                    tooltip='Item sell price'
+                                    tooltipOptions={{ ...tooltipOptions }}
+                                    placeholder='Enter item sell price'
+                                    disabled={loading}
+                                    rows={5}
+                                    cols={30}
+                                    onChange={(e) => payloadHandler(payload, e.target.value, 'sell_price', (updateValue) => {
+                                        setPayload(updateValue);
+                                    })}
+                                />
+                                <ValidationMessage field={"sell_price"} />
+                            </div>
                         </div>
 
                         <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
-                                <div className="flex flex-column gap-2">
-                                    <label htmlFor="out_of_stock" className=' text-black'>Out of stock</label>
-                                    <Checkbox
-                                        className="p-inputtext-sm text-black"
-                                        id="out_of_stock"
-                                        aria-describedby="out_of_stock-help"
-                                        tooltip='Item sell price'
-                                        tooltipOptions={{...tooltipOptions}}
-                                        placeholder='Enter item sell price'
-                                        disabled={loading}
-                                        checked={payload.out_of_stock}
-                                        onChange={(e) => payloadHandler(payload, e.checked, 'out_of_stock', (updateValue) => {
-                                            setPayload(updateValue);
-                                        })}
-                                    />
-                                    <ValidationMessage field={"out_of_stock"} />
-                                </div>
+                            <div className="flex flex-column gap-2">
+                                <label htmlFor="out_of_stock" className=' text-black'>Out of stock</label>
+                                <Checkbox
+                                    className="p-inputtext-sm text-black"
+                                    id="out_of_stock"
+                                    aria-describedby="out_of_stock-help"
+                                    tooltip='Item sell price'
+                                    tooltipOptions={{ ...tooltipOptions }}
+                                    placeholder='Enter item sell price'
+                                    disabled={loading}
+                                    checked={payload.out_of_stock}
+                                    onChange={(e) => payloadHandler(payload, e.checked, 'out_of_stock', (updateValue) => {
+                                        setPayload(updateValue);
+                                    })}
+                                />
+                                <ValidationMessage field={"out_of_stock"} />
+                            </div>
                         </div>
 
                         <div className=' col-12 my-3 md:my-0'>
@@ -238,28 +325,28 @@ const ItemCreate = () => {
                         </div>
 
                         <div className=' md:col-12 mx-2 md:mx-0 my-3'>
-                                <div className=' flex align-items-center justify-content-end'>
-                                    <div className=' flex align-items-center justify-content-between gap-3'>
+                            <div className=' flex align-items-center justify-content-end'>
+                                <div className=' flex align-items-center justify-content-between gap-3'>
 
-                                        <Button
-                                            label="CANCEL"
-                                            severity="secondary"
-                                            outlined
-                                            size='small'
-                                            onClick={() => navigate(paths.item)}
-                                        />
+                                    <Button
+                                        label="CANCEL"
+                                        severity="secondary"
+                                        outlined
+                                        size='small'
+                                        onClick={() => navigate(paths.item)}
+                                    />
 
-                                        <Button
-                                            severity="danger"
-                                            size='small'
-                                            disabled={loading}
-                                            label="SUBMIT"
-                                            onClick={() => submitItemCreate()}
-                                        />
+                                    <Button
+                                        severity="danger"
+                                        size='small'
+                                        disabled={loading}
+                                        label="SUBMIT"
+                                        onClick={() => submitItemCreate()}
+                                    />
 
-                                    </div>
                                 </div>
                             </div>
+                        </div>
 
                     </div>
 
