@@ -21,7 +21,6 @@ const CategoryCreate = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const state = useSelector(state => state.category);
 
     // const categoryList = useRef(state.category);
 

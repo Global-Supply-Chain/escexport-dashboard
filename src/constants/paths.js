@@ -18,6 +18,10 @@ export const paths = {
     itemCreate: "/item/new",
     itemDetail: "item/:id",
 
+    point: "/point",
+    pointCreate : "/point/new",
+    pointDetail : "/point/:id",
+
     delivery: "delivery",
     media: "/media"
 }
