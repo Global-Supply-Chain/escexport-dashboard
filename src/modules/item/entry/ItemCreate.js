@@ -18,6 +18,11 @@ import { itemService } from '../itemService';
 import { mediaService } from '../../media/mediaService';
 import { endpoints } from '../../../constants/endpoints';
 import { Galleria } from 'primereact/galleria';
+import { Editor } from 'primereact/editor';
+import { renderHeader } from '../../../constants/config';
+import { responsiveOptions } from '../../../constants/config';
+import { itemTemplate } from '../../../constants/config';
+import { thumbnailTemplate } from '../../../constants/config';
 
 const ItemCreate = () => {
 
@@ -31,28 +36,7 @@ const ItemCreate = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const responsiveOptions = [
-        {
-            breakpoint: '991px',
-            numVisible: 4
-        },
-        {
-            breakpoint: '767px',
-            numVisible: 3
-        },
-        {
-            breakpoint: '575px',
-            numVisible: 1
-        }
-    ];
-
-    const itemTemplate = (item) => {
-        return <img src={item?.itemImageSrc} alt={'GSC Export'} style={{ width: '100%', minHeight: '368px',display: 'block' }} />;
-    }
-
-    const thumbnailTemplate = (item) => {
-        return <img width={100} height={80} src={item.thumbnailImageSrc} alt={item.alt} style={{ display: 'block' }} />;
-    }
+    const header = renderHeader();
 
     /**
      * Create item
@@ -97,7 +81,7 @@ const ItemCreate = () => {
         setLoading(true);
         const result = await mediaService.list(dispatch);
         if (result.status === 200) {
-            const formatData = result.data?.map((img,index) => {
+            const formatData = result.data?.map((img, index) => {
                 return {
                     itemImageSrc: `${endpoints.image}/${img.id}`,
                     thumbnailImageSrc: `${endpoints.image}/${img.id}`,
@@ -115,11 +99,11 @@ const ItemCreate = () => {
     /**
      * handle gallery payload
      * **/
-    const filterPayload = useCallback((value,index) => {
-        if(value){
+    const filterPayload = useCallback((value, index) => {
+        if (value) {
             const filter = value?.filter(img => img.index === index);
             console.log(filter);
-        }   
+        }
     }, [])
 
     useEffect(() => {
@@ -152,7 +136,7 @@ const ItemCreate = () => {
                                     activeIndex={activeIndex}
                                     onItemChange={(e) => {
                                         setActiveIndex(e.index);
-                                        filterPayload(mediaRef.current.props.value,e.index);
+                                        filterPayload(mediaRef.current.props.value, e.index);
                                     }}
                                     responsiveOptions={responsiveOptions}
                                     numVisible={5}
@@ -306,7 +290,16 @@ const ItemCreate = () => {
                         <div className=' col-12 my-3 md:my-0'>
                             <div className="flex flex-column gap-2">
                                 <label htmlFor="content" className=' text-black'>Content</label>
-                                <InputTextarea
+                                <Editor
+                                    id='editor'
+                                    // value={text}
+                                    headerTemplate={header}
+                                    onTextChange={(e) => payloadHandler(payload, e.htmlValue, 'content', (updateValue) => {
+                                        setPayload(updateValue);
+                                    })}
+                                    style={{ height: '320px' }}
+                                />
+                                {/* <InputTextarea
                                     className="p-inputtext-sm text-black"
                                     id="content"
                                     aria-describedby="content-help"
@@ -319,7 +312,7 @@ const ItemCreate = () => {
                                     onChange={(e) => payloadHandler(payload, e.target.value, 'content', (updateValue) => {
                                         setPayload(updateValue);
                                     })}
-                                />
+                                /> */}
                                 <ValidationMessage field={"content"} />
                             </div>
                         </div>

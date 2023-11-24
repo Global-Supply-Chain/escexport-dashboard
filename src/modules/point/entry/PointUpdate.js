@@ -13,21 +13,23 @@ import { InputText } from 'primereact/inputtext';
 import { endpoints } from '../../../constants/endpoints';
 import { getRequest } from '../../../helpers/api';
 import { Dropdown } from 'primereact/dropdown';
+import DeleteDialogButton from '../../../shares/DeleteDialogButton';
 
 const PointUpdate = () => {
     const [loading, setLoading] = useState(false);
     const [payload, setPayload] = useState(pointPayload.update);
     const [pointLabelStatus, setPointLabelStatus] = useState([]);
+    const [visible, setVisible] = useState(false);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const params = useParams();
 
-    const {point} = useSelector(state => state.point);
+    const { point } = useSelector(state => state.point);
 
     const submitUpdatePoint = async () => {
         setLoading(true);
-        await pointService.update(dispatch,params.id,payload);
+        await pointService.update(dispatch, params.id, payload);
         setLoading(false);
     }
 
@@ -47,7 +49,7 @@ const PointUpdate = () => {
             setPointLabelStatus(formateData);
         }
 
-        await pointService.show(dispatch,params.id);
+        await pointService.show(dispatch, params.id);
 
     }, [dispatch, params.id]);
 
@@ -56,7 +58,7 @@ const PointUpdate = () => {
     }, [loadingPointLabelStatus])
 
     useEffect(() => {
-        if(point) {
+        if (point) {
             setPayload(point);
         }
     }, [point])
@@ -73,6 +75,27 @@ const PointUpdate = () => {
                 >
 
                     <div className=' grid'>
+
+                        <div className=' col-12 flex align-items-center justify-content-end'>
+                            <div>
+
+                                <DeleteDialogButton
+                                    visible={visible}
+                                    setVisible={setVisible}
+                                    url={paths.point}
+                                    id={params?.id}
+                                />
+
+                                <Button
+                                    size='small'
+                                    severity='danger'
+                                    outlined
+                                    onClick={() => setVisible(true)}
+                                >
+                                    <i className=' pi pi-trash'></i>
+                                </Button>
+                            </div>
+                        </div>
 
                         <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                             <div className="flex flex-column gap-2">
