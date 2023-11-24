@@ -83,6 +83,7 @@ export const renderHeader = () => {
         <span className="ql-formats">
             <select className="ql-font">
                 <option value="serif"></option>
+                <option value="sans-serif"></option>
                 <option value="monospace"></option>
             </select>
             <select className="ql-size">
