@@ -1,7 +1,7 @@
 import { Card } from 'primereact/card'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { categoryService } from '../../category/categoryService';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { itemPayload } from '../itemPayload';
 import { Dropdown } from 'primereact/dropdown';
 import { payloadHandler } from '../../../helpers/handler';
@@ -9,7 +9,6 @@ import { ValidationMessage } from '../../../shares/ValidationMessage';
 import { BreadCrumb } from '../../../shares/BreadCrumb';
 import { InputText } from 'primereact/inputtext';
 import { tooltipOptions } from '../../../constants/config';
-import { InputTextarea } from 'primereact/inputtextarea';
 import { Checkbox } from 'primereact/checkbox';
 import { Button } from 'primereact/button';
 import { paths } from '../../../constants/paths';
@@ -46,7 +45,7 @@ const ItemCreate = () => {
         setLoading(false);
         console.log(payload);
         return;
-        const result = await itemService.store(dispatch, payload);
+        await itemService.store(dispatch, payload);
         setLoading(false);
     }
 
@@ -94,7 +93,7 @@ const ItemCreate = () => {
             setMediaList(formatData);
         }
         setLoading(false);
-    }, []);
+    }, [dispatch]);
 
     /**
      * handle gallery payload
@@ -109,7 +108,6 @@ const ItemCreate = () => {
     useEffect(() => {
         loadingImageData()
     }, [loadingImageData])
-    console.log(activeIndex);
 
 
     return (

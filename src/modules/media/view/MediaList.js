@@ -31,12 +31,6 @@ const MediaList = () => {
     setPage(page + 1);
   }
 
-  const handlePrevPage = () => {
-    if (page >= 1) {
-      setPage(page - 1);
-    }
-  }
-
   useEffect(() => {
     loadingData();
   }, [loadingData, page])

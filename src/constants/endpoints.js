@@ -10,5 +10,6 @@ export const endpoints = {
     image: `${baseURL}/media`,
     status: "status",
     delivery: "delivery-address",
-    point: "point"
+    point: "point",
+    generalStatus : "general"
 }

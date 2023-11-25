@@ -16,6 +16,7 @@ import { payloadHandler } from '../../../helpers/handler';
 import { paths } from '../../../constants/paths';
 import { itemService } from '../itemService';
 import DeleteDialogButton from '../../../shares/DeleteDialogButton';
+import { endpoints } from '../../../constants/endpoints';
 
 const ItemUpdate = ({ dataSource }) => {
 
@@ -36,7 +37,7 @@ const ItemUpdate = ({ dataSource }) => {
 
     const loadingGeneralStatus = useCallback(async () => {
 
-        const response = await getRequest(`/status?type=general`);
+        const response = await getRequest(`${endpoints.status}?type=${endpoints.generalStatus}`);
 
         if (response) {
 
