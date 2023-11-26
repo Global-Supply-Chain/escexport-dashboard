@@ -76,7 +76,7 @@ export const UserTableView = () => {
 
     useEffect(() => {
         loadingData();
-    }, [loadingData,dispatch,params])
+    }, [loadingData])
 
     const footer = useCallback(() => {
         return (
@@ -128,7 +128,7 @@ export const UserTableView = () => {
             <DataTable
                 dataKey="id"
                 size="normal"
-                value={userList?.current}
+                value={userList.current.length > 0 && userList.current}
                 onSort={(e) => onSortChange(e)}
                 // paginatorLeft={paginateOptions.paginatorLeft}
                 // paginatorRight={
