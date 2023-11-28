@@ -141,5 +141,24 @@ export const items = [
             //     url: paths.itemCreate
             // }
         ]
-    }
+    },
+    {
+        key: '8',
+        label: 'Point',
+        icon: 'pi pi-fw pi-user',
+        children: [
+            {
+                key: '8-1',
+                label: 'List',
+                icon: 'pi pi-fw pi-list',
+                url: paths.point
+            },
+            {
+                key: '8-2',
+                label: 'Create',
+                icon: 'pi pi-fw pi-plus',
+                url: paths.pointCreate
+            }
+        ]
+    },
 ];

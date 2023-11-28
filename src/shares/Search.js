@@ -6,7 +6,7 @@ export const Search = ({ onSearch, placeholder, tooltipLabel }) => {
     const [keyword, setKeyword] = useState('');
 
     return(
-        <div className='col-12 md:col-4 lg:col-4'>
+        <div>
             <label> Press <b> Enter</b> key to search </label>
             <div className="p-inputgroup flex-1 mt-1">
                 <InputText 
