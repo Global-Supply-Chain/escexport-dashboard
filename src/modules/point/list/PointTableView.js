@@ -1,34 +1,53 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+
+
+import React, { useRef, useState, useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { categoryPayload } from '../categoryPayload';
-import { categoryService } from '../categoryService';
-import { Search } from '../../../shares/Search';
-import { Button } from 'primereact/button';
+import { useNavigate } from 'react-router-dom';
 import { DataTable } from 'primereact/datatable';
 import { auditColumns, paginateOptions } from '../../../constants/config';
 import { PaginatorRight } from '../../../shares/PaginatorRight';
 import { Column } from 'primereact/column';
-import { datetime } from '../../../helpers/datetime';
-import { Status } from '../../../shares/Status';
-import { useNavigate } from 'react-router-dom';
 import { paths } from '../../../constants/paths';
+import { datetime } from '../../../helpers/datetime';
+import { Search } from '../../../shares/Search';
+import { Calendar } from 'primereact/calendar';
+import { pointPayload } from '../pointPayload';
+import { pointService } from '../pointSerivce';
+import { Dropdown } from 'primereact/dropdown';
 import { Paginator } from 'primereact/paginator';
+import { Button } from 'primereact/button';
 
-const CategoryTableView = () => {
+const PointTableView = () => {
 
     const dispatch = useDispatch();
-    const state = useSelector(state => state.admin);
+    const { points } = useSelector(state => state.point);
     const navigate = useNavigate();
 
-    const [params, setParams] = useState(categoryPayload.paginateParams);
+    const [params, setParams] = useState(pointPayload.paginateParams);
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
+
+    const pointList = useRef(points);
+    const total = useRef(0);
+    const columns = useRef(pointPayload.columns);
+    const showColumns = useRef(columns.current.filter(col => col.show === true));
+
     const [first, setFirst] = useState(0);
 
-    const categoryList = useRef(state.category);
-    const total = useRef(0);
-    const columns = useRef(categoryPayload.columns);
-    const showColumns = useRef(columns.current.filter(col => col.show === true));
+    const dropdown = [
+        {
+            label: "Item",
+            value: "T0001"
+        },
+        {
+            label: "Item",
+            value: "T0001"
+        },
+        {
+            label: "Item",
+            value: "T0001"
+        }
+    ];
 
     const onPageChange = (event) => {
         setFirst(event?.first);
@@ -82,33 +101,81 @@ const CategoryTableView = () => {
     */
     const HeaderRender = () => {
         return (
-            <div className="w-full flex flex-column md:flex-row justify-content-between align-items-start">
-                <Search
-                    tooltipLabel={"search by admin's id, name, email, phone, status"}
-                    placeholder={"Search admin account"}
-                    onSearch={(e) => onSearchChange(e)}
-                />
+            <>
 
-                <div className="flex flex-row justify-content-center align-items-center">
-                    <Button
-                        outlined
-                        icon="pi pi-filter"
-                        size="small"
-                    />
+                <div className=' grid align-items-center'>
+
+                    <div className=' col-8 md:col-4 lg:col-3'>
+                        <Search
+                            tooltipLabel={"search by admin's id, name, email, phone"}
+                            placeholder={"Search admin account"}
+                            onSearch={(e) => onSearchChange(e)}
+                        />
+                    </div>
+
+                    <div className=' col-12 lg:col-4'>
+                        <label className=' block mb-1'>Select a point</label>
+                        <Dropdown
+                            options={dropdown}
+                            placeholder="Select a point"
+                            // disabled={loading}
+                            // value={payload.label}
+                            className="p-inputtext-sm text-black"
+                        // onChange={(e) => payloadHandler(payload, e.value, 'label', (updateValue) => {
+                        //     setPayload(updateValue);
+                        // })}
+                        />
+                    </div>
+
+                    <div className=' col-12 lg:col-5 block md:flex align-items-center justify-content-between'>
+                        <div>
+                            <label className=' block mb-1'>Start Date:</label>
+                            <Calendar
+                                placeholder='Select a start date'
+                                className=' p-inputtext-sm'
+                            />
+                        </div>
+                        <div className=' mt-3 md:mt-0'>
+                            <label className=' block mb-1'>End Date:</label>
+                            <Calendar
+                                placeholder='Select a end date'
+                                className=' p-inputtext-sm'
+                            />
+                        </div>
+                    </div>
+
                 </div>
-            </div>
+
+                {/* <div className="w-full flex flex-column md:flex-row justify-content-between align-items-start">
+                    <Search
+                        tooltipLabel={"search by admin's id, name, email, phone, status"}
+                        placeholder={"Search admin account"}
+                        onSearch={(e) => console.log(e)}
+                    />
+
+                    <div className="flex flex-row justify-content-center align-items-center">
+                        <Button
+                            outlined
+                            icon="pi pi-filter"
+                            size="small"
+                        />
+                    </div>
+                </div> */}
+
+            </>
         )
     }
 
+
     /**
-    * Loading Data
-    */
+     *  Loading Data
+     */
     const loadingData = useCallback(async () => {
         setLoading(true);
 
-        const result = await categoryService.index(dispatch,params);
+        const result = await pointService.index(dispatch,params);
         if (result.status === 200) {
-            categoryList.current = result?.data?.data;
+            pointList.current = result?.data?.data;
             total.current = result?.data?.total;
         }
 
@@ -119,39 +186,34 @@ const CategoryTableView = () => {
         loadingData();
     }, [loadingData])
 
-
     return (
         <>
-
             <DataTable
                 dataKey="id"
                 size="normal"
-                value={categoryList.current?.length > 0 && categoryList.current}
+                value={pointList.current?.length > 0 && pointList.current}
                 sortField={params ? params.order : ""}
                 sortOrder={params ? params.sort : 1}
                 onSort={(e) => onSortChange(e)}
                 sortMode={paginateOptions.sortMode}
                 loading={loading}
-                emptyMessage="No category found."
-                globalFilterFields={categoryPayload.columns}
+                emptyMessage="No point found."
+                globalFilterFields={pointPayload.columns}
                 header={<HeaderRender />}
                 footer={footer}
             >
                 {showColumns.current.map((col, index) => {
                     return (
                         <Column
-                            key={`category_col_index_${index}`}
+                            key={`point_col_index_${index}`}
                             style={{ minWidth: "250px" }}
                             field={col.field}
                             header={col.header}
                             sortable
                             body={(value) => {
-                                if (col.field === 'status') {
-                                    return (<Status status={value[col.field]} />)
-                                }
 
                                 if (col.field === 'id') {
-                                    return (<label className="nav-link" onClick={() => navigate(`${paths.category}/${value[col.field]}`)}> {value[col.field]} </label>)
+                                    return (<label className="nav-link" onClick={() => navigate(`${paths.point}/${value[col.field]}`)}> {value[col.field]} </label>)
                                 }
                                 return value[col.field]
 
@@ -180,9 +242,8 @@ const CategoryTableView = () => {
                 rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
                 onPageChange={onPageChange}
             />
-
         </>
     )
 }
 
-export default CategoryTableView
+export default PointTableView

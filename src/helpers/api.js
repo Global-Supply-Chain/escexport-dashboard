@@ -1,6 +1,14 @@
 import http from "../constants/axios"
 import { httpErrorHandler, httpResponseHandler } from "./handler"
 
+const urlParams = (params) => {
+    let paramsArray = [];
+    Object.keys(params).map((value) => {
+        return paramsArray.push(`${value}=${params[value]}`);
+    });
+    return paramsArray.join("&");
+}
+
 /**
  * Http get method request
  * @param {*} path 
@@ -9,7 +17,8 @@ import { httpErrorHandler, httpResponseHandler } from "./handler"
  */
 export const getRequest = async (path, params) => {
     try {
-        const result = await http.get(path);
+        const url = params ? `${path}?${urlParams(params)}` : path;
+        const result = await http.get(url);
         return httpResponseHandler(result);
     } catch (error) {
         return httpErrorHandler(error);

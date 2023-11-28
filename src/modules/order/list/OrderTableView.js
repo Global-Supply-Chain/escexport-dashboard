@@ -1,34 +1,39 @@
+
+
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { categoryPayload } from '../categoryPayload';
-import { categoryService } from '../categoryService';
+import { useDispatch, useSelector } from 'react-redux'
+import { auditColumns, paginateOptions } from '../../../constants/config';
 import { Search } from '../../../shares/Search';
 import { Button } from 'primereact/button';
 import { DataTable } from 'primereact/datatable';
-import { auditColumns, paginateOptions } from '../../../constants/config';
 import { PaginatorRight } from '../../../shares/PaginatorRight';
 import { Column } from 'primereact/column';
-import { datetime } from '../../../helpers/datetime';
 import { Status } from '../../../shares/Status';
-import { useNavigate } from 'react-router-dom';
+import { datetime } from '../../../helpers/datetime';
 import { paths } from '../../../constants/paths';
+import { useNavigate } from 'react-router-dom';
 import { Paginator } from 'primereact/paginator';
+import { orderPayload } from '../orderPayload';
+import { orderService } from '../orderService';
 
-const CategoryTableView = () => {
+export const OrderTableView = () => {
+
+    const [params, setParams] = useState(orderPayload?.paginateParams);
 
     const dispatch = useDispatch();
-    const state = useSelector(state => state.admin);
+    const { orders } = useSelector(state => state.order);
     const navigate = useNavigate();
 
-    const [params, setParams] = useState(categoryPayload.paginateParams);
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
+
+    const orderList = useRef(orders);
+    const total = useRef(0);
+    const columns = useRef(orderPayload?.columns);
+    const showColumns = useRef(columns?.current?.filter(col => col.show === true));
+
     const [first, setFirst] = useState(0);
 
-    const categoryList = useRef(state.category);
-    const total = useRef(0);
-    const columns = useRef(categoryPayload.columns);
-    const showColumns = useRef(columns.current.filter(col => col.show === true));
 
     const onPageChange = (event) => {
         setFirst(event?.first);
@@ -40,12 +45,12 @@ const CategoryTableView = () => {
     };
 
     const onSortChange = (event) => {
-        if (event) {
+        if(event) {
             const orderFormat = event?.sortOrder === 1 ? "DESC" : "ASC";
             setParams({
                 ...params,
                 order: event?.sortField,
-                sort: orderFormat
+                sort : orderFormat
             })
         }
     }
@@ -56,6 +61,24 @@ const CategoryTableView = () => {
             search: event
         })
     }
+
+    /**
+     *  Loading Data
+     */
+    const loadingData = useCallback(async () => {
+        setLoading(true);
+        const result = await orderService.index(dispatch, params);
+        if (result.status === 200) {
+            orderList.current = result?.data?.data;
+            total.current = result?.data?.total;
+        }
+
+        setLoading(false);
+    }, [dispatch, params]);
+
+    useEffect(() => {
+        loadingData();
+    }, [loadingData])
 
     const footer = useCallback(() => {
         return (
@@ -100,25 +123,6 @@ const CategoryTableView = () => {
         )
     }
 
-    /**
-    * Loading Data
-    */
-    const loadingData = useCallback(async () => {
-        setLoading(true);
-
-        const result = await categoryService.index(dispatch,params);
-        if (result.status === 200) {
-            categoryList.current = result?.data?.data;
-            total.current = result?.data?.total;
-        }
-
-        setLoading(false);
-    }, [dispatch,params]);
-
-    useEffect(() => {
-        loadingData();
-    }, [loadingData])
-
 
     return (
         <>
@@ -126,21 +130,21 @@ const CategoryTableView = () => {
             <DataTable
                 dataKey="id"
                 size="normal"
-                value={categoryList.current?.length > 0 && categoryList.current}
+                value={orderList.current.length > 0 && orderList.current}
                 sortField={params ? params.order : ""}
                 sortOrder={params ? params.sort : 1}
                 onSort={(e) => onSortChange(e)}
                 sortMode={paginateOptions.sortMode}
                 loading={loading}
-                emptyMessage="No category found."
-                globalFilterFields={categoryPayload.columns}
+                emptyMessage="No order found."
+                globalFilterFields={orderPayload.columns}
                 header={<HeaderRender />}
                 footer={footer}
             >
-                {showColumns.current.map((col, index) => {
+                {showColumns && showColumns.current?.map((col, index) => {
                     return (
                         <Column
-                            key={`category_col_index_${index}`}
+                            key={`user_col_index_${index}`}
                             style={{ minWidth: "250px" }}
                             field={col.field}
                             header={col.header}
@@ -150,8 +154,20 @@ const CategoryTableView = () => {
                                     return (<Status status={value[col.field]} />)
                                 }
 
+                                if (col.field === 'user_name') {
+                                    return (<p>{value[col.field]?.substring(0,12)}...</p>)
+                                }
+
+                                if (col.field === 'email') {
+                                    return (<p>{value[col.field]?.substring(0,12)}...</p>)
+                                }
+
+                                if (col.field === 'delivery_address') {
+                                    return (<p>{value[col.field].address?.substring(0,12)}...</p>)
+                                }
+
                                 if (col.field === 'id') {
-                                    return (<label className="nav-link" onClick={() => navigate(`${paths.category}/${value[col.field]}`)}> {value[col.field]} </label>)
+                                    return (<label className="nav-link" onClick={() => navigate(`${paths.order}/${value[col.field]}`)}> {value[col.field]} </label>)
                                 }
                                 return value[col.field]
 
@@ -160,7 +176,7 @@ const CategoryTableView = () => {
                     )
                 })}
 
-                {showAuditColumn && auditColumns.map((col, index) => {
+                {showAuditColumn && auditColumns?.map((col, index) => {
                     return (
                         <Column
                             key={`audit_column_key_${index}`}
@@ -168,7 +184,13 @@ const CategoryTableView = () => {
                             field={col.field}
                             header={col.header}
                             sortable
-                            body={(value) => <label> {datetime.long(value[col.field])} </label>}
+                            body={(value) => {
+                                if (col.field === 'created_at' || col.field === 'updated_at' || col.field === 'deleted_at') {
+                                    return <label> {datetime.long(value[col.field])} </label>
+                                } else {
+                                    return <label> {value[col.field] && value[col.field].name} </label>
+                                }
+                            }}
                         />
                     )
                 })}
@@ -180,9 +202,6 @@ const CategoryTableView = () => {
                 rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
                 onPageChange={onPageChange}
             />
-
         </>
     )
 }
-
-export default CategoryTableView

@@ -18,24 +18,17 @@ const MediaList = () => {
   const loadingData = useCallback(async () => {
     setLoading(true);
     const result = await mediaService.index(dispatch, page);
-    let array = [];
+    let newArray = [];
 
     if (result.status === 200) {
-      array = array.concat(result.data.data)
-      console.log(array);
-      setMediaList(array);
+      newArray = mediaList.concat(result.data.data);
+      setMediaList(newArray);
     }
     setLoading(false);
-  }, [page]);
+  }, [dispatch, page]);
 
   const handleSeeMorePage = () => {
     setPage(page + 1);
-  }
-
-  const handlePrevPage = () => {
-    if (page >= 1) {
-      setPage(page - 1);
-    }
   }
 
   useEffect(() => {
@@ -51,7 +44,7 @@ const MediaList = () => {
 
       <div className=' p-5 flex flex-wrap align-items-center justify-content-start gap-3'>
         {
-          mediaList?.length > 0 && mediaList?.map((img, i) => {
+          mediaList?.length > 0 ? mediaList?.map((img, i) => {
             return (
               <div
                 key={img?.id}
@@ -67,42 +60,26 @@ const MediaList = () => {
                   {
                     i === mediaList?.length - 1 && (
                       <div className=' flex align-items-center gap-3 my-3 md:my-0'>
-                        {
-                          page > 1 && (
-                            <Button
-                              outlined
-                              className=' text-black'
-                              onClick={handlePrevPage}
-                            >
-                              Previous
-                            </Button>
-                          )
-                        }
-                        {/* {
-                          mediaList?.next_page_url !== null && (
-                            <Button
-                              outlined
-                              className=' text-black'
-                              onClick={handleSeeMorePage}
-                            >
-                              See More...
-                            </Button>
-                          )
-                        } */}
                         <Button
-                              outlined
-                              className=' text-black'
-                              onClick={handleSeeMorePage}
-                            >
-                              See More...
-                            </Button>
+                          outlined
+                          className=' text-black'
+                          onClick={handleSeeMorePage}
+                        >
+                          See More...
+                        </Button>
                       </div>
                     )
                   }
                 </div>
               </div>
             )
-          })
+          }) : (
+            <>
+              <div className=' text-black'>
+                There is no photo
+              </div>
+            </>
+          )
         }
       </div>
 

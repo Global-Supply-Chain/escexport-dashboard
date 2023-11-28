@@ -10,6 +10,8 @@ import { categoryRoutes } from "./modules/category/categoryRoutes";
 import { itemRoutes } from "./modules/item/itemRoutes";
 import { deliveryRoutes } from "./modules/delivery/deliveryRoutes";
 import { mediaRoutes } from "./modules/media/mediaRoute";
+import { pointRoutes } from "./modules/point/pointRoutes";
+import { orderRoutes } from "./modules/order/orderRoutes";
 
 export const routers = createBrowserRouter([
     {
@@ -23,7 +25,9 @@ export const routers = createBrowserRouter([
             ...categoryRoutes,
             ...itemRoutes,
             ...deliveryRoutes,
-            ...mediaRoutes
+            ...mediaRoutes,
+            ...pointRoutes,
+            ...orderRoutes
         ]
     },
     {

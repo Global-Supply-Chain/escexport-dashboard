@@ -39,9 +39,9 @@ export const itemPayload = {
     paginateParams: {
         page: 1,
         per_page: paginateOptions.rows,
-        columns: "id,name,category_id,code.description,content,price,sell_price,out_of_stock,status",
+        columns: "id,name,category_id,code,description,content,price,sell_price,out_of_stock,status",
         search: "",
-        order: "DESC",
-        sort: "id"
+        order: "",
+        sort: "DESC"
     }
 }

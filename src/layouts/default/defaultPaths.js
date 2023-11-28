@@ -50,7 +50,7 @@ export const items = [
     {
         key: '3',
         label: 'Promotion',
-        icon: 'pi pi-fw pi-users',
+        icon: 'pi pi-fw pi-ticket',
         children: [
             {
                 key: '3-1',
@@ -69,7 +69,7 @@ export const items = [
     {
         key: '4',
         label: 'Category',
-        icon: 'pi pi-fw pi-users',
+        icon: 'pi pi-fw pi-clone',
         children: [
             {
                 key: '4-1',
@@ -88,7 +88,7 @@ export const items = [
     {
         key: '5',
         label: 'Item',
-        icon: 'pi pi-fw pi-user',
+        icon: 'pi pi-fw pi-inbox',
         children: [
             {
                 key: '5-1',
@@ -141,5 +141,37 @@ export const items = [
             //     url: paths.itemCreate
             // }
         ]
-    }
+    },
+    {
+        key: '8',
+        label: 'Point',
+        icon: 'pi pi-fw pi-box',
+        children: [
+            {
+                key: '8-1',
+                label: 'List',
+                icon: 'pi pi-fw pi-list',
+                url: paths.point
+            },
+            {
+                key: '8-2',
+                label: 'Create',
+                icon: 'pi pi-fw pi-plus',
+                url: paths.pointCreate
+            }
+        ]
+    },
+    {
+        key: '9',
+        label: 'Order',
+        icon: 'pi pi-fw pi-shopping-cart',
+        children: [
+            {
+                key: '9-1',
+                label: 'List',
+                icon: 'pi pi-fw pi-list',
+                url: paths.order
+            },
+        ]
+    },
 ];
