@@ -1,4 +1,4 @@
-export const baseURL = "http://localhost:8000/dashboard";
+export const baseURL = "http://api.gscexport.com/dashboard";
 
 export const endpoints = {
     login: "auth/login",
