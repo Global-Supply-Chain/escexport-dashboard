@@ -20,7 +20,7 @@ export const pointPayload = {
         per_page: paginateOptions.rows,
         columns: "id,label,point",
         search: "",
-        order: "DESC",
-        sort: "id"
+        order: "",
+        sort: "DESC"
     }
 }
