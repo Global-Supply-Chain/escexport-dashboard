@@ -27,7 +27,7 @@ export const categoryPayload = {
         per_page: paginateOptions.rows,
         columns: "id,title,level.category_id,description,status",
         search: "",
-        order: "DESC",
-        sort: "id"
+        order: "",
+        sort: "DESC"
     }
 }
