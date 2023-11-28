@@ -5,6 +5,7 @@ export const paths = {
 
     promotion: "/promotion",
     promotionCreate: "/promotion/new",
+    promotionDetail: "/promotion/:id",
 
     user: "/user",
     userCreate : "/user/new",
@@ -23,5 +24,9 @@ export const paths = {
     pointDetail : "/point/:id",
 
     delivery: "delivery",
-    media: "/media"
+    media: "/media",
+
+    order: "/order",
+    orderCreate: "/order/new",
+    orderDetail: "order/:id"
 }

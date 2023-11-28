@@ -1,20 +1,15 @@
 import { Card } from "primereact/card";
-import { BreadCrumb } from 'primereact/breadcrumb';
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
+import { BreadCrumb } from "../../../shares/BreadCrumb";
 
 export const CreatePromotion = () => {
 
-    const breadcrumbs = [
-        { label: "Dashboard" , url: "/", current: false },
-        { label: "Promotion", url: "/promotion", current: false },
-        { label: "Create", url: "/promotion/new", current: true }
-    ];
 
     return(
         <div className="grid">
             <div className="col-12">
-                <BreadCrumb model={breadcrumbs} />
+                <BreadCrumb />
             </div>
 
 

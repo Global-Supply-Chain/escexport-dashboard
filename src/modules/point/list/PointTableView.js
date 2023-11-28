@@ -14,19 +14,25 @@ import { Calendar } from 'primereact/calendar';
 import { pointPayload } from '../pointPayload';
 import { pointService } from '../pointSerivce';
 import { Dropdown } from 'primereact/dropdown';
+import { Paginator } from 'primereact/paginator';
+import { Button } from 'primereact/button';
 
 const PointTableView = () => {
 
     const dispatch = useDispatch();
-    const state = useSelector(state => state.point);
+    const { points } = useSelector(state => state.point);
     const navigate = useNavigate();
 
+    const [params, setParams] = useState(pointPayload.paginateParams);
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
 
-    const pointList = useRef(state.user);
+    const pointList = useRef(points);
+    const total = useRef(0);
     const columns = useRef(pointPayload.columns);
     const showColumns = useRef(columns.current.filter(col => col.show === true));
+
+    const [first, setFirst] = useState(0);
 
     const dropdown = [
         {
@@ -41,7 +47,54 @@ const PointTableView = () => {
             label: "Item",
             value: "T0001"
         }
-    ]
+    ];
+
+    const onPageChange = (event) => {
+        setFirst(event?.first);
+        setParams({
+            ...params,
+            page: event?.page + 1,
+            per_page: event?.rows,
+        })
+    };
+
+    const onSortChange = (event) => {
+        if (event) {
+            const orderFormat = event?.sortOrder === 1 ? "DESC" : "ASC";
+            setParams({
+                ...params,
+                order: event?.sortField,
+                sort: orderFormat
+            })
+        }
+    }
+
+    const onSearchChange = (event) => {
+        setParams({
+            ...params,
+            search: event
+        })
+    }
+
+    const footer = useCallback(() => {
+        return (
+            <div className=' flex items-center justify-content-between'>
+                <div>Total - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
+                <div className=' flex align-items-center gap-3'>
+                    <Button
+                        outlined
+                        icon="pi pi-refresh"
+                        size="small"
+                        onClick={() => loadingData()}
+                    />
+                    <PaginatorRight
+                        show={showAuditColumn}
+                        onHandler={(e) => setShowAuditColumn(e)}
+                    />
+                </div>
+            </div>
+        )
+    }, [total, showAuditColumn])
 
     /**
     * Table Header Render
@@ -54,9 +107,9 @@ const PointTableView = () => {
 
                     <div className=' col-8 md:col-4 lg:col-3'>
                         <Search
-                            tooltipLabel={"search by admin's id, name, email, phone, status"}
+                            tooltipLabel={"search by admin's id, name, email, phone"}
                             placeholder={"Search admin account"}
-                            onSearch={(e) => console.log(e)}
+                            onSearch={(e) => onSearchChange(e)}
                         />
                     </div>
 
@@ -120,73 +173,76 @@ const PointTableView = () => {
     const loadingData = useCallback(async () => {
         setLoading(true);
 
-        const result = await pointService.index(dispatch);
+        const result = await pointService.index(dispatch,params);
         if (result.status === 200) {
-            pointList.current = result.data;
+            pointList.current = result?.data?.data;
+            total.current = result?.data?.total;
         }
 
         setLoading(false);
-    }, [dispatch]);
+    }, [dispatch,params]);
 
     useEffect(() => {
         loadingData();
     }, [loadingData])
 
     return (
-        <DataTable
-            dataKey="id"
-            size="normal"
-            value={pointList.current}
-            paginator
-            rows={paginateOptions.rows}
-            rowsPerPageOptions={paginateOptions.rowsPerPageOptions}
-            paginatorTemplate={paginateOptions.paginatorTemplate}
-            paginatorLeft={paginateOptions.paginatorLeft}
-            paginatorRight={
-                <PaginatorRight
-                    show={showAuditColumn}
-                    onHandler={(e) => setShowAuditColumn(e)}
-                />
-            }
-            sortMode={paginateOptions.sortMode}
-            loading={loading}
-            emptyMessage="No point found."
-            globalFilterFields={pointPayload.columns}
-            header={<HeaderRender />}
-        >
-            {showColumns.current.map((col, index) => {
-                return (
-                    <Column
-                        key={`point_col_index_${index}`}
-                        style={{ minWidth: "250px" }}
-                        field={col.field}
-                        header={col.header}
-                        sortable
-                        body={(value) => {
+        <>
+            <DataTable
+                dataKey="id"
+                size="normal"
+                value={pointList.current?.length > 0 && pointList.current}
+                sortField={params ? params.order : ""}
+                sortOrder={params ? params.sort : 1}
+                onSort={(e) => onSortChange(e)}
+                sortMode={paginateOptions.sortMode}
+                loading={loading}
+                emptyMessage="No point found."
+                globalFilterFields={pointPayload.columns}
+                header={<HeaderRender />}
+                footer={footer}
+            >
+                {showColumns.current.map((col, index) => {
+                    return (
+                        <Column
+                            key={`point_col_index_${index}`}
+                            style={{ minWidth: "250px" }}
+                            field={col.field}
+                            header={col.header}
+                            sortable
+                            body={(value) => {
 
-                            if (col.field === 'id') {
-                                return (<label className="nav-link" onClick={() => navigate(`${paths.point}/${value[col.field]}`)}> {value[col.field]} </label>)
-                            }
-                            return value[col.field]
+                                if (col.field === 'id') {
+                                    return (<label className="nav-link" onClick={() => navigate(`${paths.point}/${value[col.field]}`)}> {value[col.field]} </label>)
+                                }
+                                return value[col.field]
 
-                        }}
-                    />
-                )
-            })}
+                            }}
+                        />
+                    )
+                })}
 
-            {showAuditColumn && auditColumns.map((col, index) => {
-                return (
-                    <Column
-                        key={`audit_column_key_${index}`}
-                        style={{ minWidth: "250px" }}
-                        field={col.field}
-                        header={col.header}
-                        sortable
-                        body={(value) => <label> {datetime.long(value[col.field])} </label>}
-                    />
-                )
-            })}
-        </DataTable>
+                {showAuditColumn && auditColumns.map((col, index) => {
+                    return (
+                        <Column
+                            key={`audit_column_key_${index}`}
+                            style={{ minWidth: "250px" }}
+                            field={col.field}
+                            header={col.header}
+                            sortable
+                            body={(value) => <label> {datetime.long(value[col.field])} </label>}
+                        />
+                    )
+                })}
+            </DataTable>
+            <Paginator
+                first={first}
+                rows={params.per_page ? params.per_page : paginateOptions.rows}
+                totalRecords={total?.current}
+                rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
+                onPageChange={onPageChange}
+            />
+        </>
     )
 }
 

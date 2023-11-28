@@ -16,7 +16,8 @@ const promotionSlice = createSlice({
             state = action.payload
             return state;
         },
-        update: state => {
+        update: (state, action) => {
+            state.promotion = action.payload;
             return state;
         },
         show: state => {

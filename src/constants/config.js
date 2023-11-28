@@ -40,7 +40,8 @@ export const statusOptions = [
     { status: "DISABLE", color: "chip-default" },
     { status: "DELETED", color: "chip-info" },
     { status: "PENDING", color: "chip-warn" },
-    { status: "BLOCK", color: "chip-danger" }
+    { status: "BLOCK", color: "chip-danger" },
+    { status: "COMPLETE", color: "chip-success" }
 ];
 
 export const tooltipOptions = {
