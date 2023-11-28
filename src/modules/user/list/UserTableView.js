@@ -36,7 +36,6 @@ export const UserTableView = () => {
 
 
     const onPageChange = (event) => {
-        console.log(event);
         setFirst(event?.first);
         setParams({
             ...params,
@@ -46,11 +45,14 @@ export const UserTableView = () => {
     };
 
     const onSortChange = (event) => {
-        console.log(event);
-        setParams({
-            ...params,
-            order: event?.sortField
-        })
+        if(event) {
+            const orderFormat = event?.sortOrder === 1 ? "DESC" : "ASC";
+            setParams({
+                ...params,
+                order: event?.sortField,
+                sort : orderFormat
+            })
+        }
     }
 
     const onSearchChange = (event) => {
@@ -129,14 +131,9 @@ export const UserTableView = () => {
                 dataKey="id"
                 size="normal"
                 value={userList.current.length > 0 && userList.current}
+                sortField={params ? params.order : ""}
+                sortOrder={params ? params.sort : 1}
                 onSort={(e) => onSortChange(e)}
-                // paginatorLeft={paginateOptions.paginatorLeft}
-                // paginatorRight={
-                //     <PaginatorRight
-                //         show={showAuditColumn}
-                //         onHandler={(e) => setShowAuditColumn(e)}
-                //     />
-                // }
                 sortMode={paginateOptions.sortMode}
                 loading={loading}
                 emptyMessage="No user accounts found."
