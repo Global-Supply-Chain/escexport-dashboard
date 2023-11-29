@@ -2,6 +2,7 @@ export const paths = {
 
     admin: "/admin",
     adminCreate: "/admin/new",
+    adminLogout: "/auth/login",
 
     promotion: "/promotion",
     promotionCreate: "/promotion/new",
@@ -11,6 +12,7 @@ export const paths = {
     userCreate : "/user/new",
     userDetail : "user/:id",
 
+    mainCategory: "/main-category",
     category: "/category",
     categoryCreate: "/category/new",
     categoryDetail : "/category/:id",

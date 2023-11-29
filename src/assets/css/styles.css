@@ -41,7 +41,7 @@ body{
 .app-container {
     width: 100%;
     color: #fff;
-    margin-top: 50px;
+    margin-top: 64px;
 }
 
 .app-content {
@@ -208,4 +208,27 @@ body{
 .chip-warn {
     background-color: #eec137;
     color: #fff;
+}
+
+.profile {
+    padding: 0px;
+    margin: 0px;
+    padding-top:5px;
+    padding-bottom: 5px;
+}
+
+.profile > img {
+    border-radius: 50%;
+    border: 2px solid #fff;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.profile > p {
+    padding: 0px;
+    margin: 0px;
+}
+
+.profile > p:last-child {
+    color: #f0f0f0;
 }
