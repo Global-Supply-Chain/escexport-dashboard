@@ -24,6 +24,8 @@ export const paths = {
     pointDetail : "/point/:id",
 
     delivery: "delivery",
+    deliveryCreate: "delivery/new",
+    deliveryDetail: "delivery/:id",
     media: "/media",
 
     order: "/order",

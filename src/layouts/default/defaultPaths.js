@@ -115,12 +115,12 @@ export const items = [
                 icon: 'pi pi-fw pi-list',
                 url: paths.delivery
             },
-            // {
-            //     key: '6-2',
-            //     label: 'Create',
-            //     icon: 'pi pi-fw pi-plus',
-            //     url: paths.itemCreate
-            // }
+            {
+                key: '6-2',
+                label: 'Create',
+                icon: 'pi pi-fw pi-plus',
+                url: paths.deliveryCreate
+            }
         ]
     },
     {

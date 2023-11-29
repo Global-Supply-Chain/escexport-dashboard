@@ -1,6 +1,19 @@
+import { BreadCrumb } from "../../../shares/BreadCrumb"
+import { UserDeliveryAddressTable } from "../list/UserDeliveryAddressTable"
+
 export const DeliveryList = () => {
 
-    <div className="">
-        
-    </div>
+    return (
+        <div className="grid">
+
+            <div className=" col-12">
+                <BreadCrumb />
+            </div>
+
+            <div className=" col-12">
+                <UserDeliveryAddressTable />
+            </div>
+
+        </div>
+    )
 }
