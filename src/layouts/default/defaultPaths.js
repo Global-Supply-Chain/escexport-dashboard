@@ -73,9 +73,9 @@ export const items = [
         children: [
             {
                 key: '4-1',
-                label: 'List',
+                label: 'Main Category',
                 icon: 'pi pi-fw pi-list',
-                url: paths.category
+                url: paths.mainCategory
             },
             {
                 key: '4-2',

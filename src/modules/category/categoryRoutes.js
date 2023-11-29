@@ -1,19 +1,19 @@
 import { paths } from "../../constants/paths";
 import CategoryCreate from "./entry/CategoryCreate";
 import CategoryDetail from "./view/CategoryDetail";
-import CategoryList from "./view/CategoryList";
+import { MainCategoryList } from "./view/MainCategoryList";
 
 
 export const categoryRoutes = [
     {
         id: "category",
-        path: paths.category,
-        element : <CategoryList />,
+        path: paths.mainCategory,
+        element : <MainCategoryList />,
         loader: () => {
             return {
                 breadcrumbs: [
                     { label: "Dashboard", url: "/" },
-                    { label: "List", url: paths.category },
+                    { label: "Main Category", url: paths.mainCategory },
                 ],
                 role: ['ADMINISTRATOR']
             }
@@ -27,7 +27,7 @@ export const categoryRoutes = [
             return {
                 breadcrumbs: [
                     { label: "Dashboard", url: "/" },
-                    { label: "List", url: paths.category },
+                    { label: "List", url: paths.mainCategory },
                     { label: "Create", url: paths.categoryCreate }
                 ]
             }
