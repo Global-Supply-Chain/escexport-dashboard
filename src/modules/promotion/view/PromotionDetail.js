@@ -7,10 +7,6 @@ const PromotionDetail = () => {
     <div className=' grid'>
 
         <div className=' col-12'>
-            <BreadCrumb />
-        </div>
-
-        <div className=' col-12'>
             <UpdatePromotion />
         </div>
 
