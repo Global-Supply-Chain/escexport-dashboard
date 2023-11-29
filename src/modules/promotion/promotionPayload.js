@@ -2,6 +2,17 @@ import { paginateOptions } from "../../constants/config";
 
 
 export const promotionPayload = {
+    create : {
+        title: "",
+        image: 0,
+        url: ""
+    },
+    update : {
+        title: "",
+        image: 0,
+        url: "",
+        status : ""
+    },
     columns: [
         { field: "id", header: "ID", sortable: true, show: true },
         { field: "title", header: "Title", sortable: true, show: true },
