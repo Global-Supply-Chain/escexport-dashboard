@@ -4,8 +4,8 @@ const paginatorLeft = <Button type="button" icon="pi pi-refresh" text />;
 // const paginatorRight = <Button type="button" icon="pi pi-download" text />;
 
 export const paginateOptions = {
-    rows: 50,
-    rowsPerPageOptions: [50,100,150,500,1000],
+    rows: 10,
+    rowsPerPageOptions: [10,50,100,150,500,1000],
     total: 0,
     paginatorTemplate: "RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink",
     currentPageReportTemplate: "{first} to {last} of {totalRecords}",

@@ -37,7 +37,7 @@ export const httpErrorHandler = (error) =>  {
 
     const {status, data } = error.response;
 
-    if(status === 400 || status === 500) {
+    if(status === 400 || status === 404 || status === 500) {
         return { 
             status: status, 
             message : data.message,
@@ -56,8 +56,11 @@ export const httpErrorHandler = (error) =>  {
 
     if(status === 401) {
         removeData(keys.API_TOKEN);
-        //window.location.reload('/auth/login');
-        return;
+        window.location.reload('/auth/login');
+        return {
+            status: status,
+            error: data.message
+        }
     }
 }
 
@@ -84,7 +87,7 @@ export const httpServiceHandler = async (dispatch, result) => {
 
     await dispatch(updateError(null));
 
-    if(result.status === 400 || result.status === 0 || result.status === 500) {
+    if(result.status === 400 || result.status === 0 || result.status === 500 || result.status === 404) {
         await dispatch(updateNotification(result.notification));
     }
 

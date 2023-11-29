@@ -2,15 +2,23 @@ import { endpoints } from "../../constants/endpoints";
 import { getRequest, postRequest, putRequest } from "../../helpers/api";
 import { httpServiceHandler } from "../../helpers/handler";
 import { updateNotification } from "../../shares/shareSlice";
-import { index } from "./categorySlice";
+import { mainIndex } from "./categorySlice";
 
 
 export const categoryService = {
+    mainIndex : async(dispatch, params) => {
+        const response = await getRequest(endpoints.category, params);
+        await httpServiceHandler(dispatch, response);
+        if(response.status === 200) {
+            dispatch(mainIndex(response.data.data ? response.data.data : response.data));
+        }
+        return response;  
+    },
     index : async (dispatch, params) => {
         const response = await getRequest(endpoints.category, params);
         await httpServiceHandler(dispatch, response);
         if(response.status === 200) {
-            dispatch(index(response.data));
+            dispatch(mainIndex(response.data.data));
         }
         return response;
     },
