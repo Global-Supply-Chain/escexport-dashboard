@@ -84,6 +84,7 @@ const PointUpdate = () => {
                                     setVisible={setVisible}
                                     url={paths.point}
                                     id={params?.id}
+                                    redirect={paths.point}
                                 />
 
                                 <Button

@@ -6,10 +6,14 @@ export const endpoints = {
     user: "user",
     promotion: "promotion",
     category: "category",
+    generalStatus: "general",
     item: "item",
     image: `${baseURL}/media`,
     status: "status",
     point: "point",
     delivery: "delivery-address",
-    order: "order"
+    order: "order",
+    faq: "faq",
+    region: "region",
+    shop: "shop"
 }

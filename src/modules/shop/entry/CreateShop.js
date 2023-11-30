@@ -4,8 +4,6 @@ import { Card } from 'primereact/card'
 import { Dropdown } from 'primereact/dropdown'
 import { ValidationMessage } from '../../../shares/ValidationMessage'
 import { payloadHandler } from '../../../helpers/handler'
-import { deliveryPayload } from '../deliveryPayload'
-import { userService } from '../../user/userService'
 import { useDispatch } from 'react-redux'
 import { InputText } from 'primereact/inputtext'
 import { tooltipOptions } from '../../../constants/config';
@@ -13,46 +11,50 @@ import { Checkbox } from 'primereact/checkbox'
 import { Button } from 'primereact/button'
 import { paths } from '../../../constants/paths'
 import { useNavigate } from 'react-router-dom'
-import { deliveryService } from '../deliveryService'
+import { shopService } from '../shopService'
+import { shopPayload } from '../shopPayload'
+import { regionService } from '../../region/regionService'
 
-export const CreateDelivery = () => {
+export const CreateShop = () => {
 
     const [loading, setLoading] = useState(false);
-    const [payload, setPayload] = useState(deliveryPayload.create);
-    const [userList, setUserList] = useState([]);
+    const [payload, setPayload] = useState(shopPayload.create);
+    const [regionList, setRegionList] = useState([]);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     /**
-    * Loading User Data
+    * Loading region Data
     */
-    const loadingUserData = useCallback(async () => {
+    const loadingRegionData = useCallback(async () => {
         setLoading(true);
 
-        const result = await userService.index(dispatch);
+        const result = await regionService.index(dispatch);
         if (result.status === 200) {
-            const formatData = result.data?.map((user) => {
+            const formatData = result.data?.map((region) => {
                 return {
-                    label: user?.name,
-                    value: user?.id
+                    label: region?.name,
+                    value: region?.id
                 }
             })
-            setUserList(formatData);
+            setRegionList(formatData);
         }
 
         setLoading(false);
     }, [dispatch]);
 
-    const submitDeliveryCreate = async () => {
+    const submitShopCreate = async () => {
         setLoading(true);
-        await deliveryService.store(payload,dispatch);
+        await shopService.store(payload,dispatch);
         setLoading(false);
     }
 
     useEffect(() => {
-        loadingUserData()
-    }, [loadingUserData])
+        loadingRegionData()
+    }, [loadingRegionData])
+
+    console.log(regionList);
 
     return (
         <div className=' grid'>
@@ -64,27 +66,67 @@ export const CreateDelivery = () => {
             <div className=' col-12'>
 
                 <Card
-                    title={'Create Delivery'}
+                    title={'Create Shop'}
                 >
 
                     <div className=' grid'>
 
                         <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                            <label htmlFor="user" className='input-label'> User (required*) </label>
+                            <label htmlFor="region_id" className='input-label'> Region (required*) </label>
                             <div className="p-inputgroup mt-2">
                                 <Dropdown
-                                    id='user'
-                                    value={payload.user_id}
-                                    onChange={(e) => payloadHandler(payload, e.value, 'user_id', (updateValue) => {
+                                    id='region_id'
+                                    value={payload.region_id}
+                                    onChange={(e) => payloadHandler(payload, e.value, 'region_id', (updateValue) => {
                                         setPayload(updateValue);
                                     })}
-                                    options={userList}
-                                    placeholder="Select a user"
+                                    options={regionList}
+                                    placeholder="Select a region"
                                     disabled={loading}
                                     className="p-inputtext-sm"
                                 />
                             </div>
-                            <ValidationMessage field="user_id" />
+                            <ValidationMessage field="region_id" />
+                        </div>
+
+                        <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
+                            <label htmlFor="name" className='input-label'>Name</label>
+                            <div className="p-inputgroup mt-2">
+                                <InputText
+                                    id="name"
+                                    className="p-inputtext-sm"
+                                    placeholder="Enter shop name"
+                                    value={payload.name}
+                                    aria-describedby="name-help"
+                                    tooltip="Shop name"
+                                    tooltipOptions={{ ...tooltipOptions }}
+                                    disabled={loading}
+                                    onChange={(e) => payloadHandler(payload, e.target.value, 'name', (updateValue) => {
+                                        setPayload(updateValue);
+                                    })}
+                                />
+                            </div>
+                            <ValidationMessage field="name" />
+                        </div>
+
+                        <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
+                            <label htmlFor="phone" className='input-label'>Phone</label>
+                            <div className="p-inputgroup mt-2">
+                                <InputText
+                                    id="phone"
+                                    className="p-inputtext-sm"
+                                    placeholder="Enter shop phone"
+                                    value={payload.phone}
+                                    aria-describedby="phone-help"
+                                    tooltip="Shop Phone"
+                                    tooltipOptions={{ ...tooltipOptions }}
+                                    disabled={loading}
+                                    onChange={(e) => payloadHandler(payload, e.target.value, 'phone', (updateValue) => {
+                                        setPayload(updateValue);
+                                    })}
+                                />
+                            </div>
+                            <ValidationMessage field="phone" />
                         </div>
 
                         <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
@@ -93,10 +135,10 @@ export const CreateDelivery = () => {
                                 <InputText
                                     id="address"
                                     className="p-inputtext-sm"
-                                    placeholder="Enter delivery address"
+                                    placeholder="Enter shop address"
                                     value={payload.address}
                                     aria-describedby="address-help"
-                                    tooltip="Delivery Address"
+                                    tooltip="Shop address"
                                     tooltipOptions={{ ...tooltipOptions }}
                                     disabled={loading}
                                     onChange={(e) => payloadHandler(payload, e.target.value, 'address', (updateValue) => {
@@ -107,63 +149,23 @@ export const CreateDelivery = () => {
                             <ValidationMessage field="address" />
                         </div>
 
-                        <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                            <label htmlFor="phone" className='input-label'>Contact Phone</label>
-                            <div className="p-inputgroup mt-2">
-                                <InputText
-                                    id="phone"
-                                    className="p-inputtext-sm"
-                                    placeholder="Enter contact phone"
-                                    value={payload.contact_phone}
-                                    aria-describedby="address-help"
-                                    tooltip="Contact Phone"
-                                    tooltipOptions={{ ...tooltipOptions }}
-                                    disabled={loading}
-                                    onChange={(e) => payloadHandler(payload, e.target.value, 'contact_phone', (updateValue) => {
-                                        setPayload(updateValue);
-                                    })}
-                                />
-                            </div>
-                            <ValidationMessage field="contact_phone" />
-                        </div>
-
-                        <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                            <label htmlFor="person" className='input-label'>Contact Person</label>
-                            <div className="p-inputgroup mt-2">
-                                <InputText
-                                    id="person"
-                                    className="p-inputtext-sm"
-                                    placeholder="Enter contact person"
-                                    value={payload.contact_person}
-                                    aria-describedby="address-help"
-                                    tooltip="Contact Person"
-                                    tooltipOptions={{ ...tooltipOptions }}
-                                    disabled={loading}
-                                    onChange={(e) => payloadHandler(payload, e.target.value, 'contact_person', (updateValue) => {
-                                        setPayload(updateValue);
-                                    })}
-                                />
-                            </div>
-                            <ValidationMessage field="contact_person" />
-                        </div>
-
                         <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                             <div className="flex flex-column gap-2">
-                                <label htmlFor="is_default" className=' text-black'>Default</label>
-                                <Checkbox
+                                <label htmlFor="location" className=' text-black'>Location</label>
+                                <InputText
                                     className="p-inputtext-sm text-black"
-                                    id="is_default"
-                                    aria-describedby="is_default-help"
-                                    tooltip='Item sell price'
+                                    id="location"
+                                    aria-describedby="location-help"
+                                    tooltip='Shop location'
                                     tooltipOptions={{ ...tooltipOptions }}
-                                    placeholder='Enter item sell price'
+                                    placeholder='Enter shop location'
                                     disabled={loading}
-                                    checked={payload.is_default}
-                                    onChange={(e) => payloadHandler(payload, e.checked, 'is_default', (updateValue) => {
+                                    value={payload.location}
+                                    onChange={(e) => payloadHandler(payload, e.target.value, 'location', (updateValue) => {
                                         setPayload(updateValue);
                                     })}
                                 />
-                                <ValidationMessage field={"is_default"} />
+                                <ValidationMessage field={"location"} />
                             </div>
                         </div>
 
@@ -176,7 +178,7 @@ export const CreateDelivery = () => {
                                     outlined
                                     size='small'
                                     disabled={loading}
-                                    onClick={() => navigate(paths.delivery)}
+                                    onClick={() => navigate(paths.shop)}
                                 />
 
                                 <Button
@@ -185,7 +187,7 @@ export const CreateDelivery = () => {
                                     severity="danger"
                                     size='small'
                                     disabled={loading}
-                                    onClick={() => submitDeliveryCreate()}
+                                    onClick={() => submitShopCreate()}
                                 />
                             </div>
                         </div>

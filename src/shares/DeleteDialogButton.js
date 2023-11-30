@@ -9,7 +9,8 @@ const DeleteDialogButton = ({
     setVisible,
     icon = "pi pi-exclamation-triangle",
     id,
-    url
+    url,
+    redirect
 }) => {
 
     const toast = useRef(null);
@@ -20,7 +21,7 @@ const DeleteDialogButton = ({
         const response = await delRequest(`${url}/${id}`);
 
         if(response?.status === 200){
-            navigate(url);
+            navigate(redirect);
             toast.current.show({ severity: 'success', summary: 'Confirmed', detail: response.message, life: 3000 });
         }
     }
