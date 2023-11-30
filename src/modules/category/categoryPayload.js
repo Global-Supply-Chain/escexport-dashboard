@@ -8,6 +8,12 @@ export const categoryPayload = {
     description: "",
     icon: "",
   },
+  createMain: {
+    title: "",
+    level: "",
+    description: "",
+    icon: "",
+  },
   update: {
     title: "",
     level: "",
@@ -44,6 +50,6 @@ export const categoryPayload = {
     search: "",
     order: "id",
     sort: "DESC",
-    filter: "level-0,status-ACTIVE",
+    filter: "level-0",
   },
 };

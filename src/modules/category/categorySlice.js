@@ -5,6 +5,7 @@ const categorySlice = createSlice({
     name: 'category',
     initialState: {
         mainCategories: [],
+        mainCategory: null,
         categories: [],
         mainPaginateParams: categoryPayload.mainCategoryPaginateParams
     },
@@ -13,11 +14,19 @@ const categorySlice = createSlice({
             state.mainCategories = action.payload;
             return state;
         },
-        index: (state, action) => {
-            state.categories = action.payload;
+
+        mainUpdate: (state, action) => {
+            state.mainCategory = action.payload;
             return state;
         },
-        update: state => {
+
+        mainShow: (state, action) => {
+            state.mainCategory = action.payload;
+            return state;
+        },
+
+        index: (state, action) => {
+            state.categories = action.payload;
             return state;
         },
         show: state => {
@@ -38,11 +47,12 @@ const categorySlice = createSlice({
 export const { 
     index, 
     mainIndex, 
+    mainUpdate,
     update, 
     show, 
     destroy, 
     store, 
-    setPaginate 
+    setPaginate
 } = categorySlice.actions;
 
 export default categorySlice.reducer;

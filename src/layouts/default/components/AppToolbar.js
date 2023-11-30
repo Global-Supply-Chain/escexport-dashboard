@@ -9,7 +9,7 @@ import { endpoints } from "../../../constants/endpoints";
 import { removeAllData } from "../../../helpers/localstorage";
 import { useNavigate } from "react-router-dom";
 import { paths } from "../../../constants/paths";
-
+import defaultImage from "../../../assets/images/defaultImage.png";
 const StartContent = () => {
     const dispatch = useDispatch();
 
@@ -62,7 +62,7 @@ const EndContent = () => {
                         width="50px"
                         height="50px"
                         className="profile"
-                        src={`${endpoints.image}/${adminProfile.profile}`} 
+                        src={adminProfile.profile ? `${endpoints.image}/${adminProfile.profile}` : defaultImage} 
                         title={adminProfile.name}
                         alt={adminProfile.name}
                     />
