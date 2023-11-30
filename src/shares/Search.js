@@ -1,9 +1,10 @@
 import { InputText } from "primereact/inputtext"
 import { useState } from "react";
 import { tooltipOptions } from "../constants/config";
+import { getData, setData } from "../helpers/localstorage";
 
 export const Search = ({ onSearch, placeholder, tooltipLabel }) => {
-    const [keyword, setKeyword] = useState(localStorage.getItem('search') ? localStorage.getItem('search') : "");
+    const [keyword, setKeyword] = useState(getData('search'));
 
     return (
         <div>
@@ -12,14 +13,14 @@ export const Search = ({ onSearch, placeholder, tooltipLabel }) => {
                 <InputText
                     className="p-inputtext-sm"
                     placeholder={placeholder}
-                    value={keyword}
+                    value={keyword ? keyword : ''}
                     tooltip={tooltipLabel}
                     tooltipOptions={tooltipOptions}
                     onChange={(e) => setKeyword(e.target.value)}
                     onKeyUp={(e) => {
                         if (e.key === 'Enter') {
                             onSearch(e.target.value);
-                            localStorage.setItem('search', e.target.value);
+                            setData('search', e.target.value);
                         }
                     }}
                 />

@@ -290,27 +290,12 @@ const ItemCreate = () => {
                                 <label htmlFor="content" className=' text-black'>Content</label>
                                 <Editor
                                     id='editor'
-                                    // value={text}
                                     headerTemplate={header}
                                     onTextChange={(e) => payloadHandler(payload, e.htmlValue, 'content', (updateValue) => {
                                         setPayload(updateValue);
                                     })}
                                     style={{ height: '320px' }}
                                 />
-                                {/* <InputTextarea
-                                    className="p-inputtext-sm text-black"
-                                    id="content"
-                                    aria-describedby="content-help"
-                                    tooltip='Item content'
-                                    tooltipOptions={{ ...tooltipOptions }}
-                                    placeholder='Enter item content'
-                                    disabled={loading}
-                                    rows={5}
-                                    cols={30}
-                                    onChange={(e) => payloadHandler(payload, e.target.value, 'content', (updateValue) => {
-                                        setPayload(updateValue);
-                                    })}
-                                /> */}
                                 <ValidationMessage field={"content"} />
                             </div>
                         </div>

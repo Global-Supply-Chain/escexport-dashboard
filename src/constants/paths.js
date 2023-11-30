@@ -32,5 +32,13 @@ export const paths = {
 
     order: "/order",
     orderCreate: "/order/new",
-    orderDetail: "order/:id"
+    orderDetail: "order/:id",
+
+    faq: "/faq",
+    faqCreate: "/faq/new",
+    faqDetail: "/faq/:id",
+
+    region: "/region",
+    regionCreate: "/region/new",
+    regionDetail: "/region/:id"
 }
