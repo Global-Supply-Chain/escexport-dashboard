@@ -1,39 +1,32 @@
+import { DataTable } from "primereact/datatable"
+import { Column } from "primereact/column";
+import { Search } from "../../../shares/Search";
+import { Button } from "primereact/button";
+import { auditColumns, paginateOptions } from "../../../constants/config";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { PaginatorRight } from "../../../shares/PaginatorRight";
+import { useDispatch, useSelector } from "react-redux";
+import { Paginator } from "primereact/paginator";
+import { Status } from "../../../shares/Status";
+import { useNavigate } from "react-router-dom";
+import { paths } from "../../../constants/paths";
+import { datetime } from "../../../helpers/datetime";
+import { shopPayload } from "../shopPayload";
+import { shopService } from "../shopService";
 
-
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { userPayload } from '../userPayload';
-import { userService } from '../userService';
-import { auditColumns, paginateOptions } from '../../../constants/config';
-import { Search } from '../../../shares/Search';
-import { Button } from 'primereact/button';
-import { DataTable } from 'primereact/datatable';
-import { PaginatorRight } from '../../../shares/PaginatorRight';
-import { Column } from 'primereact/column';
-import { Status } from '../../../shares/Status';
-import { datetime } from '../../../helpers/datetime';
-import { paths } from '../../../constants/paths';
-import { useNavigate } from 'react-router-dom';
-import { Paginator } from 'primereact/paginator';
-
-export const UserTableView = () => {
-
-    const [params, setParams] = useState(userPayload?.paginateParams);
+export const ShopViewTable = () => {
 
     const dispatch = useDispatch();
-    const { users } = useSelector(state => state.user);
     const navigate = useNavigate();
-
+    const {shops} = useSelector(state => state.shop)
+    const [params, setParams] = useState(shopPayload.paginateParams)
+    const [first, setFirst] = useState(0);
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
-
-    const userList = useRef(users);
+    const columns = useRef(shopPayload.columns);
+    const showColumns = useRef(columns.current.filter(col => col.show === true));
+    const shopList = useRef(shops);
     const total = useRef(0);
-    const columns = useRef(userPayload?.columns);
-    const showColumns = useRef(columns?.current?.filter(col => col.show === true));
-
-    const [first, setFirst] = useState(0);
-
 
     const onPageChange = (event) => {
         setFirst(event?.first);
@@ -45,12 +38,12 @@ export const UserTableView = () => {
     };
 
     const onSortChange = (event) => {
-        if(event) {
+        if (event) {
             const orderFormat = event?.sortOrder === 1 ? "DESC" : "ASC";
             setParams({
                 ...params,
                 order: event?.sortField,
-                sort : orderFormat
+                sort: orderFormat
             })
         }
     }
@@ -61,24 +54,6 @@ export const UserTableView = () => {
             search: event
         })
     }
-
-    /**
-     *  Loading Data
-     */
-    const loadingData = useCallback(async () => {
-        setLoading(true);
-        const result = await userService.index(dispatch, params);
-        if (result.status === 200) {
-            userList.current = result?.data?.data;
-            total.current = result?.data?.total;
-        }
-
-        setLoading(false);
-    }, [dispatch, params]);
-
-    useEffect(() => {
-        loadingData();
-    }, [loadingData])
 
     const FooterRender = () => {
         return (
@@ -107,7 +82,7 @@ export const UserTableView = () => {
         return (
             <div className="w-full flex flex-column md:flex-row justify-content-between align-items-start">
                 <Search
-                    tooltipLabel={"search by admin's id, name, email, phone, status"}
+                    tooltipLabel={"search by id, address, contact_person,contact_phone,default address"}
                     placeholder={"Search admin account"}
                     onSearch={(e) => onSearchChange(e)}
                 />
@@ -123,28 +98,43 @@ export const UserTableView = () => {
         )
     }
 
+    /**
+     * Loading Data
+     */
+    const loadingData = useCallback(async () => {
+        setLoading(true);
+        const response = await shopService.index(dispatch,params);
+        if (response.status === 200) {
+            shopList.current = response.data.data;
+            total.current = response.data.total
+        }
+        setLoading(false);
+    }, [dispatch,params]);
+
+    useEffect(() => {
+        loadingData();
+    }, [loadingData]);
 
     return (
         <>
-
             <DataTable
                 dataKey="id"
                 size="normal"
-                value={userList.current.length > 0 && userList.current}
+                value={shopList.current?.length > 0 ? shopList.current : null}
                 sortField={params ? params.order : ""}
                 sortOrder={params ? params.sort : 1}
                 onSort={(e) => onSortChange(e)}
-                sortMode={paginateOptions.sortMode}
                 loading={loading}
-                emptyMessage="No user accounts found."
-                globalFilterFields={userPayload.columns}
+                emptyMessage="No dshop found."
+                globalFilterFields={shopPayload.columns}
+                sortMode={paginateOptions.sortMode}
                 header={<HeaderRender />}
                 footer={<FooterRender />}
             >
-                {showColumns && showColumns.current?.map((col, index) => {
+                {showColumns.current.map((col, index) => {
                     return (
                         <Column
-                            key={`user_col_index_${index}`}
+                            key={`category_col_index_${index}`}
                             style={{ minWidth: "250px" }}
                             field={col.field}
                             header={col.header}
@@ -154,12 +144,12 @@ export const UserTableView = () => {
                                     return (<Status status={value[col.field]} />)
                                 }
 
-                                if (col.field === 'email_verified_at' || col.field === 'phone_verified_at') {
-                                    return (<label> {datetime.long(value[col.field])} </label>)
+                                if (col.field === 'region') {
+                                    return (<span>{value[col.field]?.name}</span>)
                                 }
 
                                 if (col.field === 'id') {
-                                    return (<label className="nav-link" onClick={() => navigate(`${paths.user}/${value[col.field]}`)}> {value[col.field]} </label>)
+                                    return (<label className="nav-link" onClick={() => navigate(`${paths.shop}/${value[col.field]}`)}> {value[col.field]} </label>)
                                 }
                                 return value[col.field]
 
@@ -168,7 +158,7 @@ export const UserTableView = () => {
                     )
                 })}
 
-                {showAuditColumn && auditColumns?.map((col, index) => {
+                {showAuditColumn && auditColumns.map((col, index) => {
                     return (
                         <Column
                             key={`audit_column_key_${index}`}
@@ -176,13 +166,7 @@ export const UserTableView = () => {
                             field={col.field}
                             header={col.header}
                             sortable
-                            body={(value) => {
-                                if (col.field === 'created_at' || col.field === 'updated_at' || col.field === 'deleted_at') {
-                                    return <label> {datetime.long(value[col.field])} </label>
-                                } else {
-                                    return <label> {value[col.field] && value[col.field].name} </label>
-                                }
-                            }}
+                            body={(value) => <label> {datetime.long(value[col.field])} </label>}
                         />
                     )
                 })}

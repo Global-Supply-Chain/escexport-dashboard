@@ -58,7 +58,7 @@ const PromotionTableView = () => {
         })
     }
 
-    const footer = useCallback(() => {
+    const FooterRender = () => {
         return (
             <div className=' flex items-center justify-content-between'>
                 <div>Total - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
@@ -76,7 +76,7 @@ const PromotionTableView = () => {
                 </div>
             </div>
         )
-    }, [total, showAuditColumn])
+    }
 
     /**
     * Table Header Render
@@ -138,7 +138,7 @@ const PromotionTableView = () => {
                 emptyMessage="No promotion found."
                 globalFilterFields={promotionPayload.columns}
                 header={<HeaderRender />}
-                footer={footer}
+                footer={<FooterRender />}
             >
                 {showColumns.current.map((col, index) => {
                     return (

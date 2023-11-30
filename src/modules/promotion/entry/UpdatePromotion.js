@@ -82,6 +82,7 @@ const UpdatePromotion = () => {
                             setVisible={setVisible}
                             url={paths.promotion}
                             id={params.id}
+                            redirect={paths.promotion}
                         />
 
                         <Button

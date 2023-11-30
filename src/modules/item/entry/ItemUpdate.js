@@ -114,6 +114,7 @@ const ItemUpdate = ({ dataSource }) => {
                             setVisible={setVisible}
                             url={paths.item}
                             id={dataSource?.id}
+                            redirect={paths.item}
                         />
 
                         <Button

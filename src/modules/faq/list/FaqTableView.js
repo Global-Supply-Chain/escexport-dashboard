@@ -2,8 +2,6 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { userPayload } from '../userPayload';
-import { userService } from '../userService';
 import { auditColumns, paginateOptions } from '../../../constants/config';
 import { Search } from '../../../shares/Search';
 import { Button } from 'primereact/button';
@@ -15,21 +13,23 @@ import { datetime } from '../../../helpers/datetime';
 import { paths } from '../../../constants/paths';
 import { useNavigate } from 'react-router-dom';
 import { Paginator } from 'primereact/paginator';
+import { faqPayload } from '../faqPayload';
+import { faqService } from '../faqService';
 
-export const UserTableView = () => {
+export const FaqTableView = () => {
 
-    const [params, setParams] = useState(userPayload?.paginateParams);
+    const [params, setParams] = useState(faqPayload?.paginateParams);
 
     const dispatch = useDispatch();
-    const { users } = useSelector(state => state.user);
+    const { faqs } = useSelector(state => state.faq);
     const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
 
-    const userList = useRef(users);
+    const faqList = useRef(faqs);
     const total = useRef(0);
-    const columns = useRef(userPayload?.columns);
+    const columns = useRef(faqPayload?.columns);
     const showColumns = useRef(columns?.current?.filter(col => col.show === true));
 
     const [first, setFirst] = useState(0);
@@ -67,9 +67,9 @@ export const UserTableView = () => {
      */
     const loadingData = useCallback(async () => {
         setLoading(true);
-        const result = await userService.index(dispatch, params);
+        const result = await faqService.index(dispatch, params);
         if (result.status === 200) {
-            userList.current = result?.data?.data;
+            faqList.current = result?.data?.data;
             total.current = result?.data?.total;
         }
 
@@ -130,14 +130,14 @@ export const UserTableView = () => {
             <DataTable
                 dataKey="id"
                 size="normal"
-                value={userList.current.length > 0 && userList.current}
+                value={faqList.current.length > 0 && faqList.current}
                 sortField={params ? params.order : ""}
                 sortOrder={params ? params.sort : 1}
                 onSort={(e) => onSortChange(e)}
                 sortMode={paginateOptions.sortMode}
                 loading={loading}
-                emptyMessage="No user accounts found."
-                globalFilterFields={userPayload.columns}
+                emptyMessage="No faq found."
+                globalFilterFields={faqPayload.columns}
                 header={<HeaderRender />}
                 footer={<FooterRender />}
             >
@@ -154,12 +154,8 @@ export const UserTableView = () => {
                                     return (<Status status={value[col.field]} />)
                                 }
 
-                                if (col.field === 'email_verified_at' || col.field === 'phone_verified_at') {
-                                    return (<label> {datetime.long(value[col.field])} </label>)
-                                }
-
                                 if (col.field === 'id') {
-                                    return (<label className="nav-link" onClick={() => navigate(`${paths.user}/${value[col.field]}`)}> {value[col.field]} </label>)
+                                    return (<label className="nav-link" onClick={() => navigate(`${paths.faq}/${value[col.field]}`)}> {value[col.field]} </label>)
                                 }
                                 return value[col.field]
 
