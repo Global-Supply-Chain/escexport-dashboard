@@ -13,7 +13,6 @@ const OrderDetail = () => {
 
     const dispatch = useDispatch();
     const { order } = useSelector((state) => state.order);
-    console.log(order);
 
     const loadingData = useCallback(async () => {
         setLoading(true);

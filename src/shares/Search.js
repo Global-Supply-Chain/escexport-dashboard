@@ -3,7 +3,7 @@ import { useState } from "react";
 import { tooltipOptions } from "../constants/config";
 
 export const Search = ({ onSearch, placeholder, tooltipLabel }) => {
-    const [keyword, setKeyword] = useState(localStorage.getItem('search'));
+    const [keyword, setKeyword] = useState(localStorage.getItem('search') ? localStorage.getItem('search') : "");
 
     return (
         <div>
