@@ -13,6 +13,8 @@ export const paths = {
     userDetail : "user/:id",
 
     mainCategory: "/main-category",
+    createMainCategory: "/main-category/new",
+    updateMainCategory: "/main-category/:id",
     category: "/category",
     categoryCreate: "/category/new",
     categoryDetail : "/category/:id",
@@ -25,12 +27,24 @@ export const paths = {
     pointCreate : "/point/new",
     pointDetail : "/point/:id",
 
-    delivery: "delivery",
-    deliveryCreate: "delivery/new",
-    deliveryDetail: "delivery/:id",
+    delivery: "/delivery",
+    deliveryCreate: "/delivery/new",
+    deliveryDetail: "/delivery/:id",
     media: "/media",
 
     order: "/order",
     orderCreate: "/order/new",
-    orderDetail: "order/:id"
+    orderDetail: "order/:id",
+
+    faq: "/faq",
+    faqCreate: "/faq/new",
+    faqDetail: "/faq/:id",
+
+    region: "/region",
+    regionCreate: "/region/new",
+    regionDetail: "/region/:id",
+
+    shop: "/shop",
+    shopCreate: "/shop/new",
+    shopDetail: "/shop/:id"
 }

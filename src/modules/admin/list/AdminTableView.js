@@ -12,6 +12,7 @@ import { datetime } from "../../../helpers/datetime";
 import { Status } from '../../../shares/Status';
 import { paths } from "../../../constants/paths";
 import { useNavigate } from "react-router-dom";
+import { Paginator } from "primereact/paginator";
 
 export const AdminTableView = () => {
     const dispatch = useDispatch();
@@ -20,25 +21,75 @@ export const AdminTableView = () => {
 
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
+    const [params, setParams] = useState(adminPayload.paginateParams);
+    const [first, setFirst] = useState(0);
 
     const adminList = useRef(state.admins);
     const columns = useRef(adminPayload.columns);
     const showColumns = useRef(columns.current.filter(col => col.show === true));
+    const total = useRef(0);
+
+    const onPageChange = (event) => {
+        setFirst(event?.first);
+        setParams({
+            ...params,
+            page: event?.page + 1,
+            per_page: event?.rows,
+        })
+    };
+
+    const onSortChange = (event) => {
+        if (event) {
+            const orderFormat = event?.sortOrder === 1 ? "DESC" : "ASC";
+            setParams({
+                ...params,
+                order: event?.sortField,
+                sort: orderFormat
+            })
+        }
+    }
+
+    const onSearchChange = (event) => {
+        setParams({
+            ...params,
+            search: event
+        })
+    }
+
+    const FooterRender = () => {
+        return (
+            <div className=' flex items-center justify-content-between'>
+                <div>Total - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
+                <div className=' flex align-items-center gap-3'>
+                    <Button
+                        outlined
+                        icon="pi pi-refresh"
+                        size="small"
+                        onClick={() => loadingData()}
+                    />
+                    <PaginatorRight
+                        show={showAuditColumn}
+                        onHandler={(e) => setShowAuditColumn(e)}
+                    />
+                </div>
+            </div>
+        )
+    }
 
     /**
-     * Table Header Render
-     */
+    * Table Header Render
+    */
     const HeaderRender = () => {
-        return(
+        return (
             <div className="w-full flex flex-column md:flex-row justify-content-between align-items-start">
-                <Search 
-                    tooltipLabel={"search by admin's id, name, email, phone, status"}
+                <Search
+                    tooltipLabel={"search by id, address, contact_person,contact_phone,default address"}
                     placeholder={"Search admin account"}
-                    onSearch={(e) => console.log(e)}
+                    onSearch={(e) => onSearchChange(e)}
                 />
 
                 <div className="flex flex-row justify-content-center align-items-center">
-                    <Button 
+                    <Button
                         outlined
                         icon="pi pi-filter"
                         size="small"
@@ -55,90 +106,92 @@ export const AdminTableView = () => {
         setLoading(true);
 
         const result = await adminService.index(dispatch);
-        if(result.status === 200) {
+        if (result.status === 200) {
             adminList.current = result.data;
         }
-        
+
         setLoading(false);
-    },[dispatch]);
+    }, [dispatch]);
 
     useEffect(() => {
         loadingData();
-    },[loadingData])
+    }, [loadingData])
 
-    return(
-        <DataTable
-            dataKey="id"
-            size="normal"
-            value={adminList.current}
-            lazy={paginateOptions.lazy}
-            loading={loading}
-            resizableColumns={paginateOptions.resizableColumns}
-            emptyMessage="No admin accounts found."
-            globalFilterFields={adminPayload.columns}
-            paginator
-            rows={paginateOptions.rows}
-            rowsPerPageOptions={paginateOptions.rowsPerPageOptions} 
-            paginatorTemplate={paginateOptions.paginatorTemplate}
-            sortMode={paginateOptions.sortMode}
-            paginatorLeft={paginateOptions.paginatorLeft}
-            paginatorRight={
-                <PaginatorRight 
-                    show={showAuditColumn}
-                    onHandler={(e) => setShowAuditColumn(e)}
-                />
-            }
-            header={<HeaderRender />}
-            onSort={(e) => console.log(e)}
-        >
-           { showColumns.current.map((col, index) => {
-                return(
-                    <Column 
-                        key={`admin_col_index_${index}`} 
-                        style={{ minWidth: "250px"}}
-                        field={col.field} 
-                        header={col.header}
-                        sortable
-                        body={(value) => {
-                            if(col.field === 'status') {
-                                return(<Status status={value[col.field]}/>)
-                            }
+    return (
+        <>
 
-                            if(col.field === 'id') {
-                                return(
-                                    <label 
-                                        className="nav-link" 
-                                        onClick={() => navigate(`${paths.admin}/${value[col.field]}`)}
-                                    > 
-                                        {value[col.field]} 
-                                    </label>
-                                )
-                            }
+            <DataTable
+                dataKey="id"
+                size="normal"
+                value={adminList.current?.length > 0 ? adminList.current : null}
+                sortField={params ? params.order : ""}
+                sortOrder={params ? params.sort : 1}
+                onSort={(e) => onSortChange(e)}
+                lazy={paginateOptions.lazy}
+                loading={loading}
+                resizableColumns={paginateOptions.resizableColumns}
+                emptyMessage="No admin accounts found."
+                globalFilterFields={adminPayload.columns}
+                header={<HeaderRender />}
+                footer={<FooterRender />}
+            >
+                {showColumns.current.map((col, index) => {
+                    return (
+                        <Column
+                            key={`admin_col_index_${index}`}
+                            style={{ minWidth: "250px" }}
+                            field={col.field}
+                            header={col.header}
+                            sortable
+                            body={(value) => {
+                                if (col.field === 'status') {
+                                    return (<Status status={value[col.field]} />)
+                                }
 
-                            return value[col.field];
-                        }}
-                    />
-                )
-           })}
+                                if (col.field === 'id') {
+                                    return (
+                                        <label
+                                            className="nav-link"
+                                            onClick={() => navigate(`${paths.admin}/${value[col.field]}`)}
+                                        >
+                                            {value[col.field]}
+                                        </label>
+                                    )
+                                }
 
-           {showAuditColumn && auditColumns.map((col, index) => {
-                return(
-                    <Column
-                        key={`audit_column_key_${index}`}
-                        style={{ minWidth: "250px"}}
-                        field={col.field} 
-                        header={col.header}
-                        sortable
-                        body={(value) => {
-                            if(col.field === 'created_at' || col.field === 'updated_at' || col.field === 'deleted_at') {
-                                return <label> { datetime.long(value[col.field])} </label>
-                            } else {
-                                return <label> {value[col.field] && value[col.field].name} </label>
-                            }
-                        }}
-                    />
-                )
-           })}
-        </DataTable>
+                                return value[col.field];
+                            }}
+                        />
+                    )
+                })}
+
+                {showAuditColumn && auditColumns.map((col, index) => {
+                    return (
+                        <Column
+                            key={`audit_column_key_${index}`}
+                            style={{ minWidth: "250px" }}
+                            field={col.field}
+                            header={col.header}
+                            sortable
+                            body={(value) => {
+                                if (col.field === 'created_at' || col.field === 'updated_at' || col.field === 'deleted_at') {
+                                    return <label> {datetime.long(value[col.field])} </label>
+                                } else {
+                                    return <label> {value[col.field] && value[col.field].name} </label>
+                                }
+                            }}
+                        />
+                    )
+                })}
+            </DataTable>
+            <Paginator
+                first={first}
+                rows={params.per_page ? params.per_page : paginateOptions.rows}
+                totalRecords={total?.current}
+                rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
+                onPageChange={onPageChange}
+            />
+
+        </>
     )
 }

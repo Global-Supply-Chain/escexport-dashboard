@@ -2,7 +2,7 @@ import { endpoints } from "../../constants/endpoints"
 import { getRequest, postRequest, putRequest } from "../../helpers/api"
 import { httpServiceHandler } from "../../helpers/handler";
 import { updateNotification } from "../../shares/shareSlice";
-import { index, update } from "./deliverySlice";
+import { index, show, update } from "./deliverySlice";
 
 export const deliveryService = {
     store: async (payload, dispatch) => {
@@ -51,7 +51,7 @@ export const deliveryService = {
         await httpServiceHandler(dispatch, response);
 
         if(response.status === 200) {
-            dispatch(update(response.data));
+            dispatch(show(response.data));
         }
         
         return response;

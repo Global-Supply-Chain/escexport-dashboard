@@ -56,7 +56,7 @@ export const UserDeliveryAddressTable = () => {
         })
     }
 
-    const footer = useCallback(() => {
+    const FooterRender = () => {
         return (
             <div className=' flex items-center justify-content-between'>
                 <div>Total - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
@@ -74,7 +74,7 @@ export const UserDeliveryAddressTable = () => {
                 </div>
             </div>
         )
-    }, [total, showAuditColumn])
+    }
 
     /**
     * Table Header Render
@@ -120,7 +120,6 @@ export const UserDeliveryAddressTable = () => {
         <>
             <DataTable
                 dataKey="id"
-                header={<HeaderRender />}
                 size="normal"
                 value={deliveries.current?.length > 0 ? deliveries.current : null}
                 sortField={params ? params.order : ""}
@@ -130,7 +129,8 @@ export const UserDeliveryAddressTable = () => {
                 emptyMessage="No delivery address found."
                 globalFilterFields={deliveryPayload.columns}
                 sortMode={paginateOptions.sortMode}
-                footer={footer}
+                header={<HeaderRender />}
+                footer={<FooterRender />}
             >
                 {showColumns.current.map((col, index) => {
                     return (

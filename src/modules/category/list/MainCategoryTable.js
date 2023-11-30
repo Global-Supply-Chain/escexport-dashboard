@@ -14,6 +14,8 @@ import { useNavigate } from "react-router-dom";
 import { paths } from "../../../constants/paths";
 import { Paginator } from "primereact/paginator";
 import { setPaginate } from "../categorySlice";
+import { Avatar } from "primereact/avatar";
+import { endpoints } from "../../../constants/endpoints";
 
 export const MainCategoryTable = () => {
   const dispatch = useDispatch();
@@ -41,23 +43,32 @@ export const MainCategoryTable = () => {
     );
   };
 
-  const onSortChange = (event) => {
-      if (event) {
-          const orderFormat = event?.sortOrder === 1 ? "DESC" : "ASC";
-          dispatch({
-              ...mainPaginateParams,
-              order: event?.sortField,
-              sort: orderFormat
-          })
-      }
-  }
-
   const onSearchChange = (event) => {
-    dispatch(setPaginate({
+    dispatch(
+      setPaginate({
         ...mainPaginateParams,
         search: event,
-      }));
+      })
+    );
   };
+
+  const loadingData = useCallback(async () => {
+    setLoading(true);
+    const result = await categoryService.mainIndex(
+      dispatch,
+      mainPaginateParams
+    );
+    if (result.status === 200) {
+      total.current = result.data.total
+        ? result.data.total
+        : result.data.length;
+    }
+    setLoading(false);
+  }, [dispatch, mainPaginateParams]);
+
+  useEffect(() => {
+    loadingData();
+  }, [loadingData]);
 
   const FooterRender = () => {
     return (
@@ -82,24 +93,6 @@ export const MainCategoryTable = () => {
     );
   };
 
-  const loadingData = useCallback(async () => {
-    setLoading(true);
-    const result = await categoryService.mainIndex(
-      dispatch,
-      mainPaginateParams
-    );
-    if (result.status === 200) {
-      total.current = result.data.total
-        ? result.data.total
-        : result.data.length;
-    }
-    setLoading(false);
-  }, [dispatch, mainPaginateParams]);
-
-  useEffect(() => {
-    loadingData();
-  }, [loadingData]);
-
   /**
    * Table Header Render
    */
@@ -111,11 +104,18 @@ export const MainCategoryTable = () => {
           placeholder={"Search main category"}
           onSearch={(e) => onSearchChange(e)}
         />
-
-        <div className="flex flex-row justify-content-center align-items-center">
-          <Button outlined icon="pi pi-filter" size="small" />
-        </div>
       </div>
+    );
+  };
+
+  const IconRender = ({ dataSource }) => {
+    return (
+      <Avatar
+        className="category-icon"
+        icon="pi pi-user"
+        shape="circle"
+        image={dataSource ? `${endpoints.image}/${dataSource}` : null}
+      />
     );
   };
 
@@ -126,9 +126,7 @@ export const MainCategoryTable = () => {
         size="normal"
         value={mainCategories}
         sortField={mainPaginateParams.order ? mainPaginateParams.order : ""}
-        sortOrder={mainPaginateParams.order ? mainPaginateParams.sort : 1}
-        onSort={(e) => onSortChange(e)}
-        sortMode={paginateOptions.sortMode}
+        sortOrder={mainPaginateParams.sort ? mainPaginateParams.sort : 1}
         loading={loading}
         emptyMessage="No category found."
         globalFilterFields={categoryPayload.columns}
@@ -148,16 +146,19 @@ export const MainCategoryTable = () => {
                   return <Status status={value[col.field]} />;
                 }
 
+                if (col.field === "icon") {
+                  return <IconRender dataSource={value[col.field]} />;
+                }
+
                 if (col.field === "id") {
                   return (
                     <label
                       className="nav-link"
                       onClick={() =>
-                        navigate(`${paths.category}/${value[col.field]}`)
+                        navigate(`${paths.mainCategory}/${value[col.field]}`)
                       }
                     >
-                      {" "}
-                      {value[col.field]}{" "}
+                      {value[col.field]}
                     </label>
                   );
                 }

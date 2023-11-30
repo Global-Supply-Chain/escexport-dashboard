@@ -14,9 +14,13 @@ const deliverySlice = createSlice({
         update: (state, action) => {
             state.delivery = action.payload;
             return state;
+        },
+        show: (state, action) => {
+            state.delivery = action.payload;
+            return state;
         }
     }
 });
 
-export const { index, update } = deliverySlice.actions;
+export const { index, update, show } = deliverySlice.actions;
 export default deliverySlice.reducer;

@@ -26,8 +26,6 @@ const ItemDetail = () => {
         loadingData()
     }, [loadingData])
 
-    console.log(dataSource);
-
 
   return (
     <div className=' grid'>

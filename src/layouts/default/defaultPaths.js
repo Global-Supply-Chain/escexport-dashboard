@@ -79,6 +79,12 @@ export const items = [
             },
             {
                 key: '4-2',
+                label: 'Create Main Category',
+                icon: 'pi pi-fw pi-plus',
+                url: paths.createMainCategory
+            },
+            {
+                key: '4-3',
                 label: 'Create',
                 icon: 'pi pi-fw pi-plus',
                 url: paths.categoryCreate
@@ -172,6 +178,63 @@ export const items = [
                 icon: 'pi pi-fw pi-list',
                 url: paths.order
             },
+        ]
+    },
+    {
+        key: '10',
+        label: 'Faq',
+        icon: 'pi pi-fw pi-comment',
+        children: [
+            {
+                key: '10-1',
+                label: 'List',
+                icon: 'pi pi-fw pi-list',
+                url: paths.faq
+            },
+            {
+                key: '10-2',
+                label: 'Create',
+                icon: 'pi pi-fw pi-plus',
+                url: paths.faqCreate
+            }
+        ]
+    },
+    {
+        key: '11',
+        label: 'Region',
+        icon: 'pi pi-fw pi-comment',
+        children: [
+            {
+                key: '11-1',
+                label: 'List',
+                icon: 'pi pi-fw pi-list',
+                url: paths.region
+            },
+            {
+                key: '11-2',
+                label: 'Create',
+                icon: 'pi pi-fw pi-plus',
+                url: paths.regionCreate
+            }
+        ]
+    },
+    {
+        key: '12',
+        label: 'Shop',
+        icon: 'pi pi-fw pi-comment',
+        children: [
+            {
+                key: '12-1',
+                label: 'List',
+                icon: 'pi pi-fw pi-list',
+                url: paths.shop
+            },
+            {
+                key: '12-2',
+                label: 'Create',
+                icon: 'pi pi-fw pi-plus',
+                url: paths.shopCreate
+            }
         ]
     },
 ];

@@ -12,6 +12,9 @@ import { deliveryRoutes } from "./modules/delivery/deliveryRoutes";
 import { mediaRoutes } from "./modules/media/mediaRoute";
 import { pointRoutes } from "./modules/point/pointRoutes";
 import { orderRoutes } from "./modules/order/orderRoutes";
+import { faqRoutes } from "./modules/faq/faqRoutes";
+import { regionRoutes } from "./modules/region/regionRoutes";
+import { shopRoutes } from "./modules/shop/shopRoutes";
 
 export const routers = createBrowserRouter([
     {
@@ -27,7 +30,10 @@ export const routers = createBrowserRouter([
             ...deliveryRoutes,
             ...mediaRoutes,
             ...pointRoutes,
-            ...orderRoutes
+            ...orderRoutes,
+            ...faqRoutes,
+            ...regionRoutes,
+            ...shopRoutes
         ]
     },
     {

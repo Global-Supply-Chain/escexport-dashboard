@@ -1,5 +1,6 @@
 import { paths } from "../../constants/paths"
 import { CreateDelivery } from "./entry/CreateDelivery"
+import { DeliveryDetail } from "./view/DeliveryDetail"
 import { DeliveryList } from "./view/DeliveryList"
 
 export const deliveryRoutes = [
@@ -32,4 +33,17 @@ export const deliveryRoutes = [
             }
         }
     },
+    {
+        id: "deliveryDetail",
+        path : paths.deliveryDetail,
+        element: <DeliveryDetail />,
+        loader: () => {
+            return {
+                breadcrumbs: [
+                    { label: "Dashboard", url: "/" },
+                    { label: "List", url: paths.delivery },
+                ]
+            }
+        }
+    }
 ]
