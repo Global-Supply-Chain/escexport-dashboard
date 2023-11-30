@@ -79,6 +79,12 @@ export const items = [
             },
             {
                 key: '4-2',
+                label: 'Create Main Category',
+                icon: 'pi pi-fw pi-plus',
+                url: paths.createMainCategory
+            },
+            {
+                key: '4-3',
                 label: 'Create',
                 icon: 'pi pi-fw pi-plus',
                 url: paths.categoryCreate
