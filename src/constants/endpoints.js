@@ -14,5 +14,6 @@ export const endpoints = {
     delivery: "delivery-address",
     order: "order",
     faq: "faq",
-    region: "region"
+    region: "region",
+    shop: "shop"
 }

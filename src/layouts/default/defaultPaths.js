@@ -212,4 +212,23 @@ export const items = [
             }
         ]
     },
+    {
+        key: '12',
+        label: 'Shop',
+        icon: 'pi pi-fw pi-comment',
+        children: [
+            {
+                key: '12-1',
+                label: 'List',
+                icon: 'pi pi-fw pi-list',
+                url: paths.shop
+            },
+            {
+                key: '12-2',
+                label: 'Create',
+                icon: 'pi pi-fw pi-plus',
+                url: paths.shopCreate
+            }
+        ]
+    },
 ];

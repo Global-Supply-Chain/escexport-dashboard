@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { Button } from 'primereact/button';
 import { paths } from '../../../constants/paths';
 import { faqService } from '../faqService';
+import { BreadCrumb } from '../../../shares/BreadCrumb';
 
 export const FaqCreate = () => {
 
@@ -29,7 +30,14 @@ export const FaqCreate = () => {
     return (
         <>
 
-            <Card
+            <div className=' grid'>
+
+                <div className=' col-12'>
+                    <BreadCrumb />
+                </div>
+
+                <div className=' col-12'>
+                <Card
             title={'Create Faq'}
 
             >
@@ -100,6 +108,9 @@ export const FaqCreate = () => {
                 </div>
 
             </Card>
+                </div>
+
+            </div>
 
         </>
     )

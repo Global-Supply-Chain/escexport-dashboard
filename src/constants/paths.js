@@ -40,5 +40,9 @@ export const paths = {
 
     region: "/region",
     regionCreate: "/region/new",
-    regionDetail: "/region/:id"
+    regionDetail: "/region/:id",
+
+    shop: "/shop",
+    shopCreate: "/shop/new",
+    shopDetail: "/shop/:id"
 }
