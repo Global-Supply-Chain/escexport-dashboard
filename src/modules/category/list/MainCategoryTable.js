@@ -8,18 +8,17 @@ import { DataTable } from "primereact/datatable";
 import { auditColumns, paginateOptions } from "../../../constants/config";
 import { PaginatorRight } from "../../../shares/PaginatorRight";
 import { Column } from "primereact/column";
-import { datetime } from "../../../helpers/datetime";
 import { Status } from "../../../shares/Status";
-import { useNavigate } from "react-router-dom";
 import { paths } from "../../../constants/paths";
 import { Paginator } from "primereact/paginator";
 import { setPaginate } from "../categorySlice";
 import { Avatar } from "primereact/avatar";
+import { NavigateId } from "../../../shares/NavigateId";
 import { endpoints } from "../../../constants/endpoints";
+import { AuditColumn } from "../../../shares/AuditColumn";
 
 export const MainCategoryTable = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const { mainPaginateParams, mainCategories } = useSelector(
     (state) => state.category
@@ -28,12 +27,18 @@ export const MainCategoryTable = () => {
   const [showAuditColumn, setShowAuditColumn] = useState(false);
 
   const total = useRef(0);
+  const first = useRef(0);
   const columns = useRef(categoryPayload.mainCategoryColumns);
   const showColumns = useRef(
     columns.current.filter((col) => col.show === true)
   );
 
+  /**
+   * Event - Paginate Page Change
+   * @param {*} event 
+   */
   const onPageChange = (event) => {
+    first.current = event.page * mainPaginateParams.per_page;
     dispatch(
       setPaginate({
         ...mainPaginateParams,
@@ -43,6 +48,10 @@ export const MainCategoryTable = () => {
     );
   };
 
+  /**
+   * Event - Search
+   * @param {*} event 
+   */
   const onSearchChange = (event) => {
     dispatch(
       setPaginate({
@@ -52,6 +61,25 @@ export const MainCategoryTable = () => {
     );
   };
 
+  /**
+   * Event - Column sorting "DESC | ASC"
+   * @param {*} event 
+   */
+  const onSort =(event) => {
+    const sortOrder = event.sortOrder === 1 ? "DESC" : "ASC";
+    console.log(event);
+    dispatch(
+      setPaginate({
+        ...mainPaginateParams,
+        sort: sortOrder,
+        order: event.sortField
+      })
+    );
+  }
+
+  /**
+   * Initialize loading data
+   */
   const loadingData = useCallback(async () => {
     setLoading(true);
     const result = await categoryService.mainIndex(
@@ -66,35 +94,16 @@ export const MainCategoryTable = () => {
     setLoading(false);
   }, [dispatch, mainPaginateParams]);
 
+  /**
+   * LifeCycle - watch event change
+   */
   useEffect(() => {
     loadingData();
   }, [loadingData]);
 
-  const FooterRender = () => {
-    return (
-      <div className=" flex items-center justify-content-between">
-        <div>
-          Total -{" "}
-          <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span>
-        </div>
-        <div className=" flex align-items-center gap-3">
-          <Button
-            outlined
-            icon="pi pi-refresh"
-            size="small"
-            onClick={() => loadingData()}
-          />
-          <PaginatorRight
-            show={showAuditColumn}
-            onHandler={(e) => setShowAuditColumn(e)}
-          />
-        </div>
-      </div>
-    );
-  };
-
   /**
-   * Table Header Render
+   * Render - Table Header
+   * @returns
    */
   const HeaderRender = () => {
     return (
@@ -108,14 +117,41 @@ export const MainCategoryTable = () => {
     );
   };
 
+  /** Render - Column Icon Field 
+   * @returns
+  */
   const IconRender = ({ dataSource }) => {
     return (
       <Avatar
         className="category-icon"
-        icon="pi pi-user"
+        icon="pi pi-image"
         shape="circle"
         image={dataSource ? `${endpoints.image}/${dataSource}` : null}
       />
+    );
+  };
+
+  /**
+   * Render - Paginate Footer
+   * @returns 
+   */
+  const FooterRender = () => {
+    return (
+      <div className=" flex items-center justify-content-between">
+        <Button
+          outlined
+          icon="pi pi-refresh"
+          size="small"
+          onClick={() => loadingData()}
+        />
+        
+        <div className=" flex align-items-center gap-3">
+          <PaginatorRight
+            show={showAuditColumn}
+            onHandler={(e) => setShowAuditColumn(e)}
+          />
+        </div>
+      </div>
     );
   };
 
@@ -125,13 +161,15 @@ export const MainCategoryTable = () => {
         dataKey="id"
         size="normal"
         value={mainCategories}
-        sortField={mainPaginateParams.order ? mainPaginateParams.order : ""}
-        sortOrder={mainPaginateParams.sort ? mainPaginateParams.sort : 1}
+        sortField={mainPaginateParams.order}
+        sortOrder={mainPaginateParams.sort === 'DESC' ? 1 : mainPaginateParams.sort === "ASC" ? -1 : 0}
         loading={loading}
-        emptyMessage="No category found."
+        sortMode="single"
+        emptyMessage="No main category found."
         globalFilterFields={categoryPayload.columns}
         header={<HeaderRender />}
         footer={<FooterRender />}
+        onSort={onSort}
       >
         {showColumns.current.map((col, index) => {
           return (
@@ -140,29 +178,23 @@ export const MainCategoryTable = () => {
               style={{ minWidth: "250px" }}
               field={col.field}
               header={col.header}
-              sortable
+              sortable={col.sortable}
               body={(value) => {
-                if (col.field === "status") {
-                  return <Status status={value[col.field]} />;
+                switch (col.field) {
+                  case "id":
+                    return (
+                      <NavigateId
+                        url={`${paths.mainCategory}/${value[col.field]}`}
+                        value={value[col.field]}
+                      />
+                    );
+                  case "status":
+                    return <Status status={value[col.field]} />;
+                  case "icon":
+                    return <IconRender dataSource={value[col.field]} />;
+                  default:
+                    return value[col.field];
                 }
-
-                if (col.field === "icon") {
-                  return <IconRender dataSource={value[col.field]} />;
-                }
-
-                if (col.field === "id") {
-                  return (
-                    <label
-                      className="nav-link"
-                      onClick={() =>
-                        navigate(`${paths.mainCategory}/${value[col.field]}`)
-                      }
-                    >
-                      {value[col.field]}
-                    </label>
-                  );
-                }
-                return value[col.field];
               }}
             />
           );
@@ -177,32 +209,19 @@ export const MainCategoryTable = () => {
                 field={col.field}
                 header={col.header}
                 sortable
-                body={(value) => {
-                  if (
-                    col.field === "created_at" ||
-                    col.field === "updated_at" ||
-                    col.field === "deleted_at"
-                  ) {
-                    return <label> {datetime.long(value[col.field])} </label>;
-                  } else {
-                    return (
-                      <label>
-                        {" "}
-                        {value[col.field] && value[col.field].name}{" "}
-                      </label>
-                    );
-                  }
-                }}
+                body={(value) => <AuditColumn col={col} value={value} />}
               />
             );
           })}
       </DataTable>
 
       <Paginator
-        first={mainPaginateParams.per_page}
+        first={first.current}
         rows={mainPaginateParams.per_page}
-        totalRecords={total?.current}
-        rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
+        totalRecords={total.current}
+        rowsPerPageOptions={paginateOptions.rowsPerPageOptions}
+        template={"FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"}
+        currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
         onPageChange={onPageChange}
       />
     </>

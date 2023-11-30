@@ -27,13 +27,13 @@ export const categoryPayload = {
     { field: "title", header: "Title", sortable: true, show: true },
     { field: "level", header: "Level", sortable: true, show: true },
     { field: "category_name", header: "Category", sortable: true, show: true },
-    { field: "status", header: "Status", show: true },
+    { field: "status", header: "Status", sortable: true, show: true },
   ],
   mainCategoryColumns: [
     { field: "id", header: "ID", sortable: true, show: true },
     { field: "icon", header: "Icon", show: true },
     { field: "title", header: "Title", sortable: true, show: true },
-    { field: "status", header: "Status", show: true },
+    { field: "status", header: "Status", sortable: true, show: true },
   ],
   paginateParams: {
     page: 1,
