@@ -23,7 +23,7 @@ const CategoryUpdate = () => {
     const [payload, setPayload] = useState(categoryPayload.update);
     const [categoryList, setCategoryList] = useState([{ label: categoryPayload.update.title, code: categoryPayload.update.id }]);
 
-    const {category} = useSelector((state) => state.category);
+    const { category } = useSelector((state) => state.category);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -40,36 +40,41 @@ const CategoryUpdate = () => {
                 return {
                     label: category?.title,
                     value: category?.id
-                } 
+                }
             })
             console.log(formatData);
             setCategoryList(formatData);
         }
 
-        await categoryService.show(dispatch,params.id);
+        await categoryService.show(dispatch, params.id);
 
         setLoading(false);
-    }, [dispatch,params.id]);
+    }, [dispatch, params.id]);
 
     useEffect(() => {
         loadingData()
     }, [loadingData])
 
+    /**
+   * Return general status
+   * @returns {Array} Array that contain general status ACTIVE,DISABLE and DELETE
+   * **/
     useEffect(() => {
-       generalStatus().then((data) => {
-        setStatus(data);
-       }).catch((error) => console.log(error))
+        generalStatus().then((data) => {
+            setStatus(data)
+        }).catch((error) => console.log(error))
+
     }, [])
 
     useEffect(() => {
-        if(category){
+        if (category) {
             setPayload(category)
         }
     }, [category])
 
     const submitUpdateCategory = async () => {
         setLoading(true);
-        await categoryService.update(dispatch,payload?.id,payload)
+        await categoryService.update(dispatch, payload?.id, payload)
         setLoading(false);
     }
 
@@ -187,22 +192,22 @@ const CategoryUpdate = () => {
                 </div>
 
                 <div className=' col-12 md:col-6 lg:col-4 py-3'>
-                        <div className="flex flex-column gap-2">
-                            <label htmlFor="phone" className=' text-black'>Status</label>
-                            <Dropdown 
-                            options={status} 
-                            placeholder="Select a general status" 
+                    <div className="flex flex-column gap-2">
+                        <label htmlFor="phone" className=' text-black'>Status</label>
+                        <Dropdown
+                            options={status}
+                            placeholder="Select a general status"
                             disabled={loading}
                             value={payload.status}
                             className="p-inputtext-sm text-black"
                             onChange={(e) => payloadHandler(payload, e.value, 'status', (updateValue) => {
                                 setPayload(updateValue);
                             })}
-                            />
- 
-                            <ValidationMessage field={"status"} />
-                        </div>
+                        />
+
+                        <ValidationMessage field={"status"} />
                     </div>
+                </div>
 
                 <div className="col-12">
                     <div className="flex flex-row justify-content-end align-items-center">

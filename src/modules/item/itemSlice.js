@@ -16,7 +16,8 @@ const itemSlice = createSlice({
         update: state => {
             return state;
         },
-        show: state => {
+        show: (state,action) => {
+            state.item = action.payload
             return state;
         },
         destroy: state => {

@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { itemPayload } from '../itemPayload';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { getRequest } from '../../../helpers/api';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 import { categoryService } from '../../category/categoryService';
 import { Card } from 'primereact/card';
 import { Dropdown } from 'primereact/dropdown';
@@ -16,57 +15,38 @@ import { payloadHandler } from '../../../helpers/handler';
 import { paths } from '../../../constants/paths';
 import { itemService } from '../itemService';
 import DeleteDialogButton from '../../../shares/DeleteDialogButton';
-import { endpoints } from '../../../constants/endpoints';
+import { generalStatus } from '../../../helpers/StatusHandler';
 
 const ItemUpdate = ({ dataSource }) => {
 
+    const params = useParams();
     const [loading, setLoading] = useState(false);
     const [categoryList, setCategoryList] = useState([{ label: itemPayload.update.title, code: itemPayload.update.id }]);
-    const [generalStatus, setGeneralStatus] = useState([]);
+    const [status, setStatus] = useState([]);
     const [visible, setVisible] = useState(false);
     const [payload, setPayload] = useState(itemPayload.update);
 
+    const { item } = useSelector((state) => state.item);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const loadingDataSource = useCallback(() => {
-        if (dataSource) {
-            setPayload(dataSource);
-        }
-    }, [dataSource]);
-
-    const loadingGeneralStatus = useCallback(async () => {
-
-        const response = await getRequest(`${endpoints.status}?type=${endpoints.generalStatus}`);
-
-        if (response) {
-
-            const formateData = response.data.general?.map((item) => {
-                return {
-                    label: item,
-                    value: item
-                }
-            })
-
-            setGeneralStatus(formateData);
-        }
-
-    }, []);
-
+    /**
+    * Return general status
+    * @returns {Array} Array that contain general status ACTIVE,DISABLE and DELETE
+    * **/
     useEffect(() => {
-        loadingGeneralStatus()
-    }, [loadingGeneralStatus])
+        generalStatus().then((data) => {
+            setStatus(data)
+        }).catch((error) => console.log(error))
 
-    useEffect(() => {
-        loadingDataSource();
-    }, [loadingDataSource])
+    }, [])
+
 
     /**
     * Loading Category Data
     */
     const loadingCategoryData = useCallback(async () => {
         setLoading(true);
-
         const result = await categoryService.index(dispatch);
         if (result.status === 200) {
             const formatData = result.data?.map((category) => {
@@ -78,12 +58,19 @@ const ItemUpdate = ({ dataSource }) => {
             setCategoryList(formatData);
         }
 
+        await itemService.show(dispatch,params.id)
         setLoading(false);
-    }, [dispatch]);
+    }, [dispatch,params]);
 
     useEffect(() => {
         loadingCategoryData()
     }, [loadingCategoryData])
+
+    useEffect(() => {
+        if(item){
+            setPayload(item)
+        }
+    }, [item])
 
     /**
      * update item
@@ -106,7 +93,7 @@ const ItemUpdate = ({ dataSource }) => {
 
             <div className=' grid'>
 
-            <div className=' col-12 flex align-items-center justify-content-end'>
+                <div className=' col-12 flex align-items-center justify-content-end'>
                     <div>
 
                         <DeleteDialogButton
@@ -277,7 +264,7 @@ const ItemUpdate = ({ dataSource }) => {
                     <div className="flex flex-column gap-2">
                         <label htmlFor="phone" className=' text-black'>Status</label>
                         <Dropdown
-                            options={generalStatus}
+                            options={status}
                             placeholder="Select a general status"
                             disabled={loading}
                             value={payload.status}
