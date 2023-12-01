@@ -1,19 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { paginateOptions } from "../../constants/config";
+import { promotionPayload } from "./promotionPayload";
 
 const promotionSlice = createSlice({
     name: 'promotion',
     initialState: {
         promotions: [],
         promotion: null,
-        params: {
-            columns: "id,title,url,status",
-            ...paginateOptions,
-        }
+        paginateParams: promotionPayload.paginateParams
     },
     reducers: {
         index: (state,action) => {
-            state = action.payload
+            state.promotions = action.payload
             return state;
         },
         update: (state, action) => {
@@ -28,9 +26,13 @@ const promotionSlice = createSlice({
         },
         store: state => {
             return state
+        },
+        setPaginate: (state, action) => {
+            state.paginateParams = action.payload;
+            return state;
         }
     }
 });
 
-export const { index, update, show, destroy, store } = promotionSlice.actions;
+export const { index, update, show, destroy, store, setPaginate } = promotionSlice.actions;
 export default promotionSlice.reducer;

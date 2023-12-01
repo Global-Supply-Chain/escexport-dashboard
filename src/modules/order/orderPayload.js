@@ -22,7 +22,7 @@ export const orderPayload = {
         per_page: paginateOptions.rows,
         columns: "id,user_name,email,phone,discount,delivery_feed,total_amount,payment_type,status",
         search: "",
-        order: "",
+        order: "id",
         sort: "DESC"
     }
 }

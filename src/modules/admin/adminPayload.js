@@ -29,7 +29,7 @@ export const adminPayload = {
         per_page: paginateOptions.rows,
         columns: "id,name,email.phone,status",
         search: "",
-        order: "DESC",
-        sort: "id"
+        order: "id",
+        sort: "DESC"
     }
 }

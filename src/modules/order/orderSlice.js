@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { orderPayload } from "./orderPayload";
 
 const orderSlice = createSlice({
     name: 'order',
     initialState: {
         orders: [],
         order: null,
-        paginateParams : "",
+        paginateParams : orderPayload.paginateParams,
         total : 0
     },
     reducers: {
@@ -17,12 +18,12 @@ const orderSlice = createSlice({
             state.order = action.payload;
             return state;
         },
-        setPaginateParams: (state, action) => {
+        setPaginate: (state, action) => {
             state.paginateParams = action.payload;
             return state;
         }
     }
 });
 
-export const { index, update, setPaginateParams } = orderSlice.actions;
+export const { index, update, setPaginate } = orderSlice.actions;
 export default orderSlice.reducer;

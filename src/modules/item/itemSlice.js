@@ -1,25 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { paginateOptions } from "../../constants/config";
+import { itemPayload } from "./itemPayload";
 
 const itemSlice = createSlice({
     name: 'item',
     initialState: {
-        users: [],
-        user: null,
-        params: {
-            columns: "id,category_id,name,code,description,content,price,sell_price,out_of_stock,status",
-            ...paginateOptions,
-        }
+        items: [],
+        item: null,
+        paginateParams: itemPayload.paginateParams
     },
     reducers: {
         index: (state, action) => {
-            state = action.payload
+            state.items = action.payload
             return state;
         },
         update: state => {
             return state;
         },
-        show: state => {
+        show: (state,action) => {
+            state.item = action.payload
             return state;
         },
         destroy: state => {
@@ -27,9 +25,13 @@ const itemSlice = createSlice({
         },
         store: state => {
             return state
+        },
+        setPaginate: (state, action) => {
+            state.paginateParams = action.payload;
+            return state;
         }
     }
 });
 
-export const { index, update, show, destroy, store } = itemSlice.actions;
+export const { index, update, show, destroy, store, setPaginate } = itemSlice.actions;
 export default itemSlice.reducer;

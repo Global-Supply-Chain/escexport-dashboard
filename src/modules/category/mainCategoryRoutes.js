@@ -1,12 +1,11 @@
 import { paths } from "../../constants/paths";
-import CategoryCreate from "./entry/CategoryCreate";
 import { MainCategoryCreate } from "./entry/MainCategoryCreate";
 import { MainCategoryUpdate } from "./entry/MainCategoryUpdate";
 import CategoryDetail from "./view/CategoryDetail";
 import { MainCategoryList } from "./view/MainCategoryList";
 
 
-export const categoryRoutes = [
+export const mainCategoryRoutes = [
     {
         id: "mainCategory",
         path: paths.mainCategory,
@@ -52,21 +51,7 @@ export const categoryRoutes = [
         }
     },
     {
-        id: "categoryCreate",
-        path: paths.categoryCreate,
-        element: <CategoryCreate />,
-        loader: () => {
-            return {
-                breadcrumbs: [
-                    { label: "Dashboard", url: "/" },
-                    { label: "List", url: paths.mainCategory },
-                    { label: "Create", url: paths.categoryCreate }
-                ]
-            }
-        }
-    },
-    {
-        id: "categoryDetail",
+        id: "mainCategoryDetail",
         path : paths.categoryDetail,
         element: <CategoryDetail />,
         loader: () => {

@@ -13,48 +13,82 @@ import { Status } from '../../../shares/Status';
 import { paths } from "../../../constants/paths";
 import { useNavigate } from "react-router-dom";
 import { Paginator } from "primereact/paginator";
+import { setPaginate } from "../adminSlice";
 
 export const AdminTableView = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const state = useSelector(state => state.admin);
+    const {admins, paginateParams} = useSelector(state => state.admin);
 
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
-    const [params, setParams] = useState(adminPayload.paginateParams);
-    const [first, setFirst] = useState(0);
 
-    const adminList = useRef(state.admins);
     const columns = useRef(adminPayload.columns);
     const showColumns = useRef(columns.current.filter(col => col.show === true));
     const total = useRef(0);
+    const first = useRef(0);
 
-    const onPageChange = (event) => {
-        setFirst(event?.first);
-        setParams({
-            ...params,
-            page: event?.page + 1,
-            per_page: event?.rows,
-        })
-    };
 
-    const onSortChange = (event) => {
-        if (event) {
-            const orderFormat = event?.sortOrder === 1 ? "DESC" : "ASC";
-            setParams({
-                ...params,
-                order: event?.sortField,
-                sort: orderFormat
-            })
+  /**
+   * Event - Paginate Page Change
+   * @param {*} event 
+   */
+  const onPageChange = (event) => {
+    first.current = event.page * paginateParams.per_page;
+    dispatch(
+      setPaginate({
+        ...paginateParams,
+        page: event?.page + 1,
+        per_page: event?.rows,
+      })
+    );
+  };
+
+  /**
+   * Event - Search
+   * @param {*} event 
+   */
+  const onSearchChange = (event) => {
+    dispatch(
+      setPaginate({
+        ...paginateParams,
+        search: event,
+      })
+    );
+  };
+
+  /**
+   * Event - Column sorting "DESC | ASC"
+   * @param {*} event 
+   */
+  const onSort =(event) => {
+    const sortOrder = event.sortOrder === 1 ? "DESC" : "ASC";
+    dispatch(
+      setPaginate({
+        ...paginateParams,
+        sort: sortOrder,
+        order: event.sortField
+      })
+    );
+  }
+
+    /**
+     *  Loading Data
+     */
+    const loadingData = useCallback(async () => {
+        setLoading(true);
+
+        const result = await adminService.index(dispatch,paginateParams);
+        if (result.status === 200) {
+            total.current = result.data.total ? result.data.total : result.data.length;
         }
-    }
 
-    const onSearchChange = (event) => {
-        setParams({
-            ...params,
-            search: event
-        })
-    }
+        setLoading(false);
+    }, [dispatch,paginateParams]);
+
+    useEffect(() => {
+        loadingData();
+    }, [loadingData])
 
     const FooterRender = () => {
         return (
@@ -83,7 +117,7 @@ export const AdminTableView = () => {
         return (
             <div className="w-full flex flex-column md:flex-row justify-content-between align-items-start">
                 <Search
-                    tooltipLabel={"search by id, address, contact_person,contact_phone,default address"}
+                    tooltipLabel={"search admin account by id, name, email, phone, status"}
                     placeholder={"Search admin account"}
                     onSearch={(e) => onSearchChange(e)}
                 />
@@ -99,34 +133,16 @@ export const AdminTableView = () => {
         )
     }
 
-    /**
-     *  Loading Data
-     */
-    const loadingData = useCallback(async () => {
-        setLoading(true);
-
-        const result = await adminService.index(dispatch);
-        if (result.status === 200) {
-            adminList.current = result.data;
-        }
-
-        setLoading(false);
-    }, [dispatch]);
-
-    useEffect(() => {
-        loadingData();
-    }, [loadingData])
-
     return (
         <>
 
             <DataTable
                 dataKey="id"
                 size="normal"
-                value={adminList.current?.length > 0 ? adminList.current : null}
-                sortField={params ? params.order : ""}
-                sortOrder={params ? params.sort : 1}
-                onSort={(e) => onSortChange(e)}
+                value={admins}
+                sortField={paginateParams.order}
+                sortOrder={paginateParams.sort === "DESC" ? 1 : paginateParams.sort === 'ASC' ? -1 : 0}
+                onSort={onSort}
                 lazy={paginateOptions.lazy}
                 loading={loading}
                 resizableColumns={paginateOptions.resizableColumns}
@@ -185,10 +201,12 @@ export const AdminTableView = () => {
                 })}
             </DataTable>
             <Paginator
-                first={first}
-                rows={params.per_page ? params.per_page : paginateOptions.rows}
+                first={first.current}
+                rows={paginateParams.per_page}
                 totalRecords={total?.current}
                 rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
+                template={"FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"}
+                currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
                 onPageChange={onPageChange}
             />
 

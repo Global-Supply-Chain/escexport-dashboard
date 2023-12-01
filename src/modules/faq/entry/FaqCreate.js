@@ -20,9 +20,12 @@ export const FaqCreate = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    /**
+     * faq create payload - [answer,question]
+     * **/
     const submitFaqCreate = async () => {
         setLoading(true);
-        await faqService.store(payload,dispatch);
+        await faqService.store(payload, dispatch);
         setLoading(false);
     }
 
@@ -37,77 +40,77 @@ export const FaqCreate = () => {
                 </div>
 
                 <div className=' col-12'>
-                <Card
-            title={'Create Faq'}
+                    <Card
+                        title={'Create Faq'}
 
-            >
+                    >
 
-                <div className=' grid'>
+                        <div className=' grid'>
 
-                    <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
-                        <div className="flex flex-column gap-2">
-                            <label htmlFor="answer" className=' text-black'>Answer (required*)</label>
-                            <InputText
-                                className="p-inputtext-sm text-black"
-                                id="answer"
-                                aria-describedby="answer-help"
-                                tooltip='Faq answer'
-                                tooltipOptions={{ ...tooltipOptions }}
-                                placeholder='Enter faq answer'
-                                disabled={loading}
-                                onChange={(e) => payloadHandler(payload, e.target.value, 'answer', (updateValue) => {
-                                    setPayload(updateValue);
-                                })}
-                            />
-                            <ValidationMessage field={"answer"} />
-                        </div>
-                    </div>
-
-                    <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
-                        <div className="flex flex-column gap-2">
-                            <label htmlFor="question" className=' text-black'>Question (required*)</label>
-                            <InputText
-                                className="p-inputtext-sm text-black"
-                                id="question"
-                                aria-describedby="question-help"
-                                tooltip='Faq question'
-                                tooltipOptions={{ ...tooltipOptions }}
-                                placeholder='Enter faq question'
-                                disabled={loading}
-                                onChange={(e) => payloadHandler(payload, e.target.value, 'question', (updateValue) => {
-                                    setPayload(updateValue);
-                                })}
-                            />
-                            <ValidationMessage field={"question"} />
-                        </div>
-                    </div>
-
-                    <div className="col-12">
-                            <div className="flex flex-row justify-content-end align-items-center">
-                                <Button
-                                    className="mx-2"
-                                    label="CANCEL"
-                                    severity="secondary"
-                                    outlined
-                                    size='small'
-                                    disabled={loading}
-                                    onClick={() => navigate(paths.faq)}
-                                />
-
-                                <Button 
-                                    className="mx-2"
-                                    label="CREATE"
-                                    severity="danger"
-                                    size='small'
-                                    disabled={loading}
-                                    onClick={() => submitFaqCreate()}
-                                />
+                            <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+                                <div className="flex flex-column gap-2">
+                                    <label htmlFor="answer" className=' text-black'>Answer (required*)</label>
+                                    <InputText
+                                        className="p-inputtext-sm text-black"
+                                        id="answer"
+                                        aria-describedby="answer-help"
+                                        tooltip='Faq answer'
+                                        tooltipOptions={{ ...tooltipOptions }}
+                                        placeholder='Enter faq answer'
+                                        disabled={loading}
+                                        onChange={(e) => payloadHandler(payload, e.target.value, 'answer', (updateValue) => {
+                                            setPayload(updateValue);
+                                        })}
+                                    />
+                                    <ValidationMessage field={"answer"} />
+                                </div>
                             </div>
-                    </div>
 
-                </div>
+                            <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+                                <div className="flex flex-column gap-2">
+                                    <label htmlFor="question" className=' text-black'>Question (required*)</label>
+                                    <InputText
+                                        className="p-inputtext-sm text-black"
+                                        id="question"
+                                        aria-describedby="question-help"
+                                        tooltip='Faq question'
+                                        tooltipOptions={{ ...tooltipOptions }}
+                                        placeholder='Enter faq question'
+                                        disabled={loading}
+                                        onChange={(e) => payloadHandler(payload, e.target.value, 'question', (updateValue) => {
+                                            setPayload(updateValue);
+                                        })}
+                                    />
+                                    <ValidationMessage field={"question"} />
+                                </div>
+                            </div>
 
-            </Card>
+                            <div className="col-12">
+                                <div className="flex flex-row justify-content-end align-items-center">
+                                    <Button
+                                        className="mx-2"
+                                        label="CANCEL"
+                                        severity="secondary"
+                                        outlined
+                                        size='small'
+                                        disabled={loading}
+                                        onClick={() => navigate(paths.faq)}
+                                    />
+
+                                    <Button
+                                        className="mx-2"
+                                        label="CREATE"
+                                        severity="danger"
+                                        size='small'
+                                        disabled={loading}
+                                        onClick={() => submitFaqCreate()}
+                                    />
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </Card>
                 </div>
 
             </div>

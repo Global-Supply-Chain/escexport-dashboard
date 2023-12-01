@@ -15,51 +15,67 @@ import { useNavigate } from 'react-router-dom';
 import { Paginator } from 'primereact/paginator';
 import { orderPayload } from '../orderPayload';
 import { orderService } from '../orderService';
+import { setPaginate } from '../orderSlice';
 
 export const OrderTableView = () => {
 
-    const [params, setParams] = useState(orderPayload?.paginateParams);
 
     const dispatch = useDispatch();
-    const { orders } = useSelector(state => state.order);
+    const { orders, paginateParams } = useSelector(state => state.order);
     const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
 
-    const orderList = useRef(orders);
     const total = useRef(0);
+    const first = useRef(0);
     const columns = useRef(orderPayload?.columns);
     const showColumns = useRef(columns?.current?.filter(col => col.show === true));
 
-    const [first, setFirst] = useState(0);
 
 
+    /**
+     * Event - Paginate Page Change
+     * @param {*} event 
+     */
     const onPageChange = (event) => {
-        setFirst(event?.first);
-        setParams({
-            ...params,
-            page: event?.page + 1,
-            per_page: event?.rows,
-        })
+        first.current = event.page * paginateParams.per_page;
+        dispatch(
+            setPaginate({
+                ...paginateParams,
+                page: event?.page + 1,
+                per_page: event?.rows,
+            })
+        );
     };
 
-    const onSortChange = (event) => {
-        if(event) {
-            const orderFormat = event?.sortOrder === 1 ? "DESC" : "ASC";
-            setParams({
-                ...params,
-                order: event?.sortField,
-                sort : orderFormat
-            })
-        }
-    }
-
+    /**
+     * Event - Search
+     * @param {*} event 
+     */
     const onSearchChange = (event) => {
-        setParams({
-            ...params,
-            search: event
-        })
+        dispatch(
+            setPaginate({
+                ...paginateParams,
+                search: event,
+            })
+        );
+    };
+
+    /**
+     * Event - Column sorting "DESC | ASC"
+     * @param {*} event 
+     */
+    const onSort = (event) => {
+        const sortOrder = event.sortOrder === 1 ? "DESC" : "ASC";
+        console.log(event);
+        dispatch(
+            setPaginate({
+                ...paginateParams,
+                sort: sortOrder,
+                order: event.sortField
+            })
+        );
     }
 
     /**
@@ -67,19 +83,21 @@ export const OrderTableView = () => {
      */
     const loadingData = useCallback(async () => {
         setLoading(true);
-        const result = await orderService.index(dispatch, params);
+        const result = await orderService.index(dispatch, paginateParams);
         if (result.status === 200) {
-            orderList.current = result?.data?.data;
-            total.current = result?.data?.total;
+            total.current = result?.data?.total ? result.data.total : result.data.length;
         }
 
         setLoading(false);
-    }, [dispatch, params]);
+    }, [dispatch, paginateParams]);
 
     useEffect(() => {
         loadingData();
     }, [loadingData])
 
+    /**
+     * Table Footer Render
+     * **/
     const FooterRender = () => {
         return (
             <div className=' flex items-center justify-content-between'>
@@ -107,8 +125,8 @@ export const OrderTableView = () => {
         return (
             <div className="w-full flex flex-column md:flex-row justify-content-between align-items-start">
                 <Search
-                    tooltipLabel={"search by admin's id, name, email, phone, status"}
-                    placeholder={"Search admin account"}
+                    tooltipLabel={"search order by id, user name, phone, email, delivery address, delivery contact phone, discount, delivery feed, total amount, items, payment type, status"}
+                    placeholder={"Search order"}
                     onSearch={(e) => onSearchChange(e)}
                 />
 
@@ -130,10 +148,10 @@ export const OrderTableView = () => {
             <DataTable
                 dataKey="id"
                 size="normal"
-                value={orderList.current.length > 0 && orderList.current}
-                sortField={params ? params.order : ""}
-                sortOrder={params ? params.sort : 1}
-                onSort={(e) => onSortChange(e)}
+                value={orders}
+                sortField={paginateParams.order}
+                sortOrder={paginateParams.sort === 'DESC' ? 1 : paginateParams.sort === 'ASC' ? -1 : 0}
+                onSort={onSort}
                 sortMode={paginateOptions.sortMode}
                 loading={loading}
                 emptyMessage="No order found."
@@ -155,15 +173,15 @@ export const OrderTableView = () => {
                                 }
 
                                 if (col.field === 'user_name') {
-                                    return (<p>{value[col.field]?.substring(0,12)}...</p>)
+                                    return (<p>{value[col.field]?.substring(0, 12)}...</p>)
                                 }
 
                                 if (col.field === 'email') {
-                                    return (<p>{value[col.field]?.substring(0,12)}...</p>)
+                                    return (<p>{value[col.field]?.substring(0, 12)}...</p>)
                                 }
 
                                 if (col.field === 'delivery_address') {
-                                    return (<p>{value[col.field].address?.substring(0,12)}...</p>)
+                                    return (<p>{value[col.field].address?.substring(0, 12)}...</p>)
                                 }
 
                                 if (col.field === 'id') {
@@ -196,10 +214,12 @@ export const OrderTableView = () => {
                 })}
             </DataTable>
             <Paginator
-                first={first}
-                rows={params.per_page ? params.per_page : paginateOptions.rows}
+                first={first.current}
+                rows={paginateParams.per_page}
                 totalRecords={total?.current}
                 rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
+                template={"FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"}
+                currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
                 onPageChange={onPageChange}
             />
         </>

@@ -11,7 +11,7 @@ export const pointService = {
         await httpServiceHandler(dispatch, response);
 
         if(response.status === 200) {
-            dispatch(index(response.data));
+            dispatch(index(response.data.data ? response.data.data : response.data));
         }
         return response;
     },

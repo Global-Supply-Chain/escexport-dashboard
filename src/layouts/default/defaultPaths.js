@@ -79,12 +79,18 @@ export const items = [
             },
             {
                 key: '4-2',
+                label: 'Category',
+                icon: 'pi pi-fw pi-list',
+                url: paths.category
+            },
+            {
+                key: '4-3',
                 label: 'Create Main Category',
                 icon: 'pi pi-fw pi-plus',
                 url: paths.createMainCategory
             },
             {
-                key: '4-3',
+                key: '4-4',
                 label: 'Create',
                 icon: 'pi pi-fw pi-plus',
                 url: paths.categoryCreate
@@ -202,7 +208,7 @@ export const items = [
     {
         key: '11',
         label: 'Region',
-        icon: 'pi pi-fw pi-comment',
+        icon: 'pi pi-fw pi-flag',
         children: [
             {
                 key: '11-1',
@@ -221,7 +227,7 @@ export const items = [
     {
         key: '12',
         label: 'Shop',
-        icon: 'pi pi-fw pi-comment',
+        icon: 'pi pi-fw pi-building',
         children: [
             {
                 key: '12-1',
