@@ -2,7 +2,7 @@ import React from 'react'
 import { BreadCrumb } from '../../../shares/BreadCrumb'
 import CategoryTableView from '../list/CategoryTableView'
 
-const CategoryList = () => {
+export const CategoryList = () => {
   return (
     <div className=' grid'>
 
@@ -18,5 +18,3 @@ const CategoryList = () => {
     </div>
   )
 }
-
-export default CategoryList

@@ -32,49 +32,49 @@ export const UserTableView = () => {
     const showColumns = useRef(columns?.current?.filter(col => col.show === true));
 
 
-  /**
-   * Event - Paginate Page Change
-   * @param {*} event 
-   */
-  const onPageChange = (event) => {
-    first.current = event.page * paginateParams.per_page;
-    dispatch(
-      setPaginate({
-        ...paginateParams,
-        page: event?.page + 1,
-        per_page: event?.rows,
-      })
-    );
-  };
+    /**
+     * Event - Paginate Page Change
+     * @param {*} event 
+     */
+    const onPageChange = (event) => {
+        first.current = event.page * paginateParams.per_page;
+        dispatch(
+            setPaginate({
+                ...paginateParams,
+                page: event?.page + 1,
+                per_page: event?.rows,
+            })
+        );
+    };
 
-  /**
-   * Event - Search
-   * @param {*} event 
-   */
-  const onSearchChange = (event) => {
-    dispatch(
-      setPaginate({
-        ...paginateParams,
-        search: event,
-      })
-    );
-  };
+    /**
+     * Event - Search
+     * @param {*} event 
+     */
+    const onSearchChange = (event) => {
+        dispatch(
+            setPaginate({
+                ...paginateParams,
+                search: event,
+            })
+        );
+    };
 
-  /**
-   * Event - Column sorting "DESC | ASC"
-   * @param {*} event 
-   */
-  const onSort =(event) => {
-    const sortOrder = event.sortOrder === 1 ? "DESC" : "ASC";
-    console.log(event);
-    dispatch(
-      setPaginate({
-        ...paginateParams,
-        sort: sortOrder,
-        order: event.sortField
-      })
-    );
-  }
+    /**
+     * Event - Column sorting "DESC | ASC"
+     * @param {*} event 
+     */
+    const onSort = (event) => {
+        const sortOrder = event.sortOrder === 1 ? "DESC" : "ASC";
+        console.log(event);
+        dispatch(
+            setPaginate({
+                ...paginateParams,
+                sort: sortOrder,
+                order: event.sortField
+            })
+        );
+    }
 
     /**
      *  Loading Data
@@ -93,6 +93,9 @@ export const UserTableView = () => {
         loadingData();
     }, [loadingData])
 
+    /**
+     * Table Footer Render
+     * **/
     const FooterRender = () => {
         return (
             <div className=' flex items-center justify-content-between'>

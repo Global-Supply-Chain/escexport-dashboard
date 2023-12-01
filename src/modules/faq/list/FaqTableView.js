@@ -20,7 +20,7 @@ import { setPaginate } from '../faqSlice';
 export const FaqTableView = () => {
 
     const dispatch = useDispatch();
-    const { faqs,paginateParams } = useSelector(state => state.faq);
+    const { faqs, paginateParams } = useSelector(state => state.faq);
     const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false);
@@ -32,48 +32,48 @@ export const FaqTableView = () => {
     const showColumns = useRef(columns?.current?.filter(col => col.show === true));
 
 
-  /**
-   * Event - Paginate Page Change
-   * @param {*} event 
-   */
-  const onPageChange = (event) => {
-    first.current = event.page * paginateParams.per_page;
-    dispatch(
-      setPaginate({
-        ...paginateParams,
-        page: event?.page + 1,
-        per_page: event?.rows,
-      })
-    );
-  };
+    /**
+     * Event - Paginate Page Change
+     * @param {*} event 
+     */
+    const onPageChange = (event) => {
+        first.current = event.page * paginateParams.per_page;
+        dispatch(
+            setPaginate({
+                ...paginateParams,
+                page: event?.page + 1,
+                per_page: event?.rows,
+            })
+        );
+    };
 
-  /**
-   * Event - Search
-   * @param {*} event 
-   */
-  const onSearchChange = (event) => {
-    dispatch(
-      setPaginate({
-        ...paginateParams,
-        search: event,
-      })
-    );
-  };
+    /**
+     * Event - Search
+     * @param {*} event 
+     */
+    const onSearchChange = (event) => {
+        dispatch(
+            setPaginate({
+                ...paginateParams,
+                search: event,
+            })
+        );
+    };
 
-  /**
-   * Event - Column sorting "DESC | ASC"
-   * @param {*} event 
-   */
-  const onSort =(event) => {
-    const sortOrder = event.sortOrder === 1 ? "DESC" : "ASC";
-    dispatch(
-      setPaginate({
-        ...paginateParams,
-        sort: sortOrder,
-        order: event.sortField
-      })
-    );
-  }
+    /**
+     * Event - Column sorting "DESC | ASC"
+     * @param {*} event 
+     */
+    const onSort = (event) => {
+        const sortOrder = event.sortOrder === 1 ? "DESC" : "ASC";
+        dispatch(
+            setPaginate({
+                ...paginateParams,
+                sort: sortOrder,
+                order: event.sortField
+            })
+        );
+    }
 
     /**
      *  Loading Data
@@ -92,6 +92,9 @@ export const FaqTableView = () => {
         loadingData();
     }, [loadingData])
 
+    /**
+     * Table footer Rnder
+     * **/
     const FooterRender = () => {
         return (
             <div className=' flex items-center justify-content-between'>
@@ -144,7 +147,7 @@ export const FaqTableView = () => {
                 size="normal"
                 value={faqs}
                 sortField={paginateParams.order}
-                sortOrder={paginateParams.sort ==='DESC' ? 1 : paginateParams.sort === 'ASC' ? -1 : 0}
+                sortOrder={paginateParams.sort === 'DESC' ? 1 : paginateParams.sort === 'ASC' ? -1 : 0}
                 onSort={onSort}
                 sortMode={paginateOptions.sortMode}
                 loading={loading}

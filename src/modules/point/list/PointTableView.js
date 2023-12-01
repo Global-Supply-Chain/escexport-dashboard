@@ -21,7 +21,7 @@ import { setPaginate } from '../pointSlice';
 const PointTableView = () => {
 
     const dispatch = useDispatch();
-    const { points,paginateParams } = useSelector(state => state.point);
+    const { points, paginateParams } = useSelector(state => state.point);
     const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false);
@@ -47,50 +47,53 @@ const PointTableView = () => {
         }
     ];
 
-  /**
-   * Event - Paginate Page Change
-   * @param {*} event 
-   */
-  const onPageChange = (event) => {
-    first.current = event.page * paginateParams.per_page;
-    dispatch(
-      setPaginate({
-        ...paginateParams,
-        page: event?.page + 1,
-        per_page: event?.rows,
-      })
-    );
-  };
+    /**
+     * Event - Paginate Page Change
+     * @param {*} event 
+     */
+    const onPageChange = (event) => {
+        first.current = event.page * paginateParams.per_page;
+        dispatch(
+            setPaginate({
+                ...paginateParams,
+                page: event?.page + 1,
+                per_page: event?.rows,
+            })
+        );
+    };
 
-  /**
-   * Event - Search
-   * @param {*} event 
-   */
-  const onSearchChange = (event) => {
-    dispatch(
-      setPaginate({
-        ...paginateParams,
-        search: event,
-      })
-    );
-  };
+    /**
+     * Event - Search
+     * @param {*} event 
+     */
+    const onSearchChange = (event) => {
+        dispatch(
+            setPaginate({
+                ...paginateParams,
+                search: event,
+            })
+        );
+    };
 
-  /**
-   * Event - Column sorting "DESC | ASC"
-   * @param {*} event 
-   */
-  const onSort =(event) => {
-    const sortOrder = event.sortOrder === 1 ? "DESC" : "ASC";
-    console.log(event);
-    dispatch(
-      setPaginate({
-        ...paginateParams,
-        sort: sortOrder,
-        order: event.sortField
-      })
-    );
-  }
+    /**
+     * Event - Column sorting "DESC | ASC"
+     * @param {*} event 
+     */
+    const onSort = (event) => {
+        const sortOrder = event.sortOrder === 1 ? "DESC" : "ASC";
+        console.log(event);
+        dispatch(
+            setPaginate({
+                ...paginateParams,
+                sort: sortOrder,
+                order: event.sortField
+            })
+        );
+    }
 
+    /**
+     * Table Footer Render
+     * **/
     const FooterRender = () => {
         return (
             <div className=' flex items-center justify-content-between'>
@@ -188,13 +191,13 @@ const PointTableView = () => {
     const loadingData = useCallback(async () => {
         setLoading(true);
 
-        const result = await pointService.index(dispatch,paginateParams);
+        const result = await pointService.index(dispatch, paginateParams);
         if (result.status === 200) {
             total.current = result?.data?.total;
         }
 
         setLoading(false);
-    }, [dispatch,paginateParams]);
+    }, [dispatch, paginateParams]);
 
     useEffect(() => {
         loadingData();

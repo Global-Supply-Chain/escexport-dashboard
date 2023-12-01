@@ -10,30 +10,22 @@ import DeleteDialogButton from '../../../shares/DeleteDialogButton';
 import { paths } from '../../../constants/paths';
 import { Dropdown } from 'primereact/dropdown';
 import { categoryService } from '../categoryService';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { getRequest } from '../../../helpers/api';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import { generalStatus } from '../../../helpers/StatusHandler';
 
-const CategoryUpdate = ({ dataSource }) => {
+const CategoryUpdate = () => {
 
+    const params = useParams();
     const [visible, setVisible] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [generalStatus, setGeneralStatus] = useState([]);
+    const [status, setStatus] = useState([]);
     const [payload, setPayload] = useState(categoryPayload.update);
     const [categoryList, setCategoryList] = useState([{ label: categoryPayload.update.title, code: categoryPayload.update.id }]);
 
+    const {category} = useSelector((state) => state.category);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const loadingDataSource = useCallback(() => {
-        if (dataSource) {
-            setPayload(dataSource);
-        }
-    }, [dataSource]);
-
-    useEffect(() => {
-        loadingDataSource();
-    }, [loadingDataSource])
 
 
     /**
@@ -54,34 +46,26 @@ const CategoryUpdate = ({ dataSource }) => {
             setCategoryList(formatData);
         }
 
+        await categoryService.show(dispatch,params.id);
+
         setLoading(false);
-    }, [dispatch]);
-
-    const loadingGeneralStatus = useCallback(async () =>    {
-
-        const response = await getRequest(`/status?type=general`);
-
-        if(response){
-
-            const formateData = response.data.general?.map((item) => {
-                return {
-                    label : item, 
-                    value: item
-                }
-            })
-
-            setGeneralStatus(formateData);
-        }
-
-    }, []);
+    }, [dispatch,params.id]);
 
     useEffect(() => {
         loadingData()
     }, [loadingData])
 
     useEffect(() => {
-        loadingGeneralStatus()
-    }, [loadingGeneralStatus])
+       generalStatus().then((data) => {
+        setStatus(data);
+       }).catch((error) => console.log(error))
+    }, [])
+
+    useEffect(() => {
+        if(category){
+            setPayload(category)
+        }
+    }, [category])
 
     const submitUpdateCategory = async () => {
         setLoading(true);
@@ -104,7 +88,8 @@ const CategoryUpdate = ({ dataSource }) => {
                             visible={visible}
                             setVisible={setVisible}
                             url={paths.category}
-                            id={dataSource?.id}
+                            id={params.id}
+                            redirect={paths.category}
                         />
 
                         <Button
@@ -180,7 +165,7 @@ const CategoryUpdate = ({ dataSource }) => {
                     )
                 }
 
-                <div className="col-12 md:col-4 lg:col-4 my-3">
+                <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
                     <label htmlFor="password" className='input-label'> Description </label>
                     <div className="p-inputgroup mt-2">
                         <InputText
@@ -205,7 +190,7 @@ const CategoryUpdate = ({ dataSource }) => {
                         <div className="flex flex-column gap-2">
                             <label htmlFor="phone" className=' text-black'>Status</label>
                             <Dropdown 
-                            options={generalStatus} 
+                            options={status} 
                             placeholder="Select a general status" 
                             disabled={loading}
                             value={payload.status}

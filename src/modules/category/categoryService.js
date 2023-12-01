@@ -2,7 +2,7 @@ import { endpoints } from "../../constants/endpoints";
 import { getRequest, postRequest, putRequest } from "../../helpers/api";
 import { httpServiceHandler } from "../../helpers/handler";
 import { updateNotification } from "../../shares/shareSlice";
-import { mainIndex, mainUpdate } from "./categorySlice";
+import { index, mainIndex, mainUpdate, show } from "./categorySlice";
 
 export const categoryService = {
   mainIndex: async (dispatch, params) => {
@@ -61,7 +61,7 @@ export const categoryService = {
     const response = await getRequest(endpoints.category, params);
     await httpServiceHandler(dispatch, response);
     if (response.status === 200) {
-      dispatch(mainIndex(response.data.data));
+      dispatch(index(response.data.data ? response.data.data : response.data));
     }
     return response;
   },
@@ -88,6 +88,7 @@ export const categoryService = {
     await httpServiceHandler(dispatch, response);
 
     if (response.status === 200) {
+      dispatch(show(response.data))
       dispatch(
         updateNotification({
           show: true,

@@ -12,6 +12,8 @@ import { paths } from '../../../constants/paths';
 import { faqService } from '../faqService';
 import DeleteDialogButton from '../../../shares/DeleteDialogButton';
 import { endpoints } from '../../../constants/endpoints';
+import { generalStatus } from '../../../helpers/StatusHandler';
+import { Dropdown } from 'primereact/dropdown';
 
 export const FaqUpdate = () => {
 
@@ -24,12 +26,27 @@ export const FaqUpdate = () => {
     const [payload, setPayload] = useState(faqPayload.update);
     const [loading, setLoading] = useState(false);
     const [visible, setVisible] = useState(false);
+    const [status, setStatus] = useState([]);
 
+    /**
+     * loading data
+     * **/
     const loadingData = useCallback(async () => {
         setLoading(true);
         await faqService.show(dispatch, params.id)
         setLoading(false);
     }, [dispatch, params])
+
+    /**
+     * Return general status
+     * @returns {Array} Array that contain general status ACTIVE,DISABLE and DELETE
+     * **/
+    useEffect(() => {
+        generalStatus().then((data) => {
+            setStatus(data)
+        }).catch((error) => console.log(error))
+
+    }, [])
 
     useEffect(() => {
         loadingData();
@@ -41,6 +58,9 @@ export const FaqUpdate = () => {
         }
     }, [faq])
 
+    /**
+     * faq update payload- [answer,question]
+     * **/
     const submitFaqUpdate = async () => {
         setLoading(true);
         await faqService.update(dispatch, params.id, payload)
@@ -116,6 +136,24 @@ export const FaqUpdate = () => {
                                 })}
                             />
                             <ValidationMessage field={"question"} />
+                        </div>
+                    </div>
+
+                    <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+                        <div className="flex flex-column gap-2">
+                            <label htmlFor="phone" className=' text-black'>Status</label>
+                            <Dropdown
+                                options={status}
+                                placeholder="Select a general status"
+                                disabled={loading}
+                                value={payload.status}
+                                className="p-inputtext-sm text-black"
+                                onChange={(e) => payloadHandler(payload, e.value, 'status', (updateValue) => {
+                                    setPayload(updateValue);
+                                })}
+                            />
+
+                            <ValidationMessage field={"status"} />
                         </div>
                     </div>
 

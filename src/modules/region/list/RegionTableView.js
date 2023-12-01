@@ -90,6 +90,9 @@ export const RegionTableView = () => {
         loadingData();
     }, [loadingData])
 
+    /**
+     * Table Footer Render
+     * **/
     const FooterRender = () => {
         return (
             <div className=' flex items-center justify-content-between'>

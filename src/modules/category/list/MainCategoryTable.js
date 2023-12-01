@@ -11,11 +11,11 @@ import { Column } from "primereact/column";
 import { Status } from "../../../shares/Status";
 import { paths } from "../../../constants/paths";
 import { Paginator } from "primereact/paginator";
-import { setPaginate } from "../categorySlice";
 import { Avatar } from "primereact/avatar";
 import { NavigateId } from "../../../shares/NavigateId";
 import { endpoints } from "../../../constants/endpoints";
 import { AuditColumn } from "../../../shares/AuditColumn";
+import { setMainPaginate } from "../categorySlice";
 
 export const MainCategoryTable = () => {
   const dispatch = useDispatch();
@@ -40,7 +40,7 @@ export const MainCategoryTable = () => {
   const onPageChange = (event) => {
     first.current = event.page * mainPaginateParams.per_page;
     dispatch(
-      setPaginate({
+      setMainPaginate({
         ...mainPaginateParams,
         page: event?.page + 1,
         per_page: event?.rows,
@@ -54,7 +54,7 @@ export const MainCategoryTable = () => {
    */
   const onSearchChange = (event) => {
     dispatch(
-      setPaginate({
+      setMainPaginate({
         ...mainPaginateParams,
         search: event,
       })
@@ -69,7 +69,7 @@ export const MainCategoryTable = () => {
     const sortOrder = event.sortOrder === 1 ? "DESC" : "ASC";
     console.log(event);
     dispatch(
-      setPaginate({
+      setMainPaginate({
         ...mainPaginateParams,
         sort: sortOrder,
         order: event.sortField

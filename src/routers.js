@@ -6,7 +6,7 @@ import { Login } from "./modules/auth/entry/Login";
 import { promotionRoutes } from "./modules/promotion/promotionRoutes";
 import { userRoutes } from "./modules/user/userRoutes";
 import { adminRoutes } from "./modules/admin/adminRoutes";
-import { categoryRoutes } from "./modules/category/categoryRoutes";
+import { mainCategoryRoutes } from "./modules/category/mainCategoryRoutes"; 
 import { itemRoutes } from "./modules/item/itemRoutes";
 import { deliveryRoutes } from "./modules/delivery/deliveryRoutes";
 import { mediaRoutes } from "./modules/media/mediaRoute";
@@ -15,6 +15,7 @@ import { orderRoutes } from "./modules/order/orderRoutes";
 import { faqRoutes } from "./modules/faq/faqRoutes";
 import { regionRoutes } from "./modules/region/regionRoutes";
 import { shopRoutes } from "./modules/shop/shopRoutes";
+import { categoryRoutes } from "./modules/category/categoryRoute";
 
 export const routers = createBrowserRouter([
     {
@@ -25,6 +26,7 @@ export const routers = createBrowserRouter([
             ...promotionRoutes,
             ...userRoutes,
             ...adminRoutes,
+            ...mainCategoryRoutes,
             ...categoryRoutes,
             ...itemRoutes,
             ...deliveryRoutes,

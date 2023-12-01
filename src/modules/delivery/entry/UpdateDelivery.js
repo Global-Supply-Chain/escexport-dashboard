@@ -29,10 +29,7 @@ export const UpdateDelivery = () => {
 
   const loadingData = useCallback(async () => {
     setLoading(true)
-    const response = await deliveryService.show(dispatch, params.id);
-    if (response.status === 200) {
-      setPayload(response.data)
-    }
+    await deliveryService.show(dispatch, params.id);
     const result = await userService.index(dispatch);
     if (result.status === 200) {
       const formatData = result.data?.map((user) => {
@@ -44,11 +41,17 @@ export const UpdateDelivery = () => {
       setUserList(formatData);
     }
     setLoading(false)
-  }, [dispatch, params])
+  }, [dispatch, params.id])
 
   useEffect(() => {
     loadingData()
   }, [loadingData])
+
+  useEffect(() => {
+    if(delivery){
+      setPayload(delivery);
+    }
+  }, [delivery])
 
   const submitDeliveryUpdate = async () => {
     setLoading(true);

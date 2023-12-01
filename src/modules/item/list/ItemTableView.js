@@ -94,7 +94,10 @@ const ItemTableView = () => {
         loadingData();
     }, [loadingData])
 
-    const footer = useCallback(() => {
+    /**
+     * Table Footer Render
+     * **/
+    const FooterRender = () => {
         return (
             <div className=' flex items-center justify-content-between'>
                 <div>Total - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
@@ -112,7 +115,7 @@ const ItemTableView = () => {
                 </div>
             </div>
         )
-    }, [total, showAuditColumn])
+    }
 
     /**
     * Table Header Render
@@ -151,7 +154,7 @@ const ItemTableView = () => {
                 emptyMessage="No item found."
                 globalFilterFields={itemPayload.columns}
                 header={<HeaderRender />}
-                footer={footer}
+                footer={<FooterRender />}
             >
                 {showColumns.current.map((col, index) => {
                     return (

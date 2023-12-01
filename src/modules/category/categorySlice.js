@@ -7,7 +7,9 @@ const categorySlice = createSlice({
         mainCategories: [],
         mainCategory: null,
         categories: [],
-        mainPaginateParams: categoryPayload.mainCategoryPaginateParams
+        category: null,
+        mainPaginateParams: categoryPayload.mainCategoryPaginateParams,
+        paginateParams: categoryPayload.paginateParams
     },
     reducers: {
         mainIndex: (state, action) => {
@@ -29,7 +31,8 @@ const categorySlice = createSlice({
             state.categories = action.payload;
             return state;
         },
-        show: state => {
+        show:( state,action) => {
+            state.category = action.payload;
             return state;
         },
         destroy: state => {
@@ -38,9 +41,14 @@ const categorySlice = createSlice({
         store: state => {
             return state
         },
-        setPaginate: (state, action) => {
+        setMainPaginate: (state, action) => {
             state.mainPaginateParams = action.payload;
+            return state;
         },
+        setPaginate: (state, action) => {
+            state.paginateParams = action.payload;
+            return state;
+        }
     }
 });
 
@@ -52,6 +60,7 @@ export const {
     show, 
     destroy, 
     store, 
+    setMainPaginate,
     setPaginate
 } = categorySlice.actions;
 
