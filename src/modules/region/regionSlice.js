@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { regionPayload } from "./regionPayload";
 
 const regionSlice = createSlice({
     name: 'region',
     initialState: {
         regions: [],
         region: null,
-        paginateParams : "",
+        paginateParams : regionPayload.paginateParams,
         total : 0
     },
     reducers: {
@@ -21,12 +22,12 @@ const regionSlice = createSlice({
             state.region = action.payload;
             return state;
         },
-        setPaginateParams: (state, action) => {
+        setPaginate: (state, action) => {
             state.paginateParams = action.payload;
             return state;
         }
     }
 });
 
-export const { index, update, show, setPaginateParams } = regionSlice.actions;
+export const { index, update, show, setPaginate } = regionSlice.actions;
 export default regionSlice.reducer;

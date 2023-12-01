@@ -13,50 +13,85 @@ import { Status } from '../../../shares/Status';
 import { paths } from '../../../constants/paths';
 import { datetime } from '../../../helpers/datetime';
 import { Paginator } from 'primereact/paginator';
+import { setPaginate } from '../promotionSlice';
 
 const PromotionTableView = () => {
 
     const dispatch = useDispatch();
-    const state = useSelector(state => state.promotion);
+    const { promotions, paginateParams } = useSelector(state => state.promotion);
     const navigate = useNavigate();
 
-    const [first, setFirst] = useState(0);
-    const [params, setParams] = useState(promotionPayload?.paginateParams);
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
 
-    const promotionList = useRef(state.user);
+    const first = useRef(0);
     const total = useRef(0);
     const columns = useRef(promotionPayload.columns);
     const showColumns = useRef(columns.current.filter(col => col.show === true));
 
 
+    /**
+     * Event - Paginate Page Change
+     * @param {*} event 
+     */
     const onPageChange = (event) => {
-        setFirst(event?.first);
-        setParams({
-            ...params,
-            page: event?.page + 1,
-            per_page: event?.rows,
-        })
+        first.current = event.page * paginateParams.per_page;
+        dispatch(
+            setPaginate({
+                ...paginateParams,
+                page: event?.page + 1,
+                per_page: event?.rows,
+            })
+        );
     };
 
-    const onSortChange = (event) => {
-        if (event) {
-            const orderFormat = event?.sortOrder === 1 ? "DESC" : "ASC";
-            setParams({
-                ...params,
-                order: event?.sortField,
-                sort: orderFormat
+    /**
+     * Event - Search
+     * @param {*} event 
+     */
+    const onSearchChange = (event) => {
+        dispatch(
+            setPaginate({
+                ...paginateParams,
+                search: event,
             })
-        }
+        );
+    };
+
+    /**
+     * Event - Column sorting "DESC | ASC"
+     * @param {*} event 
+     */
+    const onSort = (event) => {
+        const sortOrder = event.sortOrder === 1 ? "DESC" : "ASC";
+        console.log(event);
+        dispatch(
+            setPaginate({
+                ...paginateParams,
+                sort: sortOrder,
+                order: event.sortField
+            })
+        );
     }
 
-    const onSearchChange = (event) => {
-        setParams({
-            ...params,
-            search: event
-        })
-    }
+    /**
+     *  Loading Data
+     */
+    const loadingData = useCallback(async () => {
+        setLoading(true);
+
+        const result = await promotionService.index(dispatch, paginateParams);
+        if (result.status === 200) {
+            total.current = result?.data?.total;
+        }
+
+        setLoading(false);
+    }, [dispatch, paginateParams]);
+
+    useEffect(() => {
+        loadingData();
+    }, [loadingData])
+
 
     const FooterRender = () => {
         return (
@@ -85,8 +120,8 @@ const PromotionTableView = () => {
         return (
             <div className="w-full flex flex-column md:flex-row justify-content-between align-items-start">
                 <Search
-                    tooltipLabel={"search by admin's id, name, email, phone, status"}
-                    placeholder={"Search admin account"}
+                    tooltipLabel={"search promotion by id, title, status"}
+                    placeholder={"Search promotion"}
                     onSearch={(e) => onSearchChange(e)}
                 />
 
@@ -101,27 +136,6 @@ const PromotionTableView = () => {
         )
     }
 
-    /**
-     *  Loading Data
-     */
-    const loadingData = useCallback(async () => {
-        setLoading(true);
-
-        const result = await promotionService.index(dispatch,params);
-        if (result.status === 200) {
-            promotionList.current = result?.data?.data;
-            total.current = result?.data?.total;
-        }
-
-        setLoading(false);
-    }, [dispatch,params]);
-
-    useEffect(() => {
-        loadingData();
-    }, [loadingData])
-
-
-
 
     return (
         <>
@@ -129,10 +143,10 @@ const PromotionTableView = () => {
             <DataTable
                 dataKey="id"
                 size="normal"
-                value={promotionList.current?.length > 0 && promotionList?.current}
-                sortField={params ? params.order : ""}
-                sortOrder={params ? params.sort : 1}
-                onSort={(e) => onSortChange(e)}
+                value={promotions}
+                sortField={paginateParams.order}
+                sortOrder={paginateParams.sort === 'DESC' ? 1 : paginateParams.sort === "ASC" ? -1 : 0}
+                onSort={onSort}
                 sortMode={paginateOptions.sortMode}
                 loading={loading}
                 emptyMessage="No promotion found."
@@ -177,10 +191,12 @@ const PromotionTableView = () => {
                 })}
             </DataTable>
             <Paginator
-                first={first}
-                rows={params.per_page ? params.per_page : paginateOptions.rows}
+                first={first.current}
+                rows={paginateParams.per_page}
                 totalRecords={total?.current}
                 rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
+                template={"FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"}
+                currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
                 onPageChange={onPageChange}
             />
 
