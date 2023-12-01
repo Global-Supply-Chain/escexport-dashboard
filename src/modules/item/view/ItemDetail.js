@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React from 'react'
 import { BreadCrumb } from '../../../shares/BreadCrumb';
 import ItemUpdate from '../entry/ItemUpdate';
 
@@ -12,7 +12,7 @@ const ItemDetail = () => {
         </div>
 
         <div>
-            <ItemUpdate dataSource={dataSource} />
+            <ItemUpdate />
         </div>
 
     </div>
