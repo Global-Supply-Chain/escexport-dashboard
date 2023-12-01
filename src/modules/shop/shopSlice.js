@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { shopPayload } from "./shopPayload";
 
 const shopSlice = createSlice({
     name: 'shop',
     initialState: {
         shops: [],
         shop: null,
+        paginateParams: shopPayload.paginateParams
     },
     reducers: {
         index: (state, action) => {
@@ -18,9 +20,13 @@ const shopSlice = createSlice({
         show: (state, action) => {
             state.shop = action.payload;
             return state;
+        },
+        setPaginate: (state, action) => {
+            state.paginateParams = action.payload;
+            return state;
         }
     }
 });
 
-export const { index, update, show } = shopSlice.actions;
+export const { index, update, show, setPaginate } = shopSlice.actions;
 export default shopSlice.reducer;

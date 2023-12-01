@@ -4,7 +4,6 @@ import { useParams } from 'react-router'
 import { promotionService } from '../promotionService';
 import { promotionPayload } from '../promotionPayload';
 import { endpoints } from '../../../constants/endpoints';
-import { getRequest } from '../../../helpers/api';
 import { BreadCrumb } from '../../../shares/BreadCrumb';
 import { Card } from 'primereact/card';
 import { Image } from 'primereact/image';
@@ -16,12 +15,14 @@ import { tooltipOptions } from '../../../constants/config';
 import { Button } from 'primereact/button';
 import DeleteDialogButton from '../../../shares/DeleteDialogButton';
 import { paths } from '../../../constants/paths';
+import { Dropdown } from 'primereact/dropdown';
+import { generalStatus } from '../../../helpers/StatusHandler';
 
 const UpdatePromotion = () => {
 
   const params = useParams();
   const [payload, setPayload] = useState(promotionPayload.update);
-  const [generalStatus, setGeneralStatus] = useState([]);
+  const [status, setStatus] = useState([]);
   const [visible, setVisible] = useState(false);
 
   const dispatch = useDispatch();
@@ -35,11 +36,6 @@ const UpdatePromotion = () => {
     setLoading(true);
     await promotionService.show(dispatch, params.id);
 
-    const response = await getRequest(`${endpoints.status}?type=general`);
-    if (response.status === 200) {
-      setGeneralStatus(response.data.general);
-    };
-
     setLoading(false);
   }, [dispatch, params])
 
@@ -49,6 +45,16 @@ const UpdatePromotion = () => {
     setLoading(false);
   }
 
+  /**
+ * Return general status
+ * @returns {Array} Array that contain general status ACTIVE,DISABLE and DELETE
+ * **/
+  useEffect(() => {
+    generalStatus().then((data) => {
+      setStatus(data)
+    }).catch((error) => console.log(error))
+
+  }, [])
 
   useEffect(() => {
     loadingData()
@@ -74,27 +80,27 @@ const UpdatePromotion = () => {
         >
           <div className="grid">
 
-          <div className=' col-12 flex align-items-center justify-content-end'>
-                    <div>
+            <div className=' col-12 flex align-items-center justify-content-end'>
+              <div>
 
-                        <DeleteDialogButton
-                            visible={visible}
-                            setVisible={setVisible}
-                            url={paths.promotion}
-                            id={params.id}
-                            redirect={paths.promotion}
-                        />
+                <DeleteDialogButton
+                  visible={visible}
+                  setVisible={setVisible}
+                  url={paths.promotion}
+                  id={params.id}
+                  redirect={paths.promotion}
+                />
 
-                        <Button
-                            size='small'
-                            severity='danger'
-                            outlined
-                            onClick={() => setVisible(true)}
-                        >
-                            <i className=' pi pi-trash'></i>
-                        </Button>
-                    </div>
-                </div>
+                <Button
+                  size='small'
+                  severity='danger'
+                  outlined
+                  onClick={() => setVisible(true)}
+                >
+                  <i className=' pi pi-trash'></i>
+                </Button>
+              </div>
+            </div>
 
             <div className=" col-12 flex justify-content-center align-items-center">
 
@@ -173,6 +179,24 @@ const UpdatePromotion = () => {
                     }
                   }}
                 />
+              </div>
+            </div>
+
+            <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+              <div className="flex flex-column gap-2">
+                <label htmlFor="phone" className=' text-black'>Status</label>
+                <Dropdown
+                  options={status}
+                  placeholder="Select a general status"
+                  disabled={loading}
+                  value={payload.status}
+                  className="p-inputtext-sm text-black"
+                  onChange={(e) => payloadHandler(payload, e.value, 'status', (updateValue) => {
+                    setPayload(updateValue);
+                  })}
+                />
+
+                <ValidationMessage field={"status"} />
               </div>
             </div>
 

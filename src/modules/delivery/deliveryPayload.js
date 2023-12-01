@@ -26,9 +26,9 @@ export const deliveryPayload = {
     paginateParams: {
         page: 1,
         per_page: paginateOptions.rows,
-        columns: "id,address,contact_phone,contact_person",
+        columns: "id,address,contact_phone,contact_person,is_default",
         search: "",
-        order: "",
+        order: "id",
         sort: "DESC"
     }
 }

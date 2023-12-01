@@ -3,7 +3,7 @@ import { paths } from "../../constants/paths";
 import { getRequest, postRequest, putRequest } from "../../helpers/api";
 import { httpServiceHandler } from "../../helpers/handler";
 import { updateNotification } from "../../shares/shareSlice";
-import { index } from "./itemSlice";
+import { index, show } from "./itemSlice";
 
 
 export const itemService = {
@@ -11,7 +11,7 @@ export const itemService = {
         const response = await getRequest(endpoints.item, params);
         await httpServiceHandler(dispatch, response);
         if(response.status === 200) {
-            dispatch(index(response.data));
+            dispatch(index(response.data.data ? response.data.data : response.data));
         }
         return response;
     },
@@ -35,12 +35,7 @@ export const itemService = {
         await httpServiceHandler(dispatch,response);
 
         if(response.status === 200) {
-            dispatch(updateNotification( {
-                show: true,
-                summary: "Success",
-                severity: "success",
-                detail: response.message
-            }));
+            dispatch(show(response.data))
         }
 
         return response;

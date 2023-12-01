@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { regionPayload } from '../regionPayload';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getRequest } from '../../../helpers/api';
 import { endpoints } from '../../../constants/endpoints';
 import { Card } from 'primereact/card';
 import { Dropdown } from 'primereact/dropdown';
@@ -14,13 +13,14 @@ import { ValidationMessage } from '../../../shares/ValidationMessage';
 import { Button } from 'primereact/button';
 import { paths } from '../../../constants/paths';
 import DeleteDialogButton from '../../../shares/DeleteDialogButton';
+import { generalStatus } from '../../../helpers/StatusHandler';
 
 export const RegionUpdate = () => {
 
     const params = useParams();
     const [loading, setLoading] = useState(false);
     const [payload, setPayload] = useState(regionPayload.update);
-    const [generalStatus, setGeneralStatus] = useState([]);
+    const [status, setStatus] = useState([]);
     const [visible, setVisible] = useState(false);
 
     const navigate = useNavigate();
@@ -31,21 +31,19 @@ export const RegionUpdate = () => {
     const loadingData = useCallback(async () => {
         setLoading(true)
         await regionService.show(dispatch, params.id)
-        const response = await getRequest(`${endpoints.status}?type=${endpoints.generalStatus}`);
-
-        if (response) {
-
-            const formateData = response.data.general?.map((item) => {
-                return {
-                    label: item,
-                    value: item
-                }
-            })
-
-            setGeneralStatus(formateData);
-        }
         setLoading(false)
     }, [dispatch, params])
+
+    /**
+    * Return general status
+    * @returns {Array} Array that contain general status ACTIVE,DISABLE and DELETE
+    * **/
+    useEffect(() => {
+        generalStatus().then((data) => {
+            setStatus(data)
+        }).catch((error) => console.log(error))
+
+    }, [])
 
     useEffect(() => {
         loadingData();
@@ -97,7 +95,7 @@ export const RegionUpdate = () => {
                     <div className="flex flex-column gap-2">
                         <label htmlFor="phone" className=' text-black'>Status</label>
                         <Dropdown
-                            options={generalStatus}
+                            options={status}
                             placeholder="Select a general status"
                             disabled={loading}
                             value={payload.status}

@@ -1,6 +1,6 @@
 import { paths } from "../../constants/paths"
 import { FaqCreate } from "./entry/FaqCreate"
-import { FaqDetail } from "./list/FaqDetail"
+import { FaqDetail } from "./views/FaqDetail"
 import { FaqList } from "./views/FaqList"
 
 

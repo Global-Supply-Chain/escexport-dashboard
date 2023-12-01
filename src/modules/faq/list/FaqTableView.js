@@ -15,51 +15,64 @@ import { useNavigate } from 'react-router-dom';
 import { Paginator } from 'primereact/paginator';
 import { faqPayload } from '../faqPayload';
 import { faqService } from '../faqService';
+import { setPaginate } from '../faqSlice';
 
 export const FaqTableView = () => {
 
-    const [params, setParams] = useState(faqPayload?.paginateParams);
-
     const dispatch = useDispatch();
-    const { faqs } = useSelector(state => state.faq);
+    const { faqs, paginateParams } = useSelector(state => state.faq);
     const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
 
-    const faqList = useRef(faqs);
+    const first = useRef(0);
     const total = useRef(0);
     const columns = useRef(faqPayload?.columns);
     const showColumns = useRef(columns?.current?.filter(col => col.show === true));
 
-    const [first, setFirst] = useState(0);
 
-
+    /**
+     * Event - Paginate Page Change
+     * @param {*} event 
+     */
     const onPageChange = (event) => {
-        setFirst(event?.first);
-        setParams({
-            ...params,
-            page: event?.page + 1,
-            per_page: event?.rows,
-        })
+        first.current = event.page * paginateParams.per_page;
+        dispatch(
+            setPaginate({
+                ...paginateParams,
+                page: event?.page + 1,
+                per_page: event?.rows,
+            })
+        );
     };
 
-    const onSortChange = (event) => {
-        if(event) {
-            const orderFormat = event?.sortOrder === 1 ? "DESC" : "ASC";
-            setParams({
-                ...params,
-                order: event?.sortField,
-                sort : orderFormat
-            })
-        }
-    }
-
+    /**
+     * Event - Search
+     * @param {*} event 
+     */
     const onSearchChange = (event) => {
-        setParams({
-            ...params,
-            search: event
-        })
+        dispatch(
+            setPaginate({
+                ...paginateParams,
+                search: event,
+            })
+        );
+    };
+
+    /**
+     * Event - Column sorting "DESC | ASC"
+     * @param {*} event 
+     */
+    const onSort = (event) => {
+        const sortOrder = event.sortOrder === 1 ? "DESC" : "ASC";
+        dispatch(
+            setPaginate({
+                ...paginateParams,
+                sort: sortOrder,
+                order: event.sortField
+            })
+        );
     }
 
     /**
@@ -67,19 +80,21 @@ export const FaqTableView = () => {
      */
     const loadingData = useCallback(async () => {
         setLoading(true);
-        const result = await faqService.index(dispatch, params);
+        const result = await faqService.index(dispatch, paginateParams);
         if (result.status === 200) {
-            faqList.current = result?.data?.data;
-            total.current = result?.data?.total;
+            total.current = result?.data?.total ? result.data.total : result.data.length;
         }
 
         setLoading(false);
-    }, [dispatch, params]);
+    }, [dispatch, paginateParams]);
 
     useEffect(() => {
         loadingData();
     }, [loadingData])
 
+    /**
+     * Table footer Rnder
+     * **/
     const FooterRender = () => {
         return (
             <div className=' flex items-center justify-content-between'>
@@ -107,8 +122,8 @@ export const FaqTableView = () => {
         return (
             <div className="w-full flex flex-column md:flex-row justify-content-between align-items-start">
                 <Search
-                    tooltipLabel={"search by admin's id, name, email, phone, status"}
-                    placeholder={"Search admin account"}
+                    tooltipLabel={"search faq by id, answer, question, status"}
+                    placeholder={"Search faq"}
                     onSearch={(e) => onSearchChange(e)}
                 />
 
@@ -130,10 +145,10 @@ export const FaqTableView = () => {
             <DataTable
                 dataKey="id"
                 size="normal"
-                value={faqList.current.length > 0 && faqList.current}
-                sortField={params ? params.order : ""}
-                sortOrder={params ? params.sort : 1}
-                onSort={(e) => onSortChange(e)}
+                value={faqs}
+                sortField={paginateParams.order}
+                sortOrder={paginateParams.sort === 'DESC' ? 1 : paginateParams.sort === 'ASC' ? -1 : 0}
+                onSort={onSort}
                 sortMode={paginateOptions.sortMode}
                 loading={loading}
                 emptyMessage="No faq found."
@@ -184,10 +199,12 @@ export const FaqTableView = () => {
                 })}
             </DataTable>
             <Paginator
-                first={first}
-                rows={params.per_page ? params.per_page : paginateOptions.rows}
+                first={first.current}
+                rows={paginateParams.per_page}
                 totalRecords={total?.current}
                 rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
+                template={"FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"}
+                currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
                 onPageChange={onPageChange}
             />
         </>

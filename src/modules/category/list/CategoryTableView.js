@@ -13,92 +13,66 @@ import { Status } from "../../../shares/Status";
 import { useNavigate } from "react-router-dom";
 import { paths } from "../../../constants/paths";
 import { Paginator } from "primereact/paginator";
+import { setPaginate } from "../categorySlice";
 
 const CategoryTableView = () => {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.admin);
+  const { categories,paginateParams } = useSelector((state) => state.category);
   const navigate = useNavigate();
 
-  const [params, setParams] = useState(categoryPayload.paginateParams);
   const [loading, setLoading] = useState(false);
   const [showAuditColumn, setShowAuditColumn] = useState(false);
-  const [first, setFirst] = useState(0);
 
-  const categoryList = useRef(state.category);
+  const first = useRef(0);
   const total = useRef(0);
   const columns = useRef(categoryPayload.columns);
   const showColumns = useRef(
     columns.current.filter((col) => col.show === true)
   );
 
+  /**
+   * Event - Paginate Page Change
+   * @param {*} event 
+   */
   const onPageChange = (event) => {
-    setFirst(event?.first);
-    setParams({
-      ...params,
-      page: event?.page + 1,
-      per_page: event?.rows,
-    });
-  };
-
-  const onSortChange = (event) => {
-    if (event) {
-      const orderFormat = event?.sortOrder === 1 ? "DESC" : "ASC";
-      setParams({
-        ...params,
-        order: event?.sortField,
-        sort: orderFormat,
-      });
-    }
-  };
-
-  const onSearchChange = (event) => {
-    setParams({
-      ...params,
-      search: event,
-    });
-  };
-
-  const footer = useCallback(() => {
-    return (
-      <div className=" flex items-center justify-content-between">
-        <div>
-          Total -{" "}
-          <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span>
-        </div>
-        <div className=" flex align-items-center gap-3">
-          <Button
-            outlined
-            icon="pi pi-refresh"
-            size="small"
-            onClick={() => loadingData()}
-          />
-          <PaginatorRight
-            show={showAuditColumn}
-            onHandler={(e) => setShowAuditColumn(e)}
-          />
-        </div>
-      </div>
+    first.current = event.page * paginateParams.per_page;
+    dispatch(
+      setPaginate({
+        ...paginateParams,
+        page: event?.page + 1,
+        per_page: event?.rows,
+      })
     );
-  }, [total, showAuditColumn]);
+  };
 
   /**
-   * Table Header Render
+   * Event - Search
+   * @param {*} event 
    */
-  const HeaderRender = () => {
-    return (
-      <div className="w-full flex flex-column md:flex-row justify-content-between align-items-start">
-        <Search
-          tooltipLabel={"search by admin's id, name, email, phone, status"}
-          placeholder={"Search admin account"}
-          onSearch={(e) => onSearchChange(e)}
-        />
-
-        <div className="flex flex-row justify-content-center align-items-center">
-          <Button outlined icon="pi pi-filter" size="small" />
-        </div>
-      </div>
+  const onSearchChange = (event) => {
+    dispatch(
+      setPaginate({
+        ...paginateParams,
+        search: event,
+      })
     );
   };
+
+  /**
+   * Event - Column sorting "DESC | ASC"
+   * @param {*} event 
+   */
+  const onSort =(event) => {
+    const sortOrder = event.sortOrder === 1 ? "DESC" : "ASC";
+
+    dispatch(
+      setPaginate({
+        ...paginateParams,
+        sort: sortOrder,
+        order: event.sortField
+      })
+    );
+  }
 
   /**
    * Loading Data
@@ -106,34 +80,78 @@ const CategoryTableView = () => {
   const loadingData = useCallback(async () => {
     setLoading(true);
 
-    const result = await categoryService.index(dispatch, params);
+    const result = await categoryService.index(dispatch, paginateParams);
     if (result.status === 200) {
-      categoryList.current = result?.data?.data;
-      total.current = result?.data?.total;
+      total.current = result?.data?.total ? result.data.total : result.data.length;
     }
 
     setLoading(false);
-  }, [dispatch, params]);
+  }, [dispatch, paginateParams]);
 
   useEffect(() => {
     loadingData();
   }, [loadingData]);
+
+    /**
+   * Table Footer Render
+   * **/
+    const FooterRender = () => {
+      return (
+        <div className=" flex items-center justify-content-between">
+          <div>
+            Total -{" "}
+            <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span>
+          </div>
+          <div className=" flex align-items-center gap-3">
+            <Button
+              outlined
+              icon="pi pi-refresh"
+              size="small"
+              onClick={() => loadingData()}
+            />
+            <PaginatorRight
+              show={showAuditColumn}
+              onHandler={(e) => setShowAuditColumn(e)}
+            />
+          </div>
+        </div>
+      );
+    }
+  
+    /**
+     * Table Header Render
+     */
+    const HeaderRender = () => {
+      return (
+        <div className="w-full flex flex-column md:flex-row justify-content-between align-items-start">
+          <Search
+            tooltipLabel={"search by admin's id, name, email, phone, status"}
+            placeholder={"Search admin account"}
+            onSearch={(e) => onSearchChange(e)}
+          />
+  
+          <div className="flex flex-row justify-content-center align-items-center">
+            <Button outlined icon="pi pi-filter" size="small" />
+          </div>
+        </div>
+      );
+    };
 
   return (
     <>
       <DataTable
         dataKey="id"
         size="normal"
-        value={categoryList.current?.length > 0 && categoryList.current}
-        sortField={params ? params.order : ""}
-        sortOrder={params ? params.sort : 1}
-        onSort={(e) => onSortChange(e)}
+        value={categories}
+        sortField={paginateParams.order}
+        sortOrder={paginateParams.sort === 'DESC' ? 1 : paginateParams.sort === 'ASC' ? -1 : 0}
+        onSort={onSort}
         sortMode={paginateOptions.sortMode}
         loading={loading}
         emptyMessage="No category found."
         globalFilterFields={categoryPayload.columns}
         header={<HeaderRender />}
-        footer={footer}
+        footer={<FooterRender />}
       >
         {showColumns.current.map((col, index) => {
           return (
@@ -184,10 +202,12 @@ const CategoryTableView = () => {
           })}
       </DataTable>
       <Paginator
-        first={first}
-        rows={params.per_page ? params.per_page : paginateOptions.rows}
+        first={first.current}
+        rows={paginateParams.per_page}
         totalRecords={total?.current}
         rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
+        template={"FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"}
+        currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
         onPageChange={onPageChange}
       />
     </>

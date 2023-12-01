@@ -15,51 +15,65 @@ import { datetime } from '../../../helpers/datetime';
 import { paths } from '../../../constants/paths';
 import { useNavigate } from 'react-router-dom';
 import { Paginator } from 'primereact/paginator';
+import { setPaginate } from '../userSlice';
 
 export const UserTableView = () => {
 
-    const [params, setParams] = useState(userPayload?.paginateParams);
-
     const dispatch = useDispatch();
-    const { users } = useSelector(state => state.user);
+    const { users, paginateParams } = useSelector(state => state.user);
     const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
 
-    const userList = useRef(users);
+    const first = useRef(0);
     const total = useRef(0);
     const columns = useRef(userPayload?.columns);
     const showColumns = useRef(columns?.current?.filter(col => col.show === true));
 
-    const [first, setFirst] = useState(0);
 
-
+    /**
+     * Event - Paginate Page Change
+     * @param {*} event 
+     */
     const onPageChange = (event) => {
-        setFirst(event?.first);
-        setParams({
-            ...params,
-            page: event?.page + 1,
-            per_page: event?.rows,
-        })
+        first.current = event.page * paginateParams.per_page;
+        dispatch(
+            setPaginate({
+                ...paginateParams,
+                page: event?.page + 1,
+                per_page: event?.rows,
+            })
+        );
     };
 
-    const onSortChange = (event) => {
-        if(event) {
-            const orderFormat = event?.sortOrder === 1 ? "DESC" : "ASC";
-            setParams({
-                ...params,
-                order: event?.sortField,
-                sort : orderFormat
-            })
-        }
-    }
-
+    /**
+     * Event - Search
+     * @param {*} event 
+     */
     const onSearchChange = (event) => {
-        setParams({
-            ...params,
-            search: event
-        })
+        dispatch(
+            setPaginate({
+                ...paginateParams,
+                search: event,
+            })
+        );
+    };
+
+    /**
+     * Event - Column sorting "DESC | ASC"
+     * @param {*} event 
+     */
+    const onSort = (event) => {
+        const sortOrder = event.sortOrder === 1 ? "DESC" : "ASC";
+        console.log(event);
+        dispatch(
+            setPaginate({
+                ...paginateParams,
+                sort: sortOrder,
+                order: event.sortField
+            })
+        );
     }
 
     /**
@@ -67,19 +81,21 @@ export const UserTableView = () => {
      */
     const loadingData = useCallback(async () => {
         setLoading(true);
-        const result = await userService.index(dispatch, params);
+        const result = await userService.index(dispatch, paginateParams);
         if (result.status === 200) {
-            userList.current = result?.data?.data;
-            total.current = result?.data?.total;
+            total.current = result?.data?.total ? result.data.total : result.data.length;
         }
 
         setLoading(false);
-    }, [dispatch, params]);
+    }, [dispatch, paginateParams]);
 
     useEffect(() => {
         loadingData();
     }, [loadingData])
 
+    /**
+     * Table Footer Render
+     * **/
     const FooterRender = () => {
         return (
             <div className=' flex items-center justify-content-between'>
@@ -107,8 +123,8 @@ export const UserTableView = () => {
         return (
             <div className="w-full flex flex-column md:flex-row justify-content-between align-items-start">
                 <Search
-                    tooltipLabel={"search by admin's id, name, email, phone, status"}
-                    placeholder={"Search admin account"}
+                    tooltipLabel={"search user by name, profile, reward point, coupons, phone, email, status"}
+                    placeholder={"Search user account"}
                     onSearch={(e) => onSearchChange(e)}
                 />
 
@@ -130,10 +146,10 @@ export const UserTableView = () => {
             <DataTable
                 dataKey="id"
                 size="normal"
-                value={userList.current.length > 0 && userList.current}
-                sortField={params ? params.order : ""}
-                sortOrder={params ? params.sort : 1}
-                onSort={(e) => onSortChange(e)}
+                value={users}
+                sortField={paginateParams.order}
+                sortOrder={paginateParams.sort === 'DESC' ? 1 : paginateParams.sort === 'ASC' ? -1 : 0}
+                onSort={onSort}
                 sortMode={paginateOptions.sortMode}
                 loading={loading}
                 emptyMessage="No user accounts found."
@@ -188,10 +204,12 @@ export const UserTableView = () => {
                 })}
             </DataTable>
             <Paginator
-                first={first}
-                rows={params.per_page ? params.per_page : paginateOptions.rows}
+                first={first.current}
+                rows={paginateParams.per_page}
                 totalRecords={total?.current}
                 rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
+                template={"FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"}
+                currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
                 onPageChange={onPageChange}
             />
         </>

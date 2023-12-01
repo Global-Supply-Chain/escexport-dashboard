@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { userPayload } from "./userPayload";
 
 const userSlice = createSlice({
     name: 'user',
     initialState: {
         users: [],
         user: null,
-        paginateParams : "",
+        paginateParams : userPayload.paginateParams,
         total : 0
     },
     reducers: {
@@ -17,12 +18,12 @@ const userSlice = createSlice({
             state.user = action.payload;
             return state;
         },
-        setPaginateParams: (state, action) => {
+        setPaginate: (state, action) => {
             state.paginateParams = action.payload;
             return state;
         }
     }
 });
 
-export const { index, update, setPaginateParams } = userSlice.actions;
+export const { index, update, setPaginate } = userSlice.actions;
 export default userSlice.reducer;
