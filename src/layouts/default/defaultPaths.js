@@ -208,7 +208,7 @@ export const items = [
     {
         key: '11',
         label: 'Region',
-        icon: 'pi pi-fw pi-comment',
+        icon: 'pi pi-fw pi-flag',
         children: [
             {
                 key: '11-1',
@@ -227,7 +227,7 @@ export const items = [
     {
         key: '12',
         label: 'Shop',
-        icon: 'pi pi-fw pi-comment',
+        icon: 'pi pi-fw pi-building',
         children: [
             {
                 key: '12-1',
