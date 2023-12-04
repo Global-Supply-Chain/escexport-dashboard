@@ -2,6 +2,22 @@ import { paginateOptions } from "../../constants/config";
 
 
 export const orderPayload = {
+    update: {
+        delivery_address_id : '',
+        user_id : '',
+        user_name : '',
+        phone : '',
+        email : '',
+        delivery_address : '',
+        delivery_contact_person : '',
+        delivery_contact_phone : '',
+        discount : '',
+        delivery_feed : '',
+        total_amount : '',
+        items : '',
+        payment_type : '',
+        status : ''
+    },
     columns: [
         { field: "id", header: "ID", sortable: true, show: true },
         { field: "user_name", header: "User Name", sortable: true, show: true },

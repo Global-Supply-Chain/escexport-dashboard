@@ -55,5 +55,17 @@ export const userService = {
         }
         
         return response;
+    },
+    export :async(dispatch) => {
+        const response = await getRequest(`/${endpoints.user}/export`);
+        await httpServiceHandler(dispatch,response);
+        if(response.status === 200){
+            dispatch(updateNotification({
+                show: true,
+                summary: "Success",
+                severity: "success",
+                detail: response.message
+            }));
+        }
     }
 }

@@ -7,6 +7,7 @@ export const endpoints = {
     promotion: "promotion",
     category: "category",
     generalStatus: "general",
+    paymentType: "payment_type",
     item: "item",
     image: `${baseURL}/media`,
     status: "status",

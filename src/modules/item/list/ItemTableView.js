@@ -94,6 +94,19 @@ const ItemTableView = () => {
         loadingData();
     }, [loadingData])
 
+    const handleExport = () => {
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+      
+        iframe.src = 'http://127.0.0.1:8000/dashboard/export-item';
+        
+        // Cleanup the iframe after download
+        setTimeout(() => {
+          document.body.removeChild(iframe);
+        }, 5000); // Adjust the timeout as needed
+      };
+
     /**
      * Table Footer Render
      * **/
@@ -134,6 +147,14 @@ const ItemTableView = () => {
                         outlined
                         icon="pi pi-filter"
                         size="small"
+                    />
+
+                    <Button 
+                        link
+                        outlined
+                        icon="pi pi-cloud-download"
+                        size='small'
+                        onClick={handleExport}
                     />
                 </div>
             </div>
