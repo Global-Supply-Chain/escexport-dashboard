@@ -14,10 +14,11 @@ import { useNavigate } from "react-router-dom";
 import { paths } from "../../../constants/paths";
 import { Paginator } from "primereact/paginator";
 import { setPaginate } from "../categorySlice";
+import axios from "axios";
 
 const CategoryTableView = () => {
   const dispatch = useDispatch();
-  const { categories,paginateParams } = useSelector((state) => state.category);
+  const { categories, paginateParams } = useSelector((state) => state.category);
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
@@ -62,7 +63,7 @@ const CategoryTableView = () => {
    * Event - Column sorting "DESC | ASC"
    * @param {*} event 
    */
-  const onSort =(event) => {
+  const onSort = (event) => {
     const sortOrder = event.sortOrder === 1 ? "DESC" : "ASC";
 
     dispatch(
@@ -92,50 +93,76 @@ const CategoryTableView = () => {
     loadingData();
   }, [loadingData]);
 
-    /**
-   * Table Footer Render
-   * **/
-    const FooterRender = () => {
-      return (
-        <div className=" flex items-center justify-content-between">
-          <div>
-            Total -{" "}
-            <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span>
-          </div>
-          <div className=" flex align-items-center gap-3">
-            <Button
-              outlined
-              icon="pi pi-refresh"
-              size="small"
-              onClick={() => loadingData()}
-            />
-            <PaginatorRight
-              show={showAuditColumn}
-              onHandler={(e) => setShowAuditColumn(e)}
-            />
-          </div>
-        </div>
-      );
-    }
+  const exportCategory = async () => {
+    setLoading(true);
+    await categoryService.export(dispatch);
+    setLoading(false);
+  }
   
-    /**
-     * Table Header Render
-     */
-    const HeaderRender = () => {
-      return (
-        <div className="w-full flex flex-column md:flex-row justify-content-between align-items-start">
-          <Search
-            tooltipLabel={"search by admin's id, name, email, phone, status"}
-            placeholder={"Search admin account"}
-            onSearch={(e) => onSearchChange(e)}
+  const handleExport = () => {
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+  
+    iframe.src = 'http://127.0.0.1:8000/dashboard/export-category';
+    
+    // Cleanup the iframe after download
+    setTimeout(() => {
+      document.body.removeChild(iframe);
+    }, 5000); // Adjust the timeout as needed
+  };
+
+  /**
+ * Table Footer Render
+ * **/
+  const FooterRender = () => {
+    return (
+      <div className=" flex items-center justify-content-between">
+        <div>
+          Total -{" "}
+          <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span>
+        </div>
+        <div className=" flex align-items-center gap-3">
+          <Button
+            outlined
+            icon="pi pi-refresh"
+            size="small"
+            onClick={() => loadingData()}
           />
-  
-          <div className="flex flex-row justify-content-center align-items-center">
-            <Button outlined icon="pi pi-filter" size="small" />
-          </div>
+          <PaginatorRight
+            show={showAuditColumn}
+            onHandler={(e) => setShowAuditColumn(e)}
+          />
         </div>
-      );
-    };
+      </div>
+    );
+  }
+
+  /**
+   * Table Header Render
+   */
+  const HeaderRender = () => {
+    return (
+      <div className="w-full flex flex-column md:flex-row justify-content-between align-items-start">
+        <Search
+          tooltipLabel={"search by admin's id, name, email, phone, status"}
+          placeholder={"Search admin account"}
+          onSearch={(e) => onSearchChange(e)}
+        />
+
+        <div className="flex flex-row justify-content-center align-items-center">
+          <Button outlined icon="pi pi-filter" size="small" />
+            <Button
+              link
+              outlined
+              icon="pi pi-cloud-download"
+              size='small'
+              onClick={handleExport}
+            />
+        </div>
+      </div>
+    );
+  };
 
   return (
     <>
