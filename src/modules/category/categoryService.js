@@ -118,4 +118,21 @@ export const categoryService = {
 
     return response;
   },
+  export: async (dispatch) => {
+    const response = await getRequest('/export-category');
+    await httpServiceHandler(dispatch,response);
+
+    if (response.status === 200) {
+      dispatch(
+        updateNotification({
+          show: true,
+          summary: "Success",
+          severity: "success",
+          detail: response.message,
+        })
+      );
+    }
+
+    return response;
+  }
 };
