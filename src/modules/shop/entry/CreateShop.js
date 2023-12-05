@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom'
 import { shopService } from '../shopService'
 import { shopPayload } from '../shopPayload'
 import { regionService } from '../../region/regionService'
+import { Loading } from '../../../shares/Loading'
 
 export const CreateShop = () => {
 
@@ -68,6 +69,8 @@ export const CreateShop = () => {
                 <Card
                     title={'Create Shop'}
                 >
+
+                    <Loading loading={loading} />
 
                     <div className=' grid'>
 

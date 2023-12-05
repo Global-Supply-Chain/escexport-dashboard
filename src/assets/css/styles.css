@@ -75,6 +75,64 @@ body{
     margin: 0px;
 }
 
+.bg-loading {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #10101121;
+    border-radius: 6px;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bg-loading > img {
+    width: 100px;
+    height: 100px;
+}
+
+.search {
+    position: relative;
+}
+
+.remove-search {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: #ced4da;
+    position: absolute;
+    top: 50%;
+    right: 55px;
+    transform: translateY(-50%);
+    z-index: 9;
+}
+
+.remove-search-icon {
+    width: 22px;
+    height: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+.remove-search > span > i {
+    font-size: 10px;
+    color: #6c757d;
+}
+
+.count-card {
+    width: 300px;
+    height: 300px;
+    background-color: #EA2B4A;
+    color: #fff;
+    border-radius: 25px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
 /** Layout **/
 .wrapper {
     width: 100%;
@@ -125,6 +183,14 @@ body{
     margin-left: 0px;
     margin-right: 0px;
     margin-top: 0px;
+}
+
+.p-card {
+    background: #ffffff;
+    color: #495057;
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+    border-radius: 6px;
+    position: relative;
 }
 
 .toolbar {

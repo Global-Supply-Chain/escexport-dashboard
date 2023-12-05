@@ -14,6 +14,7 @@ import { Button } from 'primereact/button';
 import { paths } from '../../../constants/paths';
 import DeleteDialogButton from '../../../shares/DeleteDialogButton';
 import { generalStatus } from '../../../helpers/StatusHandler';
+import { Loading } from '../../../shares/Loading';
 
 export const RegionUpdate = () => {
 
@@ -66,6 +67,7 @@ export const RegionUpdate = () => {
         <Card
             title={'Update Region'}
         >
+            <Loading loading={loading} />
 
             <div className=' grid'>
 

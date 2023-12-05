@@ -11,6 +11,7 @@ import { tooltipOptions } from '../../../constants/config';
 import { paths } from '../../../constants/paths';
 import { payloadHandler } from '../../../helpers/handler';
 import { BreadCrumb } from '../../../shares/BreadCrumb';
+import { Loading } from '../../../shares/Loading';
 
 export const RegionCreate = () => {
 
@@ -39,6 +40,8 @@ export const RegionCreate = () => {
                         title={'Create Region'}
 
                     >
+
+                        <Loading loading={loading} />
 
                         <div className=' grid'>
 

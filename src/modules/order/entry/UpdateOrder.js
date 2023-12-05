@@ -5,7 +5,6 @@ import { orderService } from '../orderService';
 import { deliveryService } from '../../delivery/deliveryService';
 import { orderPayload } from '../orderPayload';
 import { Card } from 'primereact/card';
-import DeleteDialogButton from '../../../shares/DeleteDialogButton';
 import { paths } from '../../../constants/paths';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
@@ -16,6 +15,7 @@ import { getRequest } from '../../../helpers/api';
 import { endpoints } from '../../../constants/endpoints';
 import { InputText } from 'primereact/inputtext';
 import { ValidationMessage } from '../../../shares/ValidationMessage';
+import { Loading } from '../../../shares/Loading';
 
 export const UpdateOrder = () => {
 
@@ -41,7 +41,7 @@ export const UpdateOrder = () => {
         if (result.status === 200) {
             const formatData = result.data?.map((delivery) => {
                 return {
-                    label: delivery?.address,
+                    label: delivery?.address?.substring(0,30)+'...',
                     value: delivery?.id
                 }
             })
@@ -105,29 +105,9 @@ export const UpdateOrder = () => {
             title={'Update Order'}
         >
 
+            <Loading loading={loading} />
+
             <div className=' grid'>
-
-                <div className=' col-12 flex align-items-center justify-content-end'>
-                    <div>
-
-                        <DeleteDialogButton
-                            visible={visible}
-                            setVisible={setVisible}
-                            url={paths.order}
-                            id={params?.id}
-                            redirect={paths.item}
-                        />
-
-                        <Button
-                            size='small'
-                            severity='danger'
-                            outlined
-                            onClick={() => setVisible(true)}
-                        >
-                            <i className=' pi pi-trash'></i>
-                        </Button>
-                    </div>
-                </div>
 
                 <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
                     <label htmlFor="delivery" className='input-label'> Delivery Address (required*) </label>
@@ -140,7 +120,7 @@ export const UpdateOrder = () => {
                             })}
                             options={deliveryList}
                             placeholder="Select a delivery address"
-                            disabled={loading}
+                            disabled
                             className="p-inputtext-sm"
                         />
                     </div>
@@ -158,7 +138,7 @@ export const UpdateOrder = () => {
                             })}
                             options={userList}
                             placeholder="Select a user"
-                            disabled={loading}
+                            disabled
                             className="p-inputtext-sm"
                         />
                     </div>
@@ -175,7 +155,7 @@ export const UpdateOrder = () => {
                             tooltip='User full name'
                             tooltipOptions={{ ...tooltipOptions }}
                             placeholder='Enter user name'
-                            disabled={loading}
+                            disabled
                             value={payload?.user_name ? payload?.user_name : ""}
                             onChange={(e) => payloadHandler(payload, e.target.value, 'user_name', (updateValue) => {
                                 setPayload(updateValue);
@@ -195,7 +175,7 @@ export const UpdateOrder = () => {
                             tooltip='Order Phone'
                             tooltipOptions={{ ...tooltipOptions }}
                             placeholder='Enter phone number'
-                            disabled={loading}
+                            disabled
                             value={payload?.phone ? payload?.phone : ""}
                             onChange={(e) => payloadHandler(payload, e.target.value, 'phone', (updateValue) => {
                                 setPayload(updateValue);
@@ -215,7 +195,7 @@ export const UpdateOrder = () => {
                             tooltip='Item email'
                             tooltipOptions={{ ...tooltipOptions }}
                             placeholder='Enter order email'
-                            disabled={loading}
+                            disabled
                             value={payload?.email ? payload?.email : ''}
                             onChange={(e) => payloadHandler(payload, e.target.value, 'email', (updateValue) => {
                                 setPayload(updateValue);
@@ -235,7 +215,7 @@ export const UpdateOrder = () => {
                             tooltip='Delivery Address'
                             tooltipOptions={{ ...tooltipOptions }}
                             placeholder='Enter order delivery address'
-                            disabled={loading}
+                            disabled
                             value={payload?.delivery_address ? payload?.delivery_address : ""}
                             onChange={(e) => payloadHandler(payload, e.target.value, 'delivery_address', (updateValue) => {
                                 setPayload(updateValue);
@@ -255,7 +235,7 @@ export const UpdateOrder = () => {
                             tooltip='Order delivery contact person'
                             tooltipOptions={{ ...tooltipOptions }}
                             placeholder='Enter order delivery contact person'
-                            disabled={loading}
+                            disabled
                             value={payload?.delivery_contact_person ? payload?.delivery_contact_person : ""}
                             onChange={(e) => payloadHandler(payload, e.target.value, 'delivery_contact_person', (updateValue) => {
                                 setPayload(updateValue);
@@ -276,7 +256,7 @@ export const UpdateOrder = () => {
                             tooltip='Order delivery contact phone'
                             tooltipOptions={{ ...tooltipOptions }}
                             placeholder='Enter order delivery contact phone'
-                            disabled={loading}
+                            disabled
                             value={payload?.delivery_contact_phone ? payload?.delivery_contact_phone : ""}
                             onChange={(e) => payloadHandler(payload, e.target.value, 'delivery_contact_phone', (updateValue) => {
                                 setPayload(updateValue);
@@ -297,7 +277,7 @@ export const UpdateOrder = () => {
                             tooltip='Order discount'
                             tooltipOptions={{ ...tooltipOptions }}
                             placeholder='Enter order discount'
-                            disabled={loading}
+                            disabled
                             value={payload?.discount ? payload?.discount : ""}
                             onChange={(e) => payloadHandler(payload, e.target.value, 'discount', (updateValue) => {
                                 setPayload(updateValue);
@@ -318,7 +298,7 @@ export const UpdateOrder = () => {
                             tooltip='Order delivery feed'
                             tooltipOptions={{ ...tooltipOptions }}
                             placeholder='Enter order delivery feed'
-                            disabled={loading}
+                            disabled
                             value={payload?.delivery_feed ? payload?.delivery_feed : ""}
                             onChange={(e) => payloadHandler(payload, e.target.value, 'delivery_feed', (updateValue) => {
                                 setPayload(updateValue);
@@ -339,7 +319,7 @@ export const UpdateOrder = () => {
                             tooltip='Order total amount'
                             tooltipOptions={{ ...tooltipOptions }}
                             placeholder='Enter total amount'
-                            disabled={loading}
+                            disabled
                             value={payload?.total_amount ? payload?.total_amount : ""}
                             onChange={(e) => payloadHandler(payload, e.target.value, 'total_amount', (updateValue) => {
                                 setPayload(updateValue);
@@ -355,7 +335,7 @@ export const UpdateOrder = () => {
                         <Dropdown
                             options={paymentTypeList}
                             placeholder="Select a payment type"
-                            disabled={loading}
+                            disabled
                             value={payload.payment_type ? payload.payment_type : ''}
                             className="p-inputtext-sm text-black"
                             onChange={(e) => payloadHandler(payload, e.value, 'payment_type', (updateValue) => {

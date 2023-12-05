@@ -14,6 +14,7 @@ import { Button } from 'primereact/button'
 import { paths } from '../../../constants/paths'
 import { useNavigate } from 'react-router-dom'
 import { deliveryService } from '../deliveryService'
+import { Loading } from '../../../shares/Loading'
 
 export const CreateDelivery = () => {
 
@@ -66,6 +67,8 @@ export const CreateDelivery = () => {
                 <Card
                     title={'Create Delivery'}
                 >
+
+                    <Loading loading={loading} />
 
                     <div className=' grid'>
 
