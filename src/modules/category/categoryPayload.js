@@ -38,7 +38,7 @@ export const categoryPayload = {
   paginateParams: {
     page: 1,
     per_page: paginateOptions.rows,
-    columns: "id,title,level.category_id,description,status",
+    columns: "id,title,level,description,status",
     search: "",
     order: "id",
     sort: "DESC",

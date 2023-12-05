@@ -27,7 +27,7 @@ export const adminPayload = {
     paginateParams: {
         page: 1,
         per_page: paginateOptions.rows,
-        columns: "id,name,email.phone,status",
+        columns: "id,name,email,phone,status",
         search: "",
         order: "id",
         sort: "DESC"

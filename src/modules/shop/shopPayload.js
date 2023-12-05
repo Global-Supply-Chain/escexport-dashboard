@@ -27,7 +27,7 @@ export const shopPayload = {
     paginateParams: {
         page: 1,
         per_page: paginateOptions.rows,
-        columns: "id,region_id,phone,address,location,status",
+        columns: "id,name,phone,address,location,status",
         search: "",
         order: "",
         sort: "DESC"
