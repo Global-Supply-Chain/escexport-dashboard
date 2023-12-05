@@ -15,6 +15,7 @@ import { endpoints } from '../../../constants/endpoints';
 import { shopPayload } from '../shopPayload';
 import { regionService } from '../../region/regionService';
 import { shopService } from '../shopService';
+import { Loading } from '../../../shares/Loading';
 
 export const UpdateShop = () => {
 
@@ -65,6 +66,8 @@ export const UpdateShop = () => {
       <Card
         title={'Update Shop'}
       >
+
+        <Loading loading={loading} />
 
         <div className=' grid'>
 

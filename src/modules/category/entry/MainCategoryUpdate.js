@@ -14,6 +14,7 @@ import { endpoints } from "../../../constants/endpoints";
 import { uploadFile } from "../../../helpers/uploadFile";
 import { useDispatch, useSelector } from "react-redux";
 import { categoryService } from "../categoryService";
+import { Loading } from "../../../shares/Loading";
 
 export const MainCategoryUpdate = () => {
   const navigate = useNavigate();
@@ -57,6 +58,9 @@ export const MainCategoryUpdate = () => {
           title="Update Main Category"
           subTitle="Category is purposing for item"
         >
+
+          <Loading loading={loading} />
+
           <div className="grid">
             <div className="col-12 flex align-items-center justify-content-center">
               <form className="w-full flex flex-column justify-content-center align-items-center">

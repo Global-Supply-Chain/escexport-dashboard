@@ -14,6 +14,7 @@ import { endpoints } from '../../../constants/endpoints';
 import { getRequest } from '../../../helpers/api';
 import { Dropdown } from 'primereact/dropdown';
 import DeleteDialogButton from '../../../shares/DeleteDialogButton';
+import { Loading } from '../../../shares/Loading';
 
 const PointUpdate = () => {
     const [loading, setLoading] = useState(false);
@@ -73,6 +74,8 @@ const PointUpdate = () => {
                     title={'Create Point'}
                     subTitle="Point is purposing for reward point"
                 >
+
+                    <Loading loading={loading} />
 
                     <div className=' grid'>
 

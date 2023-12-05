@@ -1,5 +1,7 @@
 export const paths = {
 
+    dashboard: "/dashboard",
+
     admin: "/admin",
     adminCreate: "/admin/new",
     adminLogout: "/auth/login",
