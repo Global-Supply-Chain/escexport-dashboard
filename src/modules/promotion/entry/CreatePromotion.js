@@ -12,6 +12,7 @@ import { endpoints } from "../../../constants/endpoints";
 import { ValidationMessage } from "../../../shares/ValidationMessage";
 import { tooltipOptions } from '../../../constants/config';
 import { Image } from "primereact/image";
+import { Loading } from "../../../shares/Loading";
 
 export const CreatePromotion = () => {
 
@@ -43,6 +44,9 @@ export const CreatePromotion = () => {
                 <Card
                     title="Create Promotion"
                 >
+
+                    <Loading loading={loading} />
+
                     <div className="grid">
 
                         <div className=" col-12 flex justify-content-center align-items-center">

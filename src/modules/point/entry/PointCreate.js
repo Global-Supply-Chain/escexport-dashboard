@@ -14,6 +14,7 @@ import { InputText } from 'primereact/inputtext';
 import { endpoints } from '../../../constants/endpoints';
 import { getRequest } from '../../../helpers/api';
 import { Dropdown } from 'primereact/dropdown';
+import { Loading } from '../../../shares/Loading';
 
 const PointCreate = () => {
 
@@ -66,6 +67,8 @@ const PointCreate = () => {
                     title={'Create Point'}
                     subTitle="Point is purposing for reward point"
                 >
+
+                    <Loading loading={loading} />
 
                     <div className=' grid'>
 

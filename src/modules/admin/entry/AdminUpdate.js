@@ -15,6 +15,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { adminService } from "../adminService";
 import { paths } from "../../../constants/paths";
 import { getRequest } from "../../../helpers/api";
+import { Loading } from "../../../shares/Loading";
 
 export const AdminUpdate = () => {
 
@@ -62,6 +63,9 @@ export const AdminUpdate = () => {
                 title="Update Administrator Account"
                 subTitle="Administrator account is purposing for system management"
             >
+
+                <Loading loading={loading} />
+
                 <div className="grid">
                     <div className='col-12 flex align-items-center justify-content-center'>
                         <form className="w-full flex flex-column justify-content-center align-items-center">

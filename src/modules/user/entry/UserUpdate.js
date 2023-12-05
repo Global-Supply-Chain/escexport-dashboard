@@ -15,6 +15,7 @@ import { userService } from '../userService';
 import { userPayload } from '../userPayload';
 import { endpoints } from '../../../constants/endpoints';
 import { uploadFile } from '../../../helpers/uploadFile';
+import { Loading } from '../../../shares/Loading';
 
 export const UserUpdate = ({ dataSource }) => {
 
@@ -68,6 +69,8 @@ export const UserUpdate = ({ dataSource }) => {
             title="Update User Account"
             subTitle="Manage enduser account"
         >
+            <Loading loading={loading} />
+
             <div className='grid'>
                 <div className='col-12 flex align-items-center justify-content-center'>
                     <form className="w-full flex flex-column justify-content-center align-items-center">

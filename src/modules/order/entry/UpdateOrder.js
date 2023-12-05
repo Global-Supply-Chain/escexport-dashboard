@@ -16,6 +16,7 @@ import { getRequest } from '../../../helpers/api';
 import { endpoints } from '../../../constants/endpoints';
 import { InputText } from 'primereact/inputtext';
 import { ValidationMessage } from '../../../shares/ValidationMessage';
+import { Loading } from '../../../shares/Loading';
 
 export const UpdateOrder = () => {
 
@@ -104,6 +105,8 @@ export const UpdateOrder = () => {
         <Card
             title={'Update Order'}
         >
+
+            <Loading loading={loading} />
 
             <div className=' grid'>
 

@@ -13,6 +13,7 @@ import { categoryService } from '../categoryService';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { generalStatus } from '../../../helpers/StatusHandler';
+import { Loading } from '../../../shares/Loading';
 
 const CategoryUpdate = () => {
 
@@ -84,6 +85,8 @@ const CategoryUpdate = () => {
             title="Category Update"
             subTitle="Category is purposing for item"
         >
+            <Loading loading={loading} />
+
             <div className=' grid'>
 
                 <div className=' col-12 flex align-items-center justify-content-end'>

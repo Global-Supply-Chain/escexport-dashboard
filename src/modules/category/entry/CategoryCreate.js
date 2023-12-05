@@ -12,6 +12,7 @@ import { tooltipOptions } from '../../../constants/config';
 import { Button } from 'primereact/button';
 import { paths } from '../../../constants/paths';
 import { Dropdown } from 'primereact/dropdown';
+import { Loading } from '../../../shares/Loading';
 
 const CategoryCreate = () => {
 
@@ -77,6 +78,9 @@ const CategoryCreate = () => {
                     title="Create Category"
                     subTitle="Category is purposing for item"
                 >
+
+                    <Loading loading={loading} />
+
                     <div className="grid">
                         <div className="col-12 md:col-4 lg:col-4 my-3">
                             <label htmlFor="name" className='input-label'>Title</label>

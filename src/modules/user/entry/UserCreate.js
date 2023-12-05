@@ -13,6 +13,7 @@ import { payloadHandler } from '../../../helpers/handler';
 import { tooltipOptions } from '../../../constants/config';
 import { Avatar } from 'primereact/avatar';
 import { BreadCrumb } from '../../../shares/BreadCrumb';
+import { Loading } from '../../../shares/Loading';
 
 
 export const UserCreate = () => {
@@ -58,6 +59,7 @@ export const UserCreate = () => {
                     title="User Create"
                     subTitle="User account is purposing for website ui management"
                     >
+                        <Loading loading={loading} />
 
                         <div className=' grid'>
                             <div className=' col-12 flex align-items-center justify-content-center'>
