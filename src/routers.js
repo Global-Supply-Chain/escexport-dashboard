@@ -16,6 +16,7 @@ import { faqRoutes } from "./modules/faq/faqRoutes";
 import { regionRoutes } from "./modules/region/regionRoutes";
 import { shopRoutes } from "./modules/shop/shopRoutes";
 import { categoryRoutes } from "./modules/category/categoryRoute";
+import { dashbardRoutes } from "./modules/dashboard/dashboardRoutes";
 
 export const routers = createBrowserRouter([
     {
@@ -23,6 +24,7 @@ export const routers = createBrowserRouter([
         element: <DefaultLayout />,
         errorElement: <NotFound />,
         children: [
+            ...dashbardRoutes,
             ...promotionRoutes,
             ...userRoutes,
             ...adminRoutes,

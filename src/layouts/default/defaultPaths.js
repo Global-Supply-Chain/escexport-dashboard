@@ -6,7 +6,7 @@ export const items = [
         label: 'Dashboard',
         data: 'Documents Folder',
         icon: 'pi pi-fw pi-desktop',
-        url: "/"
+        url: "/dashboard"
     },
     {
         key: '1',

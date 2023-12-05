@@ -120,7 +120,7 @@ export const UpdateOrder = () => {
                             })}
                             options={deliveryList}
                             placeholder="Select a delivery address"
-                            disabled={loading}
+                            disabled
                             className="p-inputtext-sm"
                         />
                     </div>
@@ -138,7 +138,7 @@ export const UpdateOrder = () => {
                             })}
                             options={userList}
                             placeholder="Select a user"
-                            disabled={loading}
+                            disabled
                             className="p-inputtext-sm"
                         />
                     </div>

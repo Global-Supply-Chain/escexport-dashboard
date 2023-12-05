@@ -44,8 +44,6 @@ const ItemCreate = () => {
      * **/
     const submitItemCreate = async () => {
         setLoading(false);
-        console.log(payload);
-        return;
         await itemService.store(dispatch, payload);
         setLoading(false);
     }
