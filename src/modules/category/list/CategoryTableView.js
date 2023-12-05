@@ -91,12 +91,6 @@ const CategoryTableView = () => {
   useEffect(() => {
     loadingData();
   }, [loadingData]);
-
-  const exportCategory = async () => {
-    setLoading(true);
-    await categoryService.export(dispatch);
-    setLoading(false);
-  }
   
   const handleExport = () => {
     const iframe = document.createElement('iframe');
