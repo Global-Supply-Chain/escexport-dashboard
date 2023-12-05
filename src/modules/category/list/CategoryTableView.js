@@ -14,7 +14,6 @@ import { useNavigate } from "react-router-dom";
 import { paths } from "../../../constants/paths";
 import { Paginator } from "primereact/paginator";
 import { setPaginate } from "../categorySlice";
-import axios from "axios";
 
 const CategoryTableView = () => {
   const dispatch = useDispatch();
@@ -92,12 +91,6 @@ const CategoryTableView = () => {
   useEffect(() => {
     loadingData();
   }, [loadingData]);
-
-  const exportCategory = async () => {
-    setLoading(true);
-    await categoryService.export(dispatch);
-    setLoading(false);
-  }
   
   const handleExport = () => {
     const iframe = document.createElement('iframe');
