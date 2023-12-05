@@ -42,7 +42,7 @@ export const UpdateOrder = () => {
         if (result.status === 200) {
             const formatData = result.data?.map((delivery) => {
                 return {
-                    label: delivery?.address,
+                    label: delivery?.address?.substring(0,30)+'...',
                     value: delivery?.id
                 }
             })
