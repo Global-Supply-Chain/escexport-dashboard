@@ -14,7 +14,6 @@ import { useNavigate } from "react-router-dom";
 import { paths } from "../../../constants/paths";
 import { Paginator } from "primereact/paginator";
 import { setPaginate } from "../categorySlice";
-import axios from "axios";
 
 const CategoryTableView = () => {
   const dispatch = useDispatch();
