@@ -48,5 +48,9 @@ export const paths = {
 
     shop: "/shop",
     shopCreate: "/shop/new",
-    shopDetail: "/shop/:id"
+    shopDetail: "/shop/:id",
+
+    role: '/role',
+    roleCreate: '/role/new',
+    roleDetail: '/role/:id',
 }

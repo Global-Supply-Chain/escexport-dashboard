@@ -17,5 +17,6 @@ export const endpoints = {
     faq: "faq",
     region: "region",
     shop: "shop",
-    count: "count"
+    count: "count",
+    role: 'role'
 }
