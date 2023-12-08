@@ -53,4 +53,7 @@ export const paths = {
     role: '/role',
     roleCreate: '/role/new',
     roleDetail: '/role/:id',
+
+    permission: '/permission',
+    permissionDetail: '/permission/:id'
 }

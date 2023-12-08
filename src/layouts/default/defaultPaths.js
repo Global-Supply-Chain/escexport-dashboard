@@ -262,4 +262,23 @@ export const items = [
             }
         ]
     },
+    {
+        key: '14',
+        label: 'Permission',
+        icon: 'pi pi-fw pi-building',
+        children: [
+            {
+                key: '14-1',
+                label: 'List',
+                icon: 'pi pi-fw pi-list',
+                url: paths.permission
+            },
+            // {
+            //     key: '14-2',
+            //     label: 'Create',
+            //     icon: 'pi pi-fw pi-plus',
+            //     url: paths.roleCreate
+            // }
+        ]
+    },
 ];

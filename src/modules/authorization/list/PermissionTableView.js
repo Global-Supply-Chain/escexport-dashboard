@@ -14,21 +14,21 @@ import { useNavigate } from 'react-router-dom';
 import { Paginator } from 'primereact/paginator';
 import { authorizationPayload } from '../authorizationPayload';
 import { authorizationService } from '../authorizatonService';
-import { setRolePaginate } from '../authorizationSlice';
+import { setPermissionPaginate } from '../authorizationSlice';
 
-export const RoleTableView = () => {
+export const PermissionTableView = () => {
 
     const dispatch = useDispatch();
-    const { roles, rolePaginateParams } = useSelector(state => state.auth);
+    const { permissions, permissionPaginateParams } = useSelector(state => state.auth);
     const navigate = useNavigate();
-    console.log(rolePaginateParams);
+    console.log(permissionPaginateParams);
 
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
 
     const first = useRef(0);
     const total = useRef(0);
-    const columns = useRef(authorizationPayload.roleColumns);
+    const columns = useRef(authorizationPayload.permissionColumns);
     const showColumns = useRef(columns?.current?.filter(col => col.show === true));
 
 
@@ -37,10 +37,10 @@ export const RoleTableView = () => {
      * @param {*} event 
      */
     const onPageChange = (event) => {
-        first.current = event.page * rolePaginateParams.per_page;
+        first.current = event.page * permissionPaginateParams.per_page;
         dispatch(
-            setRolePaginate({
-                ...rolePaginateParams,
+            setPermissionPaginate({
+                ...permissionPaginateParams,
                 page: event?.page + 1,
                 per_page: event?.rows,
             })
@@ -53,8 +53,8 @@ export const RoleTableView = () => {
      */
     const onSearchChange = (event) => {
         dispatch(
-            setRolePaginate({
-                ...rolePaginateParams,
+            setPermissionPaginate({
+                ...permissionPaginateParams,
                 search: event,
             })
         );
@@ -67,8 +67,8 @@ export const RoleTableView = () => {
     const onSort = (event) => {
         const sortOrder = event.sortOrder === 1 ? "DESC" : "ASC";
         dispatch(
-            setRolePaginate({
-                ...rolePaginateParams,
+            setPermissionPaginate({
+                ...permissionPaginateParams,
                 sort: sortOrder,
                 order: event.sortField
             })
@@ -80,13 +80,13 @@ export const RoleTableView = () => {
      */
     const loadingData = useCallback(async () => {
         setLoading(true);
-        const result = await authorizationService.index(dispatch, rolePaginateParams);
+        const result = await authorizationService.permissionIndex(dispatch, permissionPaginateParams);
         if (result.status === 200) {
             total.current = result?.data?.total ? result.data.total : result.data.length;
         }
 
         setLoading(false);
-    }, [dispatch, rolePaginateParams]);
+    }, [dispatch, permissionPaginateParams]);
 
     useEffect(() => {
         loadingData();
@@ -145,14 +145,14 @@ export const RoleTableView = () => {
             <DataTable
                 dataKey="id"
                 size="normal"
-                value={roles}
-                sortField={rolePaginateParams.order}
-                sortOrder={rolePaginateParams.sort === 'DESC' ? 1 : rolePaginateParams.sort === 'ASC' ? -1 : 0}
+                value={permissions}
+                sortField={permissionPaginateParams.order}
+                sortOrder={permissionPaginateParams.sort === 'DESC' ? 1 : permissionPaginateParams.sort === 'ASC' ? -1 : 0}
                 onSort={onSort}
                 sortMode={paginateOptions.sortMode}
                 loading={loading}
-                emptyMessage="No role found."
-                globalFilterFields={authorizationPayload.roleColumns}
+                emptyMessage="No permission found."
+                globalFilterFields={authorizationPayload.permissionColumns}
                 header={<HeaderRender />}
                 footer={<FooterRender />}
             >
@@ -197,7 +197,7 @@ export const RoleTableView = () => {
             </DataTable>
             <Paginator
                 first={first.current}
-                rows={rolePaginateParams.per_page}
+                rows={permissionPaginateParams.per_page}
                 totalRecords={total?.current}
                 rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
                 template={"FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"}
