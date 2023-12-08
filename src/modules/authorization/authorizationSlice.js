@@ -6,10 +6,11 @@ const authorizationSlice = createSlice({
     initialState: {
         roles: [],
         role: null,
-        permission: [],
-        permissions: null,
+        permissions: [],
+        permission: null,
         rolePaginateParams : authorizationPayload.rolePaginateParams,
-        total : 0
+        permissionPaginateParams: authorizationPayload.permissionPaginateParams,
+        roleTotal : 0
     },
     reducers: {
         roleIndex: (state, action) => {
@@ -27,9 +28,21 @@ const authorizationSlice = createSlice({
         setRolePaginate: (state, action) => {
             state.rolePaginateParams = action.payload;
             return state;
+        },
+        permissionIndex: (state, action) => {
+            state.permissions = action.payload;
+            return state;
+        },
+        permissionShow: (state, action) => {
+            state.permission = action.payload;
+            return state;
+        },
+        setPermissionPaginate: (state, action) => {
+            state.permissionPaginateParams = action.payload;
+            return state;
         }
     }
 });
 
-export const { roleIndex,roleShow,roleUpdate,setRolePaginate } = authorizationSlice.actions;
+export const { roleIndex,roleShow,roleUpdate,setRolePaginate,permissionIndex,permissionShow,setPermissionPaginate } = authorizationSlice.actions;
 export default authorizationSlice.reducer;
