@@ -243,4 +243,23 @@ export const items = [
             }
         ]
     },
+    {
+        key: '13',
+        label: 'Role',
+        icon: 'pi pi-fw pi-building',
+        children: [
+            {
+                key: '13-1',
+                label: 'List',
+                icon: 'pi pi-fw pi-list',
+                url: paths.role
+            },
+            {
+                key: '12-2',
+                label: 'Create',
+                icon: 'pi pi-fw pi-plus',
+                url: paths.roleCreate
+            }
+        ]
+    },
 ];

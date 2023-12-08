@@ -17,6 +17,7 @@ import { regionRoutes } from "./modules/region/regionRoutes";
 import { shopRoutes } from "./modules/shop/shopRoutes";
 import { categoryRoutes } from "./modules/category/categoryRoute";
 import { dashbardRoutes } from "./modules/dashboard/dashboardRoutes";
+import { authorizationRoute } from "./modules/authorization/authorizationRoute";
 
 export const routers = createBrowserRouter([
     {
@@ -37,7 +38,8 @@ export const routers = createBrowserRouter([
             ...orderRoutes,
             ...faqRoutes,
             ...regionRoutes,
-            ...shopRoutes
+            ...shopRoutes,
+            ...authorizationRoute
         ]
     },
     {
