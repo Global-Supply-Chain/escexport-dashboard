@@ -18,5 +18,6 @@ export const endpoints = {
     region: "region",
     shop: "shop",
     count: "count",
-    role: 'role'
+    role: 'role',
+    permission: 'permission'
 }
