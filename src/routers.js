@@ -15,7 +15,6 @@ import { faqRoutes } from "./modules/faq/faqRoutes";
 import { regionRoutes } from "./modules/region/regionRoutes";
 import { shopRoutes } from "./modules/shop/shopRoutes";
 import { categoryRoutes } from "./modules/category/categoryRoutes";
-import { categoryRoutes } from "./modules/category/categoryRoute";
 import { dashbardRoutes } from "./modules/dashboard/dashboardRoutes";
 import { authorizationRoute } from "./modules/authorization/authorizationRoute";
 
