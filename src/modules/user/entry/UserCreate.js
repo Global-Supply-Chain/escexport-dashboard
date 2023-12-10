@@ -79,7 +79,7 @@ export const UserCreate = () => {
                             </div>
 
                             <div className=' col-12 md:col-6 lg:col-4 my-3'>
-                                <div className="flex flex-column gap-2">
+                                <div className="flex flex-column">
                                     <label htmlFor="name" className=' text-black'>Name (required)</label>
                                     <InputText
                                         className="p-inputtext-sm text-black"
@@ -96,29 +96,6 @@ export const UserCreate = () => {
                                     <ValidationMessage field={"name"} />
                                 </div>
                             </div>
-
-                            {/* <div className=' md:col-6'>
-                            <div className="flex flex-column gap-2">
-                                <label htmlFor="rewardPoint">Reward Point</label>
-                                <InputNumber
-                                    id="rewardPoint"
-                                    aria-describedby="rewardPoint-help"
-                                    tooltip='user reward point'
-                                    placeholder='Enter user reward point'
-                                />
-                            </div>
-                        </div> */}
-                                                {/* <div className=' md:col-6'>
-                            <div className="flex flex-column gap-2">
-                                <label htmlFor="profile">Profile</label>
-                                <InputText
-                                    id="profile"
-                                    aria-describedby="profile-help"
-                                    tooltip='user profile'
-                                    placeholder='Enter user profile'
-                                />
-                            </div>
-                        </div> */}
 
                             <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">

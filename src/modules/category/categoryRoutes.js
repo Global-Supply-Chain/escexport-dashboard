@@ -1,20 +1,20 @@
 import { paths } from "../../constants/paths";
 import { MainCategoryCreate } from "./entry/MainCategoryCreate";
-import { MainCategoryUpdate } from "./entry/MainCategoryUpdate";
-import CategoryDetail from "./view/CategoryDetail";
+import { MainCategoryDetail } from "./view/MainCategoryDetail";
 import { MainCategoryList } from "./view/MainCategoryList";
+import { SubCategoryList } from "./view/SubCategoryList";
 
-
-export const mainCategoryRoutes = [
+export const categoryRoutes = [
     {
         id: "mainCategory",
-        path: paths.mainCategory,
+        path: paths.category,
         element : <MainCategoryList />,
         loader: () => {
             return {
                 breadcrumbs: [
                     { label: "Dashboard", url: "/" },
-                    { label: "Main Category", url: paths.mainCategory },
+                    { label: "Main Category", url: paths.category },
+                    { label: "Create", url: paths.createMainCategory },
                 ],
                 role: ['ADMINISTRATOR']
             }
@@ -28,7 +28,7 @@ export const mainCategoryRoutes = [
             return {
                 breadcrumbs: [
                     { label: "Dashboard", url: "/" },
-                    { label: "Main Category", url: paths.mainCategory },
+                    { label: "Main Category", url: paths.category },
                     { label: "Create", url: paths.createMainCategory },
                 ],
                 role: ['ADMINISTRATOR']
@@ -38,12 +38,12 @@ export const mainCategoryRoutes = [
     {
         id: "updateMainCategory",
         path: paths.updateMainCategory,
-        element : <MainCategoryUpdate />,
+        element : <MainCategoryDetail />,
         loader: () => {
             return {
                 breadcrumbs: [
                     { label: "Dashboard", url: "/" },
-                    { label: "Main Category", url: paths.mainCategory },
+                    { label: "Main Category", url: paths.category },
                     { label: "Create", url: paths.createMainCategory },
                 ],
                 role: ['ADMINISTRATOR']
@@ -51,15 +51,17 @@ export const mainCategoryRoutes = [
         }
     },
     {
-        id: "mainCategoryDetail",
-        path : paths.categoryDetail,
-        element: <CategoryDetail />,
+        id: "subCategory",
+        path: paths.subCategory,
+        element : <SubCategoryList />,
         loader: () => {
             return {
                 breadcrumbs: [
                     { label: "Dashboard", url: "/" },
-                    { label: "List", url: paths.category },
-                ]
+                    { label: "Main Category", url: paths.category },
+                    { label: "Sub Category", url: null },
+                ],
+                role: ['ADMINISTRATOR']
             }
         }
     }
