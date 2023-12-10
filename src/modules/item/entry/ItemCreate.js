@@ -22,6 +22,7 @@ import { renderHeader } from '../../../constants/config';
 import { responsiveOptions } from '../../../constants/config';
 import { itemTemplate } from '../../../constants/config';
 import { thumbnailTemplate } from '../../../constants/config';
+import { Loading } from '../../../shares/Loading';
 
 const ItemCreate = () => {
 
@@ -43,8 +44,6 @@ const ItemCreate = () => {
      * **/
     const submitItemCreate = async () => {
         setLoading(false);
-        console.log(payload);
-        return;
         await itemService.store(dispatch, payload);
         setLoading(false);
     }
@@ -123,6 +122,7 @@ const ItemCreate = () => {
                     title={'Create Item'}
                     subTitle="Item is purposing for order management"
                 >
+                    <Loading loading={loading} />
 
                     <div className=' grid'>
 

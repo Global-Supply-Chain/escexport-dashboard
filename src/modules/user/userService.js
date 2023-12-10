@@ -57,7 +57,7 @@ export const userService = {
         return response;
     },
     export :async(dispatch) => {
-        const response = await getRequest(`/${endpoints.user}/export`);
+        const response = await getRequest(`/export-${endpoints.user}`);
         await httpServiceHandler(dispatch,response);
         if(response.status === 200){
             dispatch(updateNotification({

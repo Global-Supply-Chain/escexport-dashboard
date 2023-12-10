@@ -17,6 +17,7 @@ import DeleteDialogButton from '../../../shares/DeleteDialogButton';
 import { paths } from '../../../constants/paths';
 import { Dropdown } from 'primereact/dropdown';
 import { generalStatus } from '../../../helpers/StatusHandler';
+import { Loading } from '../../../shares/Loading';
 
 const UpdatePromotion = () => {
 
@@ -78,6 +79,8 @@ const UpdatePromotion = () => {
         <Card
           title="Update Promotion"
         >
+          <Loading loading={loading} />
+
           <div className="grid">
 
             <div className=' col-12 flex align-items-center justify-content-end'>

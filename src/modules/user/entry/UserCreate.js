@@ -13,6 +13,7 @@ import { payloadHandler } from '../../../helpers/handler';
 import { tooltipOptions } from '../../../constants/config';
 import { Avatar } from 'primereact/avatar';
 import { BreadCrumb } from '../../../shares/BreadCrumb';
+import { Loading } from '../../../shares/Loading';
 
 
 export const UserCreate = () => {
@@ -58,6 +59,7 @@ export const UserCreate = () => {
                     title="User Create"
                     subTitle="User account is purposing for website ui management"
                     >
+                        <Loading loading={loading} />
 
                         <div className=' grid'>
                             <div className=' col-12 flex align-items-center justify-content-center'>
@@ -80,6 +82,8 @@ export const UserCreate = () => {
 
                             <div className=' col-12 md:col-6 lg:col-4 my-3'>
                                 <div className="flex flex-column">
+                            <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+                                <div className="flex flex-column gap-2">
                                     <label htmlFor="name" className=' text-black'>Name (required)</label>
                                     <InputText
                                         className="p-inputtext-sm text-black"
@@ -98,6 +102,30 @@ export const UserCreate = () => {
                             </div>
 
                             <div className=' col-12 md:col-6 lg:col-4 py-3'>
+                            {/* <div className=' md:col-6'>
+                            <div className="flex flex-column gap-2">
+                                <label htmlFor="rewardPoint">Reward Point</label>
+                                <InputNumber
+                                    id="rewardPoint"
+                                    aria-describedby="rewardPoint-help"
+                                    tooltip='user reward point'
+                                    placeholder='Enter user reward point'
+                                />
+                            </div>
+                        </div> */}
+                                                {/* <div className=' md:col-6'>
+                            <div className="flex flex-column gap-2">
+                                <label htmlFor="profile">Profile</label>
+                                <InputText
+                                    id="profile"
+                                    aria-describedby="profile-help"
+                                    tooltip='user profile'
+                                    placeholder='Enter user profile'
+                                />
+                            </div>
+                        </div> */}
+
+                            <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                                 <div className="flex flex-column gap-2">
                                     <label htmlFor="email" className=' text-black'>Email (required)</label>
                                     <InputText
@@ -116,7 +144,7 @@ export const UserCreate = () => {
                                     <ValidationMessage field={"email"} />
                                 </div>
                             </div>
-                            <div className=' col-12 md:col-6 lg:col-4 py-3'>
+                            <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                                 <div className="flex flex-column gap-2">
                                     <label htmlFor="phone" className=' text-black'>Phone (required)</label>
                                     <InputText
@@ -136,7 +164,7 @@ export const UserCreate = () => {
                                 </div>
                             </div>
 
-                            <div className=' col-12 md:col-6 lg:col-4 py-3'>
+                            <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                                 <div className="flex flex-column gap-2">
                                     <label htmlFor="password" className=' text-black'>Password (required)</label>
                                     <Password
@@ -154,7 +182,7 @@ export const UserCreate = () => {
                                     <ValidationMessage field={"password"} />
                                 </div>
                             </div>
-                            <div className=' col-12 md:col-6 lg:col-4 py-3'>
+                            <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                                 <div className="flex flex-column gap-2">
                                     <label htmlFor="con_password" className=' text-black'>Confirm Password (required)</label>
                                     <Password
@@ -173,7 +201,7 @@ export const UserCreate = () => {
                                 </div>
                             </div>
 
-                            <div className=' md:col-12 mx-2 md:mx-0 my-3'>
+                            <div className=' md:col-12 mx-2 md:mx-0 my-3 md:my-0'>
                                 <div className=' flex align-items-center justify-content-end'>
                                     <div className=' flex align-items-center justify-content-between gap-3'>
 

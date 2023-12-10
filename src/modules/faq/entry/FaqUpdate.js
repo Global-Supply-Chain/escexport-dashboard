@@ -14,6 +14,7 @@ import DeleteDialogButton from '../../../shares/DeleteDialogButton';
 import { endpoints } from '../../../constants/endpoints';
 import { generalStatus } from '../../../helpers/StatusHandler';
 import { Dropdown } from 'primereact/dropdown';
+import { Loading } from '../../../shares/Loading';
 
 export const FaqUpdate = () => {
 
@@ -74,6 +75,7 @@ export const FaqUpdate = () => {
                 title={'Create Faq'}
 
             >
+                <Loading loading={loading} />
 
                 <div className=' grid'>
 

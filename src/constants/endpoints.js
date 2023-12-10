@@ -16,5 +16,8 @@ export const endpoints = {
     order: "order",
     faq: "faq",
     region: "region",
-    shop: "shop"
+    shop: "shop",
+    count: "count",
+    role: 'role',
+    permission: 'permission'
 }

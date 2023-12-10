@@ -1,5 +1,7 @@
 export const paths = {
 
+    dashboard: "/dashboard",
+
     admin: "/admin",
     adminCreate: "/admin/new",
     adminLogout: "/auth/login",
@@ -44,5 +46,12 @@ export const paths = {
 
     shop: "/shop",
     shopCreate: "/shop/new",
-    shopDetail: "/shop/:id"
+    shopDetail: "/shop/:id",
+
+    role: '/role',
+    roleCreate: '/role/new',
+    roleDetail: '/role/:id',
+
+    permission: '/permission',
+    permissionDetail: '/permission/:id'
 }

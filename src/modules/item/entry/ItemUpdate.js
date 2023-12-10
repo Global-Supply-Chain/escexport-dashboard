@@ -16,6 +16,7 @@ import { paths } from '../../../constants/paths';
 import { itemService } from '../itemService';
 import DeleteDialogButton from '../../../shares/DeleteDialogButton';
 import { generalStatus } from '../../../helpers/StatusHandler';
+import { Loading } from '../../../shares/Loading';
 
 const ItemUpdate = ({ dataSource }) => {
 
@@ -90,6 +91,7 @@ const ItemUpdate = ({ dataSource }) => {
             title={'Update Item'}
             subTitle="Item is purposing for order management"
         >
+            <Loading loading={loading} />
 
             <div className=' grid'>
 

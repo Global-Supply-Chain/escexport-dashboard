@@ -15,6 +15,7 @@ import { paths } from '../../../constants/paths';
 import { Card } from 'primereact/card';
 import DeleteDialogButton from '../../../shares/DeleteDialogButton';
 import { endpoints } from '../../../constants/endpoints';
+import { Loading } from '../../../shares/Loading';
 
 export const UpdateDelivery = () => {
 
@@ -65,6 +66,8 @@ export const UpdateDelivery = () => {
       <Card
         title={'Update Delivery'}
       >
+
+        <Loading loading={loading} />
 
         <div className=' grid'>
 

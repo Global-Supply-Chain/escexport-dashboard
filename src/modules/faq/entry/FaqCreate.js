@@ -11,6 +11,7 @@ import { Button } from 'primereact/button';
 import { paths } from '../../../constants/paths';
 import { faqService } from '../faqService';
 import { BreadCrumb } from '../../../shares/BreadCrumb';
+import { Loading } from '../../../shares/Loading';
 
 export const FaqCreate = () => {
 
@@ -44,6 +45,8 @@ export const FaqCreate = () => {
                         title={'Create Faq'}
 
                     >
+
+                        <Loading loading={loading} />
 
                         <div className=' grid'>
 

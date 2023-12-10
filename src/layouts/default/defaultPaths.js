@@ -6,7 +6,7 @@ export const items = [
         label: 'Dashboard',
         data: 'Documents Folder',
         icon: 'pi pi-fw pi-desktop',
-        url: "/"
+        url: "/dashboard"
     },
     {
         key: '1',
@@ -229,6 +229,44 @@ export const items = [
                 icon: 'pi pi-fw pi-plus',
                 url: paths.shopCreate
             }
+        ]
+    },
+    {
+        key: '13',
+        label: 'Role',
+        icon: 'pi pi-fw pi-building',
+        children: [
+            {
+                key: '13-1',
+                label: 'List',
+                icon: 'pi pi-fw pi-list',
+                url: paths.role
+            },
+            {
+                key: '12-2',
+                label: 'Create',
+                icon: 'pi pi-fw pi-plus',
+                url: paths.roleCreate
+            }
+        ]
+    },
+    {
+        key: '14',
+        label: 'Permission',
+        icon: 'pi pi-fw pi-building',
+        children: [
+            {
+                key: '14-1',
+                label: 'List',
+                icon: 'pi pi-fw pi-list',
+                url: paths.permission
+            },
+            // {
+            //     key: '14-2',
+            //     label: 'Create',
+            //     icon: 'pi pi-fw pi-plus',
+            //     url: paths.roleCreate
+            // }
         ]
     },
 ];

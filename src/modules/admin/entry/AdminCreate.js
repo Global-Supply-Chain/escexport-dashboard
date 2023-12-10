@@ -15,6 +15,7 @@ import { adminService } from "../adminService";
 import { ValidationMessage } from "../../../shares/ValidationMessage";
 import { uploadFile } from "../../../helpers/uploadFile";
 import { endpoints } from "../../../constants/endpoints";
+import { Loading } from "../../../shares/Loading";
 
 export const AdminCreate = () => {
 
@@ -44,6 +45,9 @@ export const AdminCreate = () => {
                     title="Create Administrator Account"
                     subTitle="Administrator account is purposing for system management"
                 >
+
+                    <Loading loading={loading} />
+
                     <div className="grid">
                         <div className='col-12 flex align-items-center justify-content-center'>
                             <form className="w-full flex flex-column justify-content-center align-items-center">
