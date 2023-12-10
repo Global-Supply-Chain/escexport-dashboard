@@ -80,6 +80,8 @@ export const UserCreate = () => {
 
                             </div>
 
+                            <div className=' col-12 md:col-6 lg:col-4 my-3'>
+                                <div className="flex flex-column">
                             <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                                 <div className="flex flex-column gap-2">
                                     <label htmlFor="name" className=' text-black'>Name (required)</label>
@@ -99,6 +101,7 @@ export const UserCreate = () => {
                                 </div>
                             </div>
 
+                            <div className=' col-12 md:col-6 lg:col-4 py-3'>
                             {/* <div className=' md:col-6'>
                             <div className="flex flex-column gap-2">
                                 <label htmlFor="rewardPoint">Reward Point</label>

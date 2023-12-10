@@ -2,7 +2,7 @@ import { endpoints } from "../../constants/endpoints";
 import { getRequest, postRequest, putRequest } from "../../helpers/api";
 import { httpServiceHandler } from "../../helpers/handler";
 import { updateNotification } from "../../shares/shareSlice";
-import { index, mainIndex, mainUpdate, show } from "./categorySlice";
+import { subIndex, mainIndex, mainUpdate, show } from "./categorySlice";
 
 export const categoryService = {
   mainIndex: async (dispatch, params) => {
@@ -57,11 +57,11 @@ export const categoryService = {
       }
   },
 
-  index: async (dispatch, params) => {
+  subIndex: async (dispatch, params) => {
     const response = await getRequest(endpoints.category, params);
     await httpServiceHandler(dispatch, response);
     if (response.status === 200) {
-      dispatch(index(response.data.data ? response.data.data : response.data));
+      dispatch(subIndex(response.data.data ? response.data.data : response.data));
     }
     return response;
   },

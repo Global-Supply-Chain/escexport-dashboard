@@ -1,47 +1,65 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { DataTable } from "primereact/datatable";
+import { Paginator } from "primereact/paginator";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { categoryPayload } from "../categoryPayload";
-import { categoryService } from "../categoryService";
-import { Search } from "../../../shares/Search";
-import { Button } from "primereact/button";
-import { DataTable } from "primereact/datatable";
-import { auditColumns, paginateOptions } from "../../../constants/config";
-import { PaginatorRight } from "../../../shares/PaginatorRight";
-import { Column } from "primereact/column";
-import { Status } from "../../../shares/Status";
-import { paths } from "../../../constants/paths";
-import { Paginator } from "primereact/paginator";
-import { Avatar } from "primereact/avatar";
 import { NavigateId } from "../../../shares/NavigateId";
-import { endpoints } from "../../../constants/endpoints";
+import { paths } from "../../../constants/paths";
+import { Status } from "../../../shares/Status";
+import { setSubPaginate } from "../categorySlice";
+import { Column } from "primereact/column";
+import { auditColumns, paginateOptions } from "../../../constants/config";
 import { AuditColumn } from "../../../shares/AuditColumn";
-import { setMainPaginate } from "../categorySlice";
+import { Search } from "../../../shares/Search";
+import { Avatar } from "primereact/avatar";
+import { endpoints } from "../../../constants/endpoints";
+import { Button } from "primereact/button";
+import { PaginatorRight } from "../../../shares/PaginatorRight";
+import { useParams } from "react-router-dom";
+import { categoryService } from "../categoryService";
+import { Card } from "primereact/card";
 
-export const MainCategoryTable = () => {
+export const SubCategoryTable = () => {
   const dispatch = useDispatch();
-
-  const { mainPaginateParams, mainCategories } = useSelector(
+  const urlParams = useParams();
+  
+  const { subCategories, subPaginateParams } = useSelector(
     (state) => state.category
   );
+
   const [loading, setLoading] = useState(false);
   const [showAuditColumn, setShowAuditColumn] = useState(false);
 
   const total = useRef(0);
   const first = useRef(0);
-  const columns = useRef(categoryPayload.mainCategoryColumns);
+  const columns = useRef(categoryPayload.subCategoryColumns);
   const showColumns = useRef(
     columns.current.filter((col) => col.show === true)
   );
 
+  const loadingData = useCallback(async () => {
+    setLoading(true);
+
+    const updatePaginate = {
+      ...subPaginateParams,
+      filter: "main_category_id,level",
+      value: `${urlParams.id},${urlParams.level}`
+    }
+
+    await categoryService.subIndex(dispatch, updatePaginate);
+    dispatch(setSubPaginate(updatePaginate));
+    setLoading(false);
+  },[dispatch,subPaginateParams, urlParams.id, urlParams.level]);
+
   /**
    * Event - Paginate Page Change
-   * @param {*} event 
+   * @param {*} event
    */
   const onPageChange = (event) => {
-    first.current = event.page * mainPaginateParams.per_page;
+    first.current = event.page * subPaginateParams.per_page;
     dispatch(
-      setMainPaginate({
-        ...mainPaginateParams,
+      setSubPaginate({
+        ...subPaginateParams,
         page: event?.page + 1,
         per_page: event?.rows,
       })
@@ -50,12 +68,12 @@ export const MainCategoryTable = () => {
 
   /**
    * Event - Search
-   * @param {*} event 
+   * @param {*} event
    */
   const onSearchChange = (event) => {
     dispatch(
-      setMainPaginate({
-        ...mainPaginateParams,
+      setSubPaginate({
+        ...subPaginateParams,
         search: event,
       })
     );
@@ -63,42 +81,18 @@ export const MainCategoryTable = () => {
 
   /**
    * Event - Column sorting "DESC | ASC"
-   * @param {*} event 
+   * @param {*} event
    */
-  const onSort =(event) => {
+  const onSort = (event) => {
     const sortOrder = event.sortOrder === 1 ? "DESC" : "ASC";
     dispatch(
-      setMainPaginate({
-        ...mainPaginateParams,
+      setSubPaginate({
+        ...subPaginateParams,
         sort: sortOrder,
-        order: event.sortField
+        order: event.sortField,
       })
     );
-  }
-
-  /**
-   * Initialize loading data
-   */
-  const loadingData = useCallback(async () => {
-    setLoading(true);
-    const result = await categoryService.mainIndex(
-      dispatch,
-      mainPaginateParams
-    );
-    if (result.status === 200) {
-      total.current = result.data.total
-        ? result.data.total
-        : result.data.length;
-    }
-    setLoading(false);
-  }, [dispatch, mainPaginateParams]);
-
-  /**
-   * LifeCycle - watch event change
-   */
-  useEffect(() => {
-    loadingData();
-  }, [loadingData]);
+  };
 
   /**
    * Render - Table Header
@@ -109,16 +103,16 @@ export const MainCategoryTable = () => {
       <div className="w-full flex flex-column md:flex-row justify-content-between align-items-start">
         <Search
           tooltipLabel={"Search by id,title,status"}
-          placeholder={"Search main category"}
+          placeholder={"Search sub category"}
           onSearch={(e) => onSearchChange(e)}
         />
       </div>
     );
   };
 
-  /** Render - Column Icon Field 
+  /** Render - Column Icon Field
    * @returns
-  */
+   */
   const IconRender = ({ dataSource }) => {
     return (
       <Avatar
@@ -132,7 +126,7 @@ export const MainCategoryTable = () => {
 
   /**
    * Render - Paginate Footer
-   * @returns 
+   * @returns
    */
   const FooterRender = () => {
     return (
@@ -143,7 +137,7 @@ export const MainCategoryTable = () => {
           size="small"
           onClick={() => loadingData()}
         />
-        
+
         <div className=" flex align-items-center gap-3">
           <PaginatorRight
             show={showAuditColumn}
@@ -154,18 +148,28 @@ export const MainCategoryTable = () => {
     );
   };
 
+  useEffect(() => {
+    loadingData();
+  }, [loadingData]);
+
   return (
-    <>
+    <Card title="Sub Category">
       <DataTable
         dataKey="id"
         size="normal"
-        value={mainCategories}
-        sortField={mainPaginateParams.order}
-        sortOrder={mainPaginateParams.sort === 'DESC' ? 1 : mainPaginateParams.sort === "ASC" ? -1 : 0}
+        value={subCategories}
+        sortField={subPaginateParams.order}
+        sortOrder={
+          subPaginateParams.sort === "DESC"
+            ? 1
+            : subPaginateParams.sort === "ASC"
+            ? -1
+            : 0
+        }
         loading={loading}
         sortMode="single"
         emptyMessage="No main category found."
-        globalFilterFields={categoryPayload.columns}
+        globalFilterFields={categoryPayload.subCategoryColumns}
         header={<HeaderRender />}
         footer={<FooterRender />}
         onSort={onSort}
@@ -187,6 +191,13 @@ export const MainCategoryTable = () => {
                         value={value[col.field]}
                       />
                     );
+                  case "main_category_name":
+                      return(
+                        <NavigateId 
+                          url={`${paths.category}/${urlParams.id}`}
+                          value={value[col.field]}
+                        />
+                      )
                   case "status":
                     return <Status status={value[col.field]} />;
                   case "icon":
@@ -216,13 +227,15 @@ export const MainCategoryTable = () => {
 
       <Paginator
         first={first.current}
-        rows={mainPaginateParams.per_page}
+        rows={subPaginateParams.per_page}
         totalRecords={total.current}
         rowsPerPageOptions={paginateOptions.rowsPerPageOptions}
-        template={"FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"}
+        template={
+          "FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"
+        }
         currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
         onPageChange={onPageChange}
       />
-    </>
+    </Card>
   );
 };
