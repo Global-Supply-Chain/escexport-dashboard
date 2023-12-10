@@ -4,13 +4,7 @@ export const categoryPayload = {
   create: {
     title: "",
     level: "",
-    category_id: "",
-    description: "",
-    icon: "",
-  },
-  createMain: {
-    title: "",
-    level: "",
+    main_category_id: "",
     description: "",
     icon: "",
   },
@@ -22,11 +16,12 @@ export const categoryPayload = {
     icon: "",
     status: "",
   },
-  columns: [
+  subCategoryColumns: [
     { field: "id", header: "ID", sortable: true, show: true },
+    { field: "main_category_name", header: "Main Category", sortable: true, show: true },
+    { field: "icon", header: "Icon", show: true },
     { field: "title", header: "Title", sortable: true, show: true },
     { field: "level", header: "Level", sortable: true, show: true },
-    { field: "category_name", header: "Category", sortable: true, show: true },
     { field: "status", header: "Status", sortable: true, show: true },
   ],
   mainCategoryColumns: [
@@ -35,7 +30,7 @@ export const categoryPayload = {
     { field: "title", header: "Title", sortable: true, show: true },
     { field: "status", header: "Status", sortable: true, show: true },
   ],
-  paginateParams: {
+  subCategoryPaginateParams: {
     page: 1,
     per_page: paginateOptions.rows,
     columns: "id,title,level,description,status",
@@ -50,6 +45,7 @@ export const categoryPayload = {
     search: "",
     order: "id",
     sort: "DESC",
-    filter: "level-0",
+    filter: "level",
+    value: "0"
   },
 };

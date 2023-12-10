@@ -20,7 +20,7 @@ export const MainCategoryCreate = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [payload, setPayload] = useState(categoryPayload.createMain);
+  const [payload, setPayload] = useState(categoryPayload.create);
   const [loading, setLoading] = useState(false);
 
   const submitMainCategory = async () => {
@@ -159,7 +159,7 @@ export const MainCategoryCreate = () => {
                   outlined
                   size="small"
                   disabled={loading}
-                  onClick={() => navigate(paths.mainCategory)}
+                  onClick={() => navigate(paths.category)}
                 />
 
                 <Button

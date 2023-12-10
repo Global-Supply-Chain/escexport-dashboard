@@ -75,26 +75,14 @@ export const items = [
                 key: '4-1',
                 label: 'Main Category',
                 icon: 'pi pi-fw pi-list',
-                url: paths.mainCategory
-            },
-            {
-                key: '4-2',
-                label: 'Category',
-                icon: 'pi pi-fw pi-list',
                 url: paths.category
             },
             {
-                key: '4-3',
-                label: 'Create Main Category',
+                key: '4-2',
+                label: 'Create',
                 icon: 'pi pi-fw pi-plus',
                 url: paths.createMainCategory
             },
-            {
-                key: '4-4',
-                label: 'Create',
-                icon: 'pi pi-fw pi-plus',
-                url: paths.categoryCreate
-            }
         ]
     },
     {
