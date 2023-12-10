@@ -12,11 +12,9 @@ import { endpoints } from "../../../constants/endpoints";
 import { uploadFile } from "../../../helpers/uploadFile";
 import { useDispatch, useSelector } from "react-redux";
 import { categoryService } from "../categoryService";
-
 import { Dropdown } from "primereact/dropdown";
 import { Card } from "primereact/card";
 import { getRequest } from "../../../helpers/api";
-import { Loading } from "../../../shares/Loading";
 
 export const MainCategoryUpdate = () => {
   const navigate = useNavigate();
@@ -74,6 +72,7 @@ export const MainCategoryUpdate = () => {
             onClick={() => navigate(`level/${Number(mainCategory.level) + 1}`)}
           />
         </div>
+
         <div className="col-12 flex align-items-center justify-content-center">
           <form className="w-full flex flex-column justify-content-center align-items-center">
             <Avatar
@@ -104,51 +103,6 @@ export const MainCategoryUpdate = () => {
                     "icon",
                     (updateValue) => {
                       setPayload(updateValue);
-
-      <div className="col-12">
-        <Card
-          title="Update Main Category"
-          subTitle="Category is purposing for item"
-        >
-
-          <Loading loading={loading} />
-
-          <div className="grid">
-            <div className="col-12 flex align-items-center justify-content-center">
-              <form className="w-full flex flex-column justify-content-center align-items-center">
-                <Avatar
-                  className="mb-3"
-                  icon="pi pi-user"
-                  size="xlarge"
-                  shape="circle"
-                  image={
-                    payload.icon ? `${endpoints.image}/${payload.icon}` : null
-                  }
-                  onClick={() => {
-                    document.getElementById("icon").click();
-                  }}
-                />
-                <input
-                  className="hidden"
-                  id="icon"
-                  type="file"
-                  accept="image/*"
-                  onChange={async (e) => {
-                    const result = await uploadFile.image(
-                      dispatch,
-                      e.target.files[0],
-                      "CATEGORY_ICON"
-                    );
-                    if (result.status === 200) {
-                      payloadHandler(
-                        payload,
-                        result.data.id,
-                        "icon",
-                        (updateValue) => {
-                          setPayload(updateValue);
-                        }
-                      );
-
                     }
                   );
                 }
