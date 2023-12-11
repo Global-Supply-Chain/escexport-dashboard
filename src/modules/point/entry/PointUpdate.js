@@ -71,7 +71,7 @@ const PointUpdate = () => {
             <div className='col-12'>
 
                 <Card
-                    title={'Create Point'}
+                    title={'Update Point'}
                     subTitle="Point is purposing for reward point"
                 >
 
