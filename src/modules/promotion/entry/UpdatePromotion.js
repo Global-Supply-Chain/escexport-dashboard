@@ -207,7 +207,7 @@ const UpdatePromotion = () => {
               <div className="flex flex-row justify-content-end align-items-center">
                 <Button
                   severity="danger"
-                  label="Create"
+                  label="Update"
                   onClick={submitPromotionUpdate}
                 />
               </div>

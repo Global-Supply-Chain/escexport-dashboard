@@ -88,7 +88,7 @@ export const CreatePromotion = () => {
 
                         <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="url" className=' text-black'>Promoiton Url</label>
+                                    <label htmlFor="url" className=' text-black'>Promotion Url</label>
                                     <InputText
                                         className="p-inputtext-sm text-black"
                                         id="url"

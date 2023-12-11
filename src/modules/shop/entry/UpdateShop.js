@@ -136,6 +136,7 @@ export const UpdateShop = () => {
             <div className="p-inputgroup mt-2">
               <InputText
                 id="phone"
+                keyfilter={'pnum'}
                 className="p-inputtext-sm"
                 placeholder="Enter shop phone"
                 value={payload.phone ? payload.phone : ""}
@@ -205,7 +206,7 @@ export const UpdateShop = () => {
 
               <Button
                 className="mx-2"
-                label="CREATE"
+                label="UPDATE"
                 severity="danger"
                 size='small'
                 disabled={loading}
