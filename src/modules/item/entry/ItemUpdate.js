@@ -48,7 +48,7 @@ const ItemUpdate = ({ dataSource }) => {
     */
     const loadingCategoryData = useCallback(async () => {
         setLoading(true);
-        const result = await categoryService.index(dispatch);
+        const result = await categoryService.mainIndex(dispatch);
         if (result.status === 200) {
             const formatData = result.data?.map((category) => {
                 return {

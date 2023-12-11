@@ -136,6 +136,7 @@ export const UpdateDelivery = () => {
             <div className="p-inputgroup mt-2">
               <InputText
                 id="phone"
+                keyfilter={'pnum'}
                 className="p-inputtext-sm"
                 placeholder="Enter contact phone"
                 value={payload.contact_phone}
@@ -205,7 +206,7 @@ export const UpdateDelivery = () => {
 
               <Button
                 className="mx-2"
-                label="CREATE"
+                label="UPDATE"
                 severity="danger"
                 size='small'
                 disabled={loading}
