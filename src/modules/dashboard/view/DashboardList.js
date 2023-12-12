@@ -27,150 +27,116 @@ export const DashboardList = () => {
 
       <div className=' grid'>
 
+        <div className=' col-12'>
+            <h2 className=' text-black font-bold'>Order Statics</h2>
+        </div>
+
         <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
-          <div className=' count-card order'>
+          <div className=' count-card'>
             <div className=' p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
-                  <h2 className=' font-bold '>Order</h2>
-                  <h4>{dashboard?.count?.order?.total}</h4>
+                  <h2 className=' font-bold text-gray'>Order</h2>
                 </div>
-                <div className='count-icon order'>
-                  <i className=' pi pi-shopping-cart' style={{ fontSize: "1.5rem" }}></i>
+                <div className=' count-status count-total'>
+                  Total
                 </div>
               </div>
+              <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
+                <i className=' pi pi-shopping-cart' style={{ fontSize: "3rem" }}></i>
+                <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.order?.total}</div>
+              </div>
+            </div>
+            <div className=' mt-2 h-40 count-view total flex align-items-center justify-content-center'>
+              View More
             </div>
           </div>
         </div>
 
         <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
-          <div className=' count-card status order'>
+          <div className=' count-card'>
             <div className=' p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
-                  <h2 className=' font-bold '>Verified</h2>
-                  <h4>{dashboard?.count?.order?.verified}</h4>
+                  <h2 className=' font-bold text-gray'>Order</h2>
                 </div>
-                <div className='count-icon status order'>
-                  <i className=' pi pi-percentage' style={{ fontSize: "1.5rem" }}></i>
+                <div className=' count-status count-verified'>
+                  Verified
                 </div>
               </div>
+              <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
+                <i className=' pi pi-shopping-cart' style={{ fontSize: "3rem" }}></i>
+                <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.order?.verified}</div>
+              </div>
+            </div>
+            <div className=' mt-2 h-40 count-view verified flex align-items-center justify-content-center'>
+              View More
             </div>
           </div>
         </div>
 
         <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
-          <div className=' count-card status order'>
+          <div className=' count-card'>
             <div className=' p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
-                  <h2 className=' font-bold '>Pending</h2>
-                  <h4>{dashboard?.count?.order?.pending}</h4>
+                  <h2 className=' font-bold text-gray'>Order</h2>
                 </div>
-                <div className='count-icon status order'>
-                  <i className=' pi pi-percentage' style={{ fontSize: "1.5rem" }}></i>
+                <div className=' count-status count-pending'>
+                  Pending
                 </div>
               </div>
+              <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
+                <i className=' pi pi-shopping-cart' style={{ fontSize: "3rem" }}></i>
+                <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.order?.pending}</div>
+              </div>
+            </div>
+            <div className=' mt-2 h-40 count-view pending flex align-items-center justify-content-center'>
+              View More
             </div>
           </div>
         </div>
 
         <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
-          <div className=' count-card status order'>
+          <div className=' count-card'>
             <div className=' p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
-                  <h2 className=' font-bold '>Delivery</h2>
-                  <h4>{dashboard?.count?.order?.delivery}</h4>
+                  <h2 className=' font-bold text-gray'>Order</h2>
                 </div>
-                <div className='count-icon status order'>
-                  <i className=' pi pi-percentage' style={{ fontSize: "1.5rem" }}></i>
+                <div className=' count-status count-delivery'>
+                  Delivery
                 </div>
               </div>
+              <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
+                <i className=' pi pi-shopping-cart' style={{ fontSize: "3rem" }}></i>
+                <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.order?.delivery}</div>
+              </div>
+            </div>
+            <div className=' mt-2 h-40 count-view delivery flex align-items-center justify-content-center'>
+              View More
             </div>
           </div>
         </div>
 
         <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
-          <div className=' count-card status order'>
+          <div className=' count-card'>
             <div className=' p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
-                  <h2 className=' font-bold '>Complete</h2>
-                  <h4>{dashboard?.count?.order?.complete}</h4>
+                  <h2 className=' font-bold text-gray'>Order</h2>
                 </div>
-                <div className='count-icon status order'>
-                  <i className=' pi pi-percentage' style={{ fontSize: "1.5rem" }}></i>
+                <div className=' count-status count-complete'>
+                  Complete
                 </div>
+              </div>
+              <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
+                <i className=' pi pi-shopping-cart' style={{ fontSize: "3rem" }}></i>
+                <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.order?.complete}</div>
               </div>
             </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div className=' grid mt-5'>
-
-        <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
-          <div className=' count-card item'>
-            <div className=' p-3'>
-              <div className=' flex align-items-center justify-content-between'>
-                <div>
-                  <h2 className=' font-bold '>Item</h2>
-                  <h4>{dashboard?.count?.item?.total}</h4>
-                </div>
-                <div className='count-icon item'>
-                  <i className=' pi pi-fw pi-inbox' style={{ fontSize: "1.5rem" }}></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
-          <div className=' count-card status item'>
-            <div className=' p-3'>
-              <div className=' flex align-items-center justify-content-between'>
-                <div>
-                  <h2 className=' font-bold '>Active</h2>
-                  <h4>{dashboard?.count?.item?.active}</h4>
-                </div>
-                <div className='count-icon status item'>
-                  <i className=' pi pi-percentage' style={{ fontSize: "1.5rem" }}></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
-          <div className=' count-card status item'>
-            <div className=' p-3'>
-              <div className=' flex align-items-center justify-content-between'>
-                <div>
-                  <h2 className=' font-bold '>Disable</h2>
-                  <h4>{dashboard?.count?.item?.disable}</h4>
-                </div>
-                <div className='count-icon status item'>
-                  <i className=' pi pi-percentage' style={{ fontSize: "1.5rem" }}></i>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
-          <div className=' count-card status item'>
-            <div className=' p-3'>
-              <div className=' flex align-items-center justify-content-between'>
-                <div>
-                  <h2 className=' font-bold '>Deleted</h2>
-                  <h4>{dashboard?.count?.item?.deleted}</h4>
-                </div>
-                <div className='count-icon status item'>
-                  <i className=' pi pi-percentage' style={{ fontSize: "1.5rem" }}></i>
-                </div>
-              </div>
+            <div className=' mt-2 h-40 count-view complete flex align-items-center justify-content-center'>
+              View More
             </div>
           </div>
         </div>
@@ -179,50 +145,168 @@ export const DashboardList = () => {
 
       <div className=' grid mt-5'>
 
+        <div className=' col-12'>
+            <h2 className=' text-black font-bold'>Item Statics</h2>
+        </div>
+
         <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
-          <div className=' count-card user'>
+          <div className=' count-card'>
             <div className=' p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
-                  <h2 className=' font-bold '>User</h2>
-                  <h4>{dashboard?.count?.user?.total}</h4>
+                  <h2 className=' font-bold text-gray'>Item</h2>
                 </div>
-                <div className='count-icon user'>
-                  <i className=' pi pi-fw pi-user' style={{ fontSize: "1.5rem" }}></i>
+                <div className=' count-status count-delivery'>
+                  Total
                 </div>
               </div>
+              <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
+                <i className=' pi pi-shopping-cart' style={{ fontSize: "3rem" }}></i>
+                <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.item?.total}</div>
+              </div>
+            </div>
+            <div className=' mt-2 h-40 count-view delivery flex align-items-center justify-content-center'>
+              View More
             </div>
           </div>
         </div>
 
         <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
-          <div className=' count-card status user'>
+          <div className=' count-card'>
             <div className=' p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
-                  <h2 className=' font-bold '>Active</h2>
-                  <h4>{dashboard?.count?.user?.active}</h4>
+                  <h2 className=' font-bold text-gray'>Item</h2>
                 </div>
-                <div className='count-icon status user'>
-                  <i className=' pi pi-fw pi-percentage' style={{ fontSize: "1.5rem" }}></i>
+                <div className=' count-status count-complete'>
+                  Active
                 </div>
               </div>
+              <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
+                <i className=' pi pi-shopping-cart' style={{ fontSize: "3rem" }}></i>
+                <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.item?.active}</div>
+              </div>
+            </div>
+            <div className=' mt-2 h-40 count-view complete flex align-items-center justify-content-center'>
+              View More
             </div>
           </div>
         </div>
 
         <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
-          <div className=' count-card status user'>
+          <div className=' count-card'>
             <div className=' p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
-                  <h2 className=' font-bold '>Pending</h2>
-                  <h4>{dashboard?.count?.user?.pending}</h4>
+                  <h2 className=' font-bold text-gray'>Item</h2>
                 </div>
-                <div className='count-icon status user'>
-                  <i className=' pi pi-fw pi-percentage' style={{ fontSize: "1.5rem" }}></i>
+                <div className=' count-status count-disable'>
+                  Disable
                 </div>
               </div>
+              <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
+                <i className=' pi pi-shopping-cart' style={{ fontSize: "3rem" }}></i>
+                <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.item?.disable}</div>
+              </div>
+            </div>
+            <div className=' mt-2 h-40 count-view disable flex align-items-center justify-content-center'>
+              View More
+            </div>
+          </div>
+        </div>
+
+        <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
+          <div className=' count-card'>
+            <div className=' p-3'>
+              <div className=' flex align-items-center justify-content-between'>
+                <div>
+                  <h2 className=' font-bold text-gray'>Item</h2>
+                </div>
+                <div className=' count-status count-total'>
+                  Delete
+                </div>
+              </div>
+              <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
+                <i className=' pi pi-shopping-cart' style={{ fontSize: "3rem" }}></i>
+                <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.item?.deleted}</div>
+              </div>
+            </div>
+            <div className=' mt-2 h-40 count-view total flex align-items-center justify-content-center'>
+              View More
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div className=' grid mt-5'>
+
+        <div className=' col-12'>
+            <h2 className=' text-black font-bold'>User Statics</h2>
+        </div>
+
+        <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
+          <div className=' count-card'>
+            <div className=' p-3'>
+              <div className=' flex align-items-center justify-content-between'>
+                <div>
+                  <h2 className=' font-bold text-gray'>User</h2>
+                </div>
+                <div className=' count-status count-verified'>
+                  Total
+                </div>
+              </div>
+              <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
+                <i className=' pi pi-shopping-cart' style={{ fontSize: "3rem" }}></i>
+                <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.user?.total}</div>
+              </div>
+            </div>
+            <div className=' mt-2 h-40 count-view verified flex align-items-center justify-content-center'>
+              View More
+            </div>
+          </div>
+        </div>
+
+        <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
+          <div className=' count-card'>
+            <div className=' p-3'>
+              <div className=' flex align-items-center justify-content-between'>
+                <div>
+                  <h2 className=' font-bold text-gray'>User</h2>
+                </div>
+                <div className=' count-status count-complete'>
+                  Active
+                </div>
+              </div>
+              <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
+                <i className=' pi pi-shopping-cart' style={{ fontSize: "3rem" }}></i>
+                <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.user?.active}</div>
+              </div>
+            </div>
+            <div className=' mt-2 h-40 count-view complete flex align-items-center justify-content-center'>
+              View More
+            </div>
+          </div>
+        </div>
+
+        <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
+          <div className=' count-card'>
+            <div className=' p-3'>
+              <div className=' flex align-items-center justify-content-between'>
+                <div>
+                  <h2 className=' font-bold text-gray'>User</h2>
+                </div>
+                <div className=' count-status count-pending'>
+                  Pending
+                </div>
+              </div>
+              <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
+                <i className=' pi pi-shopping-cart' style={{ fontSize: "3rem" }}></i>
+                <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.user?.pending}</div>
+              </div>
+            </div>
+            <div className=' mt-2 h-40 count-view pending flex align-items-center justify-content-center'>
+              View More
             </div>
           </div>
         </div>

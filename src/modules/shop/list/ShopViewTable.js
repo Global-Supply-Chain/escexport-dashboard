@@ -14,6 +14,7 @@ import { datetime } from "../../../helpers/datetime";
 import { shopPayload } from "../shopPayload";
 import { shopService } from "../shopService";
 import { setPaginate } from "../shopSlice";
+import { Can } from "../../../shares/Can";
 
 export const ShopViewTable = () => {
 
@@ -155,7 +156,7 @@ export const ShopViewTable = () => {
     }, [loadingData]);
 
     return (
-        <>
+        <Can>
             <DataTable
                 dataKey="id"
                 size="normal"
@@ -219,6 +220,6 @@ export const ShopViewTable = () => {
                 currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
                 onPageChange={onPageChange}
             />
-        </>
+        </Can>
     )
 }
