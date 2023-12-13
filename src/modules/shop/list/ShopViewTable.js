@@ -14,6 +14,7 @@ import { datetime } from "../../../helpers/datetime";
 import { shopPayload } from "../shopPayload";
 import { shopService } from "../shopService";
 import { setPaginate } from "../shopSlice";
+import { Can } from "../../../shares/Can";
 
 export const ShopViewTable = () => {
 

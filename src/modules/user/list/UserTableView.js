@@ -16,6 +16,7 @@ import { paths } from '../../../constants/paths';
 import { useNavigate } from 'react-router-dom';
 import { Paginator } from 'primereact/paginator';
 import { setPaginate } from '../userSlice';
+import { Can } from '../../../shares/Can';
 
 export const UserTableView = () => {
 
@@ -154,7 +155,6 @@ export const UserTableView = () => {
 
     return (
         <>
-
             <DataTable
                 dataKey="id"
                 size="normal"
@@ -224,6 +224,6 @@ export const UserTableView = () => {
                 currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
                 onPageChange={onPageChange}
             />
-        </>
+            </>
     )
 }

@@ -17,7 +17,9 @@ export const paginateOptions = {
 
 export const keys = {
     API_TOKEN: "TOKEN",
-    USER: "USER"
+    USER: "USER",
+    PERMISSION: "PERMISSION",
+    ROLE: "ROLE"
 }
 
 /**

@@ -2,6 +2,8 @@ import { paths } from "../../constants/paths";
 import { UserList } from "./view/UserList";
 import { UserCreate } from "./entry/UserCreate";
 import { UserDetail } from "./view/UserDetail";
+import { getData } from "../../helpers/localstorage";
+import { keys } from "../../constants/config";
 
 
 export const userRoutes = [
@@ -10,12 +12,15 @@ export const userRoutes = [
         path : paths.user,
         element : <UserList />,
         loader: () => {
+            const role = getData(keys.ROLE);
+            const permission = getData(keys.PERMISSION);
             return{
                 breadcrumbs: [
                     { label: "Dashboard", url: "/" },
                     { label: "List", url: paths.user },
                 ],
-                role: ['ADMINISTRATOR']
+                role: role,
+                permission: permission
             }
         }
     },

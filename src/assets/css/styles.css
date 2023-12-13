@@ -16,6 +16,10 @@ h1,h2,h3,h4,h5,h6{
     color: #000 !important;
 }
 
+.text-gray {
+    color: #6c757d;
+}
+
 .promotion-image {
     width: 100% !important;
     height: 300px;
@@ -59,6 +63,10 @@ h1,h2,h3,h4,h5,h6{
 
 .h-300 {
     height: 300px !important;
+}
+
+.h-40{
+    height: 40px !important;
 }
 
 .h-200 {
@@ -133,11 +141,84 @@ h1,h2,h3,h4,h5,h6{
 }
 
 .count-card {
-    width: 200px;
-    height: 85px;
-    color: #fff;
+    width: 100%;
+    height: 173px;
+    color: #000;
+    background-color: #fff;
     border-radius: 25px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    overflow: hidden;
+}
+
+.count-status {
+    color: #000;
+    padding: 3px 6px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.count-view {
+    
+}
+
+.count-view.total{
+    color: #fff;
+    background-color: #EA2B4A;
+}
+
+.count-view.verified {
+    color: #fff;
+    background-color: #17b978;
+}
+
+.count-view.pending {
+    color: #fff;
+    background-color: darkorange;
+}
+
+.count-view.delivery {
+    color: #fff;
+    background-color: #4338CA;
+}
+
+.count-view.complete {
+    color: #fff;
+    background-color: #21a321;
+}
+
+.count-view.disable {
+    color: #fff;
+    background-color: #6c757d;
+}
+
+.count-disable {
+    color: #fff;
+    background-color: #6c757d;
+}
+
+.count-complete {
+    color: #fff;
+    background-color: #21a321;
+}
+
+.count-total {
+    color: #fff;
+    background: #EA2B4A;
+}
+
+.count-verified {
+    color: #fff;
+    background-color: #17b978;
+}
+
+.count-pending {
+    color: #fff;
+    background-color: darkorange;
+}
+
+.count-delivery {
+    color: #fff;
+    background-color: #4338CA;
 }
 
 .count-card.status.order {

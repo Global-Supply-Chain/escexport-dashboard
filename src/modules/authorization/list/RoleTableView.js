@@ -21,7 +21,6 @@ export const RoleTableView = () => {
     const dispatch = useDispatch();
     const { roles, rolePaginateParams } = useSelector(state => state.auth);
     const navigate = useNavigate();
-    console.log(rolePaginateParams);
 
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
@@ -80,7 +79,7 @@ export const RoleTableView = () => {
      */
     const loadingData = useCallback(async () => {
         setLoading(true);
-        const result = await authorizationService.index(dispatch, rolePaginateParams);
+        const result = await authorizationService.roleIndex(dispatch, rolePaginateParams);
         if (result.status === 200) {
             total.current = result?.data?.total ? result.data.total : result.data.length;
         }
