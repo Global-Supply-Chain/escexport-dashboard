@@ -5,10 +5,8 @@ import { defineAbilityFor } from '../ability';
 
 export const Can = ({children}) => {
     const { role,permission } = useLoaderData();
-    console.log(permission);
    
     const transformedPermission = `"${permission.join('","')}"`;
-    console.log(transformedPermission);
     const auth = defineAbilityFor({ role : role, permission: transformedPermission});
 
     console.log(auth.can(transformedPermission));

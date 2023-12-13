@@ -154,8 +154,7 @@ export const UserTableView = () => {
 
 
     return (
-        <Can>
-
+        <>
             <DataTable
                 dataKey="id"
                 size="normal"
@@ -225,6 +224,6 @@ export const UserTableView = () => {
                 currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
                 onPageChange={onPageChange}
             />
-        </Can>
+            </>
     )
 }

@@ -7,7 +7,6 @@ import { payloadHandler } from '../../../helpers/handler'
 import { useDispatch } from 'react-redux'
 import { InputText } from 'primereact/inputtext'
 import { tooltipOptions } from '../../../constants/config';
-import { Checkbox } from 'primereact/checkbox'
 import { Button } from 'primereact/button'
 import { paths } from '../../../constants/paths'
 import { useNavigate } from 'react-router-dom'

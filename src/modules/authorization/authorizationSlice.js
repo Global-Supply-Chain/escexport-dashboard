@@ -18,11 +18,11 @@ const authorizationSlice = createSlice({
             return state;
         },
         roleUpdate: (state, action) => {
-            state.faq = action.payload;
+            state.role = action.payload;
             return state;
         },
         roleShow: (state, action) => {
-            state.faq = action.payload;
+            state.role = action.payload;
             return state;
         },
         setRolePaginate: (state, action) => {
