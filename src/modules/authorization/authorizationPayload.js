@@ -4,10 +4,12 @@ import { paginateOptions } from "../../constants/config";
 export const authorizationPayload = {
     createRole: {
         name : '',
-        description : ''
+        description : '',
     },
     updateRole: {
-        
+        name : '',
+        description : '',
+        permissions : []
     },
     roleColumns: [
         { field: "id", header: "ID", sortable: true, show: true },

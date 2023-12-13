@@ -3,8 +3,8 @@ import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Avatar } from "primereact/avatar";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { adminPayload } from "../adminPayload"
 import { BreadCrumb } from "../../../shares/BreadCrumb";
@@ -16,14 +16,44 @@ import { ValidationMessage } from "../../../shares/ValidationMessage";
 import { uploadFile } from "../../../helpers/uploadFile";
 import { endpoints } from "../../../constants/endpoints";
 import { Loading } from "../../../shares/Loading";
+import { authorizationService } from "../../authorization/authorizatonService";
+import { Dropdown } from "primereact/dropdown";
 
 export const AdminCreate = () => {
 
     const [payload, setPayload] = useState(adminPayload.create);
     const [loading, setLoading] = useState(false);
+    const [roleList, setRoleList] = useState([]);
 
+    const { roles } = useSelector(state => state.auth);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    /**
+     * Loading data for role list
+     * @return 
+     * **/
+    const loaidngData = useCallback(async () => {
+        setLoading(true);
+        const result = await authorizationService.roleIndex(dispatch);
+        if (result.status === 200) {
+            const formatData = result.data?.map((role) => {
+                return {
+                    label: role?.name,
+                    value: role?.id
+                }
+            })
+            setRoleList(formatData);
+        }
+
+        setLoading(false);
+    },[dispatch])
+
+    useEffect(() => {
+        loaidngData();
+    }, [loaidngData])
+
+    console.log(roles);
 
     /**
      * Create Admin Account
@@ -80,7 +110,7 @@ export const AdminCreate = () => {
                             </form>
                         </div>
 
-                        <div className="col-12 md:col-4 lg:col-4 my-3">
+                        <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
                             <label htmlFor="name" className='input-label'>Full Name (required)</label>
                             <div className="p-inputgroup mt-2">
                                 <InputText 
@@ -100,7 +130,7 @@ export const AdminCreate = () => {
                             <ValidationMessage field="name" />
                         </div>
 
-                        <div className="col-12 md:col-4 lg:col-4 my-3">
+                        <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
                             <label htmlFor="email" className='input-label'> Email (required) </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText 
@@ -121,7 +151,7 @@ export const AdminCreate = () => {
                             <ValidationMessage field="email" />
                         </div>
 
-                        <div className="col-12 md:col-4 lg:col-4 my-3">
+                        <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
                             <label htmlFor="phone" className='input-label'> Phone Number (required) </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText 
@@ -141,7 +171,24 @@ export const AdminCreate = () => {
                             <ValidationMessage field="phone" />
                         </div>
 
-                        <div className="col-12 md:col-4 lg:col-4 my-3">
+                        <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
+                            <label htmlFor="phone" className='input-label'> Category (required*) </label>
+                            <div className="p-inputgroup mt-2">
+                                <Dropdown
+                                    value={payload.role_id}
+                                    onChange={(e) => payloadHandler(payload, e.value, 'role_id', (updateValue) => {
+                                        setPayload(updateValue);
+                                    })}
+                                    options={roleList}
+                                    placeholder="Select a role"
+                                    disabled={loading}
+                                    className="p-inputtext-sm"
+                                />
+                            </div>
+                            <ValidationMessage field="role_id" />
+                        </div>
+
+                        <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
                             <label htmlFor="password" className='input-label'> Password(required) </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText 
@@ -162,7 +209,7 @@ export const AdminCreate = () => {
                             <ValidationMessage field="password" />
                         </div>
 
-                        <div className="col-12 md:col-4 lg:col-4 my-3">
+                        <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
                             <label htmlFor="confirm-password" className='input-label'> Confirm Password(required) </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText 

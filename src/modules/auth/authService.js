@@ -16,6 +16,8 @@ export const authService = {
         if(response.status === 200) {
             setData(keys.API_TOKEN, response.data.access_token);
             setData(keys.USER, response.data.user);
+            setData(keys.ROLE,response.data.user.rnp.role);
+            setData(keys.PERMISSION,response.data.user.rnp.permissions);
             
             dispatch(update(response.data.user));
             dispatch(updateNotification({

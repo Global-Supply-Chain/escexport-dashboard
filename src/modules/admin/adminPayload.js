@@ -6,6 +6,7 @@ export const adminPayload = {
         profile: "",
         email: "",
         phone: "",
+        role_id: "",
         password: "",
         confirm_password: ""
     },
@@ -14,6 +15,7 @@ export const adminPayload = {
         profile: "",
         email: "",
         phone: "",
+        role_id: "",
         password: "",
         status: ""  
     },
