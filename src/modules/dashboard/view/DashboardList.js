@@ -20,7 +20,6 @@ export const DashboardList = () => {
     loadingCountStatus()
   }, [loadingCountStatus])
 
-  console.log(dashboard);
 
   return (
     <div className=' p-5'>

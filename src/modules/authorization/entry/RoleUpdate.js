@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom'
 import { authorizationPayload } from '../authorizationPayload';
@@ -11,10 +11,9 @@ import { Button } from 'primereact/button';
 import { tooltipOptions } from '../../../constants/config';
 import { Card } from 'primereact/card';
 import { authorizationService } from '../authorizatonService';
-import { Dropdown } from 'primereact/dropdown';
 import { MultiSelect } from 'primereact/multiselect';
 
-const formatMultiSelect = (value) => {
+const formatMultiSelect = (value,preValue) => {
     const permissionFormat = value?.map((per) => {
         let id = [];
         if (per?.id) {
@@ -23,9 +22,20 @@ const formatMultiSelect = (value) => {
         if (per?.code) {
             id.push(...id, per?.code);
         }
+        return id?.flat();
+    });
+
+    const concetPreValue = preValue?.map((per) => {
+        let id = [];
+        id.push(per.id)
         return id;
-    })
-    return permissionFormat?.flat();
+    });
+
+    const result = permissionFormat.concat(concetPreValue);
+    const final = result.flat()?.filter((value,index,self) => self.indexOf(value) === index);
+
+    return final;
+    
 }
 
 export const RoleUpdate = ({ dataSource, callback }) => {
@@ -43,8 +53,7 @@ export const RoleUpdate = ({ dataSource, callback }) => {
      * **/
     const submitUpdateRole = async () => {
         setLoading(true);
-        const permissionFormat = formatMultiSelect(payload?.permissions)
-
+        const permissionFormat = formatMultiSelect(payload?.permissions,dataSource?.role.permissions)
         const mainPayload = {
             name: payload.name,
             description: payload.description,
@@ -122,6 +131,7 @@ export const RoleUpdate = ({ dataSource, callback }) => {
                                     setPayload(updateValue);
                                 })
                             }}
+                            filter
                             optionLabel="name"
                             options={dataSource?.permissionList}
                             placeholder="Select a permission"
