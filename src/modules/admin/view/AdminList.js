@@ -1,4 +1,3 @@
-import { Card } from "primereact/card";
 import { BreadCrumb } from "../../../shares/BreadCrumb"
 import { AdminTableView } from "../list/AdminTableView";
 
@@ -11,11 +10,7 @@ export const AdminList = () => {
             </div>
 
             <div className="col-12">
-                <Card
-                    title="Administrator List"
-                >
-                    <AdminTableView />
-                </Card>
+                <AdminTableView />
             </div>
         </div>
     )
