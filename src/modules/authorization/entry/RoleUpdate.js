@@ -146,7 +146,7 @@ export const RoleUpdate = ({ dataSource, callback }) => {
 
                         <Button
                             className="mx-2"
-                            label="CREATE"
+                            label="UPDATE"
                             severity="danger"
                             size='small'
                             disabled={loading}
