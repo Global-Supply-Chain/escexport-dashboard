@@ -165,8 +165,8 @@ export const RoleTableView = () => {
                             sortable
                             body={(value) => {
 
-                                if (col.field === 'id') {
-                                    return (<label className="nav-link" onClick={() => navigate(`${paths.role}/${value[col.field]}`)}> {value[col.field]} </label>)
+                                if (col.field === 'name') {
+                                    return (<label className="nav-link" onClick={() => navigate(`${paths.role}/${value.id}`)}> {value[col.field]} </label>)
                                 }
                                 return value[col.field]
 

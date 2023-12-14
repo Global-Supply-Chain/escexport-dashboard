@@ -1,4 +1,6 @@
 import { paginateOptions } from "../../constants/config";
+import { endpoints } from "../../constants/endpoints";
+import { getRequest } from "../../helpers/api";
 
 export const adminPayload = {
     create: {
@@ -19,6 +21,7 @@ export const adminPayload = {
         password: "",
         status: ""  
     },
+    searchableFields: "id,name,email,phone",
     columns: [
         { field: "id", header: "ID", sortable: true, show: true },
         { field: "name", header: "Full Name", sortable: true, show: true },
@@ -29,9 +32,21 @@ export const adminPayload = {
     paginateParams: {
         page: 1,
         per_page: paginateOptions.rows,
-        columns: "id,name,email,phone,status",
+        columns: "id,name,email,phone",
         search: "",
         order: "id",
-        sort: "DESC"
+        sort: "DESC",
+        filter: "status",
+        value: "",
+        start_date: '',
+        end_date: ''
+    },
+    status: async () => {
+        const result = await getRequest(`${endpoints.status}?type=admin`);
+        if(result.status === 200) {
+            return result.data;
+        }
+
+        return [];
     }
 }

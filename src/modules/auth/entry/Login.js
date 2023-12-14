@@ -32,7 +32,7 @@ export const Login = () => {
         setLoading(false);
 
         if(result.status === 200) {
-            navigate(paths.user);
+            navigate(paths.dashboard);
         }
     }
 
