@@ -103,8 +103,12 @@ export const AdminTableView = () => {
   const onFilterByDate = (e) => {
     let updatePaginateParams = { ...paginateParams };
 
-    updatePaginateParams.start_date = moment(e.startDate).format('yy-MM-DD');
-    updatePaginateParams.end_date = moment(e.endDate).format('yy-MM-DD');
+    updatePaginateParams.start_date = e.startDate
+      ? moment(e.startDate).format("yy-MM-DD")
+      : "";
+    updatePaginateParams.end_date = e.endDate
+      ? moment(e.endDate).format("yy-MM-DD")
+      : "";
 
     dispatch(setDateFilter(e));
     dispatch(setPaginate(updatePaginateParams));
@@ -148,8 +152,6 @@ export const AdminTableView = () => {
     loadingData();
   }, [loadingData]);
 
-  console.log(paginateParams);
-
   const FooterRender = () => {
     return (
       <div className="flex items-center justify-content-between">
@@ -163,11 +165,9 @@ export const AdminTableView = () => {
             icon="pi pi-refresh"
             size="small"
             onClick={() => {
-              dispatch(setPaginate(
-                adminPayload.paginateParams
-              ))
+              dispatch(setPaginate(adminPayload.paginateParams));
               dispatch(setStatusFilter("ALL"));
-              dispatch(setDateFilter({startDate : "", endDate: ""}));
+              dispatch(setDateFilter({ startDate: "", endDate: "" }));
             }}
           />
           <PaginatorRight
