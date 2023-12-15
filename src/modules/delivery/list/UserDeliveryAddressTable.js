@@ -14,6 +14,9 @@ import { useNavigate } from "react-router-dom";
 import { paths } from "../../../constants/paths";
 import { datetime } from "../../../helpers/datetime";
 import { setPaginate } from "../deliverySlice";
+import { setDateFilter } from "../../../shares/shareSlice";
+import moment from "moment";
+import { FilterByDate } from "../../../shares/FilterByDate";
 
 export const UserDeliveryAddressTable = () => {
 
@@ -71,6 +74,16 @@ export const UserDeliveryAddressTable = () => {
         );
     }
 
+    const onFilterByDate = (e) => {
+        let updatePaginateParams = { ...paginateParams };
+
+        updatePaginateParams.start_date = moment(e.startDate).format('yy-MM-DD');
+        updatePaginateParams.end_date = moment(e.endDate).format('yy-MM-DD');
+
+        dispatch(setDateFilter(e));
+        dispatch(setPaginate(updatePaginateParams));
+    };
+
     /**
      * Loading Data
      */
@@ -120,11 +133,7 @@ export const UserDeliveryAddressTable = () => {
                 />
 
                 <div className="flex flex-row justify-content-center align-items-center">
-                    <Button
-                        outlined
-                        icon="pi pi-filter"
-                        size="small"
-                    />
+                    <FilterByDate onFilter={(e) => onFilterByDate(e)} />
                 </div>
             </div>
         )
@@ -137,7 +146,7 @@ export const UserDeliveryAddressTable = () => {
                 size="normal"
                 value={deliveries}
                 sortField={paginateParams.order}
-                sortOrder={paginateParams.sort === 'DESC' ? 1 : paginateParams.sort === 'ASC' ? -1 : 0 }
+                sortOrder={paginateParams.sort === 'DESC' ? 1 : paginateParams.sort === 'ASC' ? -1 : 0}
                 onSort={onSort}
                 loading={loading}
                 emptyMessage="No delivery address found."

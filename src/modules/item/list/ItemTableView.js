@@ -18,9 +18,11 @@ import { Badge } from 'primereact/badge';
 import { Paginator } from 'primereact/paginator';
 import { setPaginate } from '../itemSlice';
 import { getRequest } from '../../../helpers/api';
-import { setStatusFilter } from '../../../shares/shareSlice';
+import { setDateFilter, setStatusFilter } from '../../../shares/shareSlice';
 import { FilterByStatus } from '../../../shares/FilterByStatus';
 import { endpoints } from '../../../constants/endpoints';
+import { FilterByDate } from '../../../shares/FilterByDate';
+import moment from 'moment';
 
 const ItemTableView = () => {
 
@@ -98,6 +100,16 @@ const ItemTableView = () => {
 
         dispatch(setPaginate(updatePaginateParams));
         dispatch(setStatusFilter(e));
+    };
+
+    const onFilterByDate = (e) => {
+        let updatePaginateParams = { ...paginateParams };
+
+        updatePaginateParams.start_date = moment(e.startDate).format('yy-MM-DD');
+        updatePaginateParams.end_date = moment(e.endDate).format('yy-MM-DD');
+
+        dispatch(setDateFilter(e));
+        dispatch(setPaginate(updatePaginateParams));
     };
 
     /**
@@ -178,7 +190,7 @@ const ItemTableView = () => {
     */
     const HeaderRender = () => {
         return (
-            <div className="w-full flex flex-column md:flex-row justify-content-between align-items-start">
+            <div className="w-full flex flex-column md:flex-row justify-content-start align-items-end">
                 <Search
                     tooltipLabel={"search item by id, name, code, description,content,price,sell price,out of stock, status"}
                     placeholder={"Search item"}
@@ -190,6 +202,8 @@ const ItemTableView = () => {
                         status={itemStatus.current}
                         onFilter={(e) => onFilter(e)}
                     />
+
+                    <FilterByDate onFilter={(e) => onFilterByDate(e)} />
 
                     <Button
                         link

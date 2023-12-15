@@ -17,6 +17,9 @@ import { Dropdown } from 'primereact/dropdown';
 import { Paginator } from 'primereact/paginator';
 import { Button } from 'primereact/button';
 import { setPaginate } from '../pointSlice';
+import { setDateFilter } from '../../../shares/shareSlice';
+import moment from 'moment';
+import { FilterByDate } from '../../../shares/FilterByDate';
 
 const PointTableView = () => {
 
@@ -91,6 +94,16 @@ const PointTableView = () => {
         );
     }
 
+    const onFilterByDate = (e) => {
+        let updatePaginateParams = { ...paginateParams };
+
+        updatePaginateParams.start_date = moment(e.startDate).format('yy-MM-DD');
+        updatePaginateParams.end_date = moment(e.endDate).format('yy-MM-DD');
+
+        dispatch(setDateFilter(e));
+        dispatch(setPaginate(updatePaginateParams));
+    };
+
     /**
      * Table Footer Render
      * **/
@@ -121,64 +134,20 @@ const PointTableView = () => {
         return (
             <>
 
-                <div className=' grid align-items-center'>
+                <div className=' w-full flex flex-column md:flex-row justify-content-start align-items-end'>
 
-                    <div className=' col-8 md:col-4 lg:col-3'>
-                        <Search
-                            tooltipLabel={"search by point id, label, point"}
-                            placeholder={"Search point"}
-                            onSearch={(e) => onSearchChange(e)}
-                        />
-                    </div>
+                    <Search
+                        tooltipLabel={"search by point id, label, point"}
+                        placeholder={"Search point"}
+                        onSearch={(e) => onSearchChange(e)}
+                    />
 
-                    <div className=' col-12 lg:col-4'>
-                        <label className=' block mb-1'>Select a point</label>
-                        <Dropdown
-                            options={dropdown}
-                            placeholder="Select a point"
-                            // disabled={loading}
-                            // value={payload.label}
-                            className="p-inputtext-sm text-black"
-                        // onChange={(e) => payloadHandler(payload, e.value, 'label', (updateValue) => {
-                        //     setPayload(updateValue);
-                        // })}
-                        />
-                    </div>
+                    <div className='md:ml-3 flex flex-row justify-content-center align-items-end'>
 
-                    <div className=' col-12 lg:col-5 block md:flex align-items-center justify-content-between'>
-                        <div>
-                            <label className=' block mb-1'>Start Date:</label>
-                            <Calendar
-                                placeholder='Select a start date'
-                                className=' p-inputtext-sm'
-                            />
-                        </div>
-                        <div className=' mt-3 md:mt-0'>
-                            <label className=' block mb-1'>End Date:</label>
-                            <Calendar
-                                placeholder='Select a end date'
-                                className=' p-inputtext-sm'
-                            />
-                        </div>
+                        <FilterByDate onFilter={(e) => onFilterByDate(e)} />
                     </div>
 
                 </div>
-
-                {/* <div className="w-full flex flex-column md:flex-row justify-content-between align-items-start">
-                    <Search
-                        tooltipLabel={"search by admin's id, name, email, phone, status"}
-                        placeholder={"Search admin account"}
-                        onSearch={(e) => console.log(e)}
-                    />
-
-                    <div className="flex flex-row justify-content-center align-items-center">
-                        <Button
-                            outlined
-                            icon="pi pi-filter"
-                            size="small"
-                        />
-                    </div>
-                </div> */}
 
             </>
         )

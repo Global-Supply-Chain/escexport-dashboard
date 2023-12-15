@@ -18,7 +18,9 @@ import { Can } from "../../../shares/Can";
 import { getRequest } from "../../../helpers/api";
 import { endpoints } from "../../../constants/endpoints";
 import { FilterByStatus } from "../../../shares/FilterByStatus";
-import { setStatusFilter } from "../../../shares/shareSlice";
+import { setDateFilter, setStatusFilter } from "../../../shares/shareSlice";
+import moment from "moment";
+import { FilterByDate } from "../../../shares/FilterByDate";
 
 export const ShopViewTable = () => {
 
@@ -94,6 +96,16 @@ export const ShopViewTable = () => {
 
         dispatch(setPaginate(updatePaginateParams));
         dispatch(setStatusFilter(e));
+    };
+
+    const onFilterByDate = (e) => {
+        let updatePaginateParams = { ...paginateParams };
+
+        updatePaginateParams.start_date = moment(e.startDate).format('yy-MM-DD');
+        updatePaginateParams.end_date = moment(e.endDate).format('yy-MM-DD');
+
+        dispatch(setDateFilter(e));
+        dispatch(setPaginate(updatePaginateParams));
     };
 
     const handleExport = () => {
@@ -172,7 +184,7 @@ export const ShopViewTable = () => {
     */
     const HeaderRender = () => {
         return (
-            <div className="w-full flex flex-column md:flex-row justify-content-between align-items-start">
+            <div className="w-full flex flex-column md:flex-row justify-content-start align-items-end">
                 <Search
                     tooltipLabel={"search shop by id, name, phone,address, location, status"}
                     placeholder={"Search shop"}
@@ -184,6 +196,8 @@ export const ShopViewTable = () => {
                         status={shopStatus.current}
                         onFilter={(e) => onFilter(e)}
                     />
+
+                    <FilterByDate onFilter={(e) => onFilterByDate(e)} />
 
                     <Button
                         link
