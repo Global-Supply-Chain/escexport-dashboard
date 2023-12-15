@@ -1,11 +1,11 @@
-import moment from 'moment';
+import moment from "moment";
 
 export const datetime = {
-    long: (value) => {
-        if(value) {
-            return moment(value).format('DD-MM-YYYY hh:mm:ss')
-        } else {
-            return value;
-        }
+  long: (value) => {
+    if (value) {
+      return moment(value).format("DD MMM YYYY - hh:mm:ss");
+    } else {
+      return value;
     }
-}
+  },
+};

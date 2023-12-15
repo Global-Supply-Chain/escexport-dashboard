@@ -16,9 +16,11 @@ import { NavigateId } from "../../../shares/NavigateId";
 import { endpoints } from "../../../constants/endpoints";
 import { AuditColumn } from "../../../shares/AuditColumn";
 import { setMainPaginate } from "../categorySlice";
-import { setStatusFilter } from "../../../shares/shareSlice";
+import { setDateFilter, setStatusFilter } from "../../../shares/shareSlice";
 import { getRequest } from "../../../helpers/api";
 import { FilterByStatus } from "../../../shares/FilterByStatus";
+import { FilterByDate } from "../../../shares/FilterByDate";
+import moment from "moment";
 
 export const MainCategoryTable = () => {
   const dispatch = useDispatch();
@@ -99,6 +101,16 @@ export const MainCategoryTable = () => {
     dispatch(setStatusFilter(e));
   };
 
+  const onFilterByDate = (e) => {
+    let updatePaginateParams = { ...mainPaginateParams };
+
+    updatePaginateParams.start_date = moment(e.startDate).format('yy-MM-DD');
+    updatePaginateParams.end_date = moment(e.endDate).format('yy-MM-DD');
+
+    dispatch(setDateFilter(e));
+    dispatch(setMainPaginate(updatePaginateParams));
+  };
+
   /**
    * Initialize loading data
    */
@@ -159,6 +171,8 @@ export const MainCategoryTable = () => {
           status={categoryStatus.current}
           onFilter={(e) => onFilter(e)}
         />
+
+        <FilterByDate onFilter={(e) => onFilterByDate(e)} />
       </div>
     );
   };

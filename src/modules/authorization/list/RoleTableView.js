@@ -15,6 +15,9 @@ import { Paginator } from 'primereact/paginator';
 import { authorizationPayload } from '../authorizationPayload';
 import { authorizationService } from '../authorizatonService';
 import { setRolePaginate } from '../authorizationSlice';
+import { FilterByDate } from '../../../shares/FilterByDate';
+import moment from 'moment';
+import { setDateFilter, setStatusFilter } from '../../../shares/shareSlice';
 
 export const RoleTableView = () => {
 
@@ -74,6 +77,16 @@ export const RoleTableView = () => {
         );
     }
 
+    const onFilterByDate = (e) => {
+        let updatePaginateParams = { ...rolePaginateParams };
+    
+        updatePaginateParams.start_date = moment(e.startDate).format('yy-MM-DD');
+        updatePaginateParams.end_date = moment(e.endDate).format('yy-MM-DD');
+    
+        dispatch(setDateFilter(e));
+        dispatch(setRolePaginate(updatePaginateParams));
+      };
+
     /**
      *  Loading Data
      */
@@ -127,11 +140,8 @@ export const RoleTableView = () => {
                 />
 
                 <div className="flex flex-row justify-content-center align-items-center">
-                    <Button
-                        outlined
-                        icon="pi pi-filter"
-                        size="small"
-                    />
+                    <FilterByDate onFilter={(e) => onFilterByDate(e)} />
+
                 </div>
             </div>
         )

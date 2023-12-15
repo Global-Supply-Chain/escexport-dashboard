@@ -19,7 +19,9 @@ import { setPaginate } from '../faqSlice';
 import { endpoints } from '../../../constants/endpoints';
 import { getRequest } from '../../../helpers/api';
 import { FilterByStatus } from '../../../shares/FilterByStatus';
-import { setStatusFilter } from '../../../shares/shareSlice';
+import { setDateFilter, setStatusFilter } from '../../../shares/shareSlice';
+import { FilterByDate } from '../../../shares/FilterByDate';
+import moment from 'moment';
 
 export const FaqTableView = () => {
 
@@ -99,6 +101,16 @@ export const FaqTableView = () => {
         dispatch(setStatusFilter(e));
     };
 
+    const onFilterByDate = (e) => {
+        let updatePaginateParams = { ...paginateParams };
+
+        updatePaginateParams.start_date = moment(e.startDate).format('yy-MM-DD');
+        updatePaginateParams.end_date = moment(e.endDate).format('yy-MM-DD');
+
+        dispatch(setDateFilter(e));
+        dispatch(setPaginate(updatePaginateParams));
+    };
+
     /**
      *  Loading Data
      */
@@ -174,6 +186,8 @@ export const FaqTableView = () => {
                     status={faqStatus.current}
                     onFilter={(e) => onFilter(e)}
                 />
+
+                <FilterByDate onFilter={(e) => onFilterByDate(e)} />
                 
             </div>
         )

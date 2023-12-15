@@ -15,6 +15,9 @@ import { Paginator } from 'primereact/paginator';
 import { authorizationPayload } from '../authorizationPayload';
 import { authorizationService } from '../authorizatonService';
 import { setPermissionPaginate } from '../authorizationSlice';
+import { setDateFilter } from '../../../shares/shareSlice';
+import { FilterByDate } from '../../../shares/FilterByDate';
+import moment from 'moment';
 
 export const PermissionTableView = () => {
 
@@ -75,6 +78,16 @@ export const PermissionTableView = () => {
         );
     }
 
+    const onFilterByDate = (e) => {
+        let updatePaginateParams = { ...permissionPaginateParams };
+    
+        updatePaginateParams.start_date = moment(e.startDate).format('yy-MM-DD');
+        updatePaginateParams.end_date = moment(e.endDate).format('yy-MM-DD');
+    
+        dispatch(setDateFilter(e));
+        dispatch(setPermissionPaginate(updatePaginateParams));
+      };
+
     /**
      *  Loading Data
      */
@@ -120,19 +133,15 @@ export const PermissionTableView = () => {
     */
     const HeaderRender = () => {
         return (
-            <div className="w-full flex flex-column md:flex-row justify-content-between align-items-start">
+            <div className="w-full flex flex-column md:flex-row justify-content-start align-items-end">
                 <Search
                     tooltipLabel={"search role by id, name, description"}
                     placeholder={"Search role"}
                     onSearch={(e) => onSearchChange(e)}
                 />
 
-                <div className="flex flex-row justify-content-center align-items-center">
-                    <Button
-                        outlined
-                        icon="pi pi-filter"
-                        size="small"
-                    />
+                <div className="md:ml-3 flex flex-row justify-content-center align-items-end">
+                    <FilterByDate onFilter={(e) => onFilterByDate(e)} />
                 </div>
             </div>
         )
