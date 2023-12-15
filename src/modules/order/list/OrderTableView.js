@@ -16,6 +16,10 @@ import { Paginator } from 'primereact/paginator';
 import { orderPayload } from '../orderPayload';
 import { orderService } from '../orderService';
 import { setPaginate } from '../orderSlice';
+import { getRequest } from '../../../helpers/api';
+import { endpoints } from '../../../constants/endpoints';
+import { setStatusFilter } from '../../../shares/shareSlice';
+import { FilterByStatus } from '../../../shares/FilterByStatus';
 
 export const OrderTableView = () => {
 
@@ -29,6 +33,7 @@ export const OrderTableView = () => {
 
     const total = useRef(0);
     const first = useRef(0);
+    const orderStatus = useRef(["ALL"]);
     const columns = useRef(orderPayload?.columns);
     const showColumns = useRef(columns?.current?.filter(col => col.show === true));
 
@@ -79,6 +84,25 @@ export const OrderTableView = () => {
     }
 
     /**
+  * On Change Filter
+  * @param {*} e
+  */
+    const onFilter = (e) => {
+        let updatePaginateParams = { ...paginateParams };
+
+        if (e === "ALL") {
+            updatePaginateParams.filter = "";
+            updatePaginateParams.value = "";
+        } else {
+            updatePaginateParams.filter = "status";
+            updatePaginateParams.value = e;
+        }
+
+        dispatch(setPaginate(updatePaginateParams));
+        dispatch(setStatusFilter(e));
+    };
+
+    /**
      *  Loading Data
      */
     const loadingData = useCallback(async () => {
@@ -91,6 +115,25 @@ export const OrderTableView = () => {
         setLoading(false);
     }, [dispatch, paginateParams]);
 
+    /**
+     * loading Order Status
+    */
+    const loadingStatus = useCallback(async () => {
+        const orderStatusResponse = await getRequest(
+            `${endpoints.status}?type=order`
+        );
+
+        if (orderStatusResponse.status === 200) {
+            orderStatus.current = orderStatus.current.concat(
+                orderStatusResponse.data.order
+            );
+        }
+    }, []);
+
+    useEffect(() => {
+        loadingStatus();
+    }, [loadingStatus]);
+
     useEffect(() => {
         loadingData();
     }, [loadingData])
@@ -99,14 +142,14 @@ export const OrderTableView = () => {
         const iframe = document.createElement('iframe');
         iframe.style.display = 'none';
         document.body.appendChild(iframe);
-      
+
         iframe.src = 'http://127.0.0.1:8000/dashboard/export-order';
-        
+
         // Cleanup the iframe after download
         setTimeout(() => {
-          document.body.removeChild(iframe);
+            document.body.removeChild(iframe);
         }, 5000); // Adjust the timeout as needed
-      };
+    };
 
     /**
      * Table Footer Render
@@ -143,13 +186,12 @@ export const OrderTableView = () => {
                     onSearch={(e) => onSearchChange(e)}
                 />
 
-                <div className="flex flex-row justify-content-center align-items-center">
-                    <Button
-                        outlined
-                        icon="pi pi-filter"
-                        size="small"
+                <div className="flex flex-row justify-content-center align-items-end">
+                    <FilterByStatus
+                        status={orderStatus.current}
+                        onFilter={(e) => onFilter(e)}
                     />
-                    <Button 
+                    <Button
                         link
                         outlined
                         icon="pi pi-cloud-download"

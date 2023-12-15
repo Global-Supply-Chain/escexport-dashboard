@@ -116,7 +116,7 @@ export const RoleDetail = () => {
             </div>
 
             <div className=' col-12'>
-                <RoleHasPermissionTableView dataSource={dataSource} />
+                <RoleHasPermissionTableView dataSource={dataSource} callback={loadingData} />
             </div>
 
         </div>

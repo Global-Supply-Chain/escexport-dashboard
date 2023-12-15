@@ -14,6 +14,10 @@ import { Paginator } from 'primereact/paginator';
 import { regionPayload } from '../regionPayload';
 import { regionService } from '../regionService';
 import { setPaginate } from '../regionSlice';
+import { setStatusFilter } from '../../../shares/shareSlice';
+import { endpoints } from '../../../constants/endpoints';
+import { FilterByStatus } from '../../../shares/FilterByStatus';
+import { getRequest } from '../../../helpers/api';
 
 export const RegionTableView = () => {
 
@@ -26,6 +30,7 @@ export const RegionTableView = () => {
 
     const first = useRef(0);
     const total = useRef(0);
+    const regionStatus = useRef(['ALL']);
     const columns = useRef(regionPayload?.columns);
     const showColumns = useRef(columns?.current?.filter(col => col.show === true));
 
@@ -74,6 +79,25 @@ export const RegionTableView = () => {
     }
 
     /**
+   * On Change Filter
+   * @param {*} e
+   */
+    const onFilter = (e) => {
+        let updatePaginateParams = { ...paginateParams };
+
+        if (e === "ALL") {
+            updatePaginateParams.filter = "";
+            updatePaginateParams.value = "";
+        } else {
+            updatePaginateParams.filter = "status";
+            updatePaginateParams.value = e;
+        }
+
+        dispatch(setPaginate(updatePaginateParams));
+        dispatch(setStatusFilter(e));
+    };
+
+    /**
      *  Loading Data
      */
     const loadingData = useCallback(async () => {
@@ -85,6 +109,25 @@ export const RegionTableView = () => {
 
         setLoading(false);
     }, [dispatch, paginateParams]);
+
+    /**
+     * loading General Status
+    */
+    const loadingStatus = useCallback(async () => {
+        const regionStatusResponse = await getRequest(
+            `${endpoints.status}?type=general`
+        );
+
+        if (regionStatusResponse.status === 200) {
+            regionStatus.current = regionStatus.current.concat(
+                regionStatusResponse.data.general
+            );
+        }
+    }, []);
+
+    useEffect(() => {
+        loadingStatus();
+    }, [loadingStatus]);
 
     useEffect(() => {
         loadingData();
@@ -125,13 +168,11 @@ export const RegionTableView = () => {
                     onSearch={(e) => onSearchChange(e)}
                 />
 
-                <div className="flex flex-row justify-content-center align-items-center">
-                    <Button
-                        outlined
-                        icon="pi pi-filter"
-                        size="small"
-                    />
-                </div>
+                <FilterByStatus
+                    status={regionStatus.current}
+                    onFilter={(e) => onFilter(e)}
+                />
+
             </div>
         )
     }

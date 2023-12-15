@@ -11,7 +11,7 @@ export const deliveryRoutes = [
         loader : () => {
             return{
                 breadcrumbs: [
-                    { label: "Dashboard", url: "/" },
+                    { label: "Dashboard", url: paths.dashboard },
                     { label: "Delivery", url: paths.delivery },
                 ],
                 role: ['ADMINISTRATOR']
@@ -26,7 +26,7 @@ export const deliveryRoutes = [
         loader: () => {
             return {
                 breadcrumbs: [
-                    { label: "Dashboard", url: "/" },
+                    { label: "Dashboard", url: paths.dashboard },
                     { label: "List", url: paths.delivery },
                     { label: "Create", url: paths.deliveryCreate }
                 ]
@@ -40,7 +40,7 @@ export const deliveryRoutes = [
         loader: () => {
             return {
                 breadcrumbs: [
-                    { label: "Dashboard", url: "/" },
+                    { label: "Dashboard", url: paths.dashboard },
                     { label: "List", url: paths.delivery },
                 ]
             }

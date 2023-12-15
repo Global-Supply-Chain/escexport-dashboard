@@ -16,6 +16,9 @@ import { NavigateId } from "../../../shares/NavigateId";
 import { endpoints } from "../../../constants/endpoints";
 import { AuditColumn } from "../../../shares/AuditColumn";
 import { setMainPaginate } from "../categorySlice";
+import { setStatusFilter } from "../../../shares/shareSlice";
+import { getRequest } from "../../../helpers/api";
+import { FilterByStatus } from "../../../shares/FilterByStatus";
 
 export const MainCategoryTable = () => {
   const dispatch = useDispatch();
@@ -28,6 +31,7 @@ export const MainCategoryTable = () => {
 
   const total = useRef(0);
   const first = useRef(0);
+  const categoryStatus = useRef(['ALL']);
   const columns = useRef(categoryPayload.mainCategoryColumns);
   const showColumns = useRef(
     columns.current.filter((col) => col.show === true)
@@ -65,7 +69,7 @@ export const MainCategoryTable = () => {
    * Event - Column sorting "DESC | ASC"
    * @param {*} event 
    */
-  const onSort =(event) => {
+  const onSort = (event) => {
     const sortOrder = event.sortOrder === 1 ? "DESC" : "ASC";
     dispatch(
       setMainPaginate({
@@ -75,6 +79,25 @@ export const MainCategoryTable = () => {
       })
     );
   }
+
+  /**
+    * On Change Filter
+    * @param {*} e
+    */
+  const onFilter = (e) => {
+    let updatePaginateParams = { ...mainPaginateParams };
+
+    if (e === "ALL") {
+      updatePaginateParams.filter = "";
+      updatePaginateParams.value = "";
+    } else {
+      updatePaginateParams.filter = "status";
+      updatePaginateParams.value = e;
+    }
+
+    dispatch(setMainPaginate(updatePaginateParams));
+    dispatch(setStatusFilter(e));
+  };
 
   /**
    * Initialize loading data
@@ -94,6 +117,25 @@ export const MainCategoryTable = () => {
   }, [dispatch, mainPaginateParams]);
 
   /**
+* loading general Status
+*/
+  const loadingStatus = useCallback(async () => {
+    const categoryStatusResponse = await getRequest(
+      `${endpoints.status}?type=general`
+    );
+
+    if (categoryStatusResponse.status === 200) {
+      categoryStatus.current = categoryStatus.current.concat(
+        categoryStatusResponse.data.general
+      );
+    }
+  }, []);
+
+  useEffect(() => {
+    loadingStatus();
+  }, [loadingStatus]);
+
+  /**
    * LifeCycle - watch event change
    */
   useEffect(() => {
@@ -111,6 +153,11 @@ export const MainCategoryTable = () => {
           tooltipLabel={"Search by id,title,status"}
           placeholder={"Search main category"}
           onSearch={(e) => onSearchChange(e)}
+        />
+
+        <FilterByStatus
+          status={categoryStatus.current}
+          onFilter={(e) => onFilter(e)}
         />
       </div>
     );
@@ -143,7 +190,7 @@ export const MainCategoryTable = () => {
           size="small"
           onClick={() => loadingData()}
         />
-        
+
         <div className=" flex align-items-center gap-3">
           <PaginatorRight
             show={showAuditColumn}

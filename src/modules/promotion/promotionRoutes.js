@@ -12,7 +12,7 @@ export const promotionRoutes = [
         loader : () => {
             return{
                 breadcrumbs: [
-                    { label: "Dashboard", url: "/" },
+                    { label: "Dashboard", url: paths.dashboard },
                     { label: "Promotion", url: paths.promotion },
                 ],
                 role: ['ADMINISTRATOR']
@@ -25,7 +25,7 @@ export const promotionRoutes = [
         loader: () => {
             return{
                 breadcrumbs: [
-                    { label: "Dashboard", url: "/" },
+                    { label: "Dashboard", url: paths.dashboard },
                     { label: "Promotion", url: paths.promotion },
                 ],
                 role: ['ADMINISTRATOR']
@@ -39,7 +39,7 @@ export const promotionRoutes = [
         loader: () => {
             return{
                 breadcrumbs: [
-                    { label: "Dashboard", url: "/" },
+                    { label: "Dashboard", url: paths.dashboard },
                     { label: "List", url: paths.promotion },
                 ],
                 role: ['ADMINISTRATOR']

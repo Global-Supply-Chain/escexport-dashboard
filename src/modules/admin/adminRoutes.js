@@ -11,7 +11,7 @@ export const adminRoutes = [
         loader: () => {
             return {
                 breadcrumbs: [
-                    { label: "Dashboard", url: "/" },
+                    { label: "Dashboard", url: paths.dashboard },
                     { label: "List", url: paths.admin },
                     { label: "Create", url: paths.adminCreate },
                 ],
@@ -26,7 +26,7 @@ export const adminRoutes = [
         loader: () => {
             return{
                 breadcrumbs: [
-                    { label: "Dashboard", url: "/" },
+                    { label: "Dashboard", url: paths.dashboard },
                     { label: "List", url: paths.admin },
                 ],
                 role: ['ADMINISTRATOR']
@@ -40,7 +40,7 @@ export const adminRoutes = [
         loader: () => {
             return {
                 breadcrumbs: [
-                    { label: "Dashboard", url: "/" },
+                    { label: "Dashboard", url: paths.dashboard },
                     { label: "List", url: paths.admin }
                 ]
             }
