@@ -18,7 +18,7 @@ export const authorizationPayload = {
     roleHasPermissionColumns : [
         { field: "name", header: "Name", sortable: true, show: true },
         { field: "description", header: "Description", sortable: true, show: true },
-        { field: "action", header: "Action", sortable: true, show: true },
+        { field: "action", header: "Action", sortable: false, show: true },
     ],
     permissionColumns: [
         { field: "id", header: "ID", sortable: true, show: true },

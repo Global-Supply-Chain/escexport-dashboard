@@ -12,7 +12,7 @@ export const categoryRoutes = [
         loader: () => {
             return {
                 breadcrumbs: [
-                    { label: "Dashboard", url: "/" },
+                    { label: "Dashboard", url: paths.dashboard },
                     { label: "Main Category", url: paths.category },
                     { label: "Create", url: paths.createMainCategory },
                 ],
@@ -27,7 +27,7 @@ export const categoryRoutes = [
         loader: () => {
             return {
                 breadcrumbs: [
-                    { label: "Dashboard", url: "/" },
+                    { label: "Dashboard", url: paths.dashboard },
                     { label: "Main Category", url: paths.category },
                     { label: "Create", url: paths.createMainCategory },
                 ],
@@ -42,7 +42,7 @@ export const categoryRoutes = [
         loader: () => {
             return {
                 breadcrumbs: [
-                    { label: "Dashboard", url: "/" },
+                    { label: "Dashboard", url: paths.dashboard },
                     { label: "Main Category", url: paths.category },
                     { label: "Create", url: paths.createMainCategory },
                 ],
@@ -57,7 +57,7 @@ export const categoryRoutes = [
         loader: () => {
             return {
                 breadcrumbs: [
-                    { label: "Dashboard", url: "/" },
+                    { label: "Dashboard", url: paths.dashboard },
                     { label: "Main Category", url: paths.category },
                     { label: "Sub Category", url: null },
                 ],

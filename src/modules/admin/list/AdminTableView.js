@@ -20,6 +20,7 @@ import { getRequest } from "../../../helpers/api";
 import { endpoints } from "../../../constants/endpoints";
 import { setDateFilter, setStatusFilter } from "../../../shares/shareSlice";
 import { FilterByDate } from "../../../shares/FilterByDate";
+import moment from "moment";
 
 export const AdminTableView = () => {
   const dispatch = useDispatch();
@@ -102,8 +103,8 @@ export const AdminTableView = () => {
   const onFilterByDate = (e) => {
     let updatePaginateParams = { ...paginateParams };
 
-    updatePaginateParams.start_date = datetime.long(e.startDate);
-    updatePaginateParams.end_date = datetime.long(e.endDate);
+    updatePaginateParams.start_date = moment(e.startDate).format('yy-MM-DD');
+    updatePaginateParams.end_date = moment(e.endDate).format('yy-MM-DD');
 
     dispatch(setDateFilter(e));
     dispatch(setPaginate(updatePaginateParams));
@@ -147,6 +148,8 @@ export const AdminTableView = () => {
     loadingData();
   }, [loadingData]);
 
+  console.log(paginateParams);
+
   const FooterRender = () => {
     return (
       <div className="flex items-center justify-content-between">
@@ -159,7 +162,13 @@ export const AdminTableView = () => {
             outlined
             icon="pi pi-refresh"
             size="small"
-            onClick={() => loadingData()}
+            onClick={() => {
+              dispatch(setPaginate(
+                adminPayload.paginateParams
+              ))
+              dispatch(setStatusFilter("ALL"));
+              dispatch(setDateFilter({startDate : "", endDate: ""}));
+            }}
           />
           <PaginatorRight
             show={showAuditColumn}

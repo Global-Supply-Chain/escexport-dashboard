@@ -12,7 +12,7 @@ export const faqRoutes = [
         loader: () => {
             return{
                 breadcrumbs: [
-                    { label: "Dashboard", url: "/" },
+                    { label: "Dashboard", url: paths.dashboard },
                     { label: "List", url: paths.faq },
                 ],
                 role: ['ADMINISTRATOR']
@@ -26,7 +26,7 @@ export const faqRoutes = [
         loader: () => {
             return {
                 breadcrumbs: [
-                    { label: "Dashboard", url: "/" },
+                    { label: "Dashboard", url: paths.dashboard },
                     { label: "List", url: paths.faq },
                 ],
                 role: ['ADMINISTRATOR']
@@ -40,7 +40,7 @@ export const faqRoutes = [
         loader: () => {
             return {
                 breadcrumbs: [
-                    { label: "Dashboard", url: "/" },
+                    { label: "Dashboard", url: paths.dashboard },
                     { label: "List", url: paths.faq }
                 ]
             }
