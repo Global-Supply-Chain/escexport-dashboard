@@ -17,6 +17,10 @@ import { Button } from 'primereact/button';
 import { Badge } from 'primereact/badge';
 import { Paginator } from 'primereact/paginator';
 import { setPaginate } from '../itemSlice';
+import { getRequest } from '../../../helpers/api';
+import { setStatusFilter } from '../../../shares/shareSlice';
+import { FilterByStatus } from '../../../shares/FilterByStatus';
+import { endpoints } from '../../../constants/endpoints';
 
 const ItemTableView = () => {
 
@@ -29,6 +33,7 @@ const ItemTableView = () => {
 
     const first = useRef(0);
     const total = useRef(0);
+    const itemStatus = useRef(['ALL']);
     const columns = useRef(itemPayload.columns);
     const showColumns = useRef(columns.current.filter(col => col.show === true));
 
@@ -77,6 +82,25 @@ const ItemTableView = () => {
     }
 
     /**
+  * On Change Filter
+  * @param {*} e
+  */
+    const onFilter = (e) => {
+        let updatePaginateParams = { ...paginateParams };
+
+        if (e === "ALL") {
+            updatePaginateParams.filter = "";
+            updatePaginateParams.value = "";
+        } else {
+            updatePaginateParams.filter = "status";
+            updatePaginateParams.value = e;
+        }
+
+        dispatch(setPaginate(updatePaginateParams));
+        dispatch(setStatusFilter(e));
+    };
+
+    /**
      *  Loading Data
      */
     const loadingData = useCallback(async () => {
@@ -90,6 +114,25 @@ const ItemTableView = () => {
         setLoading(false);
     }, [dispatch, paginateParams]);
 
+    /**
+ * loading general Status
+*/
+    const loadingStatus = useCallback(async () => {
+        const itemStatusResponse = await getRequest(
+            `${endpoints.status}?type=general`
+        );
+
+        if (itemStatusResponse.status === 200) {
+            itemStatus.current = itemStatus.current.concat(
+                itemStatusResponse.data.general
+            );
+        }
+    }, []);
+
+    useEffect(() => {
+        loadingStatus();
+    }, [loadingStatus]);
+
     useEffect(() => {
         loadingData();
     }, [loadingData])
@@ -98,14 +141,14 @@ const ItemTableView = () => {
         const iframe = document.createElement('iframe');
         iframe.style.display = 'none';
         document.body.appendChild(iframe);
-      
+
         iframe.src = 'http://127.0.0.1:8000/dashboard/export-item';
-        
+
         // Cleanup the iframe after download
         setTimeout(() => {
-          document.body.removeChild(iframe);
+            document.body.removeChild(iframe);
         }, 5000); // Adjust the timeout as needed
-      };
+    };
 
     /**
      * Table Footer Render
@@ -142,14 +185,13 @@ const ItemTableView = () => {
                     onSearch={(e) => onSearchChange(e)}
                 />
 
-                <div className="flex flex-row justify-content-center align-items-center">
-                    <Button
-                        outlined
-                        icon="pi pi-filter"
-                        size="small"
+                <div className="flex flex-row justify-content-center align-items-end">
+                    <FilterByStatus
+                        status={itemStatus.current}
+                        onFilter={(e) => onFilter(e)}
                     />
 
-                    <Button 
+                    <Button
                         link
                         outlined
                         icon="pi pi-cloud-download"

@@ -16,6 +16,10 @@ import { Paginator } from 'primereact/paginator';
 import { faqPayload } from '../faqPayload';
 import { faqService } from '../faqService';
 import { setPaginate } from '../faqSlice';
+import { endpoints } from '../../../constants/endpoints';
+import { getRequest } from '../../../helpers/api';
+import { FilterByStatus } from '../../../shares/FilterByStatus';
+import { setStatusFilter } from '../../../shares/shareSlice';
 
 export const FaqTableView = () => {
 
@@ -28,6 +32,7 @@ export const FaqTableView = () => {
 
     const first = useRef(0);
     const total = useRef(0);
+    const faqStatus = useRef(["ALL"]);
     const columns = useRef(faqPayload?.columns);
     const showColumns = useRef(columns?.current?.filter(col => col.show === true));
 
@@ -76,6 +81,25 @@ export const FaqTableView = () => {
     }
 
     /**
+    * On Change Filter
+    * @param {*} e
+    */
+    const onFilter = (e) => {
+        let updatePaginateParams = { ...paginateParams };
+
+        if (e === "ALL") {
+            updatePaginateParams.filter = "";
+            updatePaginateParams.value = "";
+        } else {
+            updatePaginateParams.filter = "status";
+            updatePaginateParams.value = e;
+        }
+
+        dispatch(setPaginate(updatePaginateParams));
+        dispatch(setStatusFilter(e));
+    };
+
+    /**
      *  Loading Data
      */
     const loadingData = useCallback(async () => {
@@ -87,6 +111,25 @@ export const FaqTableView = () => {
 
         setLoading(false);
     }, [dispatch, paginateParams]);
+
+    /**
+    * loading general Status
+    */
+    const loadingStatus = useCallback(async () => {
+        const faqStatusResponse = await getRequest(
+            `${endpoints.status}?type=general`
+        );
+
+        if (faqStatusResponse.status === 200) {
+            faqStatus.current = faqStatus.current.concat(
+                faqStatusResponse.data.general
+            );
+        }
+    }, []);
+
+    useEffect(() => {
+        loadingStatus();
+    }, [loadingStatus]);
 
     useEffect(() => {
         loadingData();
@@ -127,13 +170,11 @@ export const FaqTableView = () => {
                     onSearch={(e) => onSearchChange(e)}
                 />
 
-                <div className="flex flex-row justify-content-center align-items-center">
-                    <Button
-                        outlined
-                        icon="pi pi-filter"
-                        size="small"
-                    />
-                </div>
+                <FilterByStatus
+                    status={faqStatus.current}
+                    onFilter={(e) => onFilter(e)}
+                />
+                
             </div>
         )
     }

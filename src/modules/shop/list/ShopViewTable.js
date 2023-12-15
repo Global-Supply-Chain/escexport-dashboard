@@ -15,6 +15,10 @@ import { shopPayload } from "../shopPayload";
 import { shopService } from "../shopService";
 import { setPaginate } from "../shopSlice";
 import { Can } from "../../../shares/Can";
+import { getRequest } from "../../../helpers/api";
+import { endpoints } from "../../../constants/endpoints";
+import { FilterByStatus } from "../../../shares/FilterByStatus";
+import { setStatusFilter } from "../../../shares/shareSlice";
 
 export const ShopViewTable = () => {
 
@@ -27,6 +31,7 @@ export const ShopViewTable = () => {
     const showColumns = useRef(columns.current.filter(col => col.show === true));
     const first = useRef(0);
     const total = useRef(0);
+    const shopStatus = useRef(['ALL']);
 
     /**
      * Event - Paginate Page Change
@@ -72,6 +77,25 @@ export const ShopViewTable = () => {
         );
     }
 
+    /**
+  * On Change Filter
+  * @param {*} e
+  */
+    const onFilter = (e) => {
+        let updatePaginateParams = { ...paginateParams };
+
+        if (e === "ALL") {
+            updatePaginateParams.filter = "";
+            updatePaginateParams.value = "";
+        } else {
+            updatePaginateParams.filter = "status";
+            updatePaginateParams.value = e;
+        }
+
+        dispatch(setPaginate(updatePaginateParams));
+        dispatch(setStatusFilter(e));
+    };
+
     const handleExport = () => {
         const iframe = document.createElement('iframe');
         iframe.style.display = 'none';
@@ -86,8 +110,43 @@ export const ShopViewTable = () => {
     };
 
     /**
-     * Table Footer Render
-     * **/
+     * Loading Data
+     */
+    const loadingData = useCallback(async () => {
+        setLoading(true);
+        const response = await shopService.index(dispatch, paginateParams);
+        if (response.status === 200) {
+            total.current = response.data.total ? response.data.total : response.data.length;
+        }
+        setLoading(false);
+    }, [dispatch, paginateParams]);
+
+    /**
+ * loading User Status
+*/
+    const loadingStatus = useCallback(async () => {
+        const shopStatusResponse = await getRequest(
+            `${endpoints.status}?type=general`
+        );
+
+        if (shopStatusResponse.status === 200) {
+            shopStatus.current = shopStatus.current.concat(
+                shopStatusResponse.data.general
+            );
+        }
+    }, []);
+
+    useEffect(() => {
+        loadingStatus();
+    }, [loadingStatus]);
+
+    useEffect(() => {
+        loadingData();
+    }, [loadingData]);
+
+    /**
+ * Table Footer Render
+ * **/
     const FooterRender = () => {
         return (
             <div className=' flex items-center justify-content-between'>
@@ -120,11 +179,10 @@ export const ShopViewTable = () => {
                     onSearch={(e) => onSearchChange(e)}
                 />
 
-                <div className="flex flex-row justify-content-center align-items-center gap-3">
-                    <Button
-                        outlined
-                        icon="pi pi-filter"
-                        size="small"
+                <div className="flex flex-row justify-content-center align-items-end gap-3">
+                    <FilterByStatus
+                        status={shopStatus.current}
+                        onFilter={(e) => onFilter(e)}
                     />
 
                     <Button
@@ -138,22 +196,6 @@ export const ShopViewTable = () => {
             </div>
         )
     }
-
-    /**
-     * Loading Data
-     */
-    const loadingData = useCallback(async () => {
-        setLoading(true);
-        const response = await shopService.index(dispatch, paginateParams);
-        if (response.status === 200) {
-            total.current = response.data.total ? response.data.total : response.data.length;
-        }
-        setLoading(false);
-    }, [dispatch, paginateParams]);
-
-    useEffect(() => {
-        loadingData();
-    }, [loadingData]);
 
     return (
         <>

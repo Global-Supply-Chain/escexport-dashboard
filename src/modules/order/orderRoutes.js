@@ -11,7 +11,7 @@ export const orderRoutes = [
         loader: () => {
             return{
                 breadcrumbs: [
-                    { label: "Dashboard", url: "/" },
+                    { label: "Dashboard", url: paths.dashboard },
                     { label: "List", url: paths.order },
                 ],
                 role: ['ADMINISTRATOR']
@@ -25,7 +25,7 @@ export const orderRoutes = [
         loader: () => {
             return{
                 breadcrumbs: [
-                    { label: "Dashboard", url: "/" },
+                    { label: "Dashboard", url: paths.dashboard },
                     { label: "List", url: paths.order },
                 ],
                 role: ['ADMINISTRATOR']

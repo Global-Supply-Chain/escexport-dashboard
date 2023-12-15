@@ -16,7 +16,7 @@ export const shopRoutes = [
             const per = permission.filter((per) => per === "SHOP_INDEX");
             return{
                 breadcrumbs: [
-                    { label: "Dashboard", url: "/" },
+                    { label: "Dashboard", url: paths.dashboard },
                     { label: "List", url: paths.shop },
                 ],
                 role: role,
@@ -32,7 +32,7 @@ export const shopRoutes = [
         loader: () => {
             return {
                 breadcrumbs: [
-                    { label: "Dashboard", url: "/" },
+                    { label: "Dashboard", url: paths.dashboard },
                     { label: "List", url: paths.shop },
                     { label: "Create", url: paths.shopCreate }
                 ]
@@ -46,7 +46,7 @@ export const shopRoutes = [
         loader: () => {
             return {
                 breadcrumbs: [
-                    { label: "Dashboard", url: "/" },
+                    { label: "Dashboard", url: paths.dashboard },
                     { label: "List", url: paths.shopDetail },
                 ]
             }

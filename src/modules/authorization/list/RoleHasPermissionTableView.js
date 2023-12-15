@@ -4,21 +4,27 @@ import { DataTable } from 'primereact/datatable'
 import React, { useEffect, useRef, useState } from 'react'
 import { authorizationPayload } from '../authorizationPayload'
 import { InputText } from 'primereact/inputtext'
+import { Button } from 'primereact/button'
+import { authorizationService } from '../authorizatonService'
+import { useDispatch } from 'react-redux'
 
-export const RoleHasPermissionTableView = ({dataSource}) => {
+export const RoleHasPermissionTableView = ({dataSource,callback}) => {
 
     const columns = useRef(authorizationPayload.roleHasPermissionColumns);
-    const [filters, setFilters] = useState({
-        global: { value: null, matchMode: dataSource?.role?.permissions },
-    });
+    const [loading, setLoading] = useState(false);
+    const [filters, setFilters] = useState([]);
     const [globalFilterValue, setGlobalFilterValue] = useState('');
+    const [checkAll, setCheckAll] = useState(false);
     const [checkList, setCheckList] = useState([]);
+
+    const dispatch = useDispatch();
 
     const onPerChange = (e) => {
         let permission = [...checkList];
 
-        if (e.checked)
+        if (e.checked) {
             permission.push(e.value);
+        }
         else
             permission = permission.filter(per => per !== e.value);
 
@@ -27,17 +33,59 @@ export const RoleHasPermissionTableView = ({dataSource}) => {
 
     const onGlobalFilterChange = (e) => {
         const value = e.target.value;
-        // let _filters = { ...filters };
-
-        // _filters['global'].value = value;
-
-        setFilters(filters);
         setGlobalFilterValue(value);
     };
 
-    const renderHeader = () => {
+    const submitRoleRemovePermission = async () => {
+        setLoading(true);
+
+        const payload = {
+            permissions : checkList
+        }
+        const res = await authorizationService.rolePermissionRemove(dispatch,dataSource?.id,payload);
+        if(res.status === 200) {
+            callback()
+        }
+        setLoading(false);
+    }
+
+    useEffect(() => {
+        if(globalFilterValue) {
+            const result = filters?.filter((per) => per.name.toLowerCase().includes(globalFilterValue.toLowerCase()))
+            setFilters(result);
+        }
+    }, [globalFilterValue])
+
+    useEffect(() => {
+        if(checkAll === true) {
+            const result = filters?.map((per) => per.id)
+            setCheckList(result)
+        }
+    }, [checkAll])
+
+    useEffect(() => {
+        if(dataSource){
+            setFilters(dataSource?.role?.permissions)
+        }
+    }, [dataSource]);
+
+
+    const RenderHeader = () => {
         return (
-            <div className="flex justify-content-end">
+            <div className="flex justify-content-end gap-3">
+                <div className=' flex align-items-center justify-content-center gap-3'>
+                    <label htmlFor='select'>Select All</label>
+                    <Checkbox 
+                        inputId='select'
+                        checked={checkAll}
+                        onChange={(e) => {
+                            setCheckAll(!checkAll);
+                            if(e.checked === false){
+                                setCheckList([]);
+                            }
+                        }}
+                    />
+                </div>
                 <span className="p-input-icon-left">
                     <i className="pi pi-search" />
                     <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Keyword Search" />
@@ -46,26 +94,35 @@ export const RoleHasPermissionTableView = ({dataSource}) => {
         );
     };
 
-    const header = renderHeader();
+    const RenderFooter = () => {
+        const isDisable = checkList?.length > 0 ? false : true;
 
-    useEffect(() => {
-        if(dataSource){
-            setFilters(dataSource?.role?.permissions)
-        }
-    }, [dataSource])
+        return (
+            <div className=' flex align-items-center justify-content-end'>
+                <Button 
+                type='submit'
+                label='SUBMIT'
+                disabled={isDisable}
+                onClick={submitRoleRemovePermission}
+                outlined
+                />
+            </div>
+        )
+    }
 
     return (
         <div>
 
             <DataTable 
                 dataKey='id'
-                value={dataSource?.role?.permissions}
+                value={filters}
                 stripedRows 
                 filterDisplay="row"
                 filters={filters}
                 tableStyle={{ minWidth: '50rem' }}
                 globalFilterFields={['id','name']}
-                header={header}
+                header={<RenderHeader />}
+                footer={<RenderFooter />}
             >
                 {
                     columns.current?.map((col,index) => {
@@ -75,7 +132,7 @@ export const RoleHasPermissionTableView = ({dataSource}) => {
                             style={{ minWidth: "250px" }}
                             field={col.field}
                             header={col.header}
-                            sortable
+                            sortable={col.sortable}
                             body={(value) => {
 
                                 if(col.field === 'action') {
@@ -83,8 +140,11 @@ export const RoleHasPermissionTableView = ({dataSource}) => {
                                         <Checkbox 
                                         inputId={value.id}
                                         value={value.id}
-                                        checked={checkList.some((che) => che === value.id)}
-                                        onChange={onPerChange}
+                                        checked={checkAll ? checkAll : checkList.some((che) => che === value.id)}
+                                        onChange={(e) => {
+                                            onPerChange(e);
+                                            setCheckAll(false)
+                                        }}
                                         multiple
                                         />
                                         )

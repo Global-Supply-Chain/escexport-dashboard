@@ -17,6 +17,10 @@ import { useNavigate } from 'react-router-dom';
 import { Paginator } from 'primereact/paginator';
 import { setPaginate } from '../userSlice';
 import { Can } from '../../../shares/Can';
+import { FilterByStatus } from '../../../shares/FilterByStatus';
+import { setStatusFilter } from '../../../shares/shareSlice';
+import { getRequest } from '../../../helpers/api';
+import { endpoints } from '../../../constants/endpoints';
 
 export const UserTableView = () => {
 
@@ -29,6 +33,7 @@ export const UserTableView = () => {
 
     const first = useRef(0);
     const total = useRef(0);
+    const userStatus = useRef(['ALL']);
     const columns = useRef(userPayload?.columns);
     const showColumns = useRef(columns?.current?.filter(col => col.show === true));
 
@@ -78,6 +83,25 @@ export const UserTableView = () => {
     }
 
     /**
+   * On Change Filter
+   * @param {*} e
+   */
+    const onFilter = (e) => {
+        let updatePaginateParams = { ...paginateParams };
+
+        if (e === "ALL") {
+            updatePaginateParams.filter = "";
+            updatePaginateParams.value = "";
+        } else {
+            updatePaginateParams.filter = "status";
+            updatePaginateParams.value = e;
+        }
+
+        dispatch(setPaginate(updatePaginateParams));
+        dispatch(setStatusFilter(e));
+    };
+
+    /**
      *  Loading Data
      */
     const loadingData = useCallback(async () => {
@@ -90,9 +114,29 @@ export const UserTableView = () => {
         setLoading(false);
     }, [dispatch, paginateParams]);
 
-    useEffect(() => {
-        loadingData();
-    }, [loadingData])
+    /**
+     * loading User Status
+    */
+  const loadingStatus = useCallback(async () => {
+    const userStatusResponse = await getRequest(
+      `${endpoints.status}?type=user`
+    );
+    console.log(userStatusResponse);
+
+    if (userStatusResponse.status === 200) {
+      userStatus.current = userStatus.current.concat(
+        userStatusResponse.data.user
+      );
+    }
+  }, []);
+
+  useEffect(() => {
+    loadingStatus();
+  }, [loadingStatus]);
+
+  useEffect(() => {
+    loadingData();
+}, [loadingData])
 
     const exportUser = async () => {
         setLoading(true);
@@ -135,18 +179,25 @@ export const UserTableView = () => {
                     onSearch={(e) => onSearchChange(e)}
                 />
 
-                <div className="flex flex-row justify-content-center align-items-center gap-3">
-                    <Button
-                        outlined
-                        icon="pi pi-filter"
-                        size="small"
+                <div className=' flex align-items-end justify-content-center'>
+                    <FilterByStatus
+                        status={userStatus.current}
+                        onFilter={(e) => onFilter(e)}
                     />
-                    <Button 
-                        outlined
-                        icon="pi pi-cloud-download"
-                        size='small'
-                        onClick={exportUser}
-                    />
+
+                    <div className="flex flex-row justify-content-center align-items-center gap-3">
+                        <Button
+                            outlined
+                            icon="pi pi-filter"
+                            size="small"
+                        />
+                        <Button
+                            outlined
+                            icon="pi pi-cloud-download"
+                            size='small'
+                            onClick={exportUser}
+                        />
+                    </div>
                 </div>
             </div>
         )
@@ -224,6 +275,6 @@ export const UserTableView = () => {
                 currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
                 onPageChange={onPageChange}
             />
-            </>
+        </>
     )
 }

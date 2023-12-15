@@ -14,6 +14,10 @@ import { paths } from '../../../constants/paths';
 import { datetime } from '../../../helpers/datetime';
 import { Paginator } from 'primereact/paginator';
 import { setPaginate } from '../promotionSlice';
+import { getRequest } from '../../../helpers/api';
+import { endpoints } from '../../../constants/endpoints';
+import { setStatusFilter } from '../../../shares/shareSlice';
+import { FilterByStatus } from '../../../shares/FilterByStatus';
 
 const PromotionTableView = () => {
 
@@ -26,6 +30,7 @@ const PromotionTableView = () => {
 
     const first = useRef(0);
     const total = useRef(0);
+    const promotionStatus = useRef(['ALL']);
     const columns = useRef(promotionPayload.columns);
     const showColumns = useRef(columns.current.filter(col => col.show === true));
 
@@ -75,6 +80,25 @@ const PromotionTableView = () => {
     }
 
     /**
+   * On Change Filter
+   * @param {*} e
+   */
+    const onFilter = (e) => {
+        let updatePaginateParams = { ...paginateParams };
+
+        if (e === "ALL") {
+            updatePaginateParams.filter = "";
+            updatePaginateParams.value = "";
+        } else {
+            updatePaginateParams.filter = "status";
+            updatePaginateParams.value = e;
+        }
+
+        dispatch(setPaginate(updatePaginateParams));
+        dispatch(setStatusFilter(e));
+    };
+
+    /**
      *  Loading Data
      */
     const loadingData = useCallback(async () => {
@@ -87,6 +111,25 @@ const PromotionTableView = () => {
 
         setLoading(false);
     }, [dispatch, paginateParams]);
+
+    /**
+     * loading General Status
+    */
+    const loadingStatus = useCallback(async () => {
+        const promotionStatusResponse = await getRequest(
+            `${endpoints.status}?type=general`
+        );
+
+        if (promotionStatusResponse.status === 200) {
+            promotionStatus.current = promotionStatus.current.concat(
+                promotionStatusResponse.data.general
+            );
+        }
+    }, []);
+
+    useEffect(() => {
+        loadingStatus();
+    }, [loadingStatus]);
 
     useEffect(() => {
         loadingData();
@@ -127,13 +170,10 @@ const PromotionTableView = () => {
                     onSearch={(e) => onSearchChange(e)}
                 />
 
-                <div className="flex flex-row justify-content-center align-items-center">
-                    <Button
-                        outlined
-                        icon="pi pi-filter"
-                        size="small"
-                    />
-                </div>
+                <FilterByStatus
+                    status={promotionStatus.current}
+                    onFilter={(e) => onFilter(e)}
+                />
             </div>
         )
     }
