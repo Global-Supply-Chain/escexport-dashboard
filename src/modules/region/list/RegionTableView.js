@@ -14,10 +14,12 @@ import { Paginator } from 'primereact/paginator';
 import { regionPayload } from '../regionPayload';
 import { regionService } from '../regionService';
 import { setPaginate } from '../regionSlice';
-import { setStatusFilter } from '../../../shares/shareSlice';
+import { setDateFilter, setStatusFilter } from '../../../shares/shareSlice';
 import { endpoints } from '../../../constants/endpoints';
 import { FilterByStatus } from '../../../shares/FilterByStatus';
 import { getRequest } from '../../../helpers/api';
+import moment from 'moment';
+import { FilterByDate } from '../../../shares/FilterByDate';
 
 export const RegionTableView = () => {
 
@@ -97,6 +99,16 @@ export const RegionTableView = () => {
         dispatch(setStatusFilter(e));
     };
 
+    const onFilterByDate = (e) => {
+        let updatePaginateParams = { ...paginateParams };
+
+        updatePaginateParams.start_date = moment(e.startDate).format('yy-MM-DD');
+        updatePaginateParams.end_date = moment(e.endDate).format('yy-MM-DD');
+
+        dispatch(setDateFilter(e));
+        dispatch(setPaginate(updatePaginateParams));
+    };
+
     /**
      *  Loading Data
      */
@@ -161,17 +173,21 @@ export const RegionTableView = () => {
     */
     const HeaderRender = () => {
         return (
-            <div className="w-full flex flex-column md:flex-row justify-content-between align-items-start">
+            <div className="w-full flex flex-column md:flex-row justify-content-start align-items-end">
                 <Search
                     tooltipLabel={"search region by name"}
                     placeholder={"Search region"}
                     onSearch={(e) => onSearchChange(e)}
                 />
 
-                <FilterByStatus
-                    status={regionStatus.current}
-                    onFilter={(e) => onFilter(e)}
-                />
+                <div className=' flex flex-row justify-content-center align-items-end'>
+                    <FilterByStatus
+                        status={regionStatus.current}
+                        onFilter={(e) => onFilter(e)}
+                    />
+
+                    <FilterByDate onFilter={(e) => onFilterByDate(e)} />
+                </div>
 
             </div>
         )
