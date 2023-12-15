@@ -42,16 +42,12 @@ export const RoleHasPermissionTableView = ({dataSource,callback}) => {
         const payload = {
             permissions : checkList
         }
-        console.log(payload);
-        return;
         const res = await authorizationService.rolePermissionRemove(dispatch,dataSource?.id,payload);
         if(res.status === 200) {
             callback()
         }
         setLoading(false);
     }
-
-    console.log(checkList);
 
     useEffect(() => {
         if(globalFilterValue) {
@@ -136,7 +132,7 @@ export const RoleHasPermissionTableView = ({dataSource,callback}) => {
                             style={{ minWidth: "250px" }}
                             field={col.field}
                             header={col.header}
-                            sortable
+                            sortable={col.sortable}
                             body={(value) => {
 
                                 if(col.field === 'action') {
