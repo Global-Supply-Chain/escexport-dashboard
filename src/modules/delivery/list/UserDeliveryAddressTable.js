@@ -17,6 +17,7 @@ import { setPaginate } from "../deliverySlice";
 import { setDateFilter } from "../../../shares/shareSlice";
 import moment from "moment";
 import { FilterByDate } from "../../../shares/FilterByDate";
+import { Card } from "primereact/card";
 
 export const UserDeliveryAddressTable = () => {
 
@@ -109,7 +110,10 @@ export const UserDeliveryAddressTable = () => {
                         outlined
                         icon="pi pi-refresh"
                         size="small"
-                        onClick={() => loadingData()}
+                        onClick={() => {
+                            dispatch(setPaginate(deliveryPayload.paginateParams));
+                            dispatch(setDateFilter({ startDate: "", endDate: "" }));
+                        }}
                     />
                     <PaginatorRight
                         show={showAuditColumn}
@@ -125,22 +129,21 @@ export const UserDeliveryAddressTable = () => {
     */
     const HeaderRender = () => {
         return (
-            <div className="w-full flex flex-column md:flex-row justify-content-between align-items-start">
+            <div className="w-full flex flex-column md:flex-row justify-content-between md:justify-content-start align-items-start md:align-items-end gap-3">
                 <Search
                     tooltipLabel={"search delivery address by id, address, contact_person,contact_phone,default address"}
                     placeholder={"Search delivery address"}
                     onSearch={(e) => onSearchChange(e)}
                 />
-
-                <div className="flex flex-row justify-content-center align-items-center">
-                    <FilterByDate onFilter={(e) => onFilterByDate(e)} />
-                </div>
+                <FilterByDate onFilter={(e) => onFilterByDate(e)} />
             </div>
         )
     }
 
     return (
-        <>
+        <Card
+            title={'User Delivery List'}
+        >
             <DataTable
                 dataKey="id"
                 size="normal"
@@ -204,6 +207,6 @@ export const UserDeliveryAddressTable = () => {
                 currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
                 onPageChange={onPageChange}
             />
-        </>
+        </Card>
     )
 }

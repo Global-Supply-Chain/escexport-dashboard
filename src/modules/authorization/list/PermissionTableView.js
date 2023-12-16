@@ -18,6 +18,7 @@ import { setPermissionPaginate } from '../authorizationSlice';
 import { setDateFilter } from '../../../shares/shareSlice';
 import { FilterByDate } from '../../../shares/FilterByDate';
 import moment from 'moment';
+import { Card } from 'primereact/card';
 
 export const PermissionTableView = () => {
 
@@ -80,13 +81,13 @@ export const PermissionTableView = () => {
 
     const onFilterByDate = (e) => {
         let updatePaginateParams = { ...permissionPaginateParams };
-    
+
         updatePaginateParams.start_date = moment(e.startDate).format('yy-MM-DD');
         updatePaginateParams.end_date = moment(e.endDate).format('yy-MM-DD');
-    
+
         dispatch(setDateFilter(e));
         dispatch(setPermissionPaginate(updatePaginateParams));
-      };
+    };
 
     /**
      *  Loading Data
@@ -117,7 +118,10 @@ export const PermissionTableView = () => {
                         outlined
                         icon="pi pi-refresh"
                         size="small"
-                        onClick={() => loadingData()}
+                        onClick={() => {
+                            dispatch(setPermissionPaginate(authorizationPayload.permissionPaginateParams));
+                            dispatch(setDateFilter({ startDate: "", endDate: "" }));
+                        }}
                     />
                     <PaginatorRight
                         show={showAuditColumn}
@@ -133,23 +137,23 @@ export const PermissionTableView = () => {
     */
     const HeaderRender = () => {
         return (
-            <div className="w-full flex flex-column md:flex-row justify-content-start align-items-end">
+            <div className="w-full flex flex-column md:flex-row justify-content-between md:justify-content-start align-items-start md:align-items-end gap-3">
                 <Search
                     tooltipLabel={"search role by id, name, description"}
                     placeholder={"Search role"}
                     onSearch={(e) => onSearchChange(e)}
                 />
+                <FilterByDate onFilter={(e) => onFilterByDate(e)} />
 
-                <div className="md:ml-3 flex flex-row justify-content-center align-items-end">
-                    <FilterByDate onFilter={(e) => onFilterByDate(e)} />
-                </div>
             </div>
         )
     }
 
 
     return (
-        <>
+        <Card
+            title={'Permission List'}
+        >
 
             <DataTable
                 dataKey="id"
@@ -175,8 +179,8 @@ export const PermissionTableView = () => {
                             sortable
                             body={(value) => {
 
-                                if (col.field === 'id') {
-                                    return (<label className="nav-link" onClick={() => navigate(`${paths.role}/${value[col.field]}`)}> {value[col.field]} </label>)
+                                if (col.field === 'name') {
+                                    return (<label className="nav-link" onClick={() => navigate(`${paths.permission}/${value.id}`)}> {value[col.field]} </label>)
                                 }
                                 return value[col.field]
 
@@ -213,6 +217,6 @@ export const PermissionTableView = () => {
                 currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
                 onPageChange={onPageChange}
             />
-        </>
+        </Card>
     )
 }

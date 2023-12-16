@@ -21,6 +21,7 @@ import { FilterByStatus } from "../../../shares/FilterByStatus";
 import { setDateFilter, setStatusFilter } from "../../../shares/shareSlice";
 import moment from "moment";
 import { FilterByDate } from "../../../shares/FilterByDate";
+import { Card } from "primereact/card";
 
 export const ShopViewTable = () => {
 
@@ -168,7 +169,11 @@ export const ShopViewTable = () => {
                         outlined
                         icon="pi pi-refresh"
                         size="small"
-                        onClick={() => loadingData()}
+                        onClick={() => {
+                            dispatch(setPaginate(shopPayload.paginateParams));
+                            dispatch(setStatusFilter("ALL"));
+                            dispatch(setDateFilter({ startDate: "", endDate: "" }));
+                        }}
                     />
                     <PaginatorRight
                         show={showAuditColumn}
@@ -184,14 +189,14 @@ export const ShopViewTable = () => {
     */
     const HeaderRender = () => {
         return (
-            <div className="w-full flex flex-column md:flex-row justify-content-start align-items-end">
+            <div className="w-full flex flex-column md:flex-row justify-content-between md:justify-content-start align-items-start md:align-items-end gap-3">
                 <Search
                     tooltipLabel={"search shop by id, name, phone,address, location, status"}
                     placeholder={"Search shop"}
                     onSearch={(e) => onSearchChange(e)}
                 />
 
-                <div className="flex flex-row justify-content-center align-items-end gap-3">
+                <div className="flex flex-column md:flex-row align-items-start md:align-items-end justify-content-center gap-3">
                     <FilterByStatus
                         status={shopStatus.current}
                         onFilter={(e) => onFilter(e)}
@@ -200,7 +205,6 @@ export const ShopViewTable = () => {
                     <FilterByDate onFilter={(e) => onFilterByDate(e)} />
 
                     <Button
-                        link
                         outlined
                         icon="pi pi-cloud-download"
                         size='small'
@@ -212,7 +216,9 @@ export const ShopViewTable = () => {
     }
 
     return (
-        <>
+        <Card
+            title={"Shop List"}
+        >
             <DataTable
                 dataKey="id"
                 size="normal"
@@ -276,6 +282,6 @@ export const ShopViewTable = () => {
                 currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
                 onPageChange={onPageChange}
             />
-        </>
+        </Card>
     )
 }

@@ -22,6 +22,7 @@ import { setDateFilter, setStatusFilter } from '../../../shares/shareSlice';
 import { FilterByStatus } from '../../../shares/FilterByStatus';
 import moment from 'moment';
 import { FilterByDate } from '../../../shares/FilterByDate';
+import { Card } from 'primereact/card';
 
 export const OrderTableView = () => {
 
@@ -175,7 +176,11 @@ export const OrderTableView = () => {
                         outlined
                         icon="pi pi-refresh"
                         size="small"
-                        onClick={() => loadingData()}
+                        onClick={() => {
+                            dispatch(setPaginate(orderPayload.paginateParams));
+                            dispatch(setStatusFilter("ALL"));
+                            dispatch(setDateFilter({ startDate: "", endDate: "" }));
+                        }}
                     />
                     <PaginatorRight
                         show={showAuditColumn}
@@ -191,14 +196,14 @@ export const OrderTableView = () => {
     */
     const HeaderRender = () => {
         return (
-            <div className="w-full flex flex-column md:flex-row justify-content-start align-items-end">
+            <div className="w-full flex flex-column md:flex-row justify-content-between md:justify-content-start align-items-start md:align-items-end gap-3">
                 <Search
                     tooltipLabel={"search order by id, user name, phone, email, delivery address, delivery contact phone, discount, delivery feed, total amount, items, payment type, status"}
                     placeholder={"Search order"}
                     onSearch={(e) => onSearchChange(e)}
                 />
 
-                <div className="flex flex-row justify-content-center align-items-end">
+                <div className="flex flex-column md:flex-row align-items-start md:align-items-end justify-content-center gap-3">
                     <FilterByStatus
                         status={orderStatus.current}
                         onFilter={(e) => onFilter(e)}
@@ -207,7 +212,6 @@ export const OrderTableView = () => {
                     <FilterByDate onFilter={(e) => onFilterByDate(e)} />
 
                     <Button
-                        link
                         outlined
                         icon="pi pi-cloud-download"
                         size='small'
@@ -220,7 +224,9 @@ export const OrderTableView = () => {
 
 
     return (
-        <>
+        <Card
+            title={'Order List'}
+        >
 
             <DataTable
                 dataKey="id"
@@ -299,6 +305,6 @@ export const OrderTableView = () => {
                 currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
                 onPageChange={onPageChange}
             />
-        </>
+        </Card>
     )
 }

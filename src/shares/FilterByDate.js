@@ -22,7 +22,7 @@ export const FilterByDate = ({ onFilter }) => {
   };
 
   return (
-    <div className="mt-3 md:mt-0">
+    <div>
       <label> Filter By Date </label>
       <div className="form-group mt-1 flex flex-column md:flex-row align-items-start md:align-items-end justify-content-start">
         <Calendar
