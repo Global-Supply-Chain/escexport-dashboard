@@ -18,6 +18,7 @@ import { setRolePaginate } from '../authorizationSlice';
 import { FilterByDate } from '../../../shares/FilterByDate';
 import moment from 'moment';
 import { setDateFilter, setStatusFilter } from '../../../shares/shareSlice';
+import { Card } from 'primereact/card';
 
 export const RoleTableView = () => {
 
@@ -79,13 +80,13 @@ export const RoleTableView = () => {
 
     const onFilterByDate = (e) => {
         let updatePaginateParams = { ...rolePaginateParams };
-    
+
         updatePaginateParams.start_date = moment(e.startDate).format('yy-MM-DD');
         updatePaginateParams.end_date = moment(e.endDate).format('yy-MM-DD');
-    
+
         dispatch(setDateFilter(e));
         dispatch(setRolePaginate(updatePaginateParams));
-      };
+    };
 
     /**
      *  Loading Data
@@ -116,7 +117,10 @@ export const RoleTableView = () => {
                         outlined
                         icon="pi pi-refresh"
                         size="small"
-                        onClick={() => loadingData()}
+                        onClick={() => {
+                            dispatch(setRolePaginate(authorizationPayload.rolePaginateParams));
+                            dispatch(setDateFilter({ startDate: "", endDate: "" }));
+                        }}
                     />
                     <PaginatorRight
                         show={showAuditColumn}
@@ -132,24 +136,24 @@ export const RoleTableView = () => {
     */
     const HeaderRender = () => {
         return (
-            <div className="w-full flex flex-column md:flex-row justify-content-between align-items-start">
+            <div className="w-full flex flex-column md:flex-row justify-content-between md:justify-content-start align-items-start md:align-items-end gap-3">
                 <Search
                     tooltipLabel={"search role by id, name, description"}
                     placeholder={"Search role"}
                     onSearch={(e) => onSearchChange(e)}
                 />
 
-                <div className="flex flex-row justify-content-center align-items-center">
-                    <FilterByDate onFilter={(e) => onFilterByDate(e)} />
+                <FilterByDate onFilter={(e) => onFilterByDate(e)} />
 
-                </div>
             </div>
         )
     }
 
 
     return (
-        <>
+        <Card
+            title={'Role List'}
+        >
 
             <DataTable
                 dataKey="id"
@@ -213,6 +217,6 @@ export const RoleTableView = () => {
                 currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
                 onPageChange={onPageChange}
             />
-        </>
+        </Card>
     )
 }

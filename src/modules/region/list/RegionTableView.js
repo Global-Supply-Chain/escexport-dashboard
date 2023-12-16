@@ -20,6 +20,7 @@ import { FilterByStatus } from '../../../shares/FilterByStatus';
 import { getRequest } from '../../../helpers/api';
 import moment from 'moment';
 import { FilterByDate } from '../../../shares/FilterByDate';
+import { Card } from 'primereact/card';
 
 export const RegionTableView = () => {
 
@@ -157,7 +158,11 @@ export const RegionTableView = () => {
                         outlined
                         icon="pi pi-refresh"
                         size="small"
-                        onClick={() => loadingData()}
+                        onClick={() => {
+                            dispatch(setPaginate(regionPayload.paginateParams));
+                            dispatch(setStatusFilter("ALL"));
+                            dispatch(setDateFilter({ startDate: "", endDate: "" }));
+                        }}
                     />
                     <PaginatorRight
                         show={showAuditColumn}
@@ -173,28 +178,28 @@ export const RegionTableView = () => {
     */
     const HeaderRender = () => {
         return (
-            <div className="w-full flex flex-column md:flex-row justify-content-start align-items-end">
+            <div className="w-full flex flex-column md:flex-row justify-content-between md:justify-content-start align-items-start md:align-items-end gap-3">
                 <Search
                     tooltipLabel={"search region by name"}
                     placeholder={"Search region"}
                     onSearch={(e) => onSearchChange(e)}
                 />
 
-                <div className=' flex flex-row justify-content-center align-items-end'>
-                    <FilterByStatus
-                        status={regionStatus.current}
-                        onFilter={(e) => onFilter(e)}
-                    />
+                <FilterByStatus
+                    status={regionStatus.current}
+                    onFilter={(e) => onFilter(e)}
+                />
 
-                    <FilterByDate onFilter={(e) => onFilterByDate(e)} />
-                </div>
+                <FilterByDate onFilter={(e) => onFilterByDate(e)} />
 
             </div>
         )
     }
 
     return (
-        <>
+        <Card
+            title={'Region List'}
+        >
 
             <DataTable
                 dataKey="id"
@@ -261,6 +266,6 @@ export const RegionTableView = () => {
                 currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
                 onPageChange={onPageChange}
             />
-        </>
+        </Card>
     )
 }

@@ -22,6 +22,7 @@ import { FilterByStatus } from '../../../shares/FilterByStatus';
 import { setDateFilter, setStatusFilter } from '../../../shares/shareSlice';
 import { FilterByDate } from '../../../shares/FilterByDate';
 import moment from 'moment';
+import { Card } from 'primereact/card';
 
 export const FaqTableView = () => {
 
@@ -159,7 +160,11 @@ export const FaqTableView = () => {
                         outlined
                         icon="pi pi-refresh"
                         size="small"
-                        onClick={() => loadingData()}
+                        onClick={() => {
+                            dispatch(setPaginate(faqPayload.paginateParams));
+                            dispatch(setStatusFilter("ALL"));
+                            dispatch(setDateFilter({ startDate: "", endDate: "" }));
+                        }}
                     />
                     <PaginatorRight
                         show={showAuditColumn}
@@ -175,7 +180,7 @@ export const FaqTableView = () => {
     */
     const HeaderRender = () => {
         return (
-            <div className="w-full flex flex-column md:flex-row justify-content-between align-items-start">
+            <div className="w-full flex flex-column md:flex-row justify-content-between md:justify-content-start align-items-start md:align-items-end gap-3">
                 <Search
                     tooltipLabel={"search faq by id, answer, question, status"}
                     placeholder={"Search faq"}
@@ -188,14 +193,16 @@ export const FaqTableView = () => {
                 />
 
                 <FilterByDate onFilter={(e) => onFilterByDate(e)} />
-                
+
             </div>
         )
     }
 
 
     return (
-        <>
+        <Card
+            title={'Faq List'}
+        >
 
             <DataTable
                 dataKey="id"
@@ -262,6 +269,6 @@ export const FaqTableView = () => {
                 currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
                 onPageChange={onPageChange}
             />
-        </>
+        </Card>
     )
 }

@@ -20,6 +20,7 @@ import { setPaginate } from '../pointSlice';
 import { setDateFilter } from '../../../shares/shareSlice';
 import moment from 'moment';
 import { FilterByDate } from '../../../shares/FilterByDate';
+import { Card } from 'primereact/card';
 
 const PointTableView = () => {
 
@@ -116,7 +117,10 @@ const PointTableView = () => {
                         outlined
                         icon="pi pi-refresh"
                         size="small"
-                        onClick={() => loadingData()}
+                        onClick={() => {
+                            dispatch(setPaginate(pointPayload.paginateParams));
+                            dispatch(setDateFilter({ startDate: "", endDate: "" }));
+                        }}
                     />
                     <PaginatorRight
                         show={showAuditColumn}
@@ -132,24 +136,17 @@ const PointTableView = () => {
     */
     const HeaderRender = () => {
         return (
-            <>
+            <div className='w-full flex flex-column md:flex-row justify-content-between md:justify-content-start align-items-start md:align-items-end gap-3'>
 
-                <div className=' w-full flex flex-column md:flex-row justify-content-start align-items-end'>
+                <Search
+                    tooltipLabel={"search by point id, label, point"}
+                    placeholder={"Search point"}
+                    onSearch={(e) => onSearchChange(e)}
+                />
 
-                    <Search
-                        tooltipLabel={"search by point id, label, point"}
-                        placeholder={"Search point"}
-                        onSearch={(e) => onSearchChange(e)}
-                    />
+                <FilterByDate onFilter={(e) => onFilterByDate(e)} />
 
-                    <div className='md:ml-3 flex flex-row justify-content-center align-items-end'>
-
-                        <FilterByDate onFilter={(e) => onFilterByDate(e)} />
-                    </div>
-
-                </div>
-
-            </>
+            </div>
         )
     }
 
@@ -173,7 +170,9 @@ const PointTableView = () => {
     }, [loadingData])
 
     return (
-        <>
+        <Card
+            title={'Point List'}
+        >
             <DataTable
                 dataKey="id"
                 size="normal"
@@ -230,7 +229,7 @@ const PointTableView = () => {
                 currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
                 onPageChange={onPageChange}
             />
-        </>
+        </Card>
     )
 }
 
