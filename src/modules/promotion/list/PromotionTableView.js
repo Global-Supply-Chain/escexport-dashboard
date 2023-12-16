@@ -20,6 +20,7 @@ import { setDateFilter, setStatusFilter } from '../../../shares/shareSlice';
 import { FilterByStatus } from '../../../shares/FilterByStatus';
 import moment from 'moment';
 import { FilterByDate } from '../../../shares/FilterByDate';
+import { Card } from 'primereact/card';
 
 const PromotionTableView = () => {
 
@@ -159,7 +160,11 @@ const PromotionTableView = () => {
                         outlined
                         icon="pi pi-refresh"
                         size="small"
-                        onClick={() => loadingData()}
+                        onClick={() => {
+                            dispatch(setPaginate(promotionPayload.paginateParams));
+                            dispatch(setStatusFilter("ALL"));
+                            dispatch(setDateFilter({ startDate: "", endDate: "" }));
+                        }}
                     />
                     <PaginatorRight
                         show={showAuditColumn}
@@ -175,29 +180,28 @@ const PromotionTableView = () => {
     */
     const HeaderRender = () => {
         return (
-            <div className="w-full flex flex-column md:flex-row justify-content-start align-items-end">
+            <div className="w-full flex flex-column md:flex-row justify-content-between md:justify-content-start align-items-start md:align-items-end gap-3">
                 <Search
                     tooltipLabel={"search promotion by id, title, status"}
                     placeholder={"Search promotion"}
                     onSearch={(e) => onSearchChange(e)}
                 />
 
-                <div className=' flex flex-row justify-content-center align-items-end'>
+                <FilterByStatus
+                    status={promotionStatus.current}
+                    onFilter={(e) => onFilter(e)}
+                />
 
-                    <FilterByStatus
-                        status={promotionStatus.current}
-                        onFilter={(e) => onFilter(e)}
-                    />
-
-                    <FilterByDate onFilter={(e) => onFilterByDate(e)} />
-                </div>
+                <FilterByDate onFilter={(e) => onFilterByDate(e)} />
             </div>
         )
     }
 
 
     return (
-        <>
+        <Card
+            title={'Promotion List'}
+        >
 
             <DataTable
                 dataKey="id"
@@ -259,7 +263,7 @@ const PromotionTableView = () => {
                 onPageChange={onPageChange}
             />
 
-        </>
+        </Card>
     )
 }
 

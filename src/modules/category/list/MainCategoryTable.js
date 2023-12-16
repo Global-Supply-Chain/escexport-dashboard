@@ -21,6 +21,7 @@ import { getRequest } from "../../../helpers/api";
 import { FilterByStatus } from "../../../shares/FilterByStatus";
 import { FilterByDate } from "../../../shares/FilterByDate";
 import moment from "moment";
+import { Card } from "primereact/card";
 
 export const MainCategoryTable = () => {
   const dispatch = useDispatch();
@@ -160,7 +161,7 @@ export const MainCategoryTable = () => {
    */
   const HeaderRender = () => {
     return (
-      <div className="w-full flex flex-column md:flex-row justify-content-between align-items-start">
+      <div className="w-full flex flex-column md:flex-row justify-content-between md:justify-content-start align-items-start md:align-items-end gap-3">
         <Search
           tooltipLabel={"Search by id,title,status"}
           placeholder={"Search main category"}
@@ -202,7 +203,11 @@ export const MainCategoryTable = () => {
           outlined
           icon="pi pi-refresh"
           size="small"
-          onClick={() => loadingData()}
+          onClick={() => {
+            dispatch(setMainPaginate(categoryPayload.mainCategoryPaginateParams));
+            dispatch(setStatusFilter("ALL"));
+            dispatch(setDateFilter({ startDate: "", endDate: "" }));
+          }}
         />
 
         <div className=" flex align-items-center gap-3">
@@ -216,7 +221,9 @@ export const MainCategoryTable = () => {
   };
 
   return (
-    <>
+    <Card
+      title={'Main Category List'}
+    >
       <DataTable
         dataKey="id"
         size="normal"
@@ -284,6 +291,6 @@ export const MainCategoryTable = () => {
         currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
         onPageChange={onPageChange}
       />
-    </>
+    </Card>
   );
 };

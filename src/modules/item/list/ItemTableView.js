@@ -23,6 +23,7 @@ import { FilterByStatus } from '../../../shares/FilterByStatus';
 import { endpoints } from '../../../constants/endpoints';
 import { FilterByDate } from '../../../shares/FilterByDate';
 import moment from 'moment';
+import { Card } from 'primereact/card';
 
 const ItemTableView = () => {
 
@@ -174,7 +175,11 @@ const ItemTableView = () => {
                         outlined
                         icon="pi pi-refresh"
                         size="small"
-                        onClick={() => loadingData()}
+                        onClick={() => {
+                            dispatch(setPaginate(itemPayload.paginateParams));
+                            dispatch(setStatusFilter("ALL"));
+                            dispatch(setDateFilter({ startDate: "", endDate: "" }));
+                        }}
                     />
                     <PaginatorRight
                         show={showAuditColumn}
@@ -190,14 +195,14 @@ const ItemTableView = () => {
     */
     const HeaderRender = () => {
         return (
-            <div className="w-full flex flex-column md:flex-row justify-content-start align-items-end">
+            <div className="w-full flex flex-column md:flex-row justify-content-between md:justify-content-start align-items-start md:align-items-end gap-3">
                 <Search
                     tooltipLabel={"search item by id, name, code, description,content,price,sell price,out of stock, status"}
                     placeholder={"Search item"}
                     onSearch={(e) => onSearchChange(e)}
                 />
 
-                <div className="flex flex-row justify-content-center align-items-end">
+                <div className="flex flex-column md:flex-row align-items-start md:align-items-end justify-content-center gap-3">
                     <FilterByStatus
                         status={itemStatus.current}
                         onFilter={(e) => onFilter(e)}
@@ -206,7 +211,6 @@ const ItemTableView = () => {
                     <FilterByDate onFilter={(e) => onFilterByDate(e)} />
 
                     <Button
-                        link
                         outlined
                         icon="pi pi-cloud-download"
                         size='small'
@@ -218,7 +222,9 @@ const ItemTableView = () => {
     }
 
     return (
-        <>
+        <Card
+            title={'Item List'}
+        >
             <DataTable
                 dataKey="id"
                 size="normal"
@@ -286,7 +292,7 @@ const ItemTableView = () => {
                 currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
                 onPageChange={onPageChange}
             />
-        </>
+        </Card>
     )
 }
 

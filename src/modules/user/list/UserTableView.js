@@ -18,9 +18,12 @@ import { Paginator } from 'primereact/paginator';
 import { setPaginate } from '../userSlice';
 import { Can } from '../../../shares/Can';
 import { FilterByStatus } from '../../../shares/FilterByStatus';
-import { setStatusFilter } from '../../../shares/shareSlice';
+import { setDateFilter, setStatusFilter } from '../../../shares/shareSlice';
 import { getRequest } from '../../../helpers/api';
 import { endpoints } from '../../../constants/endpoints';
+import moment from 'moment';
+import { FilterByDate } from '../../../shares/FilterByDate';
+import { Card } from 'primereact/card';
 
 export const UserTableView = () => {
 
@@ -101,6 +104,16 @@ export const UserTableView = () => {
         dispatch(setStatusFilter(e));
     };
 
+    const onFilterByDate = (e) => {
+        let updatePaginateParams = { ...paginateParams };
+
+        updatePaginateParams.start_date = moment(e.startDate).format('yy-MM-DD');
+        updatePaginateParams.end_date = moment(e.endDate).format('yy-MM-DD');
+
+        dispatch(setDateFilter(e));
+        dispatch(setPaginate(updatePaginateParams));
+    };
+
     /**
      *  Loading Data
      */
@@ -117,26 +130,26 @@ export const UserTableView = () => {
     /**
      * loading User Status
     */
-  const loadingStatus = useCallback(async () => {
-    const userStatusResponse = await getRequest(
-      `${endpoints.status}?type=user`
-    );
-    console.log(userStatusResponse);
+    const loadingStatus = useCallback(async () => {
+        const userStatusResponse = await getRequest(
+            `${endpoints.status}?type=user`
+        );
+        console.log(userStatusResponse);
 
-    if (userStatusResponse.status === 200) {
-      userStatus.current = userStatus.current.concat(
-        userStatusResponse.data.user
-      );
-    }
-  }, []);
+        if (userStatusResponse.status === 200) {
+            userStatus.current = userStatus.current.concat(
+                userStatusResponse.data.user
+            );
+        }
+    }, []);
 
-  useEffect(() => {
-    loadingStatus();
-  }, [loadingStatus]);
+    useEffect(() => {
+        loadingStatus();
+    }, [loadingStatus]);
 
-  useEffect(() => {
-    loadingData();
-}, [loadingData])
+    useEffect(() => {
+        loadingData();
+    }, [loadingData])
 
     const exportUser = async () => {
         setLoading(true);
@@ -156,7 +169,11 @@ export const UserTableView = () => {
                         outlined
                         icon="pi pi-refresh"
                         size="small"
-                        onClick={() => loadingData()}
+                        onClick={() => {
+                            dispatch(setPaginate(userPayload.paginateParams));
+                            dispatch(setStatusFilter("ALL"));
+                            dispatch(setDateFilter({ startDate: "", endDate: "" }));
+                        }}
                     />
                     <PaginatorRight
                         show={showAuditColumn}
@@ -172,32 +189,27 @@ export const UserTableView = () => {
     */
     const HeaderRender = () => {
         return (
-            <div className="w-full flex flex-column md:flex-row justify-content-between align-items-start">
+            <div className="w-full flex flex-column md:flex-row justify-content-between md:justify-content-start align-items-start md:align-items-end gap-3">
                 <Search
                     tooltipLabel={"search user by name, profile, reward point, coupons, phone, email, status"}
                     placeholder={"Search user account"}
                     onSearch={(e) => onSearchChange(e)}
                 />
 
-                <div className=' flex align-items-end justify-content-center'>
+                <div className=' flex flex-column md:flex-row align-items-start md:align-items-end justify-content-center gap-3'>
                     <FilterByStatus
                         status={userStatus.current}
                         onFilter={(e) => onFilter(e)}
                     />
 
-                    <div className="flex flex-row justify-content-center align-items-center gap-3">
-                        <Button
-                            outlined
-                            icon="pi pi-filter"
-                            size="small"
-                        />
-                        <Button
-                            outlined
-                            icon="pi pi-cloud-download"
-                            size='small'
-                            onClick={exportUser}
-                        />
-                    </div>
+                    <FilterByDate onFilter={(e) => onFilterByDate(e)} />
+
+                    <Button
+                        outlined
+                        icon="pi pi-cloud-download"
+                        size='small'
+                        onClick={exportUser}
+                    />
                 </div>
             </div>
         )
@@ -205,7 +217,9 @@ export const UserTableView = () => {
 
 
     return (
-        <>
+        <Card
+            title={'User List'}
+        >
             <DataTable
                 dataKey="id"
                 size="normal"
@@ -275,6 +289,6 @@ export const UserTableView = () => {
                 currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
                 onPageChange={onPageChange}
             />
-        </>
+        </Card>
     )
 }
