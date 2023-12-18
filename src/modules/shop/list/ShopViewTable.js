@@ -22,6 +22,7 @@ import { setDateFilter, setStatusFilter } from "../../../shares/shareSlice";
 import moment from "moment";
 import { FilterByDate } from "../../../shares/FilterByDate";
 import { Card } from "primereact/card";
+import { NavigateId } from "../../../shares/NavigateId";
 
 export const ShopViewTable = () => {
 
@@ -242,18 +243,21 @@ export const ShopViewTable = () => {
                             header={col.header}
                             sortable
                             body={(value) => {
-                                if (col.field === 'status') {
-                                    return (<Status status={value[col.field]} />)
-                                }
-
-                                if (col.field === 'region') {
-                                    return (<span>{value[col.field]?.name}</span>)
-                                }
-
-                                if (col.field === 'id') {
-                                    return (<label className="nav-link" onClick={() => navigate(`${paths.shop}/${value[col.field]}`)}> {value[col.field]} </label>)
-                                }
-                                return value[col.field]
+                                switch (col.field) {
+                                    case "id":
+                                      return (
+                                        <NavigateId
+                                          url={`${paths.shop}/${value[col.field]}`}
+                                          value={value[col.field]}
+                                        />
+                                      );
+                                    case "status":
+                                      return <Status status={value[col.field]} />;
+                                    case "region":
+                                      return <span>{value[col.field]?.name}</span>  
+                                    default:
+                                      return value[col.field];
+                                  }
 
                             }}
                         />

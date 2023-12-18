@@ -21,6 +21,7 @@ import { endpoints } from "../../../constants/endpoints";
 import { setDateFilter, setStatusFilter } from "../../../shares/shareSlice";
 import { FilterByDate } from "../../../shares/FilterByDate";
 import moment from "moment";
+import { NavigateId } from "../../../shares/NavigateId";
 
 export const AdminTableView = () => {
   const dispatch = useDispatch();
@@ -233,24 +234,19 @@ export const AdminTableView = () => {
               header={col.header}
               sortable
               body={(value) => {
-                if (col.field === "status") {
-                  return <Status status={value[col.field]} />;
+                switch (col.field) {
+                  case "id":
+                    return (
+                      <NavigateId
+                        url={`${paths.admin}/${value[col.field]}`}
+                        value={value[col.field]}
+                      />
+                    );
+                  case "status":
+                    return <Status status={value[col.field]} />;
+                  default:
+                    return value[col.field];
                 }
-
-                if (col.field === "id") {
-                  return (
-                    <label
-                      className="nav-link"
-                      onClick={() =>
-                        navigate(`${paths.admin}/${value[col.field]}`)
-                      }
-                    >
-                      {value[col.field]}
-                    </label>
-                  );
-                }
-
-                return value[col.field];
               }}
             />
           );

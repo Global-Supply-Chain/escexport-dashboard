@@ -23,6 +23,7 @@ import { setDateFilter, setStatusFilter } from '../../../shares/shareSlice';
 import { FilterByDate } from '../../../shares/FilterByDate';
 import moment from 'moment';
 import { Card } from 'primereact/card';
+import { NavigateId } from '../../../shares/NavigateId';
 
 export const FaqTableView = () => {
 
@@ -227,14 +228,19 @@ export const FaqTableView = () => {
                             header={col.header}
                             sortable
                             body={(value) => {
-                                if (col.field === 'status') {
-                                    return (<Status status={value[col.field]} />)
-                                }
-
-                                if (col.field === 'id') {
-                                    return (<label className="nav-link" onClick={() => navigate(`${paths.faq}/${value[col.field]}`)}> {value[col.field]} </label>)
-                                }
-                                return value[col.field]
+                                switch (col.field) {
+                                    case "id":
+                                      return (
+                                        <NavigateId
+                                          url={`${paths.faq}/${value[col.field]}`}
+                                          value={value[col.field]}
+                                        />
+                                      );
+                                    case "status":
+                                      return <Status status={value[col.field]} />;
+                                    default:
+                                      return value[col.field];
+                                  }
 
                             }}
                         />

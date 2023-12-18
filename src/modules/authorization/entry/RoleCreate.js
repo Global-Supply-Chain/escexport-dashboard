@@ -55,6 +55,8 @@ export const RoleCreate = () => {
                             <div className="p-inputgroup mt-2">
                                 <InputText
                                     id="name"
+                                    name="name"
+                                    autoComplete='name'
                                     className="p-inputtext-sm"
                                     placeholder="Enter role name"
                                     value={payload.name}
@@ -75,6 +77,8 @@ export const RoleCreate = () => {
                             <div className="p-inputgroup mt-2">
                                 <InputText
                                     id="description"
+                                    name="description"
+                                    autoComplete='description'
                                     className="p-inputtext-sm"
                                     placeholder="Enter role descripiton"
                                     value={payload.description}

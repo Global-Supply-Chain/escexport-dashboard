@@ -115,12 +115,14 @@ export const MainCategoryUpdate = () => {
         </div>
 
         <div className="col-12 md:col-4 lg:col-4 my-3">
-          <label htmlFor="name" className="input-label">
+          <label htmlFor="title" className="input-label">
             Title
           </label>
           <div className="p-inputgroup mt-2">
             <InputText
               id="title"
+              name="title"
+              autoComplete="title"
               className="p-inputtext-sm"
               placeholder="Enter category title"
               value={payload ? payload.title : ""}
@@ -144,12 +146,14 @@ export const MainCategoryUpdate = () => {
         </div>
 
         <div className="col-12 md:col-4 lg:col-4 my-3">
-          <label htmlFor="password" className="input-label">
+          <label htmlFor="description" className="input-label">
             Description
           </label>
           <div className="p-inputgroup mt-2">
             <InputText
               id="description"
+              name="description"
+              autoComplete="description"
               className="p-inputtext-sm"
               aria-describedby="description-help"
               type="description"
@@ -174,11 +178,14 @@ export const MainCategoryUpdate = () => {
         </div>
 
         <div className="col-12 md:col-4 lg:col-4 my-3">
-          <label htmlFor="phone" className="input-label">
+          <label htmlFor="status" className="input-label">
             Status
           </label>
           <div className="p-inputgroup mt-2">
             <Dropdown
+              inputId="status"
+              name="status"
+              autoComplete="category status"
               options={generalStatus.current}
               value={payload.status ? payload.status : ""}
               onChange={(e) =>

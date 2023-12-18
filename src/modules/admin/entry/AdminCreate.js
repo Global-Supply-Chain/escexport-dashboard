@@ -115,6 +115,8 @@ export const AdminCreate = () => {
                             <div className="p-inputgroup mt-2">
                                 <InputText 
                                     id="name"
+                                    name="name"
+                                    autoComplete="admin name"
                                     className="p-inputtext-sm"
                                     placeholder="Enter account name"
                                     value={payload.name}
@@ -135,6 +137,8 @@ export const AdminCreate = () => {
                             <div className="p-inputgroup mt-2">
                                 <InputText 
                                     id="email"
+                                    name="email"
+                                    autoComplete="admin email address"
                                     className="p-inputtext-sm"
                                     keyfilter={'email'}
                                     aria-describedby="email-help"
@@ -156,6 +160,8 @@ export const AdminCreate = () => {
                             <div className="p-inputgroup mt-2">
                                 <InputText 
                                     id="phone"
+                                    name="phone"
+                                    autoComplete="admin phone number"
                                     className="p-inputtext-sm"
                                     aria-describedby="phone-help"
                                     placeholder="Enter mobile phone number"
@@ -172,9 +178,12 @@ export const AdminCreate = () => {
                         </div>
 
                         <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                            <label htmlFor="phone" className='input-label'> Category (required*) </label>
+                            <label htmlFor="role" className='input-label'> Role (required*) </label>
                             <div className="p-inputgroup mt-2">
                                 <Dropdown
+                                    inputId="role"
+                                    name="role"
+                                    autoComplete="admin role"
                                     value={payload.role_id}
                                     onChange={(e) => payloadHandler(payload, e.value, 'role_id', (updateValue) => {
                                         setPayload(updateValue);

@@ -16,7 +16,7 @@ export const BreadCrumb = () => {
                             onClick={() => navigate(item.url)}
                         >
                             <i className="pi pi-chevron-right"></i>
-                            <label> { item.label } </label>
+                            <span> { item.label } </span>
                         </div>
                     )
                 })}

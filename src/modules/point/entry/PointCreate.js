@@ -76,6 +76,9 @@ const PointCreate = () => {
                             <div className="flex flex-column gap-2">
                                 <label htmlFor="label" className=' text-black'>Label</label>
                                 <Dropdown
+                                    inputId='label'
+                                    name='label'
+                                    autoComplete='label'
                                     options={pointLabelStatus}
                                     placeholder="Select a point label"
                                     disabled={loading}
@@ -96,6 +99,8 @@ const PointCreate = () => {
                                 <InputText
                                     className="p-inputtext-sm text-black"
                                     id="point"
+                                    name="point"
+                                    autoComplete='point'
                                     keyfilter={'num'}
                                     aria-describedby="point-help"
                                     tooltip='point'

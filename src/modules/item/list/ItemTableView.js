@@ -24,6 +24,7 @@ import { endpoints } from '../../../constants/endpoints';
 import { FilterByDate } from '../../../shares/FilterByDate';
 import moment from 'moment';
 import { Card } from 'primereact/card';
+import { NavigateId } from '../../../shares/NavigateId';
 
 const ItemTableView = () => {
 
@@ -248,23 +249,26 @@ const ItemTableView = () => {
                             header={col.header}
                             sortable
                             body={(value) => {
-                                if (col.field === 'status') {
-                                    return (<Status status={value[col.field]} />)
-                                }
 
-                                if (col.field === "out_of_stock") {
-                                    if (value[col.field] === 1) {
-                                        return (<Badge value={'Instock'} severity={'success'}></Badge>)
-                                    } else {
-                                        return (<Badge value={'Outstock'} severity={'danger'}></Badge>)
-                                    }
-                                }
-
-                                if (col.field === 'id') {
-                                    return (<label className="nav-link" onClick={() => navigate(`${paths.item}/${value[col.field]}`)}> {value[col.field]} </label>)
-                                }
-                                return value[col.field]
-
+                                switch (col.field) {
+                                    case "id":
+                                      return (
+                                        <NavigateId
+                                          url={`${paths.item}/${value[col.field]}`}
+                                          value={value[col.field]}
+                                        />
+                                      );
+                                    case "status":
+                                      return <Status status={value[col.field]} />;
+                                    case 'out_of_stock':
+                                        if (value[col.field] === 1) {
+                                            return (<Badge value={'Instock'} severity={'success'}></Badge>)
+                                        } else {
+                                            return (<Badge value={'Outstock'} severity={'danger'}></Badge>)
+                                        }
+                                    default:
+                                      return value[col.field];
+                                  }
                             }}
                         />
                     )

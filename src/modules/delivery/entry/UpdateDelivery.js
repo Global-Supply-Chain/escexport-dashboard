@@ -97,7 +97,9 @@ export const UpdateDelivery = () => {
             <label htmlFor="user" className='input-label'> User (required*) </label>
             <div className="p-inputgroup mt-2">
               <Dropdown
-                id='user'
+                inputId='user'
+                name="user"
+                autoComplete='user'
                 value={payload.user_id}
                 onChange={(e) => payloadHandler(payload, e.value, 'user_id', (updateValue) => {
                   setPayload(updateValue);
@@ -116,6 +118,8 @@ export const UpdateDelivery = () => {
             <div className="p-inputgroup mt-2">
               <InputText
                 id="address"
+                name="address"
+                autoComplete='address'
                 className="p-inputtext-sm"
                 placeholder="Enter delivery address"
                 value={payload.address}
@@ -136,6 +140,8 @@ export const UpdateDelivery = () => {
             <div className="p-inputgroup mt-2">
               <InputText
                 id="phone"
+                name="phone"
+                autoComplete='phone'
                 keyfilter={'pnum'}
                 className="p-inputtext-sm"
                 placeholder="Enter contact phone"
@@ -157,6 +163,8 @@ export const UpdateDelivery = () => {
             <div className="p-inputgroup mt-2">
               <InputText
                 id="person"
+                name="person"
+                autoComplete='person'
                 className="p-inputtext-sm"
                 placeholder="Enter contact person"
                 value={payload.contact_person}
@@ -177,7 +185,9 @@ export const UpdateDelivery = () => {
               <label htmlFor="is_default" className=' text-black'>Default</label>
               <Checkbox
                 className="p-inputtext-sm text-black"
-                id="is_default"
+                inputId="is_default"
+                name='default'
+                autoComplete='default'
                 aria-describedby="is_default-help"
                 tooltip='Item sell price'
                 tooltipOptions={{ ...tooltipOptions }}

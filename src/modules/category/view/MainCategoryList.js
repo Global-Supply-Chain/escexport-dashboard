@@ -11,9 +11,7 @@ export const MainCategoryList = () => {
       </div>
 
       <div className="col-12">
-        <Card title="Main Category List" subTitle="Category for sub categories">
           <MainCategoryTable />
-        </Card>
       </div>
     </div>
   );

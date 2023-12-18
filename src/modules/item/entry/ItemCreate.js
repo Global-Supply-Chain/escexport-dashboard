@@ -147,9 +147,12 @@ const ItemCreate = () => {
                         </div>
 
                         <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                            <label htmlFor="phone" className='input-label'> Category (required*) </label>
+                            <label htmlFor="category" className='input-label'> Category (required*) </label>
                             <div className="p-inputgroup mt-2">
                                 <Dropdown
+                                    inputId='category'
+                                    name="item category"
+                                    autoComplete='item category'
                                     value={payload.category_id}
                                     onChange={(e) => payloadHandler(payload, e.value, 'category_id', (updateValue) => {
                                         setPayload(updateValue);
@@ -169,6 +172,8 @@ const ItemCreate = () => {
                                 <InputText
                                     className="p-inputtext-sm text-black"
                                     id="name"
+                                    name="name"
+                                    autoComplete='item name'
                                     aria-describedby="name-help"
                                     tooltip='User full name'
                                     tooltipOptions={{ ...tooltipOptions }}
@@ -188,6 +193,7 @@ const ItemCreate = () => {
                                 <InputText
                                     className="p-inputtext-sm text-black"
                                     id="code"
+                                    name="code"
                                     aria-describedby="code-help"
                                     tooltip='Item code'
                                     tooltipOptions={{ ...tooltipOptions }}
@@ -207,6 +213,8 @@ const ItemCreate = () => {
                                 <InputText
                                     className="p-inputtext-sm text-black"
                                     id="description"
+                                    name="description"
+                                    autoComplete='item description'
                                     aria-describedby="description-help"
                                     tooltip='Item description'
                                     tooltipOptions={{ ...tooltipOptions }}
@@ -228,6 +236,8 @@ const ItemCreate = () => {
                                 <InputText
                                     className="p-inputtext-sm text-black"
                                     id="price"
+                                    name="price"
+                                    autoComplete='item price'
                                     keyfilter={'num'}
                                     aria-describedby="price-help"
                                     tooltip='Item price'
@@ -250,6 +260,8 @@ const ItemCreate = () => {
                                 <InputText
                                     className="p-inputtext-sm text-black"
                                     id="sell_price"
+                                    name="item sell price"
+                                    autoComplete='item sell price'
                                     aria-describedby="sell_price-help"
                                     tooltip='Item sell price'
                                     tooltipOptions={{ ...tooltipOptions }}
@@ -270,7 +282,9 @@ const ItemCreate = () => {
                                 <label htmlFor="out_of_stock" className=' text-black'>Out of stock</label>
                                 <Checkbox
                                     className="p-inputtext-sm text-black"
-                                    id="out_of_stock"
+                                    inputId="out_of_stock"
+                                    name="out of stock"
+                                    autoComplete='out of stock'
                                     aria-describedby="out_of_stock-help"
                                     tooltip='Item sell price'
                                     tooltipOptions={{ ...tooltipOptions }}
@@ -287,9 +301,8 @@ const ItemCreate = () => {
 
                         <div className=' col-12 my-3 md:my-0'>
                             <div className="flex flex-column gap-2">
-                                <label htmlFor="content" className=' text-black'>Content</label>
+                                <span className=' text-black'>Content</span>
                                 <Editor
-                                    id='editor'
                                     headerTemplate={header}
                                     onTextChange={(e) => payloadHandler(payload, e.htmlValue, 'content', (updateValue) => {
                                         setPayload(updateValue);
