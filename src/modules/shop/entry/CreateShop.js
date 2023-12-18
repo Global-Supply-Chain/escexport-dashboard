@@ -74,10 +74,12 @@ export const CreateShop = () => {
                     <div className=' grid'>
 
                         <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                            <label htmlFor="region_id" className='input-label'> Region (required*) </label>
+                            <label htmlFor="region" className='input-label'> Region (required*) </label>
                             <div className="p-inputgroup mt-2">
                                 <Dropdown
-                                    id='region_id'
+                                    inputId='region'
+                                    autoComplete='region name'
+                                    name='region'
                                     value={payload.region_id}
                                     onChange={(e) => payloadHandler(payload, e.value, 'region_id', (updateValue) => {
                                         setPayload(updateValue);
@@ -96,6 +98,8 @@ export const CreateShop = () => {
                             <div className="p-inputgroup mt-2">
                                 <InputText
                                     id="name"
+                                    name='name'
+                                    autoComplete='name'
                                     className="p-inputtext-sm"
                                     placeholder="Enter shop name"
                                     value={payload.name}
@@ -116,6 +120,8 @@ export const CreateShop = () => {
                             <div className="p-inputgroup mt-2">
                                 <InputText
                                     id="phone"
+                                    name='phone'
+                                    autoComplete='phone'
                                     className="p-inputtext-sm"
                                     placeholder="Enter shop phone"
                                     value={payload.phone}
@@ -136,6 +142,8 @@ export const CreateShop = () => {
                             <div className="p-inputgroup mt-2">
                                 <InputText
                                     id="address"
+                                    name='address'
+                                    autoComplete='address'
                                     className="p-inputtext-sm"
                                     placeholder="Enter shop address"
                                     value={payload.address}
@@ -157,6 +165,8 @@ export const CreateShop = () => {
                                 <InputText
                                     className="p-inputtext-sm text-black"
                                     id="location"
+                                    name="locaiton"
+                                    autoComplete='location'
                                     aria-describedby="location-help"
                                     tooltip='Shop location'
                                     tooltipOptions={{ ...tooltipOptions }}

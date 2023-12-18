@@ -18,6 +18,7 @@ import { setDateFilter } from "../../../shares/shareSlice";
 import moment from "moment";
 import { FilterByDate } from "../../../shares/FilterByDate";
 import { Card } from "primereact/card";
+import { NavigateId } from "../../../shares/NavigateId";
 
 export const UserDeliveryAddressTable = () => {
 
@@ -167,19 +168,22 @@ export const UserDeliveryAddressTable = () => {
                             header={col.header}
                             sortable
                             body={(value) => {
-                                if (col.field === 'status') {
-                                    return (<Status status={value[col.field]} />)
-                                }
 
-                                if (col.field === 'address') {
-                                    return (<span>{value[col.field]?.substring(0, 8)}...</span>)
-                                }
-
-                                if (col.field === 'id') {
-                                    return (<label className="nav-link" onClick={() => navigate(`${paths.delivery}/${value[col.field]}`)}> {value[col.field]} </label>)
-                                }
-                                return value[col.field]
-
+                                switch (col.field) {
+                                    case "id":
+                                      return (
+                                        <NavigateId
+                                          url={`${paths.delivery}/${value[col.field]}`}
+                                          value={value[col.field]}
+                                        />
+                                      );
+                                    case "status":
+                                      return <Status status={value[col.field]} />;
+                                    case "address":
+                                        return <span>{value[col.field]?.substring(0, 8)}...</span>;
+                                    default:
+                                      return value[col.field];
+                                  }
                             }}
                         />
                     )

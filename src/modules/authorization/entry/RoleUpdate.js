@@ -93,6 +93,7 @@ export const RoleUpdate = ({ dataSource, callback }) => {
                             tooltip="Role name"
                             tooltipOptions={{ ...tooltipOptions }}
                             disabled={loading}
+                            autoComplete='Role name'
                             onChange={(e) => payloadHandler(payload, e.target.value, 'name', (updateValue) => {
                                 setPayload(updateValue);
                             })}
@@ -122,9 +123,11 @@ export const RoleUpdate = ({ dataSource, callback }) => {
                 </div>
 
                 <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                    <label htmlFor="permission" className='input-label'> Permission </label>
+                    <label htmlFor='permission' className='input-label'> Permission </label>
                     <div className="p-inputgroup mt-2">
                         <MultiSelect
+                            inputId='permission'
+                            
                             value={payload?.permissions}
                             onChange={(e) => {
                                 payloadHandler(payload, e.value, 'permissions', (updateValue) => {

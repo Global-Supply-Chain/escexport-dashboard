@@ -21,6 +21,7 @@ import { getRequest } from '../../../helpers/api';
 import moment from 'moment';
 import { FilterByDate } from '../../../shares/FilterByDate';
 import { Card } from 'primereact/card';
+import { NavigateId } from '../../../shares/NavigateId';
 
 export const RegionTableView = () => {
 
@@ -224,14 +225,19 @@ export const RegionTableView = () => {
                             header={col.header}
                             sortable
                             body={(value) => {
-                                if (col.field === 'status') {
-                                    return (<Status status={value[col.field]} />)
-                                }
-
-                                if (col.field === 'id') {
-                                    return (<label className="nav-link" onClick={() => navigate(`${paths.region}/${value[col.field]}`)}> {value[col.field]} </label>)
-                                }
-                                return value[col.field]
+                                switch (col.field) {
+                                    case "id":
+                                      return (
+                                        <NavigateId
+                                          url={`${paths.region}/${value[col.field]}`}
+                                          value={value[col.field]}
+                                        />
+                                      );
+                                    case "status":
+                                      return <Status status={value[col.field]} />;
+                                    default:
+                                      return value[col.field];
+                                  }
 
                             }}
                         />

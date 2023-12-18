@@ -23,9 +23,10 @@ export const FilterByDate = ({ onFilter }) => {
 
   return (
     <div>
-      <label> Filter By Date </label>
+      <span> Filter By Date </span>
       <div className="form-group mt-1 flex flex-column md:flex-row align-items-start md:align-items-end justify-content-start">
         <Calendar
+          name="startDate"
           className="p-inputtext-sm md:mr-2 sm:w-full"
           placeholder="Select Start Date"
           selectionMode={"single"}
@@ -38,6 +39,7 @@ export const FilterByDate = ({ onFilter }) => {
         />
 
         <Calendar
+          name='endDate'
           className="p-inputtext-sm md:ml-2 sm:w-full mt-3 md:mt-0"
           placeholder="Select End Date"
           selectionMode={"single"}

@@ -21,6 +21,7 @@ import { setDateFilter } from '../../../shares/shareSlice';
 import moment from 'moment';
 import { FilterByDate } from '../../../shares/FilterByDate';
 import { Card } from 'primereact/card';
+import { NavigateId } from '../../../shares/NavigateId';
 
 const PointTableView = () => {
 
@@ -196,11 +197,17 @@ const PointTableView = () => {
                             header={col.header}
                             sortable
                             body={(value) => {
-
-                                if (col.field === 'id') {
-                                    return (<label className="nav-link" onClick={() => navigate(`${paths.point}/${value[col.field]}`)}> {value[col.field]} </label>)
-                                }
-                                return value[col.field]
+                                switch (col.field) {
+                                    case "id":
+                                      return (
+                                        <NavigateId
+                                          url={`${paths.point}/${value[col.field]}`}
+                                          value={value[col.field]}
+                                        />
+                                      );
+                                    default:
+                                      return value[col.field];
+                                  }
 
                             }}
                         />

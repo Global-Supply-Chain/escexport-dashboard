@@ -95,8 +95,11 @@ export const RegionUpdate = () => {
 
                 <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="phone" className=' text-black'>Status</label>
+                        <label htmlFor="status" className=' text-black'>Status</label>
                         <Dropdown
+                            inputId='status'
+                            name="status"
+                            autoComplete='status'
                             options={status}
                             placeholder="Select a general status"
                             disabled={loading}
@@ -117,6 +120,8 @@ export const RegionUpdate = () => {
                         <InputText
                             className="p-inputtext-sm text-black"
                             id="name"
+                            name='name'
+                            autoComplete='name'
                             aria-describedby="name-help"
                             tooltip='Region name'
                             value={payload.name ? payload.name : ""}

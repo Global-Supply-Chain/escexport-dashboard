@@ -8,9 +8,11 @@ export const Search = ({ onSearch, placeholder, tooltipLabel }) => {
 
   return (
     <div>
-      <label> Press <b> Enter</b> key to search </label>
+      <label htmlFor="tableSearch"> Press <b> Enter</b> key to search </label>
       <div className="p-inputgroup flex-1 mt-1 search">
         <InputText
+          id="tableSearch"
+          name="tableSearch"
           className="p-inputtext-sm"
           placeholder={placeholder}
           value={keyword ? keyword : ""}

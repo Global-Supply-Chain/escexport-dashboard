@@ -6,10 +6,12 @@ export const FilterByStatus = ({ status, onFilter }) => {
 
   return (
     <div>
-      <label> Filter By </label>
+      <label htmlFor="status"> Filter By </label>
       {status && (
         <div className="form-group mt-1">
           <Dropdown
+            inputId="status"
+            name="status"
             className="p-inputtext-sm w-full"
             options={status ?? []}
             value={statusFilter}
