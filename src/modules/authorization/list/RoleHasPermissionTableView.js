@@ -8,7 +8,7 @@ import { Button } from 'primereact/button'
 import { authorizationService } from '../authorizatonService'
 import { useDispatch } from 'react-redux'
 
-export const RoleHasPermissionTableView = ({dataSource,callback}) => {
+export const RoleHasPermissionTableView = ({ dataSource, callback }) => {
 
     const columns = useRef(authorizationPayload.roleHasPermissionColumns);
     const [loading, setLoading] = useState(false);
@@ -40,71 +40,52 @@ export const RoleHasPermissionTableView = ({dataSource,callback}) => {
         setLoading(true);
 
         const payload = {
-            permissions : checkList
+            permissions: checkList
         }
-        const res = await authorizationService.rolePermissionRemove(dispatch,dataSource?.id,payload);
-        if(res.status === 200) {
+        const res = await authorizationService.rolePermissionRemove(dispatch, dataSource?.id, payload);
+        if (res.status === 200) {
             callback()
         }
         setLoading(false);
     }
 
     useEffect(() => {
-        if(globalFilterValue) {
-            const result = filters?.filter((per) => per.name.toLowerCase().includes(globalFilterValue.toLowerCase()))
-            setFilters(result);
+        if (!globalFilterValue) {
+            setFilters(dataSource?.role?.permissions);
+            return;
         }
-    }, [globalFilterValue])
+
+        const result = filters?.filter((per) =>
+            per.name.toLowerCase().includes(globalFilterValue.toLowerCase())
+        );
+        setFilters(result);
+
+    }, [globalFilterValue, filters, dataSource?.role?.permissions])
 
     useEffect(() => {
-        if(checkAll === true) {
+        if (checkAll === true) {
             const result = filters?.map((per) => per.id)
             setCheckList(result)
         }
-    }, [checkAll])
+    }, [checkAll,filters])
 
     useEffect(() => {
-        if(dataSource){
+        if (dataSource) {
             setFilters(dataSource?.role?.permissions)
         }
     }, [dataSource]);
-
-
-    const RenderHeader = () => {
-        return (
-            <div className="flex justify-content-end gap-3">
-                <div className=' flex align-items-center justify-content-center gap-3'>
-                    <label htmlFor='select'>Select All</label>
-                    <Checkbox 
-                        inputId='select'
-                        checked={checkAll}
-                        onChange={(e) => {
-                            setCheckAll(!checkAll);
-                            if(e.checked === false){
-                                setCheckList([]);
-                            }
-                        }}
-                    />
-                </div>
-                <span className="p-input-icon-left">
-                    <i className="pi pi-search" />
-                    <InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Keyword Search" />
-                </span>
-            </div>
-        );
-    };
 
     const RenderFooter = () => {
         const isDisable = checkList?.length > 0 ? false : true;
 
         return (
             <div className=' flex align-items-center justify-content-end'>
-                <Button 
-                type='submit'
-                label='SUBMIT'
-                disabled={isDisable}
-                onClick={submitRoleRemovePermission}
-                outlined
+                <Button
+                    type='submit'
+                    label='SUBMIT'
+                    disabled={isDisable}
+                    onClick={submitRoleRemovePermission}
+                    outlined
                 />
             </div>
         )
@@ -113,51 +94,75 @@ export const RoleHasPermissionTableView = ({dataSource,callback}) => {
     return (
         <div>
 
-            <DataTable 
+            <div className="flex justify-content-end gap-3">
+                <div className=' flex align-items-center justify-content-center gap-3'>
+                    <label htmlFor='select' className=' text-black'>Select All</label>
+                    <Checkbox
+                        inputId='select'
+                        checked={checkAll}
+                        onChange={(e) => {
+                            setCheckAll(!checkAll);
+                            if (e.checked === false) {
+                                setCheckList([]);
+                            }
+                        }}
+                    />
+                </div>
+                <span className="p-input-icon-left">
+                    <i htmlFor={'search'} className="pi pi-search" />
+                    <InputText 
+                    id="search"
+                    value={globalFilterValue} 
+                    onChange={onGlobalFilterChange} 
+                    placeholder="Keyword Search" />
+                </span>
+            </div>
+
+            <DataTable
                 dataKey='id'
                 value={filters}
-                stripedRows 
+                stripedRows
                 filterDisplay="row"
                 filters={filters}
+                loading={loading}
                 tableStyle={{ minWidth: '50rem' }}
-                globalFilterFields={['id','name']}
-                header={<RenderHeader />}
+                globalFilterFields={['id', 'name']}
                 footer={<RenderFooter />}
             >
                 {
-                    columns.current?.map((col,index) => {
+                    columns.current?.map((col, index) => {
                         return (
                             <Column
-                            key={`role_has_per_col_index_${index}`}
-                            style={{ minWidth: "250px" }}
-                            field={col.field}
-                            header={col.header}
-                            sortable={col.sortable}
-                            body={(value) => {
+                                key={`role_has_per_col_index_${index}`}
+                                style={{ minWidth: "250px" }}
+                                field={col.field}
+                                header={col.header}
+                                sortable={col.sortable}
+                                body={(value) => {
 
-                                if(col.field === 'action') {
-                                    return (
-                                        <Checkbox 
-                                        inputId={value.id}
-                                        value={value.id}
-                                        checked={checkAll ? checkAll : checkList.some((che) => che === value.id)}
-                                        onChange={(e) => {
-                                            onPerChange(e);
-                                            setCheckAll(false)
-                                        }}
-                                        multiple
-                                        />
+                                    if (col.field === 'action') {
+                                        return (
+                                            <Checkbox
+                                                inputId={value.id}
+                                                value={value.id}
+                                                checked={checkAll ? checkAll : checkList.some((che) => che === value.id)}
+                                                onChange={(e) => {
+                                                    onPerChange(e);
+                                                    setCheckAll(false)
+                                                }}
+                                                multiple
+                                            />
                                         )
-                                }
+                                    }
 
-                                return value[col.field]
+                                    return value[col.field]
 
-                            }}
+                                }}
                             />
                         )
                     })
                 }
-                
+
             </DataTable>
 
         </div>

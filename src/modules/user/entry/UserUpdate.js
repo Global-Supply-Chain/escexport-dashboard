@@ -110,6 +110,8 @@ export const UserUpdate = ({ dataSource }) => {
                         <InputText
                             className="p-inputtext-sm text-black"
                             id="name"
+                            name="name"
+                            autoComplete='User name'
                             aria-describedby="name-help"
                             tooltip='user name'
                             value={payload?.name ? payload?.name : ""}
@@ -131,6 +133,8 @@ export const UserUpdate = ({ dataSource }) => {
                             className="p-inputtext-sm text-black"
                             keyfilter={'email'}
                             id="email"
+                            name="email"
+                            autoComplete='User email update'
                             aria-describedby="email-help"
                             tooltip='user email'
                             value={payload?.email ? payload?.email : ""}
@@ -152,6 +156,8 @@ export const UserUpdate = ({ dataSource }) => {
                             className="p-inputtext-sm text-black"
                             keyfilter={'num'}
                             id="phone"
+                            name="phone"
+                            autoComplete='User phone update'
                             aria-describedby="phone-help"
                             tooltip='user phone'
                             value={payload?.phone ? payload.phone : ""}
@@ -168,8 +174,10 @@ export const UserUpdate = ({ dataSource }) => {
 
                 <div className=' col-12 md:col-6 lg:col-4 py-3'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="phone" className=' text-black'>Status</label>
+                        <label htmlFor="status" className=' text-black'>Status</label>
                         <Dropdown 
+                            inputId='status'
+                            name='status'
                             className="p-inputtext-sm text-black"
                             options={userStatus} 
                             placeholder="Select a user status" 

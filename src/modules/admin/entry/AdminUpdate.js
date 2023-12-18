@@ -103,6 +103,8 @@ export const AdminUpdate = () => {
                         <div className="p-inputgroup mt-2">
                             <InputText 
                                 id="name"
+                                name="name"
+                                autoComplete="admin name"
                                 className="p-inputtext-sm"
                                 placeholder="Enter account name"
                                 value={payload.name ? payload.name : ""}
@@ -123,6 +125,8 @@ export const AdminUpdate = () => {
                         <div className="p-inputgroup mt-2">
                             <InputText 
                                 id="email"
+                                name="admin email"
+                                autoComplete="admin email"
                                 className="p-inputtext-sm"
                                 keyfilter={'email'}
                                 aria-describedby="email-help"
@@ -144,6 +148,8 @@ export const AdminUpdate = () => {
                         <div className="p-inputgroup mt-2">
                             <InputText 
                                 id="phone"
+                                name="admin phone"
+                                autoComplete="admin phone"
                                 className="p-inputtext-sm"
                                 aria-describedby="phone-help"
                                 placeholder="Enter mobile phone number"
@@ -164,7 +170,9 @@ export const AdminUpdate = () => {
                             <label htmlFor="status" className='input-label'> Status </label>
                             <Dropdown 
                                 className="p-inputtext-sm text-black"
-                                id="status"
+                                inputId="status"
+                                name="status"
+                                autoComplete="admin status"
                                 options={adminStatus} 
                                 placeholder="Select admin status" 
                                 disabled={loading}
@@ -182,6 +190,7 @@ export const AdminUpdate = () => {
                         <div className="p-inputgroup mt-2">
                             <InputText 
                                 id="password"
+                                name="admin password"
                                 className="p-inputtext-sm"
                                 aria-describedby="password-help"
                                 type="password"
@@ -203,6 +212,7 @@ export const AdminUpdate = () => {
                         <div className="p-inputgroup mt-2">
                             <InputText 
                                 id="confirm-password"
+                                name="confirm password for admin"
                                 className="p-inputtext-sm"
                                 aria-describedby="confirm-password-help"
                                 type="password"

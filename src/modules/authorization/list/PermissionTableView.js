@@ -19,6 +19,7 @@ import { setDateFilter } from '../../../shares/shareSlice';
 import { FilterByDate } from '../../../shares/FilterByDate';
 import moment from 'moment';
 import { Card } from 'primereact/card';
+import { NavigateId } from '../../../shares/NavigateId';
 
 export const PermissionTableView = () => {
 
@@ -179,10 +180,17 @@ export const PermissionTableView = () => {
                             sortable
                             body={(value) => {
 
-                                if (col.field === 'name') {
-                                    return (<label className="nav-link" onClick={() => navigate(`${paths.permission}/${value.id}`)}> {value[col.field]} </label>)
-                                }
-                                return value[col.field]
+                                switch (col.field) {
+                                    case "name":
+                                      return (
+                                        <NavigateId
+                                          url={`${paths.permission}/${value.id}`}
+                                          value={value[col.field]}
+                                        />
+                                      );
+                                    default:
+                                      return value[col.field];
+                                  }
 
                             }}
                         />

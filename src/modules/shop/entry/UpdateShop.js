@@ -97,7 +97,9 @@ export const UpdateShop = () => {
             <label htmlFor="region_id" className='input-label'> Region (required*) </label>
             <div className="p-inputgroup mt-2">
               <Dropdown
-                id='region_id'
+                inputId='region_id'
+                name='region'
+                autoComplete='region'
                 value={payload.region_id}
                 onChange={(e) => payloadHandler(payload, e.value, 'region_id', (updateValue) => {
                   setPayload(updateValue);
@@ -116,6 +118,8 @@ export const UpdateShop = () => {
             <div className="p-inputgroup mt-2">
               <InputText
                 id="name"
+                name='name'
+                autoComplete='name'
                 className="p-inputtext-sm"
                 placeholder="Enter shop name"
                 value={payload.name ? payload.name : ""}
@@ -136,6 +140,8 @@ export const UpdateShop = () => {
             <div className="p-inputgroup mt-2">
               <InputText
                 id="phone"
+                name='phone'
+                autoComplete='phone'
                 keyfilter={'pnum'}
                 className="p-inputtext-sm"
                 placeholder="Enter shop phone"
@@ -157,6 +163,8 @@ export const UpdateShop = () => {
             <div className="p-inputgroup mt-2">
               <InputText
                 id="address"
+                name='address'
+                autoComplete='address'
                 className="p-inputtext-sm"
                 placeholder="Enter shop address"
                 value={payload.address ? payload.address : ""}
@@ -178,6 +186,8 @@ export const UpdateShop = () => {
               <InputText
                 className="p-inputtext-sm text-black"
                 id="location"
+                name='location'
+                autoComplete='location'
                 aria-describedby="location-help"
                 tooltip='Shop location'
                 tooltipOptions={{ ...tooltipOptions }}

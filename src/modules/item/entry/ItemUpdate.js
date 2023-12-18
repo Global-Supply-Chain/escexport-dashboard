@@ -118,9 +118,12 @@ const ItemUpdate = ({ dataSource }) => {
                 </div>
 
                 <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                    <label htmlFor="phone" className='input-label'> Category (required*) </label>
+                    <label htmlFor="category" className='input-label'> Category (required*) </label>
                     <div className="p-inputgroup mt-2">
                         <Dropdown
+                            inputId='category'
+                            name="category"
+                            autoComplete='item category'
                             value={payload.category_id}
                             onChange={(e) => payloadHandler(payload, e.value, 'category_id', (updateValue) => {
                                 setPayload(updateValue);
@@ -140,6 +143,8 @@ const ItemUpdate = ({ dataSource }) => {
                         <InputText
                             className="p-inputtext-sm text-black"
                             id="name"
+                            name='name'
+                            autoComplete='item name'
                             aria-describedby="name-help"
                             tooltip='User full name'
                             tooltipOptions={{ ...tooltipOptions }}
@@ -245,8 +250,9 @@ const ItemUpdate = ({ dataSource }) => {
                     <div className="flex align-items-center gap-2 h-100">
                         <Checkbox
                             className="p-inputtext-sm text-black"
-                            id="out_of_stock"
+                            inputId="out_of_stock"
                             name='Out of Stock'
+                            autoComplete='item out of stock'
                             aria-describedby="out_of_stock-help"
                             tooltip='Item sell price'
                             tooltipOptions={{ ...tooltipOptions }}
@@ -264,8 +270,11 @@ const ItemUpdate = ({ dataSource }) => {
 
                 <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="phone" className=' text-black'>Status</label>
+                        <label htmlFor="status" className=' text-black'>Status</label>
                         <Dropdown
+                            inputId='status'
+                            name="status"
+                            autoComplete='item status'
                             options={status}
                             placeholder="Select a general status"
                             disabled={loading}
@@ -286,6 +295,8 @@ const ItemUpdate = ({ dataSource }) => {
                         <InputTextarea
                             className="p-inputtext-sm text-black"
                             id="content"
+                            name="content"
+                            autoComplete='content'
                             aria-describedby="content-help"
                             tooltip='Item content'
                             tooltipOptions={{ ...tooltipOptions }}

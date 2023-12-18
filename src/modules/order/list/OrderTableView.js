@@ -23,6 +23,7 @@ import { FilterByStatus } from '../../../shares/FilterByStatus';
 import moment from 'moment';
 import { FilterByDate } from '../../../shares/FilterByDate';
 import { Card } from 'primereact/card';
+import { NavigateId } from '../../../shares/NavigateId';
 
 export const OrderTableView = () => {
 
@@ -251,27 +252,25 @@ export const OrderTableView = () => {
                             header={col.header}
                             sortable
                             body={(value) => {
-                                if (col.field === 'status') {
-                                    return (<Status status={value[col.field]} />)
-                                }
-
-                                if (col.field === 'user_name') {
-                                    return (<p>{value[col.field]?.substring(0, 12)}...</p>)
-                                }
-
-                                if (col.field === 'email') {
-                                    return (<p>{value[col.field]?.substring(0, 12)}...</p>)
-                                }
-
-                                if (col.field === 'delivery_address') {
-                                    return (<p>{value[col.field].address?.substring(0, 12)}...</p>)
-                                }
-
-                                if (col.field === 'id') {
-                                    return (<label className="nav-link" onClick={() => navigate(`${paths.order}/${value[col.field]}`)}> {value[col.field]} </label>)
-                                }
-                                return value[col.field]
-
+                                switch (col.field) {
+                                    case "id":
+                                      return (
+                                        <NavigateId
+                                          url={`${paths.order}/${value[col.field]}`}
+                                          value={value[col.field]}
+                                        />
+                                      );
+                                    case "status":
+                                      return <Status status={value[col.field]} />;
+                                    case "username":
+                                      return <p>{value[col.field]?.substring(0, 12)}...</p>;
+                                    case "email":
+                                      return <p>{value[col.field]?.substring(0, 12)}...</p>;
+                                    case "delivery_address":
+                                      return <p>{value[col.field]?.address?.substring(0, 12)}...</p>;
+                                    default:
+                                      return value[col.field];
+                                  }
                             }}
                         />
                     )

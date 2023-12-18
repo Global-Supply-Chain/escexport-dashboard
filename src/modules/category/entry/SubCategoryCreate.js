@@ -86,12 +86,14 @@ export const SubCategoryCreate = ({ dataSource }) => {
         </div>
 
         <div className="col-12 md:col-4 lg:col-4 my-3">
-          <label htmlFor="name" className="input-label">
+          <label htmlFor="title" className="input-label">
             Title
           </label>
           <div className="p-inputgroup mt-2">
             <InputText
               id="title"
+              name='title'
+              autoComplete="title"
               className="p-inputtext-sm"
               placeholder="Enter category title"
               value={payload ? payload.title : ""}
@@ -115,12 +117,14 @@ export const SubCategoryCreate = ({ dataSource }) => {
         </div>
 
         <div className="col-12 md:col-8 lg:col-8 my-3">
-          <label htmlFor="password" className="input-label">
+          <label htmlFor="description" className="input-label">
             Description
           </label>
           <div className="p-inputgroup mt-2">
             <InputText
               id="description"
+              name="description"
+              autoComplete="description"
               className="p-inputtext-sm"
               aria-describedby="description-help"
               type="description"

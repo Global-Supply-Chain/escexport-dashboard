@@ -24,6 +24,7 @@ import { endpoints } from '../../../constants/endpoints';
 import moment from 'moment';
 import { FilterByDate } from '../../../shares/FilterByDate';
 import { Card } from 'primereact/card';
+import { NavigateId } from '../../../shares/NavigateId';
 
 export const UserTableView = () => {
 
@@ -134,7 +135,6 @@ export const UserTableView = () => {
         const userStatusResponse = await getRequest(
             `${endpoints.status}?type=user`
         );
-        console.log(userStatusResponse);
 
         if (userStatusResponse.status === 200) {
             userStatus.current = userStatus.current.concat(
@@ -243,19 +243,22 @@ export const UserTableView = () => {
                             header={col.header}
                             sortable
                             body={(value) => {
-                                if (col.field === 'status') {
-                                    return (<Status status={value[col.field]} />)
-                                }
 
-                                if (col.field === 'email_verified_at' || col.field === 'phone_verified_at') {
-                                    return (<label> {datetime.long(value[col.field])} </label>)
-                                }
-
-                                if (col.field === 'id') {
-                                    return (<label className="nav-link" onClick={() => navigate(`${paths.user}/${value[col.field]}`)}> {value[col.field]} </label>)
-                                }
-                                return value[col.field]
-
+                                switch (col.field) {
+                                    case "id":
+                                      return (
+                                        <NavigateId
+                                          url={`${paths.user}/${value[col.field]}`}
+                                          value={value[col.field]}
+                                        />
+                                      );
+                                    case "status":
+                                      return <Status status={value[col.field]} />;
+                                    case "email_verified_at":
+                                        return <span>{datetime.long(value[col.field])}</span>
+                                    default:
+                                      return value[col.field];
+                                  }
                             }}
                         />
                     )
@@ -271,9 +274,9 @@ export const UserTableView = () => {
                             sortable
                             body={(value) => {
                                 if (col.field === 'created_at' || col.field === 'updated_at' || col.field === 'deleted_at') {
-                                    return <label> {datetime.long(value[col.field])} </label>
+                                    return <span> {datetime.long(value[col.field])} </span>
                                 } else {
-                                    return <label> {value[col.field] && value[col.field].name} </label>
+                                    return <span> {value[col.field] && value[col.field].name} </span>
                                 }
                             }}
                         />

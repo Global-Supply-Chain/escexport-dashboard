@@ -74,6 +74,8 @@ export const UserCreate = () => {
                   <InputText
                     className="p-inputtext-sm text-black"
                     id="name"
+                    name={'name'}
+                    autoComplete="User name"
                     aria-describedby="name-help"
                     tooltip="User full name"
                     tooltipOptions={{ ...tooltipOptions }}
@@ -103,6 +105,8 @@ export const UserCreate = () => {
                     className="p-inputtext-sm text-black"
                     keyfilter={"email"}
                     id="email"
+                    name="email"
+                    autoComplete="User email"
                     aria-describedby="email-help"
                     tooltip="User email"
                     tooltipOptions={{ ...tooltipOptions }}
@@ -131,6 +135,8 @@ export const UserCreate = () => {
                     className="p-inputtext-sm text-black"
                     keyfilter={"num"}
                     id="phone"
+                    name="phone"
+                    autoComplete="user phone"
                     aria-describedby="phone-help"
                     tooltip="User phone"
                     tooltipOptions={{ ...tooltipOptions }}
@@ -158,6 +164,7 @@ export const UserCreate = () => {
                   </label>
                   <Password
                     className="p-inputtext-sm text-black"
+                    inputId="password"
                     name={"password"}
                     tooltip="Password must be contain special chars"
                     tooltipOptions={{ ...tooltipOptions }}
@@ -185,6 +192,7 @@ export const UserCreate = () => {
                   </label>
                   <Password
                     className="p-inputtext-sm text-black"
+                    inputId={'con_password'}
                     name={"con_password"}
                     tooltip="Confirm password must be same password"
                     tooltipOptions={{ ...tooltipOptions }}

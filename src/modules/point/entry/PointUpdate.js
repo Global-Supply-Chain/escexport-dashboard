@@ -105,6 +105,9 @@ const PointUpdate = () => {
                             <div className="flex flex-column gap-2">
                                 <label htmlFor="label" className=' text-black'>Label</label>
                                 <Dropdown
+                                    inputId='label'
+                                    name="label"
+                                    autoComplete='label'
                                     options={pointLabelStatus}
                                     placeholder="Select a point label"
                                     disabled={loading}

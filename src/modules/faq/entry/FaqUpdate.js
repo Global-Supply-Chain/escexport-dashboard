@@ -107,6 +107,8 @@ export const FaqUpdate = () => {
                             <InputText
                                 className="p-inputtext-sm text-black"
                                 id="answer"
+                                name="answer"
+                                autoComplete='answer'
                                 aria-describedby="answer-help"
                                 tooltip='Faq answer'
                                 value={payload.answer ? payload?.answer : ""}
@@ -127,6 +129,8 @@ export const FaqUpdate = () => {
                             <InputText
                                 className="p-inputtext-sm text-black"
                                 id="question"
+                                name="question"
+                                autoComplete='question'
                                 aria-describedby="question-help"
                                 value={payload.question ? payload?.question : ''}
                                 tooltip='Faq question'
@@ -143,8 +147,11 @@ export const FaqUpdate = () => {
 
                     <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                         <div className="flex flex-column gap-2">
-                            <label htmlFor="phone" className=' text-black'>Status</label>
+                            <label htmlFor="status" className=' text-black'>Status</label>
                             <Dropdown
+                                inputId='status'
+                                name='status'
+                                autoComplete='status'
                                 options={status}
                                 placeholder="Select a general status"
                                 disabled={loading}

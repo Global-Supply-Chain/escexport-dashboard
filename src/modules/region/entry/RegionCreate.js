@@ -52,6 +52,8 @@ export const RegionCreate = () => {
                                     <InputText
                                         className="p-inputtext-sm text-black"
                                         id="name"
+                                        name="name"
+                                        autoComplete='name'
                                         aria-describedby="name-help"
                                         tooltip='Region name'
                                         tooltipOptions={{ ...tooltipOptions }}

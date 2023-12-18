@@ -223,6 +223,7 @@ export const MainCategoryTable = () => {
   return (
     <Card
       title={'Main Category List'}
+      subTitle="Category for sub categories"
     >
       <DataTable
         dataKey="id"

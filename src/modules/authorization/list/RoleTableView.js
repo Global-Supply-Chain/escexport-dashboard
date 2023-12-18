@@ -19,6 +19,7 @@ import { FilterByDate } from '../../../shares/FilterByDate';
 import moment from 'moment';
 import { setDateFilter, setStatusFilter } from '../../../shares/shareSlice';
 import { Card } from 'primereact/card';
+import { NavigateId } from '../../../shares/NavigateId';
 
 export const RoleTableView = () => {
 
@@ -179,11 +180,17 @@ export const RoleTableView = () => {
                             sortable
                             body={(value) => {
 
-                                if (col.field === 'name') {
-                                    return (<label className="nav-link" onClick={() => navigate(`${paths.role}/${value.id}`)}> {value[col.field]} </label>)
-                                }
-                                return value[col.field]
-
+                                switch (col.field) {
+                                    case "name":
+                                      return (
+                                        <NavigateId
+                                          url={`${paths.role}/${value.id}`}
+                                          value={value[col.field]}
+                                        />
+                                      );
+                                    default:
+                                      return value[col.field];
+                                  }
                             }}
                         />
                     )
