@@ -17,7 +17,7 @@ export const adminPayload = {
         profile: "",
         email: "",
         phone: "",
-        role_id: "",
+        role_id: null,
         password: "",
         status: ""  
     },

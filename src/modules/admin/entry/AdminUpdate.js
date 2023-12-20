@@ -16,9 +16,11 @@ import { adminService } from "../adminService";
 import { paths } from "../../../constants/paths";
 import { getRequest } from "../../../helpers/api";
 import { Loading } from "../../../shares/Loading";
+import { authorizationService } from "../../authorization/authorizatonService";
 
 export const AdminUpdate = () => {
 
+    const [roleList, setRoleList] = useState([]);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const params = useParams();
@@ -41,6 +43,16 @@ export const AdminUpdate = () => {
 
         if(response.status === 200) {
             setAdminStatus(response.data.user);
+        }
+        const result = await authorizationService.roleIndex(dispatch);
+        if (result.status === 200) {
+            const formatData = result.data?.map((role) => {
+                return {
+                    label: role?.name,
+                    value: role?.id
+                }
+            })
+            setRoleList(formatData);
         }
 
         await adminService.show(dispatch, params.id);
@@ -228,6 +240,26 @@ export const AdminUpdate = () => {
                         </div>
                         <ValidationMessage field="confirm_password" />
                     </div>
+
+                    <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
+                            <label htmlFor="role" className='input-label'> Role </label>
+                            <div className="p-inputgroup mt-2">
+                                <Dropdown
+                                    inputId="role"
+                                    name="role"
+                                    autoComplete="admin role"
+                                    value={payload.role_id}
+                                    onChange={(e) => payloadHandler(payload, e.value, 'role_id', (updateValue) => {
+                                        setPayload(updateValue);
+                                    })}
+                                    options={roleList}
+                                    placeholder="Select a role"
+                                    disabled={loading}
+                                    className="p-inputtext-sm"
+                                />
+                            </div>
+                            <ValidationMessage field="role_id" />
+                        </div>
 
                     <div className="col-12">
                         <div className="flex flex-row justify-content-end align-items-center">
