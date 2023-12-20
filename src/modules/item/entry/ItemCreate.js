@@ -145,6 +145,7 @@ const ItemCreate = () => {
     }
 
     const submitImage = async () => {
+        setLoading(false);
         const fetchMedia = async () => {
             checked?.map(async (img) => {
                 const result = await uploadFile.image(dispatch, img.id, 'ITEM_IMAGE');
@@ -158,13 +159,19 @@ const ItemCreate = () => {
         }
 
         fetchMedia();
+        setLoading(false);
     }
 
+    const handleItemClick = async () => {
+        await submitImage();
+      };
+
     useEffect(() => {
-        if(mediaList){
+        if(mediaList.length > 0){
             payloadHandler(payload, mediaList, 'image', (updateValue) => {
                 setPayload(updateValue);
             });
+            submitItemCreate();
         }
     }, [mediaList])
 
@@ -500,10 +507,7 @@ const ItemCreate = () => {
                                         size='small'
                                         disabled={loading}
                                         label="SUBMIT"
-                                        onClick={() => {
-                                            submitImage();
-                                            submitItemCreate();
-                                        }}
+                                        onClick={handleItemClick}
                                     />
 
                                 </div>
