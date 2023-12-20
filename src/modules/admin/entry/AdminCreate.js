@@ -53,8 +53,6 @@ export const AdminCreate = () => {
         loaidngData();
     }, [loaidngData])
 
-    console.log(roles);
-
     /**
      * Create Admin Account
      */
