@@ -14,29 +14,125 @@ import { Button } from 'primereact/button';
 import { paths } from '../../../constants/paths';
 import { useNavigate } from 'react-router-dom';
 import { itemService } from '../itemService';
-import { mediaService } from '../../media/mediaService';
-import { endpoints } from '../../../constants/endpoints';
-import { Galleria } from 'primereact/galleria';
 import { Editor } from 'primereact/editor';
 import { renderHeader } from '../../../constants/config';
-import { responsiveOptions } from '../../../constants/config';
-import { itemTemplate } from '../../../constants/config';
-import { thumbnailTemplate } from '../../../constants/config';
 import { Loading } from '../../../shares/Loading';
+import { FileUpload } from "primereact/fileupload";
+import { ProgressBar } from 'primereact/progressbar';
+import { Badge } from 'primereact/badge';
+import { uploadFile } from '../../../helpers/uploadFile';
+import { shopService } from '../../shop/shopService';
 
 const ItemCreate = () => {
 
     const [loading, setLoading] = useState(false);
     const [categoryList, setCategoryList] = useState([]);
+    const [shopList, setShopList] = useState([]);
     const [payload, setPayload] = useState(itemPayload.create);
-    const [activeIndex, setActiveIndex] = useState(0);
-    const [mediaList, setMediaList] = useState([])
+    const [selectPhoto, setSelectPhoto] = useState([]);
+    const [isFeaturePhoto, setIsFeaturePhoto] = useState([]);
+    const [checked, setChecked] = useState(false);
+    const [mediaList, setMediaList] = useState([]);
+    const [totalSize, setTotalSize] = useState(0);
+    const fileUploadRef = useRef(null);
 
-    const mediaRef = useRef();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const header = renderHeader();
+
+    const onTemplateSelect = (e) => {
+        let _totalSize = totalSize;
+        let files = e.files;
+        setSelectPhoto(files);
+        setIsFeaturePhoto(files);
+
+        Object.keys(files).forEach((key) => {
+            _totalSize += files[key].size || 0;
+        });
+
+        setTotalSize(_totalSize);
+    };
+
+    const onTemplateRemove = (file, callback) => {
+        setTotalSize(totalSize - file.size);
+        callback();
+    };
+
+    const onTemplateClear = () => {
+        setTotalSize(0);
+    };
+
+
+    const emptyTemplate = () => {
+        return (
+            <div className="flex align-items-center flex-column">
+                <i className="pi pi-image mt-3 p-5" style={{ fontSize: '5em', borderRadius: '50%', backgroundColor: 'var(--surface-b)', color: 'var(--surface-d)' }}></i>
+                <span style={{ fontSize: '1.2em', color: 'var(--text-color-secondary)' }} className="my-5">
+                    Drag and Drop Image Here
+                </span>
+            </div>
+        );
+    };
+
+
+    const onFeatureChange = (e) => {
+        let _select = [...selectPhoto];
+
+        // if (e.checked)
+        //     _select.push(e.value);
+        // else
+        _select = _select.filter((select, index) => select.lastModified === e.value.lastModified);
+
+        setIsFeaturePhoto(_select);
+    };
+
+    const itemTemplate = (file, props) => {
+
+        const isFeature = isFeaturePhoto.some((item) => item.lastModified === file.lastModified);
+
+        return (
+            <div className="flex align-items-top flex-wrap"
+            >
+                <div className="flex align-items-top" style={{ width: '40%' }}>
+                    <img alt={file.name} role="presentation" src={file.objectURL} width={100} />
+                    <span className="flex flex-column gap-2 text-left ml-3">
+                        {file.name}
+                        <Checkbox
+                            name="feature"
+                            value={file}
+                            onChange={onFeatureChange}
+                            checked={isFeature}
+                        />
+                    </span>
+                </div>
+                <div className=' flex align-items-top gap-3'>
+                    <Badge value={props.formatSize}></Badge>
+                </div>
+                <Button type="button" icon="pi pi-times" className="p-button-outlined p-button-rounded p-button-danger ml-auto" onClick={() => onTemplateRemove(file, props.onRemove)} />
+            </div>
+        );
+    };
+
+    const headerTemplate = (options) => {
+        const { className, chooseButton, cancelButton } = options;
+        const value = totalSize / 10000;
+        const formatedValue = fileUploadRef && fileUploadRef.current ? fileUploadRef.current.formatSize(totalSize) : '0 B';
+
+        return (
+            <div className={className} style={{ backgroundColor: 'transparent', display: 'flex', alignItems: 'center' }}>
+                {chooseButton}
+                {cancelButton}
+                <div className="flex align-items-center gap-3 ml-auto">
+                    <span>{formatedValue} / 1 MB</span>
+                    <ProgressBar value={value} showValue={false} style={{ width: '10rem', height: '12px' }}></ProgressBar>
+                </div>
+            </div>
+        );
+    };
+
+    const chooseOptions = { icon: 'pi pi-fw pi-images', iconOnly: true, className: 'custom-choose-btn p-button-rounded p-button-outlined' };
+    const cancelOptions = { icon: 'pi pi-fw pi-times', iconOnly: true, className: 'custom-cancel-btn p-button-danger p-button-rounded p-button-outlined' };
 
     /**
      * Create item
@@ -47,6 +143,37 @@ const ItemCreate = () => {
         await itemService.store(dispatch, payload);
         setLoading(false);
     }
+
+    const submitImage = async () => {
+        setLoading(false);
+        const fetchMedia = async () => {
+            checked?.map(async (img) => {
+                const result = await uploadFile.image(dispatch, img.id, 'ITEM_IMAGE');
+                if (result.status === 200) {
+                    setMediaList((prev) => [...prev, {
+                        id: result.data.id,
+                        is_feature: img.is_feature
+                    }])
+                }
+            })
+        }
+
+        fetchMedia();
+        setLoading(false);
+    }
+
+    const handleItemClick = async () => {
+        await submitImage();
+      };
+
+    useEffect(() => {
+        if(mediaList.length > 0){
+            payloadHandler(payload, mediaList, 'image', (updateValue) => {
+                setPayload(updateValue);
+            });
+            submitItemCreate();
+        }
+    }, [mediaList])
 
     /**
     * Loading Category Data
@@ -68,46 +195,55 @@ const ItemCreate = () => {
         setLoading(false);
     }, [dispatch]);
 
+    /**
+    * Loading Category Data
+    */
+    const loadingShopData = useCallback(async () => {
+        setLoading(true);
+
+        const result = await shopService.index(dispatch);
+        if (result.status === 200) {
+            const formatData = result.data?.map((shop) => {
+                return {
+                    label: shop?.name,
+                    value: shop?.id
+                }
+            })
+            setShopList(formatData);
+        }
+
+        setLoading(false);
+    }, [dispatch]);
+
+    useEffect(() => {
+        loadingShopData()
+    }, [loadingShopData])
+
     useEffect(() => {
         loadingCategoryData()
     }, [loadingCategoryData])
 
-    /**
-     * loading image list
-     * **/
-    const loadingImageData = useCallback(async () => {
-        setLoading(true);
-        const result = await mediaService.list(dispatch);
-        if (result.status === 200) {
-            const formatData = result.data?.map((img, index) => {
-                return {
-                    itemImageSrc: `${endpoints.image}/${img.id}`,
-                    thumbnailImageSrc: `${endpoints.image}/${img.id}`,
-                    alt: 'GSC Export',
-                    title: 'Title 1',
-                    id: img?.id,
-                    index: index
-                }
-            })
-            setMediaList(formatData);
-        }
-        setLoading(false);
-    }, [dispatch]);
-
-    /**
-     * handle gallery payload
-     * **/
-    const filterPayload = useCallback((value, index) => {
-        if (value) {
-            const filter = value?.filter(img => img.index === index);
-            console.log(filter);
-        }
-    }, [])
-
     useEffect(() => {
-        loadingImageData()
-    }, [loadingImageData])
 
+        const format = selectPhoto?.map((select) => {
+            if (select.lastModified === isFeaturePhoto[0].lastModified) {
+                return {
+                    id: select,
+                    is_feature: true
+                }
+            } else {
+                return {
+                    id: select,
+                    is_feature: false
+                }
+            }
+        })
+
+        setChecked(format)
+
+    }, [selectPhoto, isFeaturePhoto])
+
+    console.log(payload);
 
     return (
         <div className=' grid'>
@@ -127,23 +263,20 @@ const ItemCreate = () => {
                     <div className=' grid'>
 
                         <div className=' col-12'>
-                            <div className=' flex align-items-center justify-content-center'>
-                                <Galleria
-                                    ref={mediaRef}
-                                    value={mediaList}
-                                    activeIndex={activeIndex}
-                                    onItemChange={(e) => {
-                                        setActiveIndex(e.index);
-                                        filterPayload(mediaRef.current.props.value, e.index);
-                                    }}
-                                    responsiveOptions={responsiveOptions}
-                                    numVisible={5}
-                                    item={itemTemplate}
-                                    // onClick={(e) => filterPayload(mediaRef.current.props.value)}
-                                    thumbnail={thumbnailTemplate}
-                                    style={{ maxWidth: '640px', minHeight: '471px' }}
-                                />
-                            </div>
+                            <FileUpload
+                                ref={fileUploadRef}
+                                multiple
+                                accept="image/*"
+                                maxFileSize={1000000}
+                                onSelect={onTemplateSelect}
+                                onError={onTemplateClear}
+                                onClear={onTemplateClear}
+                                headerTemplate={headerTemplate}
+                                itemTemplate={itemTemplate}
+                                emptyTemplate={emptyTemplate}
+                                chooseOptions={chooseOptions}
+                                cancelOptions={cancelOptions}
+                            />
                         </div>
 
                         <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
@@ -164,6 +297,27 @@ const ItemCreate = () => {
                                 />
                             </div>
                             <ValidationMessage field="category_id" />
+                        </div>
+
+
+                        <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
+                            <label htmlFor="shop" className='input-label'> Shop (required*) </label>
+                            <div className="p-inputgroup mt-2">
+                                <Dropdown
+                                    inputId='shop'
+                                    name="shop item"
+                                    autoComplete='shop item'
+                                    value={payload.shop_id}
+                                    onChange={(e) => payloadHandler(payload, e.value, 'shop_id', (updateValue) => {
+                                        setPayload(updateValue);
+                                    })}
+                                    options={shopList}
+                                    placeholder="Select a shop"
+                                    disabled={loading}
+                                    className="p-inputtext-sm"
+                                />
+                            </div>
+                            <ValidationMessage field="shop_id" />
                         </div>
 
                         <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
@@ -279,6 +433,29 @@ const ItemCreate = () => {
 
                         <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                             <div className="flex flex-column gap-2">
+                                <label htmlFor="instock" className=' text-black'>Instock (required*)</label>
+                                <InputText
+                                    className="p-inputtext-sm text-black"
+                                    id="instock"
+                                    name="item instcok"
+                                    autoComplete='item instock'
+                                    aria-describedby="instock-help"
+                                    tooltip='Item instock'
+                                    tooltipOptions={{ ...tooltipOptions }}
+                                    placeholder='Enter item instock'
+                                    disabled={loading}
+                                    rows={5}
+                                    cols={30}
+                                    onChange={(e) => payloadHandler(payload, e.target.value, 'instock', (updateValue) => {
+                                        setPayload(updateValue);
+                                    })}
+                                />
+                                <ValidationMessage field={"instock"} />
+                            </div>
+                        </div>
+
+                        <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+                            <div className="flex flex-column gap-2">
                                 <label htmlFor="out_of_stock" className=' text-black'>Out of stock</label>
                                 <Checkbox
                                     className="p-inputtext-sm text-black"
@@ -330,7 +507,7 @@ const ItemCreate = () => {
                                         size='small'
                                         disabled={loading}
                                         label="SUBMIT"
-                                        onClick={() => submitItemCreate()}
+                                        onClick={handleItemClick}
                                     />
 
                                 </div>
