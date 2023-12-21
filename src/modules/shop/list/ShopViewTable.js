@@ -2,7 +2,7 @@ import { DataTable } from "primereact/datatable"
 import { Column } from "primereact/column";
 import { Search } from "../../../shares/Search";
 import { Button } from "primereact/button";
-import { auditColumns, paginateOptions } from "../../../constants/config";
+import { auditColumns, keys, paginateOptions } from "../../../constants/config";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PaginatorRight } from "../../../shares/PaginatorRight";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,7 +14,6 @@ import { datetime } from "../../../helpers/datetime";
 import { shopPayload } from "../shopPayload";
 import { shopService } from "../shopService";
 import { setPaginate } from "../shopSlice";
-import { Can } from "../../../shares/Can";
 import { getRequest } from "../../../helpers/api";
 import { endpoints } from "../../../constants/endpoints";
 import { FilterByStatus } from "../../../shares/FilterByStatus";
@@ -23,6 +22,7 @@ import moment from "moment";
 import { FilterByDate } from "../../../shares/FilterByDate";
 import { Card } from "primereact/card";
 import { NavigateId } from "../../../shares/NavigateId";
+import { exportExcel } from "../../../helpers/export";
 
 export const ShopViewTable = () => {
 
@@ -110,17 +110,8 @@ export const ShopViewTable = () => {
         dispatch(setPaginate(updatePaginateParams));
     };
 
-    const handleExport = () => {
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        document.body.appendChild(iframe);
-
-        iframe.src = 'http://127.0.0.1:8000/dashboard/export-shop';
-
-        // Cleanup the iframe after download
-        setTimeout(() => {
-            document.body.removeChild(iframe);
-        }, 5000); // Adjust the timeout as needed
+    const handleExport = async () => {
+        exportExcel('/export-shop')
     };
 
     /**

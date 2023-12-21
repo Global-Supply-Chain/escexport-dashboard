@@ -24,6 +24,7 @@ import moment from 'moment';
 import { FilterByDate } from '../../../shares/FilterByDate';
 import { Card } from 'primereact/card';
 import { NavigateId } from '../../../shares/NavigateId';
+import { exportExcel } from '../../../helpers/export';
 
 export const OrderTableView = () => {
 
@@ -153,16 +154,7 @@ export const OrderTableView = () => {
     }, [loadingData])
 
     const handleExport = () => {
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        document.body.appendChild(iframe);
-
-        iframe.src = 'http://127.0.0.1:8000/dashboard/export-order';
-
-        // Cleanup the iframe after download
-        setTimeout(() => {
-            document.body.removeChild(iframe);
-        }, 5000); // Adjust the timeout as needed
+        exportExcel('/export-order')
     };
 
     /**

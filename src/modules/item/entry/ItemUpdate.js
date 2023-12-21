@@ -9,7 +9,7 @@ import { ValidationMessage } from '../../../shares/ValidationMessage';
 import { InputText } from 'primereact/inputtext';
 import { Checkbox } from 'primereact/checkbox';
 import { InputTextarea } from 'primereact/inputtextarea';
-import { tooltipOptions } from '../../../constants/config';
+import { renderHeader, tooltipOptions } from '../../../constants/config';
 import { Button } from 'primereact/button';
 import { payloadHandler } from '../../../helpers/handler';
 import { paths } from '../../../constants/paths';
@@ -17,6 +17,7 @@ import { itemService } from '../itemService';
 import DeleteDialogButton from '../../../shares/DeleteDialogButton';
 import { generalStatus } from '../../../helpers/StatusHandler';
 import { Loading } from '../../../shares/Loading';
+import { Editor } from 'primereact/editor';
 
 const ItemUpdate = ({ dataSource }) => {
 
@@ -30,6 +31,8 @@ const ItemUpdate = ({ dataSource }) => {
     const { item } = useSelector((state) => state.item);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const header = renderHeader();
 
     /**
     * Return general status
@@ -59,16 +62,16 @@ const ItemUpdate = ({ dataSource }) => {
             setCategoryList(formatData);
         }
 
-        await itemService.show(dispatch,params.id)
+        await itemService.show(dispatch, params.id)
         setLoading(false);
-    }, [dispatch,params]);
+    }, [dispatch, params]);
 
     useEffect(() => {
         loadingCategoryData()
     }, [loadingCategoryData])
 
     useEffect(() => {
-        if(item){
+        if (item) {
             setPayload(item)
         }
     }, [item])
@@ -291,23 +294,14 @@ const ItemUpdate = ({ dataSource }) => {
 
                 <div className=' col-12 my-3 md:my-0'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="content" className=' text-black'>Content</label>
-                        <InputTextarea
-                            className="p-inputtext-sm text-black"
-                            id="content"
-                            name="content"
-                            autoComplete='content'
-                            aria-describedby="content-help"
-                            tooltip='Item content'
-                            tooltipOptions={{ ...tooltipOptions }}
-                            placeholder='Enter item content'
-                            disabled={loading}
-                            rows={5}
-                            cols={30}
-                            value={payload?.content ? payload?.content : ''}
-                            onChange={(e) => payloadHandler(payload, e.target.value, 'content', (updateValue) => {
+                        <span className=' text-black'>Content</span>
+                        <Editor
+                            headerTemplate={header}
+                            value={payload.content}
+                            onTextChange={(e) => payloadHandler(payload, e.htmlValue, 'content', (updateValue) => {
                                 setPayload(updateValue);
                             })}
+                            style={{ height: '320px' }}
                         />
                         <ValidationMessage field={"content"} />
                     </div>
