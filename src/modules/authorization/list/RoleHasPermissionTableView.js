@@ -7,6 +7,7 @@ import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button'
 import { authorizationService } from '../authorizatonService'
 import { useDispatch } from 'react-redux'
+import { Card } from 'primereact/card'
 
 export const RoleHasPermissionTableView = ({ dataSource, callback }) => {
 
@@ -82,8 +83,9 @@ export const RoleHasPermissionTableView = ({ dataSource, callback }) => {
             <div className=' flex align-items-center justify-content-end'>
                 <Button
                     type='submit'
-                    label='SUBMIT'
+                    label='REMOVE PERMISSION'
                     disabled={isDisable}
+                    severity='danger'
                     onClick={submitRoleRemovePermission}
                     outlined
                 />
@@ -92,9 +94,11 @@ export const RoleHasPermissionTableView = ({ dataSource, callback }) => {
     }
 
     return (
-        <div>
+        <Card
+        title={'Role Has Permission'}
+        >
 
-            <div className="flex justify-content-end gap-3">
+            <div className="flex justify-content-end gap-3 mb-3">
                 <div className=' flex align-items-center justify-content-center gap-3'>
                     <label htmlFor='select' className=' text-black'>Select All</label>
                     <Checkbox
@@ -165,6 +169,6 @@ export const RoleHasPermissionTableView = ({ dataSource, callback }) => {
 
             </DataTable>
 
-        </div>
+        </Card>
     )
 }
