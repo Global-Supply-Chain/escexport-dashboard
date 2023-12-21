@@ -32,7 +32,6 @@ const ItemCreate = () => {
     const [selectPhoto, setSelectPhoto] = useState([]);
     const [isFeaturePhoto, setIsFeaturePhoto] = useState([]);
     const [checked, setChecked] = useState(false);
-    const [mediaList, setMediaList] = useState([]);
     const [totalSize, setTotalSize] = useState(0);
     const fileUploadRef = useRef(null);
 
@@ -147,15 +146,38 @@ const ItemCreate = () => {
     const submitImage = async () => {
         setLoading(false);
         const fetchMedia = async () => {
-            checked?.map(async (img) => {
+
+
+            const mediaList = [];
+
+            for (const img of checked) {
                 const result = await uploadFile.image(dispatch, img.id, 'ITEM_IMAGE');
+
                 if (result.status === 200) {
-                    setMediaList((prev) => [...prev, {
+                    // Append the new media item to mediaList
+                    mediaList.push({
                         id: result.data.id,
-                        is_feature: img.is_feature
-                    }])
+                        is_feature: img.is_feature,
+                    });
                 }
-            })
+            }
+
+            const mainPayload = {
+                category_id: payload.category_id,
+                shop_id: payload.shop_id,
+                name: payload.name,
+                image: mediaList,
+                code: payload.code,
+                description: payload.description,
+                content: payload.content,
+                price: payload.price,
+                sell_price: payload.sell_price,
+                out_of_stock: payload.out_of_stock,
+                instock: payload.instock
+            }
+            console.log(mainPayload);
+
+            await itemService.store(dispatch, mainPayload);
         }
 
         fetchMedia();
@@ -164,16 +186,7 @@ const ItemCreate = () => {
 
     const handleItemClick = async () => {
         await submitImage();
-      };
-
-    useEffect(() => {
-        if(mediaList.length > 0){
-            payloadHandler(payload, mediaList, 'image', (updateValue) => {
-                setPayload(updateValue);
-            });
-            submitItemCreate();
-        }
-    }, [mediaList])
+    };
 
     /**
     * Loading Category Data
@@ -242,8 +255,6 @@ const ItemCreate = () => {
         setChecked(format)
 
     }, [selectPhoto, isFeaturePhoto])
-
-    console.log(payload);
 
     return (
         <div className=' grid'>
@@ -481,6 +492,7 @@ const ItemCreate = () => {
                                 <span className=' text-black'>Content</span>
                                 <Editor
                                     headerTemplate={header}
+                                    value={payload.content}
                                     onTextChange={(e) => payloadHandler(payload, e.htmlValue, 'content', (updateValue) => {
                                         setPayload(updateValue);
                                     })}

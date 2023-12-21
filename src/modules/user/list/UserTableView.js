@@ -25,6 +25,7 @@ import moment from 'moment';
 import { FilterByDate } from '../../../shares/FilterByDate';
 import { Card } from 'primereact/card';
 import { NavigateId } from '../../../shares/NavigateId';
+import { exportExcel } from '../../../helpers/export';
 
 export const UserTableView = () => {
 
@@ -152,9 +153,7 @@ export const UserTableView = () => {
     }, [loadingData])
 
     const exportUser = async () => {
-        setLoading(true);
-        await userService.export(dispatch);
-        setLoading(false);
+        exportExcel('/export-user');
     }
 
     /**
