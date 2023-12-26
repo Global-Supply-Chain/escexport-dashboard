@@ -13,10 +13,8 @@ import { Column } from 'primereact/column';
 import { Status } from '../../../shares/Status';
 import { datetime } from '../../../helpers/datetime';
 import { paths } from '../../../constants/paths';
-import { useNavigate } from 'react-router-dom';
 import { Paginator } from 'primereact/paginator';
 import { setPaginate } from '../userSlice';
-import { Can } from '../../../shares/Can';
 import { FilterByStatus } from '../../../shares/FilterByStatus';
 import { setDateFilter, setStatusFilter } from '../../../shares/shareSlice';
 import { getRequest } from '../../../helpers/api';
@@ -31,7 +29,6 @@ export const UserTableView = () => {
 
     const dispatch = useDispatch();
     const { users, paginateParams } = useSelector(state => state.user);
-    const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);

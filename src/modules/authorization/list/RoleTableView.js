@@ -10,7 +10,6 @@ import { PaginatorRight } from '../../../shares/PaginatorRight';
 import { Column } from 'primereact/column';
 import { datetime } from '../../../helpers/datetime';
 import { paths } from '../../../constants/paths';
-import { useNavigate } from 'react-router-dom';
 import { Paginator } from 'primereact/paginator';
 import { authorizationPayload } from '../authorizationPayload';
 import { authorizationService } from '../authorizatonService';
@@ -25,7 +24,6 @@ export const RoleTableView = () => {
 
     const dispatch = useDispatch();
     const { roles, rolePaginateParams } = useSelector(state => state.auth);
-    const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);

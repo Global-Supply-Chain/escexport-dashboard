@@ -2,13 +2,12 @@ import { DataTable } from "primereact/datatable"
 import { Column } from "primereact/column";
 import { Search } from "../../../shares/Search";
 import { Button } from "primereact/button";
-import { auditColumns, keys, paginateOptions } from "../../../constants/config";
+import { auditColumns, paginateOptions } from "../../../constants/config";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { PaginatorRight } from "../../../shares/PaginatorRight";
 import { useDispatch, useSelector } from "react-redux";
 import { Paginator } from "primereact/paginator";
 import { Status } from "../../../shares/Status";
-import { useNavigate } from "react-router-dom";
 import { paths } from "../../../constants/paths";
 import { datetime } from "../../../helpers/datetime";
 import { shopPayload } from "../shopPayload";
@@ -27,7 +26,6 @@ import { exportExcel } from "../../../helpers/export";
 export const ShopViewTable = () => {
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { shops, paginateParams } = useSelector(state => state.shop)
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);

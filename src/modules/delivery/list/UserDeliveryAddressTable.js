@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { deliveryService } from "../deliveryService";
 import { Paginator } from "primereact/paginator";
 import { Status } from "../../../shares/Status";
-import { useNavigate } from "react-router-dom";
 import { paths } from "../../../constants/paths";
 import { datetime } from "../../../helpers/datetime";
 import { setPaginate } from "../deliverySlice";
@@ -23,7 +22,6 @@ import { NavigateId } from "../../../shares/NavigateId";
 export const UserDeliveryAddressTable = () => {
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { deliveries, paginateParams } = useSelector(state => state.delivery)
 
     const [loading, setLoading] = useState(false);

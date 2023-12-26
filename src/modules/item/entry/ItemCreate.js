@@ -30,8 +30,6 @@ const ItemCreate = () => {
     const [shopList, setShopList] = useState([]);
     const [payload, setPayload] = useState(itemPayload.create);
     const [selectPhoto, setSelectPhoto] = useState([]);
-    const [isFeaturePhoto, setIsFeaturePhoto] = useState([]);
-    const [checked, setChecked] = useState(false);
     const [totalSize, setTotalSize] = useState(0);
     const fileUploadRef = useRef(null);
 
@@ -44,7 +42,6 @@ const ItemCreate = () => {
         let _totalSize = totalSize;
         let files = e.files;
         setSelectPhoto(files);
-        setIsFeaturePhoto(files);
 
         Object.keys(files).forEach((key) => {
             _totalSize += files[key].size || 0;
@@ -75,20 +72,8 @@ const ItemCreate = () => {
     };
 
 
-    const onFeatureChange = (e) => {
-        let _select = [...selectPhoto];
-
-        // if (e.checked)
-        //     _select.push(e.value);
-        // else
-        _select = _select.filter((select, index) => select.lastModified === e.value.lastModified);
-
-        setIsFeaturePhoto(_select);
-    };
 
     const itemTemplate = (file, props) => {
-
-        const isFeature = isFeaturePhoto.some((item) => item.lastModified === file.lastModified);
 
         return (
             <div className="flex align-items-top flex-wrap"
@@ -97,12 +82,6 @@ const ItemCreate = () => {
                     <img alt={file.name} role="presentation" src={file.objectURL} width={100} />
                     <span className="flex flex-column gap-2 text-left ml-3">
                         {file.name}
-                        <Checkbox
-                            name="feature"
-                            value={file}
-                            onChange={onFeatureChange}
-                            checked={isFeature}
-                        />
                     </span>
                 </div>
                 <div className=' flex align-items-top gap-3'>
@@ -150,15 +129,12 @@ const ItemCreate = () => {
 
             const mediaList = [];
 
-            for (const img of checked) {
-                const result = await uploadFile.image(dispatch, img.id, 'ITEM_IMAGE');
+            for (const img of selectPhoto) {
+                const result = await uploadFile.image(dispatch, img, 'ITEM_IMAGE');
 
                 if (result.status === 200) {
                     // Append the new media item to mediaList
-                    mediaList.push({
-                        id: result.data.id,
-                        is_feature: img.is_feature,
-                    });
+                    mediaList.push(result.data.id);
                 }
             }
 
@@ -236,25 +212,7 @@ const ItemCreate = () => {
         loadingCategoryData()
     }, [loadingCategoryData])
 
-    useEffect(() => {
 
-        const format = selectPhoto?.map((select) => {
-            if (select.lastModified === isFeaturePhoto[0].lastModified) {
-                return {
-                    id: select,
-                    is_feature: true
-                }
-            } else {
-                return {
-                    id: select,
-                    is_feature: false
-                }
-            }
-        })
-
-        setChecked(format)
-
-    }, [selectPhoto, isFeaturePhoto])
 
     return (
         <div className=' grid'>

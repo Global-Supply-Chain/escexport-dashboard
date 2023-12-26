@@ -57,7 +57,11 @@ export const FilterByDate = ({ onFilter }) => {
             icon="pi pi-check"
             severity="primary"
             outlined
-            onClick={() => onFilterByDate()}
+            onClick={() => {
+              if(startDate !== null && endDate !== null){
+                onFilterByDate()
+              }
+            }}
           />
 
           <Button

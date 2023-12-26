@@ -21,7 +21,6 @@ export const UpdateOrder = () => {
 
     const params = useParams();
     const [loading, setLoading] = useState(false);
-    const [visible, setVisible] = useState(false);
     const [payload, setPayload] = useState(orderPayload.update);
     const [deliveryList, setDeliveryList] = useState([]);
     const [userList, setUserList] = useState([]);

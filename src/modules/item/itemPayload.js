@@ -17,13 +17,15 @@ export const itemPayload = {
     },
     update: {
         category_id: "",
+        shop_id: "",
         name : "",
+        image : [],
         code : "",
         description : "",
         content : "",
         price : "",
         sell_price : "",
-        out_of_stock: "",
+        out_of_stock: false,
         instock: "",
         status : ""
     },

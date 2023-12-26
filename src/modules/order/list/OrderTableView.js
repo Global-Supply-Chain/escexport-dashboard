@@ -11,7 +11,6 @@ import { Column } from 'primereact/column';
 import { Status } from '../../../shares/Status';
 import { datetime } from '../../../helpers/datetime';
 import { paths } from '../../../constants/paths';
-import { useNavigate } from 'react-router-dom';
 import { Paginator } from 'primereact/paginator';
 import { orderPayload } from '../orderPayload';
 import { orderService } from '../orderService';
@@ -31,7 +30,6 @@ export const OrderTableView = () => {
 
     const dispatch = useDispatch();
     const { orders, paginateParams } = useSelector(state => state.order);
-    const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
