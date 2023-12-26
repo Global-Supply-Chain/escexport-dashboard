@@ -118,50 +118,29 @@ const ItemCreate = () => {
      * **/
     const submitItemCreate = async () => {
         setLoading(false);
-        await itemService.store(dispatch, payload);
-        setLoading(false);
-    }
 
-    const submitImage = async () => {
-        setLoading(false);
-        const fetchMedia = async () => {
+        const storePayload = {
+            category_id: payload.category_id,
+            shop_id: payload.shop_id,
+            name: payload.name,
+            images: selectPhoto,
+            code: payload.code,
+            description: payload.description,
+            content: payload.content,
+            price: payload.price,
+            sell_price: payload.sell_price,
+            out_of_stock: payload.out_of_stock,
+            instock: payload.instock
+        };
+        console.log(storePayload);
+        storePayload.images = selectPhoto;
 
-
-            const mediaList = [];
-
-            for (const img of selectPhoto) {
-                const result = await uploadFile.image(dispatch, img, 'ITEM_IMAGE');
-
-                if (result.status === 200) {
-                    // Append the new media item to mediaList
-                    mediaList.push(result.data.id);
-                }
-            }
-
-            const mainPayload = {
-                category_id: payload.category_id,
-                shop_id: payload.shop_id,
-                name: payload.name,
-                image: mediaList,
-                code: payload.code,
-                description: payload.description,
-                content: payload.content,
-                price: payload.price,
-                sell_price: payload.sell_price,
-                out_of_stock: payload.out_of_stock,
-                instock: payload.instock
-            }
-            console.log(mainPayload);
-
-            await itemService.store(dispatch, mainPayload);
-        }
-
-        fetchMedia();
+        // await itemService.store(dispatch, storePayload);
         setLoading(false);
     }
 
     const handleItemClick = async () => {
-        await submitImage();
+        await submitItemCreate();
     };
 
     /**
