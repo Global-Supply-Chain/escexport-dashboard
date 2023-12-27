@@ -1,4 +1,5 @@
 import { Button } from "primereact/button";
+import { getData } from "../helpers/localstorage";
 
 const paginatorLeft = <Button type="button" icon="pi pi-refresh" text />;
 // const paginatorRight = <Button type="button" icon="pi pi-download" text />;
@@ -19,7 +20,8 @@ export const keys = {
     API_TOKEN: "TOKEN",
     USER: "USER",
     PERMISSION: "PERMISSION",
-    ROLE: "ROLE"
+    ROLE: "ROLE",
+    LANGUAGE: "LANGUAGE"
 }
 
 /**
@@ -80,6 +82,16 @@ export const itemTemplate = (item) => {
 export const thumbnailTemplate = (item) => {
     return <img width={100} height={80} src={item.thumbnailImageSrc} alt={item.alt} style={{ display: 'block' }} />;
 }
+
+/**
+ * Language / Region / Country
+ */
+export const countries = [
+    { name: 'China', code: 'CN' },
+    { name: 'Myanmar', code: 'MM' },
+    { name: 'English', code: 'UK' }
+];
+export const defaultLanguage = getData(keys.LANGUAGE) ? getData(keys.LANGUAGE) : countries[1];
 
 export const renderHeader = () => {
     return (

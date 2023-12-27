@@ -14,6 +14,7 @@ import regionSlice from "./modules/region/regionSlice";
 import shopSlice from "./modules/shop/shopSlice";
 import dashboardSlice from "./modules/dashboard/dashboardSlice";
 import authorizationSlice from "./modules/authorization/authorizationSlice";
+import settingSlice from "./modules/setting/settingSlice";
 
 export const stores = configureStore({
    reducer: {
@@ -31,7 +32,8 @@ export const stores = configureStore({
     region: regionSlice,
     shop: shopSlice,
     dashboard: dashboardSlice,
-    auth : authorizationSlice
+    auth : authorizationSlice,
+    setting: settingSlice
    },
    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
       serializableCheck: false

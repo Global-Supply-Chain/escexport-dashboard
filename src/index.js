@@ -2,6 +2,7 @@ import '/node_modules/primeflex/primeflex.css';
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import 'primeicons/primeicons.css';
 import './assets/css/styles.css';
+import './assets/css/flags.css';
 
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';

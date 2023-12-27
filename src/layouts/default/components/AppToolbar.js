@@ -70,6 +70,7 @@ const EndContent = () => {
                         <p> { adminProfile.name } </p>
                         <p> <small> {adminProfile.email} </small> </p>
                     </h4>
+                    
                     <Button 
                         className="mx-3"
                         style={{ color: "#fff"}}

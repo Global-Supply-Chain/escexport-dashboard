@@ -18,8 +18,6 @@ http.interceptors.request.use(
                 ...config.headers,
                 authorization: `Bearer ${token}`,
                 Accept: "Application/json",
-                'Content-Disposition': 'attachment; filename=exportedFile.xlsx',
-                'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             };
         }
 

@@ -42,8 +42,10 @@ export const Search = ({ onSearch, placeholder, tooltipLabel }) => {
         <span
           className="p-inputgroup-addon"
           onClick={() => {
-            onSearch(keyword);
-            setData(keyword);
+            if (keyword !== null) {
+              onSearch(keyword);
+              setData(keyword);
+            }
           }}
         >
           <i className="pi pi-search"></i>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { authorizationPayload } from '../authorizationPayload';
 import { Loading } from '../../../shares/Loading';
 import { paths } from '../../../constants/paths';

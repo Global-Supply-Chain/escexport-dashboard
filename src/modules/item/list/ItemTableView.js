@@ -2,7 +2,6 @@
 
 import React, { useRef, useState, useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { itemService } from '../itemService';
 import { itemPayload } from '../itemPayload';
 import { DataTable } from 'primereact/datatable';
@@ -31,7 +30,6 @@ const ItemTableView = () => {
 
     const dispatch = useDispatch();
     const { items, paginateParams } = useSelector(state => state.item);
-    const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
@@ -87,9 +85,9 @@ const ItemTableView = () => {
     }
 
     /**
-  * On Change Filter
-  * @param {*} e
-  */
+    * On Change Filter
+    * @param {*} e
+    */
     const onFilter = (e) => {
         let updatePaginateParams = { ...paginateParams };
 
@@ -130,8 +128,8 @@ const ItemTableView = () => {
     }, [dispatch, paginateParams]);
 
     /**
- * loading general Status
-*/
+    * loading general Status
+    */
     const loadingStatus = useCallback(async () => {
         const itemStatusResponse = await getRequest(
             `${endpoints.status}?type=general`

@@ -9,7 +9,6 @@ import { Column } from 'primereact/column';
 import { Status } from '../../../shares/Status';
 import { datetime } from '../../../helpers/datetime';
 import { paths } from '../../../constants/paths';
-import { useNavigate } from 'react-router-dom';
 import { Paginator } from 'primereact/paginator';
 import { regionPayload } from '../regionPayload';
 import { regionService } from '../regionService';
@@ -27,7 +26,6 @@ export const RegionTableView = () => {
 
     const dispatch = useDispatch();
     const { regions, paginateParams } = useSelector(state => state.region);
-    const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
