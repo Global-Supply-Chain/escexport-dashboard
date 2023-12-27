@@ -8,7 +8,6 @@ import { Dropdown } from 'primereact/dropdown';
 import { ValidationMessage } from '../../../shares/ValidationMessage';
 import { InputText } from 'primereact/inputtext';
 import { Checkbox } from 'primereact/checkbox';
-import { InputTextarea } from 'primereact/inputtextarea';
 import { renderHeader, tooltipOptions } from '../../../constants/config';
 import { Button } from 'primereact/button';
 import { payloadHandler } from '../../../helpers/handler';
@@ -18,12 +17,14 @@ import DeleteDialogButton from '../../../shares/DeleteDialogButton';
 import { generalStatus } from '../../../helpers/StatusHandler';
 import { Loading } from '../../../shares/Loading';
 import { Editor } from 'primereact/editor';
+import { shopService } from '../../shop/shopService';
 
-const ItemUpdate = ({ dataSource }) => {
+const ItemUpdate = () => {
 
     const params = useParams();
     const [loading, setLoading] = useState(false);
-    const [categoryList, setCategoryList] = useState([{ label: itemPayload.update.title, code: itemPayload.update.id }]);
+    const [categoryList, setCategoryList] = useState([]);
+    const [shopList, setShopList] = useState([]);
     const [status, setStatus] = useState([]);
     const [visible, setVisible] = useState(false);
     const [payload, setPayload] = useState(itemPayload.update);
@@ -66,6 +67,43 @@ const ItemUpdate = ({ dataSource }) => {
         setLoading(false);
     }, [dispatch, params]);
 
+    /**
+    * Loading Category Data
+    */
+    const loadingShopData = useCallback(async () => {
+        setLoading(true);
+
+        const result = await shopService.index(dispatch);
+        if (result.status === 200) {
+            const formatData = result.data?.map((shop) => {
+                return {
+                    label: shop?.name,
+                    value: shop?.id
+                }
+            })
+            setShopList(formatData);
+        }
+
+        setLoading(false);
+    }, [dispatch]);
+
+    /**
+     *  Loading Old Data
+     * **/
+    const loadingData = useCallback(async () => {
+        setLoading(true);
+        itemService.show(dispatch, params.id)
+        setLoading(false);
+    }, [dispatch, params])
+
+    useEffect(() => {
+        loadingData()
+    }, [loadingData])
+
+    useEffect(() => {
+        loadingShopData()
+    }, [loadingShopData])
+
     useEffect(() => {
         loadingCategoryData()
     }, [loadingCategoryData])
@@ -105,7 +143,7 @@ const ItemUpdate = ({ dataSource }) => {
                             visible={visible}
                             setVisible={setVisible}
                             url={paths.item}
-                            id={dataSource?.id}
+                            id={params?.id}
                             redirect={paths.item}
                         />
 
@@ -138,6 +176,26 @@ const ItemUpdate = ({ dataSource }) => {
                         />
                     </div>
                     <ValidationMessage field="category_id" />
+                </div>
+
+                <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
+                    <label htmlFor="shop" className='input-label'> Shop (required*) </label>
+                    <div className="p-inputgroup mt-2">
+                        <Dropdown
+                            inputId='shop'
+                            name="shop item"
+                            autoComplete='shop item'
+                            value={payload.shop_id}
+                            onChange={(e) => payloadHandler(payload, e.value, 'shop_id', (updateValue) => {
+                                setPayload(updateValue);
+                            })}
+                            options={shopList}
+                            placeholder="Select a shop"
+                            disabled={loading}
+                            className="p-inputtext-sm"
+                        />
+                    </div>
+                    <ValidationMessage field="shop_id" />
                 </div>
 
                 <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
@@ -250,25 +308,48 @@ const ItemUpdate = ({ dataSource }) => {
                 </div>
 
                 <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
-                    <div className="flex align-items-center gap-2 h-100">
+                    <div className="flex flex-column gap-2">
+                        <label htmlFor="instock" className=' text-black'>Instock (required*)</label>
+                        <InputText
+                            className="p-inputtext-sm text-black"
+                            id="instock"
+                            name="item instcok"
+                            autoComplete='item instock'
+                            aria-describedby="instock-help"
+                            tooltip='Item instock'
+                            tooltipOptions={{ ...tooltipOptions }}
+                            placeholder='Enter item instock'
+                            disabled={loading}
+                            rows={5}
+                            cols={30}
+                            onChange={(e) => payloadHandler(payload, e.target.value, 'instock', (updateValue) => {
+                                setPayload(updateValue);
+                            })}
+                        />
+                        <ValidationMessage field={"instock"} />
+                    </div>
+                </div>
+
+                <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+                    <div className="flex flex-column gap-2">
+                        <label htmlFor="out_of_stock" className=' text-black'>Out of stock</label>
                         <Checkbox
                             className="p-inputtext-sm text-black"
                             inputId="out_of_stock"
-                            name='Out of Stock'
-                            autoComplete='item out of stock'
+                            name="out of stock"
+                            autoComplete='out of stock'
                             aria-describedby="out_of_stock-help"
                             tooltip='Item sell price'
                             tooltipOptions={{ ...tooltipOptions }}
                             placeholder='Enter item sell price'
                             disabled={loading}
-                            checked={payload?.out_of_stock}
+                            checked={payload.out_of_stock}
                             onChange={(e) => payloadHandler(payload, e.checked, 'out_of_stock', (updateValue) => {
                                 setPayload(updateValue);
                             })}
                         />
-                        <label htmlFor="out_of_stock" className=' text-black'>Out of stock</label>
+                        <ValidationMessage field={"out_of_stock"} />
                     </div>
-                    <ValidationMessage field={"out_of_stock"} />
                 </div>
 
                 <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
