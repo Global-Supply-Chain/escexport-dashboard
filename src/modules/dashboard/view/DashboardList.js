@@ -32,7 +32,7 @@ export const DashboardList = () => {
 
         <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
           <div className=' count-card'>
-            <div className=' p-3'>
+            <div className=' h-126 p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
                   <h2 className=' font-bold text-gray'>{translate.order}</h2>
@@ -46,7 +46,7 @@ export const DashboardList = () => {
                 <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.order?.total}</div>
               </div>
             </div>
-            <div className=' mt-2 h-40 count-view total flex align-items-center justify-content-center'>
+            <div className=' mt-auto h-40 count-view total flex align-items-center justify-content-center'>
               {translate.view_more}
             </div>
           </div>
@@ -54,7 +54,7 @@ export const DashboardList = () => {
 
         <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
           <div className=' count-card'>
-            <div className=' p-3'>
+            <div className=' h-126 p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
                   <h2 className=' font-bold text-gray'>{translate.order}</h2>
@@ -68,7 +68,7 @@ export const DashboardList = () => {
                 <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.order?.verified}</div>
               </div>
             </div>
-            <div className=' mt-2 h-40 count-view verified flex align-items-center justify-content-center'>
+            <div className=' mt-auto h-40 count-view verified flex align-items-center justify-content-center'>
               {translate.view_more}
             </div>
           </div>
@@ -76,7 +76,7 @@ export const DashboardList = () => {
 
         <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
           <div className=' count-card'>
-            <div className=' p-3'>
+            <div className=' h-126 p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
                   <h2 className=' font-bold text-gray'>{translate.order}</h2>
@@ -90,7 +90,7 @@ export const DashboardList = () => {
                 <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.order?.pending}</div>
               </div>
             </div>
-            <div className=' mt-2 h-40 count-view pending flex align-items-center justify-content-center'>
+            <div className=' mt-auto h-40 count-view pending flex align-items-center justify-content-center'>
               {translate.view_more}
             </div>
           </div>
@@ -98,7 +98,7 @@ export const DashboardList = () => {
 
         <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
           <div className=' count-card'>
-            <div className=' p-3'>
+            <div className=' h-126 p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
                   <h2 className=' font-bold text-gray'>{translate.order}</h2>
@@ -112,7 +112,7 @@ export const DashboardList = () => {
                 <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.order?.delivery}</div>
               </div>
             </div>
-            <div className=' mt-2 h-40 count-view delivery flex align-items-center justify-content-center'>
+            <div className=' mt-auto h-40 count-view delivery flex align-items-center justify-content-center'>
               {translate.view_more}
             </div>
           </div>
@@ -120,7 +120,7 @@ export const DashboardList = () => {
 
         <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
           <div className=' count-card'>
-            <div className=' p-3'>
+            <div className=' h-126 p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
                   <h2 className=' font-bold text-gray'>{translate.order}</h2>
@@ -134,7 +134,7 @@ export const DashboardList = () => {
                 <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.order?.complete}</div>
               </div>
             </div>
-            <div className=' mt-2 h-40 count-view complete flex align-items-center justify-content-center'>
+            <div className=' mt-auto h-40 count-view complete flex align-items-center justify-content-center'>
               {translate.view_more}
             </div>
           </div>
@@ -150,7 +150,7 @@ export const DashboardList = () => {
 
         <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
           <div className=' count-card'>
-            <div className=' p-3'>
+            <div className=' h-126 p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
                   <h2 className=' font-bold text-gray'>{translate.item}</h2>
@@ -164,7 +164,7 @@ export const DashboardList = () => {
                 <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.item?.total}</div>
               </div>
             </div>
-            <div className=' mt-2 h-40 count-view delivery flex align-items-center justify-content-center'>
+            <div className=' mt-auto h-40 count-view delivery flex align-items-center justify-content-center'>
               {translate.view_more}
             </div>
           </div>
@@ -172,7 +172,7 @@ export const DashboardList = () => {
 
         <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
           <div className=' count-card'>
-            <div className=' p-3'>
+            <div className=' h-126 p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
                   <h2 className=' font-bold text-gray'>{translate.item}</h2>
@@ -186,7 +186,7 @@ export const DashboardList = () => {
                 <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.item?.active}</div>
               </div>
             </div>
-            <div className=' mt-2 h-40 count-view complete flex align-items-center justify-content-center'>
+            <div className=' mt-auto h-40 count-view complete flex align-items-center justify-content-center'>
               {translate.view_more}
             </div>
           </div>
@@ -194,7 +194,7 @@ export const DashboardList = () => {
 
         <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
           <div className=' count-card'>
-            <div className=' p-3'>
+            <div className=' h-126 p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
                   <h2 className=' font-bold text-gray'>{translate.item}</h2>
@@ -208,7 +208,7 @@ export const DashboardList = () => {
                 <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.item?.disable}</div>
               </div>
             </div>
-            <div className=' mt-2 h-40 count-view disable flex align-items-center justify-content-center'>
+            <div className=' mt-auto h-40 count-view disable flex align-items-center justify-content-center'>
               {translate.view_more}
             </div>
           </div>
@@ -216,7 +216,7 @@ export const DashboardList = () => {
 
         <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
           <div className=' count-card'>
-            <div className=' p-3'>
+            <div className=' h-126 p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
                   <h2 className=' font-bold text-gray'>{translate.item}</h2>
@@ -230,7 +230,7 @@ export const DashboardList = () => {
                 <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.item?.deleted}</div>
               </div>
             </div>
-            <div className=' mt-2 h-40 count-view total flex align-items-center justify-content-center'>
+            <div className=' mt-auto h-40 count-view total flex align-items-center justify-content-center'>
               {translate.view_more}
             </div>
           </div>
@@ -246,7 +246,7 @@ export const DashboardList = () => {
 
         <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
           <div className=' count-card'>
-            <div className=' p-3'>
+            <div className=' h-126 p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
                   <h2 className=' font-bold text-gray'>{translate.user}</h2>
@@ -260,7 +260,7 @@ export const DashboardList = () => {
                 <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.user?.total}</div>
               </div>
             </div>
-            <div className=' mt-2 h-40 count-view verified flex align-items-center justify-content-center'>
+            <div className=' mt-auto h-40 count-view verified flex align-items-center justify-content-center'>
               {translate.view_more}
             </div>
           </div>
@@ -268,7 +268,7 @@ export const DashboardList = () => {
 
         <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
           <div className=' count-card'>
-            <div className=' p-3'>
+            <div className=' h-126 p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
                   <h2 className=' font-bold text-gray'>{translate.user}</h2>
@@ -282,7 +282,7 @@ export const DashboardList = () => {
                 <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.user?.active}</div>
               </div>
             </div>
-            <div className=' mt-2 h-40 count-view complete flex align-items-center justify-content-center'>
+            <div className=' mt-auto h-40 count-view complete flex align-items-center justify-content-center'>
               {translate.view_more}
             </div>
           </div>
@@ -290,7 +290,7 @@ export const DashboardList = () => {
 
         <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
           <div className=' count-card'>
-            <div className=' p-3'>
+            <div className=' h-126 p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
                   <h2 className=' font-bold text-gray'>{translate.user}</h2>
@@ -304,7 +304,7 @@ export const DashboardList = () => {
                 <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.user?.pending}</div>
               </div>
             </div>
-            <div className=' mt-2 h-40 count-view pending flex align-items-center justify-content-center'>
+            <div className=' mt-auto h-40 count-view pending flex align-items-center justify-content-center'>
               {translate.view_more}
             </div>
           </div>
