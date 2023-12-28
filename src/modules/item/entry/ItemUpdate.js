@@ -1,8 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { itemPayload } from '../itemPayload';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { categoryService } from '../../category/categoryService';
 import { Card } from 'primereact/card';
 import { Dropdown } from 'primereact/dropdown';
 import { ValidationMessage } from '../../../shares/ValidationMessage';
@@ -16,8 +15,13 @@ import { itemService } from '../itemService';
 import DeleteDialogButton from '../../../shares/DeleteDialogButton';
 import { generalStatus } from '../../../helpers/StatusHandler';
 import { Loading } from '../../../shares/Loading';
-import { Editor } from 'primereact/editor';
-import { shopService } from '../../shop/shopService';
+import { Column } from 'primereact/column';
+import { getRequest } from '../../../helpers/api';
+import { endpoints } from '../../../constants/endpoints';
+import { FileUpload } from 'primereact/fileupload';
+import { Badge } from 'primereact/badge';
+import { AppEditor } from '../../../shares/AppEditor';
+import { DataTable } from 'primereact/datatable';
 
 const ItemUpdate = () => {
 
@@ -28,12 +32,158 @@ const ItemUpdate = () => {
     const [status, setStatus] = useState([]);
     const [visible, setVisible] = useState(false);
     const [payload, setPayload] = useState(itemPayload.update);
+    const [content, setContent] = useState('');
+    const fileUploadRef = useRef();
+    const [selectPhoto, setSelectPhoto] = useState([]);
 
     const { item } = useSelector((state) => state.item);
+    const { translate } = useSelector(state => state.setting);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const header = renderHeader();
+
+    const onTemplateSelect = (e) => {
+        setSelectPhoto(e.files);
+    };
+
+    const onTemplateRemove = (file, callback) => {
+        let updateSelectPhoto = selectPhoto.filter(
+            (value) => value.name !== file.name
+        );
+        setSelectPhoto(updateSelectPhoto);
+        callback();
+    };
+
+    const onTemplateClear = () => {
+        setSelectPhoto([]);
+    };
+
+    const emptyTemplate = () => {
+        return (
+            <div className="flex align-items-center flex-column">
+                <i
+                    className="pi pi-image mt-3 p-5"
+                    style={{
+                        fontSize: "5em",
+                        borderRadius: "50%",
+                        backgroundColor: "var(--surface-b)",
+                        color: "var(--surface-d)",
+                    }}
+                ></i>
+                <span
+                    style={{ fontSize: "1.2em", color: "var(--text-color-secondary)" }}
+                    className="my-5"
+                >
+                    {translate.drag_and_drop}
+                </span>
+            </div>
+        );
+    };
+
+    const itemTemplate = (file, props) => {
+        return (
+            <div className="flex align-items-top flex-wrap">
+                <div className="flex align-items-top" style={{ width: "40%" }}>
+                    <img
+                        alt={file.name}
+                        role="presentation"
+                        src={file.objectURL}
+                        width={100}
+                    />
+                    <span className="flex flex-column gap-2 text-left ml-3">
+                        {file.name}
+                    </span>
+                </div>
+                <div className=" flex align-items-top gap-3">
+                    <Badge value={props.formatSize}></Badge>
+                </div>
+                <Button
+                    type="button"
+                    icon="pi pi-times"
+                    className="p-button-outlined p-button-rounded p-button-danger ml-auto"
+                    onClick={() => onTemplateRemove(file, props.onRemove)}
+                />
+            </div>
+        );
+    };
+
+    const headerTemplate = (options) => {
+        const { className, chooseButton, cancelButton } = options;
+        return (
+            <div
+                className={className}
+                style={{
+                    backgroundColor: "transparent",
+                    display: "flex",
+                    alignItems: "center",
+                }}
+            >
+                {chooseButton}
+                {cancelButton}
+            </div>
+        );
+    };
+
+    const chooseOptions = {
+        icon: "pi pi-fw pi-images",
+        iconOnly: true,
+        className: "custom-choose-btn p-button-rounded p-button-outlined",
+    };
+    const cancelOptions = {
+        icon: "pi pi-fw pi-times",
+        iconOnly: true,
+        className:
+            "custom-cancel-btn p-button-danger p-button-rounded p-button-outlined",
+    };
+
+    /**
+     * Create item
+     * payload [category_id,name,code,description,content,price,sell_price,out_of_stock]
+     * **/
+    const handleItemClick = async () => {
+        setLoading(false);
+        const {
+            category_id,
+            out_of_stock,
+            shop_id,
+            name,
+            description,
+            code,
+            instock,
+            price,
+            sell_price,
+        } = payload;
+
+        const formData = new FormData();
+
+        selectPhoto.map((value, index) => {
+            formData.append(`images[${index}]`, value);
+            return value;
+        });
+
+        formData.append("content", content);
+        formData.append("category_id", category_id);
+        formData.append(
+            "out_of_stock",
+            out_of_stock === "true" ? Number(0) : Number(1)
+        );
+        formData.append("sell_price", sell_price);
+        formData.append("price", price);
+        formData.append("description", description);
+        formData.append("code", code);
+        formData.append("instock", instock);
+        formData.append("name", name);
+        formData.append("shop_id", shop_id);
+        formData.append("method", "PUT");
+
+        await itemService.store(dispatch, formData);
+        setLoading(false);
+    };
+
+    const imageBodyTemplate = (value) => {
+        return <img src={`${endpoints.image}/${value}`} className="w-6rem shadow-2 border-round" />
+    }
 
     /**
     * Return general status
@@ -52,18 +202,18 @@ const ItemUpdate = () => {
     */
     const loadingCategoryData = useCallback(async () => {
         setLoading(true);
-        const result = await categoryService.mainIndex(dispatch);
+        const result = await getRequest(
+            `${endpoints.category}?filter=status,value=ACTIVE`
+        );
         if (result.status === 200) {
             const formatData = result.data?.map((category) => {
                 return {
                     label: category?.title,
-                    value: category?.id
-                }
-            })
+                    value: category?.id,
+                };
+            });
             setCategoryList(formatData);
         }
-
-        await itemService.show(dispatch, params.id)
         setLoading(false);
     }, [dispatch, params]);
 
@@ -73,14 +223,16 @@ const ItemUpdate = () => {
     const loadingShopData = useCallback(async () => {
         setLoading(true);
 
-        const result = await shopService.index(dispatch);
+        const result = await getRequest(
+            `${endpoints.shop}?filter=status,value=ACTIVE`
+        );
         if (result.status === 200) {
             const formatData = result.data?.map((shop) => {
                 return {
                     label: shop?.name,
-                    value: shop?.id
-                }
-            })
+                    value: shop?.id,
+                };
+            });
             setShopList(formatData);
         }
 
@@ -129,8 +281,8 @@ const ItemUpdate = () => {
 
     return (
         <Card
-            title={'Update Item'}
-            subTitle="Item is purposing for order management"
+            title={translate.item_update}
+            subTitle={translate.item_subtitle}
         >
             <Loading loading={loading} />
 
@@ -158,8 +310,34 @@ const ItemUpdate = () => {
                     </div>
                 </div>
 
+                <div className=' col-12'>
+                    <DataTable 
+                        value={payload.images} 
+                        tableStyle={{ minWidth: '60rem' }} 
+                    >
+                        <Column field='image' header="Image" body={imageBodyTemplate}></Column>
+                    </DataTable>
+                </div>
+
+                <div className=" col-12">
+                    <FileUpload
+                        ref={fileUploadRef}
+                        multiple
+                        accept="image/*"
+                        maxFileSize={1000000}
+                        onSelect={onTemplateSelect}
+                        onError={onTemplateClear}
+                        onClear={onTemplateClear}
+                        headerTemplate={headerTemplate}
+                        itemTemplate={itemTemplate}
+                        emptyTemplate={emptyTemplate}
+                        chooseOptions={chooseOptions}
+                        cancelOptions={cancelOptions}
+                    />
+                </div>
+
                 <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                    <label htmlFor="category" className='input-label'> Category (required*) </label>
+                    <label htmlFor="category" className='input-label'> {translate.category} (required*) </label>
                     <div className="p-inputgroup mt-2">
                         <Dropdown
                             inputId='category'
@@ -179,7 +357,7 @@ const ItemUpdate = () => {
                 </div>
 
                 <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                    <label htmlFor="shop" className='input-label'> Shop (required*) </label>
+                    <label htmlFor="shop" className='input-label'> {translate.shop} (required*) </label>
                     <div className="p-inputgroup mt-2">
                         <Dropdown
                             inputId='shop'
@@ -200,7 +378,7 @@ const ItemUpdate = () => {
 
                 <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="name" className=' text-black'>Name (required*)</label>
+                        <label htmlFor="name" className=' text-black'>{translate.name} (required*)</label>
                         <InputText
                             className="p-inputtext-sm text-black"
                             id="name"
@@ -222,7 +400,7 @@ const ItemUpdate = () => {
 
                 <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="code" className=' text-black'>Code (required*)</label>
+                        <label htmlFor="code" className=' text-black'>{translate.code} (required*)</label>
                         <InputText
                             className="p-inputtext-sm text-black"
                             id="code"
@@ -242,7 +420,7 @@ const ItemUpdate = () => {
 
                 <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="description" className=' text-black'>Description</label>
+                        <label htmlFor="description" className=' text-black'>{translate.description}</label>
                         <InputText
                             className="p-inputtext-sm text-black"
                             id="description"
@@ -264,7 +442,7 @@ const ItemUpdate = () => {
 
                 <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="price" className=' text-black'>Price</label>
+                        <label htmlFor="price" className=' text-black'>{translate.price}</label>
                         <InputText
                             className="p-inputtext-sm text-black"
                             id="price"
@@ -287,7 +465,7 @@ const ItemUpdate = () => {
 
                 <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="sell_price" className=' text-black'>Sell Price (required*)</label>
+                        <label htmlFor="sell_price" className=' text-black'>{translate.sell_price} (required*)</label>
                         <InputText
                             className="p-inputtext-sm text-black"
                             id="sell_price"
@@ -309,7 +487,7 @@ const ItemUpdate = () => {
 
                 <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="instock" className=' text-black'>Instock (required*)</label>
+                        <label htmlFor="instock" className=' text-black'>{translate.instock} (required*)</label>
                         <InputText
                             className="p-inputtext-sm text-black"
                             id="instock"
@@ -332,7 +510,7 @@ const ItemUpdate = () => {
 
                 <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="out_of_stock" className=' text-black'>Out of stock</label>
+                        <label htmlFor="out_of_stock" className=' text-black'>{translate.outstock}</label>
                         <Checkbox
                             className="p-inputtext-sm text-black"
                             inputId="out_of_stock"
@@ -354,7 +532,7 @@ const ItemUpdate = () => {
 
                 <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="status" className=' text-black'>Status</label>
+                        <label htmlFor="status" className=' text-black'>{translate.status}</label>
                         <Dropdown
                             inputId='status'
                             name="status"
@@ -375,15 +553,8 @@ const ItemUpdate = () => {
 
                 <div className=' col-12 my-3 md:my-0'>
                     <div className="flex flex-column gap-2">
-                        <span className=' text-black'>Content</span>
-                        <Editor
-                            headerTemplate={header}
-                            value={payload.content}
-                            onTextChange={(e) => payloadHandler(payload, e.htmlValue, 'content', (updateValue) => {
-                                setPayload(updateValue);
-                            })}
-                            style={{ height: '320px' }}
-                        />
+                        <span className=' text-black'>{translate.content}</span>
+                        <AppEditor value={payload.content} onChange={(e) => setContent(e)} />
                         <ValidationMessage field={"content"} />
                     </div>
                 </div>
@@ -393,7 +564,7 @@ const ItemUpdate = () => {
                         <div className=' flex align-items-center justify-content-between gap-3'>
 
                             <Button
-                                label="CANCEL"
+                                label={translate.cancel}
                                 severity="secondary"
                                 outlined
                                 size='small'
@@ -404,7 +575,7 @@ const ItemUpdate = () => {
                                 severity="danger"
                                 size='small'
                                 disabled={loading}
-                                label="UPDATE"
+                                label={translate.update}
                                 onClick={() => submitItemUpdate()}
                             />
 

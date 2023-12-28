@@ -26,6 +26,7 @@ export const RegionTableView = () => {
 
     const dispatch = useDispatch();
     const { regions, paginateParams } = useSelector(state => state.region);
+    const { translate } = useSelector(state => state.setting);
 
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
@@ -151,7 +152,7 @@ export const RegionTableView = () => {
     const FooterRender = () => {
         return (
             <div className=' flex items-center justify-content-between'>
-                <div>Total - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
+                <div>{translate.total} - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
                 <div className=' flex align-items-center gap-3'>
                     <Button
                         outlined
@@ -166,6 +167,7 @@ export const RegionTableView = () => {
                     <PaginatorRight
                         show={showAuditColumn}
                         onHandler={(e) => setShowAuditColumn(e)}
+                        label={translate.audit_columns}
                     />
                 </div>
             </div>
@@ -182,14 +184,16 @@ export const RegionTableView = () => {
                     tooltipLabel={"search region by name"}
                     placeholder={"Search region"}
                     onSearch={(e) => onSearchChange(e)}
+                    label={translate.press_enter_key_to_search}
                 />
 
                 <FilterByStatus
                     status={regionStatus.current}
                     onFilter={(e) => onFilter(e)}
+                    label={translate.filter_by}
                 />
 
-                <FilterByDate onFilter={(e) => onFilterByDate(e)} />
+                <FilterByDate onFilter={(e) => onFilterByDate(e)} label={translate.filter_by_date} />
 
             </div>
         )
@@ -197,7 +201,7 @@ export const RegionTableView = () => {
 
     return (
         <Card
-            title={'Region List'}
+            title={translate.region_list}
         >
 
             <DataTable

@@ -1,8 +1,8 @@
 import { Editor } from "primereact/editor";
 import { useState } from "react";
 
-export const AppEditor = ({onChange}) => {
-   const [content, setContent] = useState("");
+export const AppEditor = ({onChange,value = null}) => {
+   const [content, setContent] = useState(value);
 
   const renderHeader = () => {
     return (
@@ -36,7 +36,7 @@ export const AppEditor = ({onChange}) => {
   return (
     <Editor
       headerTemplate={renderHeader()}
-      value={content}
+      value={value ? value : content}
       onTextChange={(e) => {
         setContent(e.htmlValue);
         onChange(e.htmlValue);

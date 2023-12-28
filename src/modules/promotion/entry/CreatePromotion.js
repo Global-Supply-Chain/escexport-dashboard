@@ -3,7 +3,7 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { BreadCrumb } from "../../../shares/BreadCrumb";
 import { uploadFile } from "../../../helpers/uploadFile";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { payloadHandler } from "../../../helpers/handler";
 import { promotionPayload } from "../promotionPayload";
 import { promotionService } from "../promotionService";
@@ -13,13 +13,17 @@ import { ValidationMessage } from "../../../shares/ValidationMessage";
 import { tooltipOptions } from '../../../constants/config';
 import { Image } from "primereact/image";
 import { Loading } from "../../../shares/Loading";
+import { paths } from "../../../constants/paths";
+import { useNavigate } from "react-router-dom";
 
 export const CreatePromotion = () => {
 
     const [payload, setPayload] = useState(promotionPayload.create);
     const [loading, setLoading] = useState(false);
 
+    const { translate } = useSelector(state => state.setting);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     /**
      * Promotion Create
@@ -42,7 +46,7 @@ export const CreatePromotion = () => {
 
             <div className="col-12">
                 <Card
-                    title="Create Promotion"
+                    title={translate.promotion_create}
                 >
 
                     <Loading loading={loading} />
@@ -69,7 +73,7 @@ export const CreatePromotion = () => {
 
                         <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="title" className=' text-black'>Title</label>
+                                    <label htmlFor="title" className=' text-black'>{translate.title}</label>
                                     <InputText
                                         className="p-inputtext-sm text-black"
                                         id="title"
@@ -88,7 +92,7 @@ export const CreatePromotion = () => {
 
                         <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="url" className=' text-black'>Promotion Url</label>
+                                    <label htmlFor="url" className=' text-black'>{translate.promotion_url}</label>
                                     <InputText
                                         className="p-inputtext-sm text-black"
                                         id="url"
@@ -107,7 +111,7 @@ export const CreatePromotion = () => {
 
                         <div className=" col-12 md:col-4 lg:ocl-4">
                             <div className=" flex flex-column gap-2">
-                                <label htmlFor="promotion" className=' text-black'>Choose promotion image</label>
+                                <label htmlFor="promotion" className=' text-black'>{translate.promotion_image}</label>
                                 <InputText
                                     id="promotion"
                                     className="p-inputtext-sm text-black"
@@ -129,9 +133,18 @@ export const CreatePromotion = () => {
 
                         <div className="col-12">
                             <div className="flex flex-row justify-content-end align-items-center">
+                            <Button 
+                                className="mx-2"
+                                label={translate.cancel}
+                                severity="secondary"
+                                outlined
+                                size='small'
+                                disabled={loading}
+                                onClick={() => navigate(paths.promotion)}
+                            />
                                 <Button
                                     severity="danger"
-                                    label="Create"
+                                    label={translate.submit}
                                     onClick={submitPromotionCreate}
                                 />
                             </div>

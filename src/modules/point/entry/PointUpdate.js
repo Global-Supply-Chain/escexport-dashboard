@@ -24,6 +24,7 @@ const PointUpdate = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const { translate } = useSelector(state => state.setting);
     const params = useParams();
 
     const { point } = useSelector(state => state.point);
@@ -71,8 +72,8 @@ const PointUpdate = () => {
             <div className='col-12'>
 
                 <Card
-                    title={'Update Point'}
-                    subTitle="Point is purposing for reward point"
+                    title={translate.point_update}
+                    subTitle={translate.point_subtitle}
                 >
 
                     <Loading loading={loading} />
@@ -103,7 +104,7 @@ const PointUpdate = () => {
 
                         <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                             <div className="flex flex-column gap-2">
-                                <label htmlFor="label" className=' text-black'>Label</label>
+                                <label htmlFor="label" className=' text-black'>{translate.label}</label>
                                 <Dropdown
                                     inputId='label'
                                     name="label"
@@ -124,7 +125,7 @@ const PointUpdate = () => {
 
                         <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                             <div className="flex flex-column gap-2">
-                                <label htmlFor="point" className=' text-black'>Point</label>
+                                <label htmlFor="point" className=' text-black'>{translate.point}</label>
                                 <InputText
                                     className="p-inputtext-sm text-black"
                                     id="point"
@@ -150,7 +151,7 @@ const PointUpdate = () => {
                                 <div className=' flex align-items-center justify-content-between gap-3'>
 
                                     <Button
-                                        label="CANCEL"
+                                        label={translate.cancel}
                                         severity="secondary"
                                         outlined
                                         size='small'
@@ -161,7 +162,7 @@ const PointUpdate = () => {
                                         severity="danger"
                                         size='small'
                                         disabled={loading}
-                                        label="UPDATE"
+                                        label={translate.update}
                                         onClick={() => submitUpdatePoint()}
                                     />
 

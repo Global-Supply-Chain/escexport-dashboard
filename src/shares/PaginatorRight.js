@@ -1,7 +1,7 @@
 import { Checkbox } from "primereact/checkbox"
 import { tooltipOptions } from "../constants/config";
 
-export const PaginatorRight = ({show, onHandler}) => {
+export const PaginatorRight = ({show, onHandler, label}) => {
     return(
         <div className="flex align-items-center mx-2">
             <Checkbox 
@@ -13,7 +13,7 @@ export const PaginatorRight = ({show, onHandler}) => {
                 value={show}
                 onChange={(e) => onHandler(!e.target.value)}
             />
-            <label htmlFor="audit" className="ml-2">Audit Columns </label>
+            <label htmlFor="audit" className="ml-2">{label}</label>
         </div>
     )
 }

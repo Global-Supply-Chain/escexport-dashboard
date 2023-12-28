@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { dashboardService } from '../dashboardService';
 import { useDispatch, useSelector } from 'react-redux';
-import { Divider } from "primereact/divider"
 
 export const DashboardList = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const dashboard = useSelector((state) => state.dashboard)
+  const dashboard = useSelector((state) => state.dashboard);
+  const { translate } = useSelector(state => state.setting);
   const dispatch = useDispatch()
 
   const loadingCountStatus = useCallback(async () => {
@@ -27,7 +27,7 @@ export const DashboardList = () => {
       <div className=' grid'>
 
         <div className=' col-12'>
-            <h2 className=' text-black font-bold'>Order Statics</h2>
+            <h2 className=' text-black font-bold'>{translate.order_statics}</h2>
         </div>
 
         <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
@@ -35,10 +35,10 @@ export const DashboardList = () => {
             <div className=' p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
-                  <h2 className=' font-bold text-gray'>Order</h2>
+                  <h2 className=' font-bold text-gray'>{translate.order}</h2>
                 </div>
                 <div className=' count-status count-total'>
-                  Total
+                  {translate.total}
                 </div>
               </div>
               <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
@@ -47,7 +47,7 @@ export const DashboardList = () => {
               </div>
             </div>
             <div className=' mt-2 h-40 count-view total flex align-items-center justify-content-center'>
-              View More
+              {translate.view_more}
             </div>
           </div>
         </div>
@@ -57,10 +57,10 @@ export const DashboardList = () => {
             <div className=' p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
-                  <h2 className=' font-bold text-gray'>Order</h2>
+                  <h2 className=' font-bold text-gray'>{translate.order}</h2>
                 </div>
                 <div className=' count-status count-verified'>
-                  Verified
+                  {translate.verified}
                 </div>
               </div>
               <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
@@ -69,7 +69,7 @@ export const DashboardList = () => {
               </div>
             </div>
             <div className=' mt-2 h-40 count-view verified flex align-items-center justify-content-center'>
-              View More
+              {translate.view_more}
             </div>
           </div>
         </div>
@@ -79,10 +79,10 @@ export const DashboardList = () => {
             <div className=' p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
-                  <h2 className=' font-bold text-gray'>Order</h2>
+                  <h2 className=' font-bold text-gray'>{translate.order}</h2>
                 </div>
                 <div className=' count-status count-pending'>
-                  Pending
+                  {translate.pending}
                 </div>
               </div>
               <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
@@ -91,7 +91,7 @@ export const DashboardList = () => {
               </div>
             </div>
             <div className=' mt-2 h-40 count-view pending flex align-items-center justify-content-center'>
-              View More
+              {translate.view_more}
             </div>
           </div>
         </div>
@@ -101,10 +101,10 @@ export const DashboardList = () => {
             <div className=' p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
-                  <h2 className=' font-bold text-gray'>Order</h2>
+                  <h2 className=' font-bold text-gray'>{translate.order}</h2>
                 </div>
                 <div className=' count-status count-delivery'>
-                  Delivery
+                  {translate.delivery}
                 </div>
               </div>
               <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
@@ -113,7 +113,7 @@ export const DashboardList = () => {
               </div>
             </div>
             <div className=' mt-2 h-40 count-view delivery flex align-items-center justify-content-center'>
-              View More
+              {translate.view_more}
             </div>
           </div>
         </div>
@@ -123,10 +123,10 @@ export const DashboardList = () => {
             <div className=' p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
-                  <h2 className=' font-bold text-gray'>Order</h2>
+                  <h2 className=' font-bold text-gray'>{translate.order}</h2>
                 </div>
                 <div className=' count-status count-complete'>
-                  Complete
+                  {translate.complete}
                 </div>
               </div>
               <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
@@ -135,7 +135,7 @@ export const DashboardList = () => {
               </div>
             </div>
             <div className=' mt-2 h-40 count-view complete flex align-items-center justify-content-center'>
-              View More
+              {translate.view_more}
             </div>
           </div>
         </div>
@@ -145,7 +145,7 @@ export const DashboardList = () => {
       <div className=' grid mt-5'>
 
         <div className=' col-12'>
-            <h2 className=' text-black font-bold'>Item Statics</h2>
+            <h2 className=' text-black font-bold'>{translate.item_statics}</h2>
         </div>
 
         <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
@@ -153,10 +153,10 @@ export const DashboardList = () => {
             <div className=' p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
-                  <h2 className=' font-bold text-gray'>Item</h2>
+                  <h2 className=' font-bold text-gray'>{translate.item}</h2>
                 </div>
                 <div className=' count-status count-delivery'>
-                  Total
+                  {translate.total}
                 </div>
               </div>
               <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
@@ -165,7 +165,7 @@ export const DashboardList = () => {
               </div>
             </div>
             <div className=' mt-2 h-40 count-view delivery flex align-items-center justify-content-center'>
-              View More
+              {translate.view_more}
             </div>
           </div>
         </div>
@@ -175,10 +175,10 @@ export const DashboardList = () => {
             <div className=' p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
-                  <h2 className=' font-bold text-gray'>Item</h2>
+                  <h2 className=' font-bold text-gray'>{translate.item}</h2>
                 </div>
                 <div className=' count-status count-complete'>
-                  Active
+                  {translate.active}
                 </div>
               </div>
               <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
@@ -187,7 +187,7 @@ export const DashboardList = () => {
               </div>
             </div>
             <div className=' mt-2 h-40 count-view complete flex align-items-center justify-content-center'>
-              View More
+              {translate.view_more}
             </div>
           </div>
         </div>
@@ -197,10 +197,10 @@ export const DashboardList = () => {
             <div className=' p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
-                  <h2 className=' font-bold text-gray'>Item</h2>
+                  <h2 className=' font-bold text-gray'>{translate.item}</h2>
                 </div>
                 <div className=' count-status count-disable'>
-                  Disable
+                  {translate.disable}
                 </div>
               </div>
               <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
@@ -209,7 +209,7 @@ export const DashboardList = () => {
               </div>
             </div>
             <div className=' mt-2 h-40 count-view disable flex align-items-center justify-content-center'>
-              View More
+              {translate.view_more}
             </div>
           </div>
         </div>
@@ -219,10 +219,10 @@ export const DashboardList = () => {
             <div className=' p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
-                  <h2 className=' font-bold text-gray'>Item</h2>
+                  <h2 className=' font-bold text-gray'>{translate.item}</h2>
                 </div>
                 <div className=' count-status count-total'>
-                  Delete
+                  {translate.delete}
                 </div>
               </div>
               <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
@@ -231,7 +231,7 @@ export const DashboardList = () => {
               </div>
             </div>
             <div className=' mt-2 h-40 count-view total flex align-items-center justify-content-center'>
-              View More
+              {translate.view_more}
             </div>
           </div>
         </div>
@@ -241,7 +241,7 @@ export const DashboardList = () => {
       <div className=' grid mt-5'>
 
         <div className=' col-12'>
-            <h2 className=' text-black font-bold'>User Statics</h2>
+            <h2 className=' text-black font-bold'>{translate.user_statics}</h2>
         </div>
 
         <div className=' col-12 md:col-6 lg:col-3 flex justify-content-center'>
@@ -249,10 +249,10 @@ export const DashboardList = () => {
             <div className=' p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
-                  <h2 className=' font-bold text-gray'>User</h2>
+                  <h2 className=' font-bold text-gray'>{translate.user}</h2>
                 </div>
                 <div className=' count-status count-verified'>
-                  Total
+                  {translate.total}
                 </div>
               </div>
               <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
@@ -261,7 +261,7 @@ export const DashboardList = () => {
               </div>
             </div>
             <div className=' mt-2 h-40 count-view verified flex align-items-center justify-content-center'>
-              View More
+              {translate.view_more}
             </div>
           </div>
         </div>
@@ -271,10 +271,10 @@ export const DashboardList = () => {
             <div className=' p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
-                  <h2 className=' font-bold text-gray'>User</h2>
+                  <h2 className=' font-bold text-gray'>{translate.user}</h2>
                 </div>
                 <div className=' count-status count-complete'>
-                  Active
+                  {translate.active}
                 </div>
               </div>
               <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
@@ -283,7 +283,7 @@ export const DashboardList = () => {
               </div>
             </div>
             <div className=' mt-2 h-40 count-view complete flex align-items-center justify-content-center'>
-              View More
+              {translate.view_more}
             </div>
           </div>
         </div>
@@ -293,10 +293,10 @@ export const DashboardList = () => {
             <div className=' p-3'>
               <div className=' flex align-items-center justify-content-between'>
                 <div>
-                  <h2 className=' font-bold text-gray'>User</h2>
+                  <h2 className=' font-bold text-gray'>{translate.user}</h2>
                 </div>
                 <div className=' count-status count-pending'>
-                  Pending
+                  {translate.pending}
                 </div>
               </div>
               <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
@@ -305,7 +305,7 @@ export const DashboardList = () => {
               </div>
             </div>
             <div className=' mt-2 h-40 count-view pending flex align-items-center justify-content-center'>
-              View More
+              {translate.view_more}
             </div>
           </div>
         </div>

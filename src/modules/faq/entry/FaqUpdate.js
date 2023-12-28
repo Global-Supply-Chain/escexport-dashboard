@@ -23,6 +23,7 @@ export const FaqUpdate = () => {
     const navigate = useNavigate();
 
     const { faq } = useSelector((state) => state.faq);
+    const { translate } = useSelector(state => state.setting);
 
     const [payload, setPayload] = useState(faqPayload.update);
     const [loading, setLoading] = useState(false);
@@ -72,7 +73,7 @@ export const FaqUpdate = () => {
         <>
 
             <Card
-                title={'Create Faq'}
+                title={translate.faq_update}
 
             >
                 <Loading loading={loading} />
@@ -103,7 +104,7 @@ export const FaqUpdate = () => {
 
                     <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                         <div className="flex flex-column gap-2">
-                            <label htmlFor="answer" className=' text-black'>Answer (required*)</label>
+                            <label htmlFor="answer" className=' text-black'>{translate.answer} (required*)</label>
                             <InputText
                                 className="p-inputtext-sm text-black"
                                 id="answer"
@@ -125,7 +126,7 @@ export const FaqUpdate = () => {
 
                     <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                         <div className="flex flex-column gap-2">
-                            <label htmlFor="question" className=' text-black'>Question (required*)</label>
+                            <label htmlFor="question" className=' text-black'>{translate.question} (required*)</label>
                             <InputText
                                 className="p-inputtext-sm text-black"
                                 id="question"
@@ -147,7 +148,7 @@ export const FaqUpdate = () => {
 
                     <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                         <div className="flex flex-column gap-2">
-                            <label htmlFor="status" className=' text-black'>Status</label>
+                            <label htmlFor="status" className=' text-black'>{translate.status}</label>
                             <Dropdown
                                 inputId='status'
                                 name='status'

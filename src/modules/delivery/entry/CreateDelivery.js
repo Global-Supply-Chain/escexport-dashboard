@@ -6,7 +6,7 @@ import { ValidationMessage } from '../../../shares/ValidationMessage'
 import { payloadHandler } from '../../../helpers/handler'
 import { deliveryPayload } from '../deliveryPayload'
 import { userService } from '../../user/userService'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { InputText } from 'primereact/inputtext'
 import { tooltipOptions } from '../../../constants/config';
 import { Checkbox } from 'primereact/checkbox'
@@ -21,6 +21,8 @@ export const CreateDelivery = () => {
     const [loading, setLoading] = useState(false);
     const [payload, setPayload] = useState(deliveryPayload.create);
     const [userList, setUserList] = useState([]);
+
+    const { translate } = useSelector(state => state.setting);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -65,7 +67,7 @@ export const CreateDelivery = () => {
             <div className=' col-12'>
 
                 <Card
-                    title={'Create Delivery'}
+                    title={translate.user_delivery_create}
                 >
 
                     <Loading loading={loading} />
@@ -73,7 +75,7 @@ export const CreateDelivery = () => {
                     <div className=' grid'>
 
                         <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                            <label htmlFor="user" className='input-label'> User (required*) </label>
+                            <label htmlFor="user" className='input-label'> {translate.user} (required*) </label>
                             <div className="p-inputgroup mt-2">
                                 <Dropdown
                                     inputId='user'
@@ -93,7 +95,7 @@ export const CreateDelivery = () => {
                         </div>
 
                         <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                            <label htmlFor="address" className='input-label'>Address</label>
+                            <label htmlFor="address" className='input-label'>{translate.address}</label>
                             <div className="p-inputgroup mt-2">
                                 <InputText
                                     id="address"
@@ -115,7 +117,7 @@ export const CreateDelivery = () => {
                         </div>
 
                         <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                            <label htmlFor="phone" className='input-label'>Contact Phone</label>
+                            <label htmlFor="phone" className='input-label'>{translate.contact_phone}</label>
                             <div className="p-inputgroup mt-2">
                                 <InputText
                                     id="phone"
@@ -137,7 +139,7 @@ export const CreateDelivery = () => {
                         </div>
 
                         <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                            <label htmlFor="person" className='input-label'>Contact Person</label>
+                            <label htmlFor="person" className='input-label'>{translate.contact_person}</label>
                             <div className="p-inputgroup mt-2">
                                 <InputText
                                     id="person"
@@ -160,7 +162,7 @@ export const CreateDelivery = () => {
 
                         <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                             <div className="flex flex-column gap-2">
-                                <label htmlFor="is_default" className=' text-black'>Default</label>
+                                <label htmlFor="is_default" className=' text-black'>{translate.default}</label>
                                 <Checkbox
                                     className="p-inputtext-sm text-black"
                                     inputId="is_default"
@@ -184,7 +186,7 @@ export const CreateDelivery = () => {
                             <div className="flex flex-row justify-content-end align-items-center">
                                 <Button
                                     className="mx-2"
-                                    label="CANCEL"
+                                    label={translate.cancel}
                                     severity="secondary"
                                     outlined
                                     size='small'
@@ -194,7 +196,7 @@ export const CreateDelivery = () => {
 
                                 <Button
                                     className="mx-2"
-                                    label="CREATE"
+                                    label={translate.submit}
                                     severity="danger"
                                     size='small'
                                     disabled={loading}

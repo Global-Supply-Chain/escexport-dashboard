@@ -12,13 +12,15 @@ import { paths } from "../../../constants/paths";
 import { Avatar } from "primereact/avatar";
 import { endpoints } from "../../../constants/endpoints";
 import { uploadFile } from "../../../helpers/uploadFile";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { categoryService } from "../categoryService";
 import { Loading } from "../../../shares/Loading";
 
 export const MainCategoryCreate = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const { translate } = useSelector(state => state.setting);
 
   const [payload, setPayload] = useState(categoryPayload.create);
   const [loading, setLoading] = useState(false);
@@ -40,8 +42,8 @@ export const MainCategoryCreate = () => {
 
       <div className="col-12">
         <Card
-          title="Create Main Category"
-          subTitle="Category is purposing for item"
+          title={translate.main_category_create}
+          subTitle={translate.main_category_subtitle}
         >
 
           <Loading loading={loading} />
@@ -92,8 +94,7 @@ export const MainCategoryCreate = () => {
 
             <div className="col-12 md:col-4 lg:col-4 my-3">
               <label htmlFor="title" className="input-label">
-                {" "}
-                Title{" "}
+                {translate.title}
               </label>
               <div className="p-inputgroup mt-2">
                 <InputText
@@ -124,7 +125,7 @@ export const MainCategoryCreate = () => {
 
             <div className="col-12 md:col-8 lg:col-8 my-3">
               <label htmlFor="description" className="input-label">
-                Description
+                {translate.description}
               </label>
               <div className="p-inputgroup mt-2">
                 <InputText
@@ -158,7 +159,7 @@ export const MainCategoryCreate = () => {
               <div className="flex flex-row justify-content-end align-items-center">
                 <Button
                   className="mx-2"
-                  label="CANCEL"
+                  label={translate.cancel}
                   severity="secondary"
                   outlined
                   size="small"
@@ -168,7 +169,7 @@ export const MainCategoryCreate = () => {
 
                 <Button
                   className="mx-2"
-                  label="CREATE"
+                  label={translate.submit}
                   severity="danger"
                   size="small"
                   disabled={loading}

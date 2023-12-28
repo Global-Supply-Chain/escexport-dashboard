@@ -4,7 +4,7 @@ import { BreadCrumb } from '../../../shares/BreadCrumb';
 import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { pointService } from '../pointSerivce';
 import { pointPayload } from '../pointPayload';
 import { paths } from '../../../constants/paths';
@@ -24,6 +24,7 @@ const PointCreate = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const { translate } = useSelector(state => state.setting);
 
     const submitCreatePoint = async () => {
         setLoading(true);
@@ -64,8 +65,8 @@ const PointCreate = () => {
             <div className='col-12'>
 
                 <Card
-                    title={'Create Point'}
-                    subTitle="Point is purposing for reward point"
+                    title={translate.point_create}
+                    subTitle={translate.point_subtitle}
                 >
 
                     <Loading loading={loading} />
@@ -74,7 +75,7 @@ const PointCreate = () => {
 
                         <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                             <div className="flex flex-column gap-2">
-                                <label htmlFor="label" className=' text-black'>Label</label>
+                                <label htmlFor="label" className=' text-black'>{translate.label}</label>
                                 <Dropdown
                                     inputId='label'
                                     name='label'
@@ -95,7 +96,7 @@ const PointCreate = () => {
 
                         <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                             <div className="flex flex-column gap-2">
-                                <label htmlFor="point" className=' text-black'>Point</label>
+                                <label htmlFor="point" className=' text-black'>{translate.point}</label>
                                 <InputText
                                     className="p-inputtext-sm text-black"
                                     id="point"
@@ -122,7 +123,7 @@ const PointCreate = () => {
                                 <div className=' flex align-items-center justify-content-between gap-3'>
 
                                     <Button
-                                        label="CANCEL"
+                                        label={translate.cancel}
                                         severity="secondary"
                                         outlined
                                         size='small'
@@ -133,7 +134,7 @@ const PointCreate = () => {
                                         severity="danger"
                                         size='small'
                                         disabled={loading}
-                                        label="SUBMIT"
+                                        label={translate.submit}
                                         onClick={() => submitCreatePoint()}
                                     />
 

@@ -6,7 +6,7 @@ import { ValidationMessage } from '../../../shares/ValidationMessage';
 import { InputText } from 'primereact/inputtext';
 import { tooltipOptions } from '../../../constants/config';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'primereact/button';
 import { paths } from '../../../constants/paths';
 import { faqService } from '../faqService';
@@ -17,6 +17,8 @@ export const FaqCreate = () => {
 
     const [loading, setLoading] = useState(false);
     const [payload, setPayload] = useState(faqPayload.create);
+
+    const { translate } = useSelector(state => state.setting);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -42,7 +44,7 @@ export const FaqCreate = () => {
 
                 <div className=' col-12'>
                     <Card
-                        title={'Create Faq'}
+                        title={translate.faq_create}
 
                     >
 
@@ -52,7 +54,7 @@ export const FaqCreate = () => {
 
                             <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="answer" className=' text-black'>Answer (required*)</label>
+                                    <label htmlFor="answer" className=' text-black'>{translate.answer} (required*)</label>
                                     <InputText
                                         className="p-inputtext-sm text-black"
                                         id="answer"
@@ -71,7 +73,7 @@ export const FaqCreate = () => {
 
                             <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="question" className=' text-black'>Question (required*)</label>
+                                    <label htmlFor="question" className=' text-black'>{translate.question} (required*)</label>
                                     <InputText
                                         className="p-inputtext-sm text-black"
                                         id="question"
@@ -92,7 +94,7 @@ export const FaqCreate = () => {
                                 <div className="flex flex-row justify-content-end align-items-center">
                                     <Button
                                         className="mx-2"
-                                        label="CANCEL"
+                                        label={translate.cancel}
                                         severity="secondary"
                                         outlined
                                         size='small'
@@ -102,7 +104,7 @@ export const FaqCreate = () => {
 
                                     <Button
                                         className="mx-2"
-                                        label="CREATE"
+                                        label={translate.submit}
                                         severity="danger"
                                         size='small'
                                         disabled={loading}

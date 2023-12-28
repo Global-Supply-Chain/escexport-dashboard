@@ -28,6 +28,7 @@ export const RegionUpdate = () => {
     const dispatch = useDispatch();
 
     const { region } = useSelector((state) => state.region);
+    const { translate } = useSelector(state => state.setting);
 
     const loadingData = useCallback(async () => {
         setLoading(true)
@@ -65,7 +66,7 @@ export const RegionUpdate = () => {
 
     return (
         <Card
-            title={'Update Region'}
+            title={translate.region_update}
         >
             <Loading loading={loading} />
 
@@ -95,28 +96,7 @@ export const RegionUpdate = () => {
 
                 <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="status" className=' text-black'>Status</label>
-                        <Dropdown
-                            inputId='status'
-                            name="status"
-                            autoComplete='status'
-                            options={status}
-                            placeholder="Select a general status"
-                            disabled={loading}
-                            value={payload.status}
-                            className="p-inputtext-sm text-black"
-                            onChange={(e) => payloadHandler(payload, e.value, 'status', (updateValue) => {
-                                setPayload(updateValue);
-                            })}
-                        />
-
-                        <ValidationMessage field={"status"} />
-                    </div>
-                </div>
-
-                <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
-                    <div className="flex flex-column gap-2">
-                        <label htmlFor="name" className=' text-black'>Name (required*)</label>
+                        <label htmlFor="name" className=' text-black'>{translate.name} (required*)</label>
                         <InputText
                             className="p-inputtext-sm text-black"
                             id="name"
@@ -136,11 +116,32 @@ export const RegionUpdate = () => {
                     </div>
                 </div>
 
+                <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+                    <div className="flex flex-column gap-2">
+                        <label htmlFor="status" className=' text-black'>{translate.status}</label>
+                        <Dropdown
+                            inputId='status'
+                            name="status"
+                            autoComplete='status'
+                            options={status}
+                            placeholder="Select a general status"
+                            disabled={loading}
+                            value={payload.status}
+                            className="p-inputtext-sm text-black"
+                            onChange={(e) => payloadHandler(payload, e.value, 'status', (updateValue) => {
+                                setPayload(updateValue);
+                            })}
+                        />
+
+                        <ValidationMessage field={"status"} />
+                    </div>
+                </div>
+
                 <div className="col-12">
                     <div className="flex flex-row justify-content-end align-items-center">
                         <Button
                             className="mx-2"
-                            label="CANCEL"
+                            label={translate.cancel}
                             severity="secondary"
                             outlined
                             size='small'
@@ -150,7 +151,7 @@ export const RegionUpdate = () => {
 
                         <Button
                             className="mx-2"
-                            label="UPDATE"
+                            label={translate.update}
                             severity="danger"
                             size='small'
                             disabled={loading}

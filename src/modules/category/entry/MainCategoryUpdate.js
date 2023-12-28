@@ -22,6 +22,7 @@ export const MainCategoryUpdate = () => {
   const params = useParams();
 
   const { mainCategory } = useSelector((state) => state.category);
+  const { translate } = useSelector(state => state.setting);
   const [payload, setPayload] = useState(categoryPayload.update);
   const [loading, setLoading] = useState(false);
 
@@ -57,8 +58,8 @@ export const MainCategoryUpdate = () => {
 
   return (
     <Card
-      title="Update Main Category"
-      subTitle="Category is purposing for item"
+      title={translate.main_category_update}
+      subTitle={translate.main_category_subtitle}
     >
       <div className="grid">
         <div className="col-12 flex align-items-center justify-content-end">
@@ -116,7 +117,7 @@ export const MainCategoryUpdate = () => {
 
         <div className="col-12 md:col-4 lg:col-4 my-3">
           <label htmlFor="title" className="input-label">
-            Title
+            {translate.title}
           </label>
           <div className="p-inputgroup mt-2">
             <InputText
@@ -147,7 +148,7 @@ export const MainCategoryUpdate = () => {
 
         <div className="col-12 md:col-4 lg:col-4 my-3">
           <label htmlFor="description" className="input-label">
-            Description
+            {translate.description}
           </label>
           <div className="p-inputgroup mt-2">
             <InputText
@@ -179,7 +180,7 @@ export const MainCategoryUpdate = () => {
 
         <div className="col-12 md:col-4 lg:col-4 my-3">
           <label htmlFor="status" className="input-label">
-            Status
+            {translate.status}
           </label>
           <div className="p-inputgroup mt-2">
             <Dropdown
@@ -205,7 +206,7 @@ export const MainCategoryUpdate = () => {
           <div className="flex flex-row justify-content-end align-items-center">
             <Button
               className="mx-2"
-              label="CANCEL"
+              label={translate.cancel}
               severity="secondary"
               outlined
               size="small"
@@ -215,7 +216,7 @@ export const MainCategoryUpdate = () => {
 
             <Button
               className="mx-2"
-              label="UPDATE"
+              label={translate.update}
               severity="danger"
               size="small"
               disabled={loading}

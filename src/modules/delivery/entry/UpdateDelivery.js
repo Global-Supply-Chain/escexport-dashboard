@@ -23,6 +23,7 @@ export const UpdateDelivery = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { delivery } = useSelector((state) => state.delivery);
+  const { translate } = useSelector(state => state.setting);
   const [loading, setLoading] = useState(false);
   const [userList, setUserList] = useState([]);
   const [payload, setPayload] = useState(deliveryPayload.update);
@@ -64,7 +65,7 @@ export const UpdateDelivery = () => {
     <div className=' col-12'>
 
       <Card
-        title={'Update Delivery'}
+        title={translate.user_delivery_update}
       >
 
         <Loading loading={loading} />
@@ -94,7 +95,7 @@ export const UpdateDelivery = () => {
           </div>
 
           <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-            <label htmlFor="user" className='input-label'> User (required*) </label>
+            <label htmlFor="user" className='input-label'> {translate.user} (required*) </label>
             <div className="p-inputgroup mt-2">
               <Dropdown
                 inputId='user'
@@ -114,7 +115,7 @@ export const UpdateDelivery = () => {
           </div>
 
           <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-            <label htmlFor="address" className='input-label'>Address</label>
+            <label htmlFor="address" className='input-label'>{translate.address}</label>
             <div className="p-inputgroup mt-2">
               <InputText
                 id="address"
@@ -136,7 +137,7 @@ export const UpdateDelivery = () => {
           </div>
 
           <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-            <label htmlFor="phone" className='input-label'>Contact Phone</label>
+            <label htmlFor="phone" className='input-label'>{translate.contact_phone}</label>
             <div className="p-inputgroup mt-2">
               <InputText
                 id="phone"
@@ -159,7 +160,7 @@ export const UpdateDelivery = () => {
           </div>
 
           <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-            <label htmlFor="person" className='input-label'>Contact Person</label>
+            <label htmlFor="person" className='input-label'>{translate.contact_person}</label>
             <div className="p-inputgroup mt-2">
               <InputText
                 id="person"
@@ -182,7 +183,7 @@ export const UpdateDelivery = () => {
 
           <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
             <div className="flex flex-column gap-2">
-              <label htmlFor="is_default" className=' text-black'>Default</label>
+              <label htmlFor="is_default" className=' text-black'>{translate.default}</label>
               <Checkbox
                 className="p-inputtext-sm text-black"
                 inputId="is_default"
@@ -206,7 +207,7 @@ export const UpdateDelivery = () => {
             <div className="flex flex-row justify-content-end align-items-center">
               <Button
                 className="mx-2"
-                label="CANCEL"
+                label={translate.cancel}
                 severity="secondary"
                 outlined
                 size='small'
@@ -216,7 +217,7 @@ export const UpdateDelivery = () => {
 
               <Button
                 className="mx-2"
-                label="UPDATE"
+                label={translate.update}
                 severity="danger"
                 size='small'
                 disabled={loading}

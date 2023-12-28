@@ -24,6 +24,7 @@ export const UserUpdate = ({ dataSource }) => {
     const params = useParams();
 
     const { user } = useSelector(state => state.user);
+    const { translate } = useSelector(state => state.setting);
 
     const [loading, setLoading] = useState(false);
     const [userStatus, setUserStatus] = useState([]);
@@ -66,8 +67,8 @@ export const UserUpdate = ({ dataSource }) => {
 
     return (
         <Card 
-            title="Update User Account"
-            subTitle="Manage enduser account"
+            title={translate.user_update}
+            subTitle={translate.user_subtitle}
         >
             <Loading loading={loading} />
 
@@ -106,7 +107,7 @@ export const UserUpdate = ({ dataSource }) => {
 
                 <div className=' col-12 md:col-6 lg:col-4 py-3'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="name" className=' text-black'>Name</label>
+                        <label htmlFor="name" className=' text-black'>{translate.name}</label>
                         <InputText
                             className="p-inputtext-sm text-black"
                             id="name"
@@ -128,7 +129,7 @@ export const UserUpdate = ({ dataSource }) => {
 
                 <div className=' col-12 md:col-6 lg:col-4 py-3'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="email" className=' text-black'>Email</label>
+                        <label htmlFor="email" className=' text-black'>{translate.email}</label>
                         <InputText
                             className="p-inputtext-sm text-black"
                             keyfilter={'email'}
@@ -151,7 +152,7 @@ export const UserUpdate = ({ dataSource }) => {
 
                 <div className=' col-12 md:col-6 lg:col-4 py-3'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="phone" className=' text-black'>Phone</label>
+                        <label htmlFor="phone" className=' text-black'>{translate.phone}</label>
                         <InputText
                             className="p-inputtext-sm text-black"
                             keyfilter={'num'}
@@ -174,7 +175,7 @@ export const UserUpdate = ({ dataSource }) => {
 
                 <div className=' col-12 md:col-6 lg:col-4 py-3'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="status" className=' text-black'>Status</label>
+                        <label htmlFor="status" className=' text-black'>{translate.status}</label>
                         <Dropdown 
                             inputId='status'
                             name='status'
@@ -196,7 +197,7 @@ export const UserUpdate = ({ dataSource }) => {
                     <div className=' flex align-items-center justify-content-end'>
                         <div className=' flex align-items-center justify-content-between gap-3'>
                             <Button
-                                label="CANCEL"
+                                label={translate.cancel}
                                 severity="secondary"
                                 outlined
                                 size='small'
@@ -207,7 +208,7 @@ export const UserUpdate = ({ dataSource }) => {
                                 severity="danger"
                                 size='small'
                                 disabled={loading}
-                                label="UPDATE"
+                                label={translate.update}
                                 onClick={() => submitUpdateUser()}
                             />
                         </div>
