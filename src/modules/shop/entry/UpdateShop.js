@@ -23,6 +23,7 @@ export const UpdateShop = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { shop } = useSelector((state) => state.shop);
+  const { translate } = useSelector(state => state.setting);
   const [loading, setLoading] = useState(false);
   const [regionList, setRegionList] = useState([]);
   const [payload, setPayload] = useState(shopPayload.update);
@@ -64,7 +65,7 @@ export const UpdateShop = () => {
     <div className=' col-12'>
 
       <Card
-        title={'Update Shop'}
+        title={translate.shop_update}
       >
 
         <Loading loading={loading} />
@@ -94,7 +95,7 @@ export const UpdateShop = () => {
           </div>
 
           <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-            <label htmlFor="region_id" className='input-label'> Region (required*) </label>
+            <label htmlFor="region_id" className='input-label'> {translate.region} (required*) </label>
             <div className="p-inputgroup mt-2">
               <Dropdown
                 inputId='region_id'
@@ -114,7 +115,7 @@ export const UpdateShop = () => {
           </div>
 
           <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-            <label htmlFor="name" className='input-label'>Name</label>
+            <label htmlFor="name" className='input-label'>{translate.name}</label>
             <div className="p-inputgroup mt-2">
               <InputText
                 id="name"
@@ -136,7 +137,7 @@ export const UpdateShop = () => {
           </div>
 
           <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-            <label htmlFor="phone" className='input-label'>Phone</label>
+            <label htmlFor="phone" className='input-label'>{translate.phone}</label>
             <div className="p-inputgroup mt-2">
               <InputText
                 id="phone"
@@ -159,7 +160,7 @@ export const UpdateShop = () => {
           </div>
 
           <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-            <label htmlFor="address" className='input-label'>Address</label>
+            <label htmlFor="address" className='input-label'>{translate.address}</label>
             <div className="p-inputgroup mt-2">
               <InputText
                 id="address"
@@ -182,7 +183,7 @@ export const UpdateShop = () => {
 
           <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
             <div className="flex flex-column gap-2">
-              <label htmlFor="location" className=' text-black'>Location</label>
+              <label htmlFor="location" className=' text-black'>{translate.location}</label>
               <InputText
                 className="p-inputtext-sm text-black"
                 id="location"
@@ -206,7 +207,7 @@ export const UpdateShop = () => {
             <div className="flex flex-row justify-content-end align-items-center">
               <Button
                 className="mx-2"
-                label="CANCEL"
+                label={translate.cancel}
                 severity="secondary"
                 outlined
                 size='small'
@@ -216,7 +217,7 @@ export const UpdateShop = () => {
 
               <Button
                 className="mx-2"
-                label="UPDATE"
+                label={translate.update}
                 severity="danger"
                 size='small'
                 disabled={loading}

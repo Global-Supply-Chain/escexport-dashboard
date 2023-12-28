@@ -29,6 +29,7 @@ export const UserTableView = () => {
 
     const dispatch = useDispatch();
     const { users, paginateParams } = useSelector(state => state.user);
+    const { translate } = useSelector(state => state.setting);
 
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
@@ -159,7 +160,7 @@ export const UserTableView = () => {
     const FooterRender = () => {
         return (
             <div className=' flex items-center justify-content-between'>
-                <div>Total - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
+                <div>{translate.total} - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
                 <div className=' flex align-items-center gap-3'>
                     <Button
                         outlined
@@ -174,6 +175,7 @@ export const UserTableView = () => {
                     <PaginatorRight
                         show={showAuditColumn}
                         onHandler={(e) => setShowAuditColumn(e)}
+                        label={translate.audit_columns}
                     />
                 </div>
             </div>
@@ -190,15 +192,17 @@ export const UserTableView = () => {
                     tooltipLabel={"search user by name, profile, reward point, coupons, phone, email, status"}
                     placeholder={"Search user account"}
                     onSearch={(e) => onSearchChange(e)}
+                    label={translate.press_enter_key_to_search}
                 />
 
                 <div className=' flex flex-column md:flex-row align-items-start md:align-items-end justify-content-center gap-3'>
                     <FilterByStatus
                         status={userStatus.current}
                         onFilter={(e) => onFilter(e)}
+                        label={translate.filter_by}
                     />
 
-                    <FilterByDate onFilter={(e) => onFilterByDate(e)} />
+                    <FilterByDate onFilter={(e) => onFilterByDate(e)} label={translate.filter_by_date} />
 
                     <Button
                         outlined
@@ -214,7 +218,7 @@ export const UserTableView = () => {
 
     return (
         <Card
-            title={'User List'}
+            title={translate.user_list}
         >
             <DataTable
                 dataKey="id"

@@ -3,7 +3,7 @@ import { Card } from "primereact/card";
 import { useState } from "react";
 import { endpoints } from "../../../constants/endpoints";
 import { uploadFile } from "../../../helpers/uploadFile";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { payloadHandler } from "../../../helpers/handler";
 import { ValidationMessage } from "../../../shares/ValidationMessage";
 import { InputText } from "primereact/inputtext";
@@ -16,6 +16,7 @@ import { useParams } from "react-router-dom";
 export const SubCategoryCreate = ({ dataSource }) => {
   const dispatch = useDispatch();
   const urlParams = useParams();
+  const { translate } = useSelector(state => state.setting);
 
   const [payload, setPayload] = useState(categoryPayload.create);
   const [loading, setLoading] = useState(false);
@@ -40,8 +41,8 @@ export const SubCategoryCreate = ({ dataSource }) => {
 
   return (
     <Card
-      title="Create Sub Category"
-      subTitle="Sub category is purposing for item"
+      title={translate.sub_category_create}
+      subTitle={translate.sub_category_subtitle}
     >
       <div className="grid">
         <div className="col-12 flex align-items-center justify-content-center">
@@ -87,7 +88,7 @@ export const SubCategoryCreate = ({ dataSource }) => {
 
         <div className="col-12 md:col-4 lg:col-4 my-3">
           <label htmlFor="title" className="input-label">
-            Title
+            {translate.title}
           </label>
           <div className="p-inputgroup mt-2">
             <InputText
@@ -118,7 +119,7 @@ export const SubCategoryCreate = ({ dataSource }) => {
 
         <div className="col-12 md:col-8 lg:col-8 my-3">
           <label htmlFor="description" className="input-label">
-            Description
+            {translate.description}
           </label>
           <div className="p-inputgroup mt-2">
             <InputText
@@ -152,7 +153,7 @@ export const SubCategoryCreate = ({ dataSource }) => {
           <div className="flex flex-row justify-content-end align-items-center">
             <Button
               className="mx-2"
-              label="CREATE"
+              label={translate.submit}
               severity="danger"
               size="small"
               disabled={loading}

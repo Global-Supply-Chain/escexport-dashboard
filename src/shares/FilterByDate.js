@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button } from "primereact/button";
 import { useSelector } from "react-redux";
 
-export const FilterByDate = ({ onFilter }) => {
+export const FilterByDate = ({ onFilter,label }) => {
   const currentDate = new Date();
 
   const { startFilterDate, endFilterDate } = useSelector(
@@ -23,7 +23,7 @@ export const FilterByDate = ({ onFilter }) => {
 
   return (
     <div>
-      <span> Filter By Date </span>
+      <span>{label}</span>
       <div className="form-group mt-1 flex flex-column md:flex-row align-items-start md:align-items-end justify-content-start">
         <Calendar
           name="startDate"

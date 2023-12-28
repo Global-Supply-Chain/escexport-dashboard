@@ -22,10 +22,11 @@ import { Card } from "primereact/card";
 export const SubCategoryTable = () => {
   const dispatch = useDispatch();
   const urlParams = useParams();
-  
+
   const { subCategories, subPaginateParams } = useSelector(
     (state) => state.category
   );
+  const { translate } = useSelector(state => state.setting);
 
   const [loading, setLoading] = useState(false);
   const [showAuditColumn, setShowAuditColumn] = useState(false);
@@ -49,7 +50,7 @@ export const SubCategoryTable = () => {
     await categoryService.subIndex(dispatch, updatePaginate);
     dispatch(setSubPaginate(updatePaginate));
     setLoading(false);
-  },[dispatch,subPaginateParams, urlParams.id, urlParams.level]);
+  }, [dispatch, subPaginateParams, urlParams.id, urlParams.level]);
 
   /**
    * Event - Paginate Page Change
@@ -105,6 +106,7 @@ export const SubCategoryTable = () => {
           tooltipLabel={"Search by id,title,status"}
           placeholder={"Search sub category"}
           onSearch={(e) => onSearchChange(e)}
+          label={translate.press_enter_key_to_search}
         />
       </div>
     );
@@ -131,18 +133,27 @@ export const SubCategoryTable = () => {
   const FooterRender = () => {
     return (
       <div className=" flex items-center justify-content-between">
-        <Button
-          outlined
-          icon="pi pi-refresh"
-          size="small"
-          onClick={() => loadingData()}
-        />
-
-        <div className=" flex align-items-center gap-3">
-          <PaginatorRight
-            show={showAuditColumn}
-            onHandler={(e) => setShowAuditColumn(e)}
+        <div>
+          {translate.total} -
+          <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span>
+        </div>
+        <div  className=" flex align-items-center gap-3">
+          <Button
+            outlined
+            icon="pi pi-refresh"
+            size="small"
+            onClick={() => {
+              dispatch(setSubPaginate(categoryPayload.subPaginateParams));
+            }}
           />
+
+          <div className=" flex align-items-center gap-3">
+            <PaginatorRight
+              show={showAuditColumn}
+              onHandler={(e) => setShowAuditColumn(e)}
+              label={translate.audit_columns}
+            />
+          </div>
         </div>
       </div>
     );
@@ -153,7 +164,9 @@ export const SubCategoryTable = () => {
   }, [loadingData]);
 
   return (
-    <Card title="Sub Category">
+    <Card
+      title={translate.sub_category_list}
+    >
       <DataTable
         dataKey="id"
         size="normal"
@@ -163,8 +176,8 @@ export const SubCategoryTable = () => {
           subPaginateParams.sort === "DESC"
             ? 1
             : subPaginateParams.sort === "ASC"
-            ? -1
-            : 0
+              ? -1
+              : 0
         }
         loading={loading}
         sortMode="single"
@@ -192,12 +205,12 @@ export const SubCategoryTable = () => {
                       />
                     );
                   case "main_category_name":
-                      return(
-                        <NavigateId 
-                          url={`${paths.category}/${urlParams.id}`}
-                          value={value[col.field]}
-                        />
-                      )
+                    return (
+                      <NavigateId
+                        url={`${paths.category}/${urlParams.id}`}
+                        value={value[col.field]}
+                      />
+                    )
                   case "status":
                     return <Status status={value[col.field]} />;
                   case "icon":

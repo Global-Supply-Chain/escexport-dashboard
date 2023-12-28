@@ -1,6 +1,6 @@
 import { Card } from "primereact/card";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { itemPayload } from "../itemPayload";
 import { Dropdown } from "primereact/dropdown";
 import { payloadHandler } from "../../../helpers/handler";
@@ -31,6 +31,8 @@ const ItemCreate = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { translate } = useSelector(state => state.setting);
 
   const onTemplateSelect = (e) => {
     setSelectPhoto(e.files);
@@ -64,7 +66,7 @@ const ItemCreate = () => {
           style={{ fontSize: "1.2em", color: "var(--text-color-secondary)" }}
           className="my-5"
         >
-          Drag and Drop Image Here
+          {translate.drag_and_drop}
         </span>
       </div>
     );
@@ -228,8 +230,8 @@ const ItemCreate = () => {
 
       <div className="col-12">
         <Card
-          title={"Create Item"}
-          subTitle="Item is purposing for order management"
+          title={translate.item_create}
+          subTitle={translate.item_subtitle}
         >
           <Loading loading={loading} />
 
@@ -253,7 +255,7 @@ const ItemCreate = () => {
 
             <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
               <label htmlFor="category" className="input-label">
-                Category (required*)
+                {translate.category} (required*)
               </label>
               <div className="p-inputgroup mt-2">
                 <Dropdown
@@ -282,7 +284,7 @@ const ItemCreate = () => {
 
             <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
               <label htmlFor="shop" className="input-label">
-                Shop (required*)
+                {translate.shop} (required*)
               </label>
               <div className="p-inputgroup mt-2">
                 <Dropdown
@@ -312,7 +314,7 @@ const ItemCreate = () => {
             <div className=" col-12 md:col-6 lg:col-4 my-3 md:my-0">
               <div className="flex flex-column gap-2">
                 <label htmlFor="name" className=" text-black">
-                  Name (required*)
+                  {translate.name} (required*)
                 </label>
                 <InputText
                   className="p-inputtext-sm text-black"
@@ -342,7 +344,7 @@ const ItemCreate = () => {
             <div className=" col-12 md:col-6 lg:col-4 my-3 md:my-0">
               <div className="flex flex-column gap-2">
                 <label htmlFor="code" className=" text-black">
-                  Code (required*)
+                  {translate.code} (required*)
                 </label>
                 <InputText
                   className="p-inputtext-sm text-black"
@@ -371,7 +373,7 @@ const ItemCreate = () => {
             <div className=" col-12 md:col-6 lg:col-4 my-3 md:my-0">
               <div className="flex flex-column gap-2">
                 <label htmlFor="description" className=" text-black">
-                  Description
+                  {translate.description}
                 </label>
                 <InputText
                   className="p-inputtext-sm text-black"
@@ -403,7 +405,7 @@ const ItemCreate = () => {
             <div className=" col-12 md:col-6 lg:col-4 my-3 md:my-0">
               <div className="flex flex-column gap-2">
                 <label htmlFor="price" className=" text-black">
-                  Price
+                  {translate.price}
                 </label>
                 <InputText
                   className="p-inputtext-sm text-black"
@@ -436,7 +438,7 @@ const ItemCreate = () => {
             <div className=" col-12 md:col-6 lg:col-4 my-3 md:my-0">
               <div className="flex flex-column gap-2">
                 <label htmlFor="sell_price" className=" text-black">
-                  Sell Price (required*)
+                  {translate.sell_price} (required*)
                 </label>
                 <InputText
                   className="p-inputtext-sm text-black"
@@ -468,7 +470,7 @@ const ItemCreate = () => {
             <div className=" col-12 md:col-6 lg:col-4 my-3 md:my-0">
               <div className="flex flex-column gap-2">
                 <label htmlFor="instock" className=" text-black">
-                  Instock (required*)
+                  {translate.instock} (required*)
                 </label>
                 <InputText
                   className="p-inputtext-sm text-black"
@@ -500,7 +502,7 @@ const ItemCreate = () => {
             <div className=" col-12 md:col-6 lg:col-4 my-3 md:my-0">
               <div className="flex flex-column gap-2">
                 <label htmlFor="out_of_stock" className=" text-black">
-                  Out of stock
+                  {translate.outstock}
                 </label>
                 <Checkbox
                   className="p-inputtext-sm text-black"
@@ -530,7 +532,7 @@ const ItemCreate = () => {
 
             <div className=" col-12 my-3 md:my-0">
               <div className="flex flex-column gap-2">
-                <span className=" text-black">Content </span>
+                <span className=" text-black">{translate.content} </span>
                 <AppEditor onChange={(e) => setContent(e)} />
                 <ValidationMessage field={"content"} />
               </div>
@@ -540,7 +542,7 @@ const ItemCreate = () => {
               <div className=" flex align-items-center justify-content-end">
                 <div className=" flex align-items-center justify-content-between gap-3">
                   <Button
-                    label="CANCEL"
+                    label={translate.cancel}
                     severity="secondary"
                     outlined
                     size="small"
@@ -551,7 +553,7 @@ const ItemCreate = () => {
                     severity="danger"
                     size="small"
                     disabled={loading}
-                    label="SUBMIT"
+                    label={translate.submit}
                     onClick={handleItemClick}
                   />
                 </div>

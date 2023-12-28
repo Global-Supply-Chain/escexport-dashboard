@@ -27,6 +27,7 @@ const PointTableView = () => {
 
     const dispatch = useDispatch();
     const { points, paginateParams } = useSelector(state => state.point);
+    const { translate } = useSelector(state => state.setting);
     const navigate = useNavigate();
 
     const [loading, setLoading] = useState(false);
@@ -112,7 +113,7 @@ const PointTableView = () => {
     const FooterRender = () => {
         return (
             <div className=' flex items-center justify-content-between'>
-                <div>Total - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
+                <div>{translate.total} - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
                 <div className=' flex align-items-center gap-3'>
                     <Button
                         outlined
@@ -126,6 +127,7 @@ const PointTableView = () => {
                     <PaginatorRight
                         show={showAuditColumn}
                         onHandler={(e) => setShowAuditColumn(e)}
+                        label={translate.audit_columns}
                     />
                 </div>
             </div>
@@ -143,9 +145,10 @@ const PointTableView = () => {
                     tooltipLabel={"search by point id, label, point"}
                     placeholder={"Search point"}
                     onSearch={(e) => onSearchChange(e)}
+                    label={translate.press_enter_key_to_search}
                 />
 
-                <FilterByDate onFilter={(e) => onFilterByDate(e)} />
+                <FilterByDate onFilter={(e) => onFilterByDate(e)} label={translate.filter_by} />
 
             </div>
         )
@@ -172,7 +175,7 @@ const PointTableView = () => {
 
     return (
         <Card
-            title={'Point List'}
+            title={translate.point_list}
         >
             <DataTable
                 dataKey="id"

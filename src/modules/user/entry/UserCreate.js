@@ -5,7 +5,7 @@ import { Password } from "primereact/password";
 import { paths } from "../../../constants/paths";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userService } from "../userService";
 import { ValidationMessage } from "../../../shares/ValidationMessage";
 import { payloadHandler } from "../../../helpers/handler";
@@ -23,6 +23,8 @@ export const UserCreate = () => {
     password: "",
     confirm_password: "",
   });
+
+  const { translate } = useSelector(state => state.setting);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -48,8 +50,8 @@ export const UserCreate = () => {
 
         <div className=" col-12">
           <Card
-            title="User Create"
-            subTitle="User account is purposing for website ui management"
+            title={translate.user_create}
+            subTitle={translate.user_subtitle}
           >
             <div className=" grid">
               <div className=" col-12 flex align-items-center justify-content-center">
@@ -69,7 +71,7 @@ export const UserCreate = () => {
               <div className=" col-12 md:col-6 lg:col-4 my-3">
                 <div className="flex flex-column">
                   <label htmlFor="name" className=" text-black">
-                    Name (required)
+                    {translate.name} (required)
                   </label>
                   <InputText
                     className="p-inputtext-sm text-black"
@@ -99,7 +101,7 @@ export const UserCreate = () => {
               <div className=" col-12 md:col-6 lg:col-4 py-3">
                 <div className="flex flex-column gap-2">
                   <label htmlFor="email" className=" text-black">
-                    Email (required)
+                    {translate.email} (required)
                   </label>
                   <InputText
                     className="p-inputtext-sm text-black"
@@ -129,7 +131,7 @@ export const UserCreate = () => {
               <div className=" col-12 md:col-6 lg:col-4 py-3">
                 <div className="flex flex-column gap-2">
                   <label htmlFor="phone" className=" text-black">
-                    Phone (required)
+                    {translate.phone} (required)
                   </label>
                   <InputText
                     className="p-inputtext-sm text-black"
@@ -160,7 +162,7 @@ export const UserCreate = () => {
               <div className=" col-12 md:col-6 lg:col-4 py-3">
                 <div className="flex flex-column gap-2">
                   <label htmlFor="password" className=" text-black">
-                    Password (required)
+                    {translate.password} (required)
                   </label>
                   <Password
                     className="p-inputtext-sm text-black"
@@ -188,7 +190,7 @@ export const UserCreate = () => {
               <div className=" col-12 md:col-6 lg:col-4 py-3">
                 <div className="flex flex-column gap-2">
                   <label htmlFor="con_password" className=" text-black">
-                    Confirm Password (required)
+                    {translate.con_password} (required)
                   </label>
                   <Password
                     className="p-inputtext-sm text-black"
@@ -218,7 +220,7 @@ export const UserCreate = () => {
                 <div className=" flex align-items-center justify-content-end">
                   <div className=" flex align-items-center justify-content-between gap-3">
                     <Button
-                      label="CANCEL"
+                      label={translate.cancel}
                       severity="secondary"
                       outlined
                       size="small"
@@ -229,7 +231,7 @@ export const UserCreate = () => {
                       severity="danger"
                       size="small"
                       disabled={loading}
-                      label="SUBMIT"
+                      label={translate.submit}
                       onClick={() => submitUser()}
                     />
                   </div>

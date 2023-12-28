@@ -1,12 +1,12 @@
 import { Dropdown } from "primereact/dropdown";
 import { useSelector } from "react-redux";
 
-export const FilterByStatus = ({ status, onFilter }) => {
+export const FilterByStatus = ({ status, onFilter, label }) => {
   const { statusFilter } = useSelector((state) => state.share);
 
   return (
     <div>
-      <label htmlFor="status"> Filter By </label>
+      <label htmlFor="status">{label}</label>
       {status && (
         <div className="form-group mt-1">
           <Dropdown

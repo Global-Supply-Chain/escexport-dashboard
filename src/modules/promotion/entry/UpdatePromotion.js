@@ -18,6 +18,7 @@ import { paths } from '../../../constants/paths';
 import { Dropdown } from 'primereact/dropdown';
 import { generalStatus } from '../../../helpers/StatusHandler';
 import { Loading } from '../../../shares/Loading';
+import { useNavigate } from "react-router-dom";
 
 const UpdatePromotion = () => {
 
@@ -27,9 +28,9 @@ const UpdatePromotion = () => {
   const [visible, setVisible] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { promotion } = useSelector((state) => state.promotion);
-
-  console.log(generalStatus);
+  const { translate } = useSelector(state => state.setting);
 
   const [loading, setLoading] = useState(false);
 
@@ -77,7 +78,7 @@ const UpdatePromotion = () => {
 
       <div className="col-12">
         <Card
-          title="Update Promotion"
+          title={translate.promotion_update}
         >
           <Loading loading={loading} />
 
@@ -125,7 +126,7 @@ const UpdatePromotion = () => {
 
             <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
               <div className="flex flex-column gap-2">
-                <label htmlFor="title" className=' text-black'>Title</label>
+                <label htmlFor="title" className=' text-black'>{translate.title}</label>
                 <InputText
                   className="p-inputtext-sm text-black"
                   id="title"
@@ -145,7 +146,7 @@ const UpdatePromotion = () => {
 
             <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
               <div className="flex flex-column gap-2">
-                <label htmlFor="url" className=' text-black'>Promoiton Url</label>
+                <label htmlFor="url" className=' text-black'>{translate.promotion_url}</label>
                 <InputText
                   className="p-inputtext-sm text-black"
                   id="url"
@@ -165,7 +166,7 @@ const UpdatePromotion = () => {
 
             <div className=" col-12 md:col-4 lg:ocl-4">
               <div className=" flex flex-column gap-2">
-                <label htmlFor="promotion" className=' text-black'>Choose promotion image</label>
+                <label htmlFor="promotion" className=' text-black'>{translate.promotion_image}</label>
                 <InputText
                   id="promotion"
                   className="p-inputtext-sm text-black"
@@ -187,7 +188,7 @@ const UpdatePromotion = () => {
 
             <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
               <div className="flex flex-column gap-2">
-                <label htmlFor="status" className=' text-black'>Status</label>
+                <label htmlFor="status" className=' text-black'>{translate.status}</label>
                 <Dropdown
                   inputId='status'
                   name='promotion status'
@@ -209,8 +210,17 @@ const UpdatePromotion = () => {
             <div className="col-12">
               <div className="flex flex-row justify-content-end align-items-center">
                 <Button
+                  className="mx-2"
+                  label={translate.cancel}
+                  severity="secondary"
+                  outlined
+                  size='small'
+                  disabled={loading}
+                  onClick={() => navigate(paths.promotion)}
+                />
+                <Button
                   severity="danger"
-                  label="Update"
+                  label={translate.update}
                   onClick={submitPromotionUpdate}
                 />
               </div>
