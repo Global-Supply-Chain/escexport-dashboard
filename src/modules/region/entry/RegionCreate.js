@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { regionPayload } from '../regionPayload';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { regionService } from '../regionService';
 import { InputText } from 'primereact/inputtext';
 import { Card } from 'primereact/card';
@@ -20,6 +20,7 @@ export const RegionCreate = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const { translate } = useSelector(state => state.setting);
 
     const submitRegionCreate = async () => {
         setLoading(true);
@@ -37,7 +38,7 @@ export const RegionCreate = () => {
 
                 <div className=' col-12'>
                     <Card
-                        title={'Create Region'}
+                        title={translate.region_create}
 
                     >
 
@@ -48,7 +49,7 @@ export const RegionCreate = () => {
 
                             <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="name" className=' text-black'>Name (required*)</label>
+                                    <label htmlFor="name" className=' text-black'>{translate.name} (required*)</label>
                                     <InputText
                                         className="p-inputtext-sm text-black"
                                         id="name"
@@ -71,7 +72,7 @@ export const RegionCreate = () => {
                                 <div className="flex flex-row justify-content-end align-items-center">
                                     <Button
                                         className="mx-2"
-                                        label="CANCEL"
+                                        label={translate.cancel}
                                         severity="secondary"
                                         outlined
                                         size='small'
@@ -81,7 +82,7 @@ export const RegionCreate = () => {
 
                                     <Button
                                         className="mx-2"
-                                        label="CREATE"
+                                        label={translate.submit}
                                         severity="danger"
                                         size='small'
                                         disabled={loading}

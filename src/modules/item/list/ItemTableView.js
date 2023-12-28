@@ -30,6 +30,7 @@ const ItemTableView = () => {
 
     const dispatch = useDispatch();
     const { items, paginateParams } = useSelector(state => state.item);
+    const { translate } = useSelector(state => state.setting);
 
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
@@ -160,7 +161,7 @@ const ItemTableView = () => {
     const FooterRender = () => {
         return (
             <div className=' flex items-center justify-content-between'>
-                <div>Total - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
+                <div>{translate.total} - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
                 <div className=' flex align-items-center gap-3'>
                     <Button
                         outlined
@@ -175,6 +176,7 @@ const ItemTableView = () => {
                     <PaginatorRight
                         show={showAuditColumn}
                         onHandler={(e) => setShowAuditColumn(e)}
+                        label={translate.audit_columns}
                     />
                 </div>
             </div>
@@ -191,15 +193,17 @@ const ItemTableView = () => {
                     tooltipLabel={"search item by id, name, code, description,content,price,sell price,out of stock, status"}
                     placeholder={"Search item"}
                     onSearch={(e) => onSearchChange(e)}
+                    label={translate.press_enter_key_to_search}
                 />
 
                 <div className="flex flex-column md:flex-row align-items-start md:align-items-end justify-content-center gap-3">
                     <FilterByStatus
                         status={itemStatus.current}
                         onFilter={(e) => onFilter(e)}
+                        label={translate.filter_by}
                     />
 
-                    <FilterByDate onFilter={(e) => onFilterByDate(e)} />
+                    <FilterByDate onFilter={(e) => onFilterByDate(e)} label={translate.filter_by_date} />
 
                     <Button
                         outlined
@@ -214,7 +218,7 @@ const ItemTableView = () => {
 
     return (
         <Card
-            title={'Item List'}
+            title={translate.item_list}
         >
             <DataTable
                 dataKey="id"

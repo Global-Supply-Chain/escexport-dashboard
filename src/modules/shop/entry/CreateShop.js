@@ -4,7 +4,7 @@ import { Card } from 'primereact/card'
 import { Dropdown } from 'primereact/dropdown'
 import { ValidationMessage } from '../../../shares/ValidationMessage'
 import { payloadHandler } from '../../../helpers/handler'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { InputText } from 'primereact/inputtext'
 import { tooltipOptions } from '../../../constants/config';
 import { Button } from 'primereact/button'
@@ -23,6 +23,7 @@ export const CreateShop = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { translate } = useSelector(state => state.setting);
 
     /**
     * Loading region Data
@@ -66,7 +67,7 @@ export const CreateShop = () => {
             <div className=' col-12'>
 
                 <Card
-                    title={'Create Shop'}
+                    title={translate.shop_create}
                 >
 
                     <Loading loading={loading} />
@@ -74,7 +75,7 @@ export const CreateShop = () => {
                     <div className=' grid'>
 
                         <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                            <label htmlFor="region" className='input-label'> Region (required*) </label>
+                            <label htmlFor="region" className='input-label'>{translate.region} (required*) </label>
                             <div className="p-inputgroup mt-2">
                                 <Dropdown
                                     inputId='region'
@@ -94,7 +95,7 @@ export const CreateShop = () => {
                         </div>
 
                         <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                            <label htmlFor="name" className='input-label'>Name</label>
+                            <label htmlFor="name" className='input-label'>{translate.name}</label>
                             <div className="p-inputgroup mt-2">
                                 <InputText
                                     id="name"
@@ -116,7 +117,7 @@ export const CreateShop = () => {
                         </div>
 
                         <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                            <label htmlFor="phone" className='input-label'>Phone</label>
+                            <label htmlFor="phone" className='input-label'>{translate.phone}</label>
                             <div className="p-inputgroup mt-2">
                                 <InputText
                                     id="phone"
@@ -138,7 +139,7 @@ export const CreateShop = () => {
                         </div>
 
                         <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                            <label htmlFor="address" className='input-label'>Address</label>
+                            <label htmlFor="address" className='input-label'>{translate.address}</label>
                             <div className="p-inputgroup mt-2">
                                 <InputText
                                     id="address"
@@ -161,7 +162,7 @@ export const CreateShop = () => {
 
                         <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                             <div className="flex flex-column gap-2">
-                                <label htmlFor="location" className=' text-black'>Location</label>
+                                <label htmlFor="location" className=' text-black'>{translate.location}</label>
                                 <InputText
                                     className="p-inputtext-sm text-black"
                                     id="location"
@@ -185,7 +186,7 @@ export const CreateShop = () => {
                             <div className="flex flex-row justify-content-end align-items-center">
                                 <Button
                                     className="mx-2"
-                                    label="CANCEL"
+                                    label={translate.cancel}
                                     severity="secondary"
                                     outlined
                                     size='small'
@@ -195,7 +196,7 @@ export const CreateShop = () => {
 
                                 <Button
                                     className="mx-2"
-                                    label="CREATE"
+                                    label={translate.submit}
                                     severity="danger"
                                     size='small'
                                     disabled={loading}

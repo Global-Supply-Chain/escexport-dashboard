@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
 import { authorizationPayload } from '../authorizationPayload';
 import { Loading } from '../../../shares/Loading';
@@ -46,6 +46,8 @@ export const RoleUpdate = ({ dataSource, callback }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    const { translate } = useSelector(state => state.setting);
+
     /**
      * update role
      * @returns
@@ -74,7 +76,7 @@ export const RoleUpdate = ({ dataSource, callback }) => {
 
     return (
         <Card
-            title={'Update Role'}
+            title={translate.role_update}
         >
 
             <Loading loading={loading} />
@@ -82,7 +84,7 @@ export const RoleUpdate = ({ dataSource, callback }) => {
             <div className=' grid'>
 
                 <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                    <label htmlFor="name" className='input-label'>Name</label>
+                    <label htmlFor="name" className='input-label'>{translate.name}</label>
                     <div className="p-inputgroup mt-2">
                         <InputText
                             id="name"
@@ -103,7 +105,7 @@ export const RoleUpdate = ({ dataSource, callback }) => {
                 </div>
 
                 <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                    <label htmlFor="description" className='input-label'>Description</label>
+                    <label htmlFor="description" className='input-label'>{translate.description}</label>
                     <div className="p-inputgroup mt-2">
                         <InputText
                             id="description"
@@ -123,7 +125,7 @@ export const RoleUpdate = ({ dataSource, callback }) => {
                 </div>
 
                 <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                    <label htmlFor='permission' className='input-label'> Permission </label>
+                    <label htmlFor='permission' className='input-label'> {translate.permission} </label>
                     <div className="p-inputgroup mt-2">
                         <MultiSelect
                             inputId='permission'
@@ -149,7 +151,7 @@ export const RoleUpdate = ({ dataSource, callback }) => {
                     <div className="flex flex-row justify-content-end align-items-center">
                         <Button
                             className="mx-2"
-                            label="CANCEL"
+                            label={translate.cancel}
                             severity="secondary"
                             outlined
                             size='small'
@@ -159,7 +161,7 @@ export const RoleUpdate = ({ dataSource, callback }) => {
 
                         <Button
                             className="mx-2"
-                            label="UPDATE"
+                            label={translate.update}
                             severity="danger"
                             size='small'
                             disabled={loading}

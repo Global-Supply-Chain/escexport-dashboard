@@ -3,12 +3,12 @@ import { useState } from "react";
 import { tooltipOptions } from "../constants/config";
 import { getData, setData } from "../helpers/localstorage";
 
-export const Search = ({ onSearch, placeholder, tooltipLabel }) => {
+export const Search = ({ onSearch, placeholder, tooltipLabel, label }) => {
   const [keyword, setKeyword] = useState(getData("search"));
 
   return (
     <div>
-      <label htmlFor="tableSearch"> Press <b> Enter</b> key to search </label>
+      <label htmlFor="tableSearch">{label}</label>
       <div className="p-inputgroup flex-1 mt-1 search">
         <InputText
           id="tableSearch"

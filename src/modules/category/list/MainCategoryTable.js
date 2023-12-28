@@ -29,6 +29,7 @@ export const MainCategoryTable = () => {
   const { mainPaginateParams, mainCategories } = useSelector(
     (state) => state.category
   );
+  const { translate } = useSelector(state => state.setting);
   const [loading, setLoading] = useState(false);
   const [showAuditColumn, setShowAuditColumn] = useState(false);
 
@@ -166,14 +167,16 @@ export const MainCategoryTable = () => {
           tooltipLabel={"Search by id,title,status"}
           placeholder={"Search main category"}
           onSearch={(e) => onSearchChange(e)}
+          label={translate.press_enter_key_to_search}
         />
 
         <FilterByStatus
           status={categoryStatus.current}
           onFilter={(e) => onFilter(e)}
+          label={translate.filter_by}
         />
 
-        <FilterByDate onFilter={(e) => onFilterByDate(e)} />
+        <FilterByDate onFilter={(e) => onFilterByDate(e)} label={translate.filter_by_date} />
       </div>
     );
   };
@@ -198,22 +201,26 @@ export const MainCategoryTable = () => {
    */
   const FooterRender = () => {
     return (
-      <div className=" flex items-center justify-content-between">
-        <Button
-          outlined
-          icon="pi pi-refresh"
-          size="small"
-          onClick={() => {
-            dispatch(setMainPaginate(categoryPayload.mainCategoryPaginateParams));
-            dispatch(setStatusFilter("ALL"));
-            dispatch(setDateFilter({ startDate: "", endDate: "" }));
-          }}
-        />
-
+      <div className="flex items-center justify-content-between">
+        <div>
+          {translate.total} -
+          <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span>
+        </div>
         <div className=" flex align-items-center gap-3">
+          <Button
+            outlined
+            icon="pi pi-refresh"
+            size="small"
+            onClick={() => {
+              dispatch(setMainPaginate(categoryPayload.paginateParams));
+              dispatch(setStatusFilter("ALL"));
+              dispatch(setDateFilter({ startDate: "", endDate: "" }));
+            }}
+          />
           <PaginatorRight
             show={showAuditColumn}
             onHandler={(e) => setShowAuditColumn(e)}
+            label={translate.audit_columns}
           />
         </div>
       </div>
@@ -222,8 +229,8 @@ export const MainCategoryTable = () => {
 
   return (
     <Card
-      title={'Main Category List'}
-      subTitle="Category for sub categories"
+      title={translate.main_category_list}
+      subTitle={translate.main_category_subtitle}
     >
       <DataTable
         dataKey="id"

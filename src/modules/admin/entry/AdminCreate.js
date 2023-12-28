@@ -26,6 +26,7 @@ export const AdminCreate = () => {
     const [roleList, setRoleList] = useState([]);
 
     const { roles } = useSelector(state => state.auth);
+    const { translate } = useSelector(state => state.setting);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -70,8 +71,8 @@ export const AdminCreate = () => {
 
             <div className="col-12">
                 <Card 
-                    title="Create Administrator Account"
-                    subTitle="Administrator account is purposing for system management"
+                    title={translate.admin_create}
+                    subTitle={translate.admin_subtitle}
                 >
 
                     <Loading loading={loading} />
@@ -109,7 +110,7 @@ export const AdminCreate = () => {
                         </div>
 
                         <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                            <label htmlFor="name" className='input-label'>Full Name (required)</label>
+                            <label htmlFor="name" className='input-label'>{translate.name} (required)</label>
                             <div className="p-inputgroup mt-2">
                                 <InputText 
                                     id="name"
@@ -131,7 +132,7 @@ export const AdminCreate = () => {
                         </div>
 
                         <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                            <label htmlFor="email" className='input-label'> Email (required) </label>
+                            <label htmlFor="email" className='input-label'>{translate.email} (required) </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText 
                                     id="email"
@@ -154,7 +155,7 @@ export const AdminCreate = () => {
                         </div>
 
                         <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                            <label htmlFor="phone" className='input-label'> Phone Number (required) </label>
+                            <label htmlFor="phone" className='input-label'>{translate.phone} (required) </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText 
                                     id="phone"
@@ -176,7 +177,7 @@ export const AdminCreate = () => {
                         </div>
 
                         <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                            <label htmlFor="role" className='input-label'> Role (required*) </label>
+                            <label htmlFor="role" className='input-label'>{translate.role} (required*) </label>
                             <div className="p-inputgroup mt-2">
                                 <Dropdown
                                     inputId="role"
@@ -196,7 +197,7 @@ export const AdminCreate = () => {
                         </div>
 
                         <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                            <label htmlFor="password" className='input-label'> Password(required) </label>
+                            <label htmlFor="password" className='input-label'>{translate.password} (required) </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText 
                                     id="password"
@@ -217,7 +218,7 @@ export const AdminCreate = () => {
                         </div>
 
                         <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                            <label htmlFor="confirm-password" className='input-label'> Confirm Password(required) </label>
+                            <label htmlFor="confirm-password" className='input-label'>{translate.con_password} (required) </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText 
                                     id="confirm-password"
@@ -241,7 +242,7 @@ export const AdminCreate = () => {
                             <div className="flex flex-row justify-content-end align-items-center">
                                 <Button 
                                     className="mx-2"
-                                    label="CANCEL"
+                                    label={translate.cancel}
                                     severity="secondary"
                                     outlined
                                     size='small'
@@ -251,7 +252,7 @@ export const AdminCreate = () => {
 
                                 <Button 
                                     className="mx-2"
-                                    label="CREATE"
+                                    label={translate.submit}
                                     severity="danger"
                                     size='small'
                                     disabled={loading}

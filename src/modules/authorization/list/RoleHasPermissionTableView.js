@@ -6,7 +6,7 @@ import { authorizationPayload } from '../authorizationPayload'
 import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button'
 import { authorizationService } from '../authorizatonService'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Card } from 'primereact/card'
 
 export const RoleHasPermissionTableView = ({ dataSource, callback }) => {
@@ -19,6 +19,7 @@ export const RoleHasPermissionTableView = ({ dataSource, callback }) => {
     const [checkList, setCheckList] = useState([]);
 
     const dispatch = useDispatch();
+    const { translate } = useSelector(state => state.setting);
 
     const onPerChange = (e) => {
         let permission = [...checkList];
@@ -95,12 +96,12 @@ export const RoleHasPermissionTableView = ({ dataSource, callback }) => {
 
     return (
         <Card
-        title={'Role Has Permission'}
+        title={translate.role_has_permission}
         >
 
             <div className="flex justify-content-end gap-3 mb-3">
                 <div className=' flex align-items-center justify-content-center gap-3'>
-                    <label htmlFor='select' className=' text-black'>Select All</label>
+                    <label htmlFor='select' className=' text-black'>{translate.select_all}</label>
                     <Checkbox
                         inputId='select'
                         checked={checkAll}

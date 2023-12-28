@@ -28,6 +28,7 @@ export const FaqTableView = () => {
 
     const dispatch = useDispatch();
     const { faqs, paginateParams } = useSelector(state => state.faq);
+    const { translate } = useSelector(state => state.setting);
 
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
@@ -153,7 +154,7 @@ export const FaqTableView = () => {
     const FooterRender = () => {
         return (
             <div className=' flex items-center justify-content-between'>
-                <div>Total - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
+                <div>{translate.total} - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
                 <div className=' flex align-items-center gap-3'>
                     <Button
                         outlined
@@ -168,6 +169,7 @@ export const FaqTableView = () => {
                     <PaginatorRight
                         show={showAuditColumn}
                         onHandler={(e) => setShowAuditColumn(e)}
+                        label={translate.audit_columns}
                     />
                 </div>
             </div>
@@ -184,14 +186,16 @@ export const FaqTableView = () => {
                     tooltipLabel={"search faq by id, answer, question, status"}
                     placeholder={"Search faq"}
                     onSearch={(e) => onSearchChange(e)}
+                    label={translate.press_enter_key_to_search}
                 />
 
                 <FilterByStatus
                     status={faqStatus.current}
                     onFilter={(e) => onFilter(e)}
+                    label={translate.filter_by}
                 />
 
-                <FilterByDate onFilter={(e) => onFilterByDate(e)} />
+                <FilterByDate onFilter={(e) => onFilterByDate(e)} label={translate.filter_by_date} />
 
             </div>
         )
@@ -200,7 +204,7 @@ export const FaqTableView = () => {
 
     return (
         <Card
-            title={'Faq List'}
+            title={translate.faq_list}
         >
 
             <DataTable

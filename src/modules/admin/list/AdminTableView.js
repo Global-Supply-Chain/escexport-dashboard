@@ -27,6 +27,7 @@ export const AdminTableView = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { admins, paginateParams } = useSelector((state) => state.admin);
+  const { translate } = useSelector(state => state.setting);
 
   const [loading, setLoading] = useState(false);
   const [showAuditColumn, setShowAuditColumn] = useState(false);
@@ -157,7 +158,7 @@ export const AdminTableView = () => {
     return (
       <div className="flex items-center justify-content-between">
         <div>
-          Total -
+          {translate.total} -
           <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span>
         </div>
         <div className=" flex align-items-center gap-3">
@@ -174,6 +175,7 @@ export const AdminTableView = () => {
           <PaginatorRight
             show={showAuditColumn}
             onHandler={(e) => setShowAuditColumn(e)}
+            label={translate.audit_columns}
           />
         </div>
       </div>
@@ -190,20 +192,22 @@ export const AdminTableView = () => {
           tooltipLabel={adminPayload.searchableFields}
           placeholder={"Search admin account"}
           onSearch={(e) => onSearchChange(e)}
+          label={translate.press_enter_key_to_search}
         />
 
         <FilterByStatus
           status={adminStatus.current}
           onFilter={(e) => onFilter(e)}
+          label={translate.filter_by}
         />
 
-        <FilterByDate onFilter={(e) => onFilterByDate(e)} />
+        <FilterByDate onFilter={(e) => onFilterByDate(e)} label={translate.filter_by_date} />
       </div>
     );
   };
 
   return (
-    <Card title="Administrator List">
+    <Card title={translate.admin_list}>
       <DataTable
         dataKey="id"
         size="normal"

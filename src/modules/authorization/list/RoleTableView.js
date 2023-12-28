@@ -24,6 +24,7 @@ export const RoleTableView = () => {
 
     const dispatch = useDispatch();
     const { roles, rolePaginateParams } = useSelector(state => state.auth);
+    const { translate } = useSelector(state => state.setting);
 
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
@@ -110,7 +111,7 @@ export const RoleTableView = () => {
     const FooterRender = () => {
         return (
             <div className=' flex items-center justify-content-between'>
-                <div>Total - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
+                <div>{translate.total} - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
                 <div className=' flex align-items-center gap-3'>
                     <Button
                         outlined
@@ -124,6 +125,7 @@ export const RoleTableView = () => {
                     <PaginatorRight
                         show={showAuditColumn}
                         onHandler={(e) => setShowAuditColumn(e)}
+                        label={translate.audit_columns}
                     />
                 </div>
             </div>
@@ -140,9 +142,10 @@ export const RoleTableView = () => {
                     tooltipLabel={"search role by id, name, description"}
                     placeholder={"Search role"}
                     onSearch={(e) => onSearchChange(e)}
+                    label={translate.press_enter_key_to_search}
                 />
 
-                <FilterByDate onFilter={(e) => onFilterByDate(e)} />
+                <FilterByDate onFilter={(e) => onFilterByDate(e)} label={translate.filter_by} />
 
             </div>
         )
@@ -151,7 +154,7 @@ export const RoleTableView = () => {
 
     return (
         <Card
-            title={'Role List'}
+            title={translate.role_list}
         >
 
             <DataTable

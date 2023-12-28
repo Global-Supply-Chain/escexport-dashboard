@@ -22,7 +22,8 @@ import { NavigateId } from "../../../shares/NavigateId";
 export const UserDeliveryAddressTable = () => {
 
     const dispatch = useDispatch();
-    const { deliveries, paginateParams } = useSelector(state => state.delivery)
+    const { deliveries, paginateParams } = useSelector(state => state.delivery);
+    const { translate } = useSelector(state => state.setting);
 
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
@@ -103,7 +104,7 @@ export const UserDeliveryAddressTable = () => {
     const FooterRender = () => {
         return (
             <div className=' flex items-center justify-content-between'>
-                <div>Total - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
+                <div>{translate.total} - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
                 <div className=' flex align-items-center gap-3'>
                     <Button
                         outlined
@@ -117,6 +118,7 @@ export const UserDeliveryAddressTable = () => {
                     <PaginatorRight
                         show={showAuditColumn}
                         onHandler={(e) => setShowAuditColumn(e)}
+                        label={translate.audit_columns}
                     />
                 </div>
             </div>
@@ -133,15 +135,16 @@ export const UserDeliveryAddressTable = () => {
                     tooltipLabel={"search delivery address by id, address, contact_person,contact_phone,default address"}
                     placeholder={"Search delivery address"}
                     onSearch={(e) => onSearchChange(e)}
+                    label={translate.press_enter_key_to_search}
                 />
-                <FilterByDate onFilter={(e) => onFilterByDate(e)} />
+                <FilterByDate onFilter={(e) => onFilterByDate(e)} label={translate.filter_by} />
             </div>
         )
     }
 
     return (
         <Card
-            title={'User Delivery List'}
+            title={translate.user_delivery_list}
         >
             <DataTable
                 dataKey="id"

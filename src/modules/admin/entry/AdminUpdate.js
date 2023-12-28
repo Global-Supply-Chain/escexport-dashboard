@@ -26,6 +26,7 @@ export const AdminUpdate = () => {
     const params = useParams();
 
     const { admin } = useSelector(state => state.admin);
+    const { translate } = useSelector(state => state.setting);
 
     const [payload, setPayload] = useState(adminPayload.update);
     const [loading, setLoading] = useState(false);
@@ -72,8 +73,8 @@ export const AdminUpdate = () => {
     return(
         <div className="col-12">
             <Card 
-                title="Update Administrator Account"
-                subTitle="Administrator account is purposing for system management"
+                title={translate.admin_update}
+                subTitle={translate.admin_subtitle}
             >
 
                 <Loading loading={loading} />
@@ -111,7 +112,7 @@ export const AdminUpdate = () => {
                     </div>
 
                     <div className="col-12 md:col-4 lg:col-4 my-3">
-                        <label htmlFor="name" className='input-label'>Full Name </label>
+                        <label htmlFor="name" className='input-label'>{translate.name}</label>
                         <div className="p-inputgroup mt-2">
                             <InputText 
                                 id="name"
@@ -133,7 +134,7 @@ export const AdminUpdate = () => {
                     </div>
 
                     <div className="col-12 md:col-4 lg:col-4 my-3">
-                        <label htmlFor="email" className='input-label'> Email </label>
+                        <label htmlFor="email" className='input-label'>{translate.email}</label>
                         <div className="p-inputgroup mt-2">
                             <InputText 
                                 id="email"
@@ -156,7 +157,7 @@ export const AdminUpdate = () => {
                     </div>
 
                     <div className="col-12 md:col-4 lg:col-4 my-3">
-                        <label htmlFor="phone" className='input-label'> Phone Number </label>
+                        <label htmlFor="phone" className='input-label'>{translate.phone}</label>
                         <div className="p-inputgroup mt-2">
                             <InputText 
                                 id="phone"
@@ -179,7 +180,7 @@ export const AdminUpdate = () => {
 
                     <div className="col-12 md:col-4 lg:col-4 my-3">
                         <div className="flex flex-column gap-2">
-                            <label htmlFor="status" className='input-label'> Status </label>
+                            <label htmlFor="status" className='input-label'>{translate.status}</label>
                             <Dropdown 
                                 className="p-inputtext-sm text-black"
                                 inputId="status"
@@ -198,7 +199,7 @@ export const AdminUpdate = () => {
                     </div>
 
                     <div className="col-12 md:col-4 lg:col-4 my-3">
-                        <label htmlFor="password" className='input-label'> Password </label>
+                        <label htmlFor="password" className='input-label'>{translate.password}</label>
                         <div className="p-inputgroup mt-2">
                             <InputText 
                                 id="password"
@@ -220,7 +221,7 @@ export const AdminUpdate = () => {
                     </div>
 
                     <div className="col-12 md:col-4 lg:col-4 my-3">
-                        <label htmlFor="confirm-password" className='input-label'> Confirm Password </label>
+                        <label htmlFor="confirm-password" className='input-label'>{translate.con_password}</label>
                         <div className="p-inputgroup mt-2">
                             <InputText 
                                 id="confirm-password"
@@ -242,7 +243,7 @@ export const AdminUpdate = () => {
                     </div>
 
                     <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                            <label htmlFor="role" className='input-label'> Role </label>
+                            <label htmlFor="role" className='input-label'>{translate.role}</label>
                             <div className="p-inputgroup mt-2">
                                 <Dropdown
                                     inputId="role"
@@ -265,7 +266,7 @@ export const AdminUpdate = () => {
                         <div className="flex flex-row justify-content-end align-items-center">
                             <Button 
                                 className="mx-2"
-                                label="CANCEL"
+                                label={translate.cancel}
                                 severity="secondary"
                                 outlined
                                 size='small'
@@ -275,7 +276,7 @@ export const AdminUpdate = () => {
 
                             <Button 
                                 className="mx-2"
-                                label="UPDATE"
+                                label={translate.update}
                                 severity="danger"
                                 size='small'
                                 disabled={loading}

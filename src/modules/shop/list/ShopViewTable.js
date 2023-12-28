@@ -26,7 +26,8 @@ import { exportExcel } from "../../../helpers/export";
 export const ShopViewTable = () => {
 
     const dispatch = useDispatch();
-    const { shops, paginateParams } = useSelector(state => state.shop)
+    const { shops, paginateParams } = useSelector(state => state.shop);
+    const { translate } = useSelector(state => state.setting);
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
     const columns = useRef(shopPayload.columns);
@@ -153,7 +154,7 @@ export const ShopViewTable = () => {
     const FooterRender = () => {
         return (
             <div className=' flex items-center justify-content-between'>
-                <div>Total - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
+                <div>{translate.total} - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
                 <div className=' flex align-items-center gap-3'>
                     <Button
                         outlined
@@ -168,6 +169,7 @@ export const ShopViewTable = () => {
                     <PaginatorRight
                         show={showAuditColumn}
                         onHandler={(e) => setShowAuditColumn(e)}
+                        label={translate.audit_columns}
                     />
                 </div>
             </div>
@@ -184,15 +186,17 @@ export const ShopViewTable = () => {
                     tooltipLabel={"search shop by id, name, phone,address, location, status"}
                     placeholder={"Search shop"}
                     onSearch={(e) => onSearchChange(e)}
+                    label={translate.press_enter_key_to_search}
                 />
 
                 <div className="flex flex-column md:flex-row align-items-start md:align-items-end justify-content-center gap-3">
                     <FilterByStatus
                         status={shopStatus.current}
                         onFilter={(e) => onFilter(e)}
+                        label={translate.filter_by}
                     />
 
-                    <FilterByDate onFilter={(e) => onFilterByDate(e)} />
+                    <FilterByDate onFilter={(e) => onFilterByDate(e)} label={translate.filter_by_date} />
 
                     <Button
                         outlined
@@ -207,7 +211,7 @@ export const ShopViewTable = () => {
 
     return (
         <Card
-            title={"Shop List"}
+            title={translate.shop_list}
         >
             <DataTable
                 dataKey="id"

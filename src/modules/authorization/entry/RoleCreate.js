@@ -8,7 +8,7 @@ import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 import { paths } from '../../../constants/paths';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ValidationMessage } from '../../../shares/ValidationMessage';
 import { tooltipOptions } from '../../../constants/config';
 import { authorizationService } from '../authorizatonService';
@@ -20,6 +20,7 @@ export const RoleCreate = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const { translate } = useSelector(state => state.setting);
 
     /**
      * create role
@@ -43,7 +44,7 @@ export const RoleCreate = () => {
             <div className=' col-12'>
 
                 <Card
-                    title={'Create Role'}
+                    title={translate.role_create}
                 >
 
                     <Loading loading={loading} />
@@ -51,7 +52,7 @@ export const RoleCreate = () => {
                     <div className=' grid'>
 
                         <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                            <label htmlFor="name" className='input-label'>Name</label>
+                            <label htmlFor="name" className='input-label'>{translate.name}</label>
                             <div className="p-inputgroup mt-2">
                                 <InputText
                                     id="name"
@@ -73,7 +74,7 @@ export const RoleCreate = () => {
                         </div>
 
                         <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                            <label htmlFor="description" className='input-label'>Description</label>
+                            <label htmlFor="description" className='input-label'>{translate.description}</label>
                             <div className="p-inputgroup mt-2">
                                 <InputText
                                     id="description"
@@ -98,7 +99,7 @@ export const RoleCreate = () => {
                             <div className="flex flex-row justify-content-end align-items-center">
                                 <Button
                                     className="mx-2"
-                                    label="CANCEL"
+                                    label={translate.cancel}
                                     severity="secondary"
                                     outlined
                                     size='small'
@@ -108,7 +109,7 @@ export const RoleCreate = () => {
 
                                 <Button
                                     className="mx-2"
-                                    label="CREATE"
+                                    label={translate.submit}
                                     severity="danger"
                                     size='small'
                                     disabled={loading}

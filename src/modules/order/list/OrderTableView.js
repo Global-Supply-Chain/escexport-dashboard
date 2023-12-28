@@ -30,6 +30,7 @@ export const OrderTableView = () => {
 
     const dispatch = useDispatch();
     const { orders, paginateParams } = useSelector(state => state.order);
+    const { translate } = useSelector(state => state.setting);
 
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
@@ -161,7 +162,7 @@ export const OrderTableView = () => {
     const FooterRender = () => {
         return (
             <div className=' flex items-center justify-content-between'>
-                <div>Total - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
+                <div>{translate.total} - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
                 <div className=' flex align-items-center gap-3'>
                     <Button
                         outlined
@@ -176,6 +177,7 @@ export const OrderTableView = () => {
                     <PaginatorRight
                         show={showAuditColumn}
                         onHandler={(e) => setShowAuditColumn(e)}
+                        label={translate.audit_columns}
                     />
                 </div>
             </div>
@@ -192,15 +194,17 @@ export const OrderTableView = () => {
                     tooltipLabel={"search order by id, user name, phone, email, delivery address, delivery contact phone, discount, delivery feed, total amount, items, payment type, status"}
                     placeholder={"Search order"}
                     onSearch={(e) => onSearchChange(e)}
+                    label={translate.press_enter_key_to_search}
                 />
 
                 <div className="flex flex-column md:flex-row align-items-start md:align-items-end justify-content-center gap-3">
                     <FilterByStatus
                         status={orderStatus.current}
                         onFilter={(e) => onFilter(e)}
+                        label={translate.filter_by}
                     />
 
-                    <FilterByDate onFilter={(e) => onFilterByDate(e)} />
+                    <FilterByDate onFilter={(e) => onFilterByDate(e)} label={translate.filter_by_date} />
 
                     <Button
                         outlined
@@ -216,7 +220,7 @@ export const OrderTableView = () => {
 
     return (
         <Card
-            title={'Order List'}
+            title={translate.order_list}
         >
 
             <DataTable
