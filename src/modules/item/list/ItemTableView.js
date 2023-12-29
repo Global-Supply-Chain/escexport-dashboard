@@ -260,6 +260,10 @@ const ItemTableView = () => {
                                         } else {
                                             return (<Badge value={'Outstock'} severity={'danger'}></Badge>)
                                         }
+                                    case "content":
+                                        return <div
+                                                    dangerouslySetInnerHTML={{__html: value[col.field]}}
+                                                />
                                     default:
                                       return value[col.field];
                                   }
