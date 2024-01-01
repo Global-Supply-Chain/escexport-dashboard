@@ -22,6 +22,7 @@
     "setting_card_title" : "Setting",
     "setting_card_sub_title": "Setting can only control by administrator",
     "change_language": "Change Language",
+    "language" : "Language",
     "order_statics" : "Order Statics",
     "order": "Order",
     "order_list": "Order List",
