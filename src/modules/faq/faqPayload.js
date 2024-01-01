@@ -2,13 +2,32 @@ import { paginateOptions } from "../../constants/config";
 
 export const faqPayload = {
     create: {
-        answer: "",
-        question: "",
+        faq : {
+            answer: {
+                mm : "",
+                uk : "",
+                cn : ""
+            },
+            question: {
+                mm : "",
+                uk : "",
+                cn : ""
+            },
+        }
     },
     update: {
-        answer: "",
-        question: "",
-        status : ""
+        faq : {
+            answer: {
+                mm : "",
+                uk : "",
+                cn : ""
+            },
+            question: {
+                mm : "",
+                uk : "",
+                cn : ""
+            },
+        }
     },
     columns: [
         { field: "id", header: "ID", sortable: true, show: true },
