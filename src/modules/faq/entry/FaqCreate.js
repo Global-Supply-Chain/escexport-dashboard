@@ -36,39 +36,31 @@ export const FaqCreate = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  //   const dynamicPayloadHandler = (field, value, key) => {
-  //     let getPayload = {...payload};
-  //     getPayload[field][key] = value;
-  //     setPayload(getPayload);
-  //   }
-
-  /**
-   * faq create payload - [answer,question]
-   * **/
   const submitFaqCreate = async () => {
     setLoading(true);
-    console.log(payload);
 
-    countries?.map((country,index) => {
-        return {
-            answer : {
-                country : ""
-            }
-        }
-    })
+    const keys = Object.keys(payload.current).map((keys) => keys);
+
+    const answers = JSON.stringify(
+      Object.fromEntries(
+        keys.map((value) => {
+          return [value, payload.current[value].answer];
+        })
+      )
+    );
+
+    const questions = JSON.stringify(
+      Object.fromEntries(
+        keys.map((value) => {
+          return [value, payload.current[value].question];
+        })
+      )
+    );
 
     const mainPayload = {
-        answer : JSON.stringify({
-            mm : payload.current.mm.answer,
-            cn : payload.current.cn.answer,
-            uk : payload.current.uk.answer
-        }),
-        question : JSON.stringify({
-            mm : payload.current.mm.question,
-            cn : payload.current.cn.question,
-            uk : payload.current.uk.question
-        })
-    }
+      answer: answers,
+      question: questions,
+    };
 
     await faqService.store(mainPayload, dispatch);
     setLoading(false);
