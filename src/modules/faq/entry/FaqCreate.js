@@ -12,6 +12,7 @@ import { Loading } from "../../../shares/Loading";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Divider } from "primereact/divider";
 import { Badge } from "primereact/badge";
+import { faqService } from "../faqService";
 
 export const FaqCreate = () => {
   const dynamicForm = Object.fromEntries(
@@ -48,7 +49,28 @@ export const FaqCreate = () => {
     setLoading(true);
     console.log(payload);
 
-    // await faqService.store(payload, dispatch);
+    countries?.map((country,index) => {
+        return {
+            answer : {
+                country : ""
+            }
+        }
+    })
+
+    const mainPayload = {
+        answer : JSON.stringify({
+            mm : payload.current.mm.answer,
+            cn : payload.current.cn.answer,
+            uk : payload.current.uk.answer
+        }),
+        question : JSON.stringify({
+            mm : payload.current.mm.question,
+            cn : payload.current.cn.question,
+            uk : payload.current.uk.question
+        })
+    }
+
+    await faqService.store(mainPayload, dispatch);
     setLoading(false);
   };
 
