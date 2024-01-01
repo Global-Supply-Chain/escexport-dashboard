@@ -41,7 +41,7 @@ export const DashboardList = () => {
                   {translate.total}
                 </div>
               </div>
-              <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
+              <div className=' h-60 text-gray flex align-items-center justiry-content-start gap-5'>
                 <i className=' pi pi-shopping-cart' style={{ fontSize: "3rem" }}></i>
                 <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.order?.total}</div>
               </div>
@@ -63,7 +63,7 @@ export const DashboardList = () => {
                   {translate.verified}
                 </div>
               </div>
-              <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
+              <div className=' h-60 text-gray flex align-items-center justiry-content-start gap-5'>
                 <i className=' pi pi-shopping-cart' style={{ fontSize: "3rem" }}></i>
                 <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.order?.verified}</div>
               </div>
@@ -85,7 +85,7 @@ export const DashboardList = () => {
                   {translate.pending}
                 </div>
               </div>
-              <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
+              <div className=' h-60 text-gray flex align-items-center justiry-content-start gap-5'>
                 <i className=' pi pi-shopping-cart' style={{ fontSize: "3rem" }}></i>
                 <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.order?.pending}</div>
               </div>
@@ -107,7 +107,7 @@ export const DashboardList = () => {
                   {translate.delivery}
                 </div>
               </div>
-              <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
+              <div className=' h-60 text-gray flex align-items-center justiry-content-start gap-5'>
                 <i className=' pi pi-shopping-cart' style={{ fontSize: "3rem" }}></i>
                 <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.order?.delivery}</div>
               </div>
@@ -129,7 +129,7 @@ export const DashboardList = () => {
                   {translate.complete}
                 </div>
               </div>
-              <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
+              <div className=' h-60 text-gray flex align-items-center justiry-content-start gap-5'>
                 <i className=' pi pi-shopping-cart' style={{ fontSize: "3rem" }}></i>
                 <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.order?.complete}</div>
               </div>
@@ -159,7 +159,7 @@ export const DashboardList = () => {
                   {translate.total}
                 </div>
               </div>
-              <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
+              <div className=' h-60 text-gray flex align-items-center justiry-content-start gap-5'>
                 <i className=' pi pi-shopping-cart' style={{ fontSize: "3rem" }}></i>
                 <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.item?.total}</div>
               </div>
@@ -181,7 +181,7 @@ export const DashboardList = () => {
                   {translate.active}
                 </div>
               </div>
-              <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
+              <div className=' h-60 text-gray flex align-items-center justiry-content-start gap-5'>
                 <i className=' pi pi-shopping-cart' style={{ fontSize: "3rem" }}></i>
                 <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.item?.active}</div>
               </div>
@@ -203,7 +203,7 @@ export const DashboardList = () => {
                   {translate.disable}
                 </div>
               </div>
-              <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
+              <div className=' h-60 text-gray flex align-items-center justiry-content-start gap-5'>
                 <i className=' pi pi-shopping-cart' style={{ fontSize: "3rem" }}></i>
                 <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.item?.disable}</div>
               </div>
@@ -225,7 +225,7 @@ export const DashboardList = () => {
                   {translate.delete}
                 </div>
               </div>
-              <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
+              <div className=' h-60 text-gray flex align-items-center justiry-content-start gap-5'>
                 <i className=' pi pi-shopping-cart' style={{ fontSize: "3rem" }}></i>
                 <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.item?.deleted}</div>
               </div>
@@ -255,7 +255,7 @@ export const DashboardList = () => {
                   {translate.total}
                 </div>
               </div>
-              <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
+              <div className=' h-60 text-gray flex align-items-center justiry-content-start gap-5'>
                 <i className=' pi pi-shopping-cart' style={{ fontSize: "3rem" }}></i>
                 <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.user?.total}</div>
               </div>
@@ -277,7 +277,7 @@ export const DashboardList = () => {
                   {translate.active}
                 </div>
               </div>
-              <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
+              <div className=' h-60 text-gray flex align-items-center justiry-content-start gap-5'>
                 <i className=' pi pi-shopping-cart' style={{ fontSize: "3rem" }}></i>
                 <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.user?.active}</div>
               </div>
@@ -299,7 +299,7 @@ export const DashboardList = () => {
                   {translate.pending}
                 </div>
               </div>
-              <div className=' mt-3 text-gray flex align-items-center justiry-content-start gap-5'>
+              <div className=' h-60 text-gray flex align-items-center justiry-content-start gap-5'>
                 <i className=' pi pi-shopping-cart' style={{ fontSize: "3rem" }}></i>
                 <div style={{ fontSize: "2.5rem" }}>{dashboard?.count?.user?.pending}</div>
               </div>

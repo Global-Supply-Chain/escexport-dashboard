@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@100;200;300;400;500;600&display=swap');
+
 body{
     padding: 0px;
     margin: 0px;
+    font-family: 'Noto Sans Myanmar', sans-serif;
 }
 h1,h2,h3,h4,h5,h6{
     margin: 0;
@@ -67,6 +70,10 @@ h1,h2,h3,h4,h5,h6{
 
 .h-40{
     height: 40px !important;
+}
+
+.h-60{
+    height: 60px !important;
 }
 
 .h-126{
