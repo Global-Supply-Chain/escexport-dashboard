@@ -1,6 +1,5 @@
 import { Card } from "primereact/card";
-import React, { useState } from "react";
-import { payloadHandler } from "../../../helpers/handler";
+import React, { useRef, useState } from "react";
 import { ValidationMessage } from "../../../shares/ValidationMessage";
 import { InputText } from "primereact/inputtext";
 import { countries, tooltipOptions } from "../../../constants/config";
@@ -8,44 +7,48 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "primereact/button";
 import { paths } from "../../../constants/paths";
-import { faqService } from "../faqService";
 import { BreadCrumb } from "../../../shares/BreadCrumb";
 import { Loading } from "../../../shares/Loading";
+import { InputTextarea } from "primereact/inputtextarea";
+import { Divider } from "primereact/divider";
+import { Badge } from "primereact/badge";
 
 export const FaqCreate = () => {
-  const languages = Object.fromEntries(
+  const dynamicForm = Object.fromEntries(
     countries.map((k) => {
       const codeName = k.code.toLowerCase();
-      return [codeName, ""];
+      return [
+        codeName,
+        {
+          answer: "",
+          question: "",
+        },
+      ];
     })
   );
 
   const [loading, setLoading] = useState(false);
-  const [payload, setPayload] = useState({
-    question: languages,
-    answer: languages,
-  });
+  const payload = useRef(dynamicForm);
 
   const { translate } = useSelector((state) => state.setting);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-
-  console.log(payload);
-
-  const dynamicPayloadHandler = (field, value, key) => {
-    let getPayload = {...payload};
-    getPayload[field][key] = value;
-    setPayload(getPayload);
-  }
+  //   const dynamicPayloadHandler = (field, value, key) => {
+  //     let getPayload = {...payload};
+  //     getPayload[field][key] = value;
+  //     setPayload(getPayload);
+  //   }
 
   /**
    * faq create payload - [answer,question]
    * **/
   const submitFaqCreate = async () => {
     setLoading(true);
-    await faqService.store(payload, dispatch);
+    console.log(payload);
+
+    // await faqService.store(payload, dispatch);
     setLoading(false);
   };
 
@@ -62,13 +65,42 @@ export const FaqCreate = () => {
           <div className=" grid">
             {countries.map((value, index) => {
               return (
-                <div key={`faq_lang_${index}`}>
-                  <div className=" col-12 md:col-6 lg:col-4 my-3 md:my-0">
+                <div className="col-12" key={`faq_lang_${index}`}>
+                  <div className="grid">
+                    <div className="col-12 md:col-12 my-3 md:my-0">
+                      <div className="flex flex-column gap-2">
+                        <div className="flex flex-row align-items-center justify-content-between">
+                          <label htmlFor="question" className="text-black">
+                            {translate.question} (required*)
+                          </label>
+
+                          <Badge value={`${value.name}`} />
+                        </div>
+                        <InputText
+                          className="p-inputtext-sm text-black"
+                          id="question"
+                          aria-describedby="question-help"
+                          tooltip="Faq question"
+                          tooltipOptions={{ ...tooltipOptions }}
+                          placeholder="Enter faq question"
+                          disabled={loading}
+                          onChange={(e) => {
+                            const codeNameQuestion = value.code.toLowerCase();
+                            payload.current[codeNameQuestion].question =
+                              e.target.value;
+                          }}
+                        />
+                        <ValidationMessage field={"question"} />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className=" col-12 md:col-12 my-3 md:my-0">
                     <div className="flex flex-column gap-2">
                       <label htmlFor="answer" className=" text-black">
-                        {translate.answer} {`${value.name} (required*)`}
+                        {translate.answer} (required*)
                       </label>
-                      <InputText
+                      <InputTextarea
                         className="p-inputtext-sm text-black"
                         id="answer"
                         aria-describedby="answer-help"
@@ -77,39 +109,16 @@ export const FaqCreate = () => {
                         placeholder="Enter faq answer"
                         disabled={loading}
                         onChange={(e) => {
-                            let getPayload = {...payload};
-                            console.log(getPayload);
-                            
-                            getPayload.answer[value.code.toLowerCase()] = e.target.value
-                            setPayload(getPayload);
+                          const codeName = value.code.toLowerCase();
+                          payload.current[codeName].answer = e.target.value;
                         }}
+                        rows={4}
                       />
                       <ValidationMessage field={"answer"} />
                     </div>
                   </div>
 
-                  <div className=" col-12 md:col-6 lg:col-4 my-3 md:my-0">
-                    <div className="flex flex-column gap-2">
-                      <label htmlFor="question" className=" text-black">
-                        {translate.question} (required*)
-                      </label>
-                      <InputText
-                        className="p-inputtext-sm text-black"
-                        id="question"
-                        aria-describedby="question-help"
-                        tooltip="Faq question"
-                        tooltipOptions={{ ...tooltipOptions }}
-                        placeholder="Enter faq question"
-                        disabled={loading}
-                        onChange={(e) => {
-                            let getPayload = {...payload};
-                            getPayload.question[value.code.toLowerCase()] = e.target.value
-                            setPayload(getPayload);
-                        }}
-                    />
-                      <ValidationMessage field={"question"} />
-                    </div>
-                  </div>
+                  <Divider />
                 </div>
               );
             })}
