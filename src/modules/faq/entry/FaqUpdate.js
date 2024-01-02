@@ -1,10 +1,8 @@
 import { Card } from 'primereact/card'
-import React, { useCallback, useEffect, useState } from 'react'
-import { payloadHandler } from '../../../helpers/handler';
-import { faqPayload } from '../faqPayload';
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { ValidationMessage } from '../../../shares/ValidationMessage';
 import { InputText } from 'primereact/inputtext';
-import { tooltipOptions } from '../../../constants/config';
+import { countries, tooltipOptions } from '../../../constants/config';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'primereact/button';
@@ -15,8 +13,23 @@ import { endpoints } from '../../../constants/endpoints';
 import { generalStatus } from '../../../helpers/StatusHandler';
 import { Dropdown } from 'primereact/dropdown';
 import { Loading } from '../../../shares/Loading';
+import { Badge } from 'primereact/badge';
+import { InputTextarea } from 'primereact/inputtextarea';
+import { Divider } from 'primereact/divider';
 
 export const FaqUpdate = () => {
+    const dynamicForm = Object.fromEntries(
+        countries.map((k) => {
+            const codeName = k.code.toLowerCase();
+            return [
+                codeName,
+                {
+                    answer: "",
+                    question: "",
+                },
+            ];
+        })
+    );
 
     const params = useParams();
     const dispatch = useDispatch();
@@ -25,10 +38,12 @@ export const FaqUpdate = () => {
     const { faq } = useSelector((state) => state.faq);
     const { translate } = useSelector(state => state.setting);
 
-    const [payload, setPayload] = useState(faqPayload.update);
+    const payload = useRef(dynamicForm);
+    const [statusPayload, setStatusPayload] = useState();
     const [loading, setLoading] = useState(false);
     const [visible, setVisible] = useState(false);
     const [status, setStatus] = useState([]);
+    const [prevValue,setPrevValue] = useState();
 
     /**
      * loading data
@@ -55,8 +70,8 @@ export const FaqUpdate = () => {
     }, [loadingData])
 
     useEffect(() => {
-        if (faq) {
-            setPayload(faq);
+        if(faq) {
+            setPrevValue(faq)
         }
     }, [faq])
 
@@ -65,7 +80,34 @@ export const FaqUpdate = () => {
      * **/
     const submitFaqUpdate = async () => {
         setLoading(true);
-        await faqService.update(dispatch, params.id, payload)
+
+        const keys = Object.keys(payload.current).map((keys) => keys);
+
+        const answers = JSON.stringify(
+          Object.fromEntries(
+            keys.map((value) => {
+              return [value, payload.current[value].answer];
+            })
+          )
+        );
+    
+        const questions = JSON.stringify(
+          Object.fromEntries(
+            keys.map((value) => {
+              return [value, payload.current[value].question];
+            })
+          )
+        );
+    
+        const mainPayload = {
+          answer: answers,
+          question: questions,
+          status : statusPayload?.status
+        };
+        console.log(mainPayload);
+
+
+        await faqService.update(dispatch, params.id, mainPayload)
         setLoading(false);
     }
 
@@ -102,49 +144,70 @@ export const FaqUpdate = () => {
                         </div>
                     </div>
 
-                    <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
-                        <div className="flex flex-column gap-2">
-                            <label htmlFor="answer" className=' text-black'>{translate.answer} (required*)</label>
-                            <InputText
-                                className="p-inputtext-sm text-black"
-                                id="answer"
-                                name="answer"
-                                autoComplete='answer'
-                                aria-describedby="answer-help"
-                                tooltip='Faq answer'
-                                value={payload.answer ? payload?.answer : ""}
-                                tooltipOptions={{ ...tooltipOptions }}
-                                placeholder='Enter faq answer'
-                                disabled={loading}
-                                onChange={(e) => payloadHandler(payload, e.target.value, 'answer', (updateValue) => {
-                                    setPayload(updateValue);
-                                })}
-                            />
-                            <ValidationMessage field={"answer"} />
-                        </div>
-                    </div>
+                    {prevValue && countries.map((value, index) => {
+                        const codeNameQuestion = value.code.toLowerCase();
+                        // console.log(prevValue);
+                        // console.log(JSON.parse(prevValue.answer)[codeNameQuestion]);
+                        return (
+                            <div className="col-12" key={`faq_lang_${index}`}>
+                                <div className="grid">
+                                    <div className="col-12 md:col-12 my-3 md:my-0">
+                                        <div className="flex flex-column gap-2">
+                                            <div className="flex flex-row align-items-center justify-content-between">
+                                                <label htmlFor="question" className="text-black">
+                                                    {translate.question} (required*)
+                                                </label>
 
-                    <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
-                        <div className="flex flex-column gap-2">
-                            <label htmlFor="question" className=' text-black'>{translate.question} (required*)</label>
-                            <InputText
-                                className="p-inputtext-sm text-black"
-                                id="question"
-                                name="question"
-                                autoComplete='question'
-                                aria-describedby="question-help"
-                                value={payload.question ? payload?.question : ''}
-                                tooltip='Faq question'
-                                tooltipOptions={{ ...tooltipOptions }}
-                                placeholder='Enter faq question'
-                                disabled={loading}
-                                onChange={(e) => payloadHandler(payload, e.target.value, 'question', (updateValue) => {
-                                    setPayload(updateValue);
-                                })}
-                            />
-                            <ValidationMessage field={"question"} />
-                        </div>
-                    </div>
+                                                <Badge value={`${value.name}`} />
+                                            </div>
+                                            <InputText
+                                                className="p-inputtext-sm text-black"
+                                                id="question"
+                                                aria-describedby="question-help"
+                                                tooltip="Faq question"
+                                                tooltipOptions={{ ...tooltipOptions }}
+                                                placeholder="Enter faq question"
+                                                defaultValue={prevValue?.question ? JSON.parse(prevValue?.question)[codeNameQuestion] : ""}
+                                                disabled={loading}
+                                                onChange={(e) => {
+                                                    const codeNameQuestion = value.code.toLowerCase();
+                                                    payload.current[codeNameQuestion].question =
+                                                        e.target.value;
+                                                }}
+                                            />
+                                            <ValidationMessage field={"question"} />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className=" col-12 md:col-12 my-3 md:my-0">
+                                    <div className="flex flex-column gap-2">
+                                        <label htmlFor="answer" className=" text-black">
+                                            {translate.answer} (required*)
+                                        </label>
+                                        <InputTextarea
+                                            className="p-inputtext-sm text-black"
+                                            id="answer"
+                                            aria-describedby="answer-help"
+                                            tooltip="Faq answer"
+                                            tooltipOptions={{ ...tooltipOptions }}
+                                            placeholder="Enter faq answer"
+                                            disabled={loading}
+                                            defaultValue={prevValue?.answer ? JSON.parse(prevValue?.answer)[codeNameQuestion] : ""}
+                                            onChange={(e) => {
+                                                const codeName = value.code.toLowerCase();
+                                                payload.current[codeName].answer = e.target.value;
+                                            }}
+                                            rows={4}
+                                        />
+                                        <ValidationMessage field={"answer"} />
+                                    </div>
+                                </div>
+
+                                <Divider />
+                            </div>
+                        );
+                    })}
 
                     <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                         <div className="flex flex-column gap-2">
@@ -156,11 +219,9 @@ export const FaqUpdate = () => {
                                 options={status}
                                 placeholder="Select a general status"
                                 disabled={loading}
-                                value={payload.status}
+                                value={statusPayload}
                                 className="p-inputtext-sm text-black"
-                                onChange={(e) => payloadHandler(payload, e.value, 'status', (updateValue) => {
-                                    setPayload(updateValue);
-                                })}
+                                onChange={(e) => setStatusPayload(e.value)}
                             />
 
                             <ValidationMessage field={"status"} />
