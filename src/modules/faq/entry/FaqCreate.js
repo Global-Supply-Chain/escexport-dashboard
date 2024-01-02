@@ -12,6 +12,7 @@ import { Loading } from "../../../shares/Loading";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Divider } from "primereact/divider";
 import { Badge } from "primereact/badge";
+import { faqService } from "../faqService";
 
 export const FaqCreate = () => {
   const dynamicForm = Object.fromEntries(
@@ -35,20 +36,33 @@ export const FaqCreate = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  //   const dynamicPayloadHandler = (field, value, key) => {
-  //     let getPayload = {...payload};
-  //     getPayload[field][key] = value;
-  //     setPayload(getPayload);
-  //   }
-
-  /**
-   * faq create payload - [answer,question]
-   * **/
   const submitFaqCreate = async () => {
     setLoading(true);
-    console.log(payload);
 
-    // await faqService.store(payload, dispatch);
+    const keys = Object.keys(payload.current).map((keys) => keys);
+
+    const answers = JSON.stringify(
+      Object.fromEntries(
+        keys.map((value) => {
+          return [value, payload.current[value].answer];
+        })
+      )
+    );
+
+    const questions = JSON.stringify(
+      Object.fromEntries(
+        keys.map((value) => {
+          return [value, payload.current[value].question];
+        })
+      )
+    );
+
+    const mainPayload = {
+      answer: answers,
+      question: questions,
+    };
+
+    await faqService.store(mainPayload, dispatch);
     setLoading(false);
   };
 
