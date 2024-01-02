@@ -47,7 +47,7 @@ export const shopRoutes = [
             return {
                 breadcrumbs: [
                     { label: "Dashboard", url: paths.dashboard },
-                    { label: "List", url: paths.shopDetail },
+                    { label: "List", url: paths.shop },
                 ]
             }
         }
