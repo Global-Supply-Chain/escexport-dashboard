@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { auditColumns, paginateOptions } from '../../../constants/config';
+import { auditColumns, countries, paginateOptions } from '../../../constants/config';
 import { Search } from '../../../shares/Search';
 import { Button } from 'primereact/button';
 import { DataTable } from 'primereact/datatable';
@@ -28,7 +28,7 @@ export const FaqTableView = () => {
 
     const dispatch = useDispatch();
     const { faqs, paginateParams } = useSelector(state => state.faq);
-    const { translate } = useSelector(state => state.setting);
+    const { translate, language } = useSelector(state => state.setting);
 
     const [loading, setLoading] = useState(false);
     const [showAuditColumn, setShowAuditColumn] = useState(false);
@@ -105,8 +105,13 @@ export const FaqTableView = () => {
     const onFilterByDate = (e) => {
         let updatePaginateParams = { ...paginateParams };
 
-        updatePaginateParams.start_date = moment(e.startDate).format('yy-MM-DD');
-        updatePaginateParams.end_date = moment(e.endDate).format('yy-MM-DD');
+        if (e.startDate === "" || e.endDate === "") {
+            delete updatePaginateParams.start_date;
+            delete updatePaginateParams.end_date;
+          } else {
+            updatePaginateParams.start_date = moment(e.startDate).format("yy-MM-DD");
+            updatePaginateParams.end_date = moment(e.endDate).format("yy-MM-DD");
+          }
 
         dispatch(setDateFilter(e));
         dispatch(setPaginate(updatePaginateParams));
@@ -240,6 +245,13 @@ export const FaqTableView = () => {
                                       );
                                     case "status":
                                       return <Status status={value[col.field]} />;
+                                    case "question":
+                                        const countryCode = countries.map(country => country.code.toLowerCase())
+                                        return countryCode.map((code) => {
+                                            if(code === language?.code?.toLowerCase()){
+                                                return <div key={code}>{JSON.parse(value[col.field])[language?.code?.toLowerCase()]}</div>
+                                            }
+                                        })
                                     default:
                                       return value[col.field];
                                   }
