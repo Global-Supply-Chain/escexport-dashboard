@@ -39,7 +39,7 @@ export const FaqUpdate = () => {
     const { translate } = useSelector(state => state.setting);
 
     const payload = useRef(dynamicForm);
-    const [statusPayload, setStatusPayload] = useState();
+    const [statusPayload, setStatusPayload] = useState(faq?.status);
     const [loading, setLoading] = useState(false);
     const [visible, setVisible] = useState(false);
     const [status, setStatus] = useState([]);
@@ -104,10 +104,11 @@ export const FaqUpdate = () => {
           question: questions,
           status : statusPayload?.status
         };
+
         console.log(mainPayload);
 
 
-        await faqService.update(dispatch, params.id, mainPayload)
+        // await faqService.update(dispatch, params.id, mainPayload)
         setLoading(false);
     }
 
@@ -146,8 +147,7 @@ export const FaqUpdate = () => {
 
                     {prevValue && countries.map((value, index) => {
                         const codeNameQuestion = value.code.toLowerCase();
-                        // console.log(prevValue);
-                        // console.log(JSON.parse(prevValue.answer)[codeNameQuestion]);
+
                         return (
                             <div className="col-12" key={`faq_lang_${index}`}>
                                 <div className="grid">
@@ -171,8 +171,7 @@ export const FaqUpdate = () => {
                                                 disabled={loading}
                                                 onChange={(e) => {
                                                     const codeNameQuestion = value.code.toLowerCase();
-                                                    payload.current[codeNameQuestion].question =
-                                                        e.target.value;
+                                                    payload.current[codeNameQuestion].question = e.target.value;
                                                 }}
                                             />
                                             <ValidationMessage field={"question"} />
