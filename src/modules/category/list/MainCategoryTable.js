@@ -29,13 +29,13 @@ export const MainCategoryTable = () => {
   const { mainPaginateParams, mainCategories } = useSelector(
     (state) => state.category
   );
-  const { translate } = useSelector(state => state.setting);
+  const { translate } = useSelector((state) => state.setting);
   const [loading, setLoading] = useState(false);
   const [showAuditColumn, setShowAuditColumn] = useState(false);
 
   const total = useRef(0);
   const first = useRef(0);
-  const categoryStatus = useRef(['ALL']);
+  const categoryStatus = useRef(["ALL"]);
   const columns = useRef(categoryPayload.mainCategoryColumns);
   const showColumns = useRef(
     columns.current.filter((col) => col.show === true)
@@ -43,7 +43,7 @@ export const MainCategoryTable = () => {
 
   /**
    * Event - Paginate Page Change
-   * @param {*} event 
+   * @param {*} event
    */
   const onPageChange = (event) => {
     first.current = event.page * mainPaginateParams.per_page;
@@ -58,7 +58,7 @@ export const MainCategoryTable = () => {
 
   /**
    * Event - Search
-   * @param {*} event 
+   * @param {*} event
    */
   const onSearchChange = (event) => {
     dispatch(
@@ -71,7 +71,7 @@ export const MainCategoryTable = () => {
 
   /**
    * Event - Column sorting "DESC | ASC"
-   * @param {*} event 
+   * @param {*} event
    */
   const onSort = (event) => {
     const sortOrder = event.sortOrder === 1 ? "DESC" : "ASC";
@@ -79,24 +79,24 @@ export const MainCategoryTable = () => {
       setMainPaginate({
         ...mainPaginateParams,
         sort: sortOrder,
-        order: event.sortField
+        order: event.sortField,
       })
     );
-  }
+  };
 
   /**
-    * On Change Filter
-    * @param {*} e
-    */
+   * On Change Filter
+   * @param {*} e
+   */
   const onFilter = (e) => {
     let updatePaginateParams = { ...mainPaginateParams };
 
     if (e === "ALL") {
-      updatePaginateParams.filter = "";
-      updatePaginateParams.value = "";
+      updatePaginateParams.filter = "level";
+      updatePaginateParams.value = "0";
     } else {
-      updatePaginateParams.filter = "status";
-      updatePaginateParams.value = e;
+      updatePaginateParams.filter = "level,status";
+      updatePaginateParams.value = `0,${e}`;
     }
 
     dispatch(setMainPaginate(updatePaginateParams));
@@ -106,8 +106,13 @@ export const MainCategoryTable = () => {
   const onFilterByDate = (e) => {
     let updatePaginateParams = { ...mainPaginateParams };
 
-    updatePaginateParams.start_date = moment(e.startDate).format('yy-MM-DD');
-    updatePaginateParams.end_date = moment(e.endDate).format('yy-MM-DD');
+    if (e.startDate === "" || e.endDate === "") {
+      delete updatePaginateParams.start_date;
+      delete updatePaginateParams.end_date;
+    } else {
+      updatePaginateParams.start_date = moment(e.startDate).format("yy-MM-DD");
+      updatePaginateParams.end_date = moment(e.endDate).format("yy-MM-DD");
+    }
 
     dispatch(setDateFilter(e));
     dispatch(setMainPaginate(updatePaginateParams));
@@ -131,8 +136,8 @@ export const MainCategoryTable = () => {
   }, [dispatch, mainPaginateParams]);
 
   /**
-* loading general Status
-*/
+   * loading general Status
+   */
   const loadingStatus = useCallback(async () => {
     const categoryStatusResponse = await getRequest(
       `${endpoints.status}?type=general`
@@ -176,14 +181,17 @@ export const MainCategoryTable = () => {
           label={translate.filter_by}
         />
 
-        <FilterByDate onFilter={(e) => onFilterByDate(e)} label={translate.filter_by_date} />
+        <FilterByDate
+          onFilter={(e) => onFilterByDate(e)}
+          label={translate.filter_by_date}
+        />
       </div>
     );
   };
 
-  /** Render - Column Icon Field 
+  /** Render - Column Icon Field
    * @returns
-  */
+   */
   const IconRender = ({ dataSource }) => {
     return (
       <Avatar
@@ -197,7 +205,7 @@ export const MainCategoryTable = () => {
 
   /**
    * Render - Paginate Footer
-   * @returns 
+   * @returns
    */
   const FooterRender = () => {
     return (
@@ -212,7 +220,9 @@ export const MainCategoryTable = () => {
             icon="pi pi-refresh"
             size="small"
             onClick={() => {
-              dispatch(setMainPaginate(categoryPayload.paginateParams));
+              dispatch(
+                setMainPaginate(categoryPayload.mainCategoryPaginateParams)
+              );
               dispatch(setStatusFilter("ALL"));
               dispatch(setDateFilter({ startDate: "", endDate: "" }));
             }}
@@ -237,7 +247,13 @@ export const MainCategoryTable = () => {
         size="normal"
         value={mainCategories}
         sortField={mainPaginateParams.order}
-        sortOrder={mainPaginateParams.sort === 'DESC' ? 1 : mainPaginateParams.sort === "ASC" ? -1 : 0}
+        sortOrder={
+          mainPaginateParams.sort === "DESC"
+            ? 1
+            : mainPaginateParams.sort === "ASC"
+            ? -1
+            : 0
+        }
         loading={loading}
         sortMode="single"
         emptyMessage="No main category found."
@@ -295,7 +311,9 @@ export const MainCategoryTable = () => {
         rows={mainPaginateParams.per_page}
         totalRecords={total.current}
         rowsPerPageOptions={paginateOptions.rowsPerPageOptions}
-        template={"FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"}
+        template={
+          "FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"
+        }
         currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
         onPageChange={onPageChange}
       />
