@@ -100,8 +100,13 @@ const PointTableView = () => {
     const onFilterByDate = (e) => {
         let updatePaginateParams = { ...paginateParams };
 
-        updatePaginateParams.start_date = moment(e.startDate).format('yy-MM-DD');
-        updatePaginateParams.end_date = moment(e.endDate).format('yy-MM-DD');
+        if (e.startDate === "" || e.endDate === "") {
+            delete updatePaginateParams.start_date;
+            delete updatePaginateParams.end_date;
+          } else {
+            updatePaginateParams.start_date = moment(e.startDate).format("yy-MM-DD");
+            updatePaginateParams.end_date = moment(e.endDate).format("yy-MM-DD");
+          }
 
         dispatch(setDateFilter(e));
         dispatch(setPaginate(updatePaginateParams));

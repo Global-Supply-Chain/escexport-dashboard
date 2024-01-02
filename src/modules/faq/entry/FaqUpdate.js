@@ -108,7 +108,7 @@ export const FaqUpdate = () => {
         console.log(mainPayload);
 
 
-        // await faqService.update(dispatch, params.id, mainPayload)
+        await faqService.update(dispatch, params.id, mainPayload)
         setLoading(false);
     }
 
