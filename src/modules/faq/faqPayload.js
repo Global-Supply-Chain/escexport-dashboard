@@ -31,7 +31,6 @@ export const faqPayload = {
     },
     columns: [
         { field: "id", header: "ID", sortable: true, show: true },
-        { field: "answer", header: "Answer", sortable: true, show: true },
         { field: "question", header: "Question", sortable: true, show: true },
         { field: "status", header: "Status", show: true }
     ],
