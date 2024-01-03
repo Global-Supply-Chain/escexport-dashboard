@@ -22,7 +22,7 @@ import { FilterByStatus } from "../../../shares/FilterByStatus";
 import { FilterByDate } from "../../../shares/FilterByDate";
 import moment from "moment";
 import { Card } from "primereact/card";
-import { exportExcel } from "../../../helpers/export";
+import { ExportExcel, exportExcel } from "../../../helpers/export";
 import { ImportExcel } from "../../../helpers/import";
 
 export const MainCategoryTable = () => {
@@ -163,9 +163,6 @@ export const MainCategoryTable = () => {
     loadingData();
   }, [loadingData]);
 
-  const handleExport = () => {
-    exportExcel('/export-category');
-  };
 
   /**
    * Render - Table Header
@@ -190,12 +187,7 @@ export const MainCategoryTable = () => {
 
           <FilterByDate onFilter={(e) => onFilterByDate(e)} label={translate.filter_by_date} />
 
-          <Button
-            outlined
-            icon="pi pi-cloud-download"
-            size='small'
-            onClick={handleExport}
-          />
+          <ExportExcel url={endpoints.exportCategory} />
 
           <ImportExcel url={endpoints.importCategory} callback={loadingData} />
         </div>

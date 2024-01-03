@@ -1,15 +1,18 @@
+import { Button } from "primereact/button";
 import { keys } from "../constants/config";
+import { baseURL } from "../constants/endpoints";
 import { getData } from "./localstorage";
 
 
-export const exportExcel = async (url) => {
-    const baseUrl = 'http://127.0.0.1:8000/dashboard';
-    const iframe = document.createElement('iframe');
+export const ExportExcel = ({url}) => {
+
+    const handleExport = async () => {
+        const iframe = document.createElement('iframe');
         iframe.style.display = 'none';
         document.body.appendChild(iframe);
 
         try {
-            const response = await fetch(baseUrl+url, {
+            const response = await fetch(baseURL +'/'+ url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json', // Adjust the content type if needed
@@ -21,7 +24,7 @@ export const exportExcel = async (url) => {
                 // Add body if you need to send data in the request payload
                 // body: JSON.stringify({ key: 'value' }),
             });
-    
+
             // Check if the request was successful (status code 2xx)
             if (response.ok) {
                 // Check if the response has a valid content type for an Excel file
@@ -31,7 +34,7 @@ export const exportExcel = async (url) => {
                     const blob = await response.arrayBuffer();
                     const url = URL.createObjectURL(new Blob([blob], { type: contentType }));
                     iframe.src = url;
-    
+
                     // Cleanup the iframe after download
                     setTimeout(() => {
                         document.body.removeChild(iframe);
@@ -47,4 +50,14 @@ export const exportExcel = async (url) => {
         } catch (error) {
             console.error('An error occurred during the export:', error);
         }
+    }
+
+    return (
+        <Button
+            outlined
+            icon="pi pi-cloud-download"
+            size='small'
+            onClick={handleExport}
+        />
+    )
 }

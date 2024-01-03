@@ -24,7 +24,7 @@ import { FilterByDate } from '../../../shares/FilterByDate';
 import moment from 'moment';
 import { Card } from 'primereact/card';
 import { NavigateId } from '../../../shares/NavigateId';
-import { exportExcel } from '../../../helpers/export';
+import { ExportExcel } from '../../../helpers/export';
 import { ImportExcel } from '../../../helpers/import';
 
 const ItemTableView = () => {
@@ -157,10 +157,6 @@ const ItemTableView = () => {
         loadingData();
     }, [loadingData])
 
-    const handleExport = () => {
-        exportExcel('/export-item');
-    };
-
     /**
      * Table Footer Render
      * **/
@@ -211,12 +207,7 @@ const ItemTableView = () => {
 
                     <FilterByDate onFilter={(e) => onFilterByDate(e)} label={translate.filter_by_date} />
 
-                    <Button
-                        outlined
-                        icon="pi pi-cloud-download"
-                        size='small'
-                        onClick={handleExport}
-                    />
+                    <ExportExcel url={endpoints.exportItem} />
 
                     <ImportExcel url={endpoints.importItem} callback={loadingData} />
                 </div>
