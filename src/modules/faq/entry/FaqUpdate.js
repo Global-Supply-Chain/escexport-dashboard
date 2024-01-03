@@ -43,7 +43,7 @@ export const FaqUpdate = () => {
     const [loading, setLoading] = useState(false);
     const [visible, setVisible] = useState(false);
     const [status, setStatus] = useState([]);
-    const [prevValue,setPrevValue] = useState();
+    const [prevValue, setPrevValue] = useState();
 
     /**
      * loading data
@@ -70,7 +70,7 @@ export const FaqUpdate = () => {
     }, [loadingData])
 
     useEffect(() => {
-        if(faq) {
+        if (faq) {
             setPrevValue(faq)
         }
     }, [faq])
@@ -80,33 +80,31 @@ export const FaqUpdate = () => {
      * **/
     const submitFaqUpdate = async () => {
         setLoading(true);
+            const keys = Object.keys(payload.current).map((keys) => keys);
 
-        const keys = Object.keys(payload.current).map((keys) => keys);
+            const answers = JSON.stringify(
+                Object.fromEntries(
+                    keys.map((value) => {
+                        return [value, payload.current[value].answer ? payload.current[value].answer : JSON.parse(prevValue.answer)[value]];
+                    })
+                )
+            );
+            // setAnswer(answers);
+        
+            const questions = JSON.stringify(
+                Object.fromEntries(
+                    keys.map((value) => {
+                        return [value, payload.current[value].question ? payload.current[value].question : JSON.parse(prevValue.question)[value]];
+                    })
+                )
+            );
+            // setQuestion(questions);
 
-        const answers = JSON.stringify(
-          Object.fromEntries(
-            keys.map((value) => {
-              return [value, payload.current[value].answer];
-            })
-          )
-        );
-    
-        const questions = JSON.stringify(
-          Object.fromEntries(
-            keys.map((value) => {
-              return [value, payload.current[value].question];
-            })
-          )
-        );
-    
         const mainPayload = {
-          answer: answers,
-          question: questions,
-          status : statusPayload?.status
+            answer: answers,
+            question: questions,
+            status: statusPayload
         };
-
-        console.log(mainPayload);
-
 
         await faqService.update(dispatch, params.id, mainPayload)
         setLoading(false);
