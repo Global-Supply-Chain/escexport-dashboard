@@ -22,6 +22,8 @@ import { FilterByStatus } from "../../../shares/FilterByStatus";
 import { FilterByDate } from "../../../shares/FilterByDate";
 import moment from "moment";
 import { Card } from "primereact/card";
+import { exportExcel } from "../../../helpers/export";
+import { ImportExcel } from "../../../helpers/import";
 
 export const MainCategoryTable = () => {
   const dispatch = useDispatch();
@@ -161,6 +163,10 @@ export const MainCategoryTable = () => {
     loadingData();
   }, [loadingData]);
 
+  const handleExport = () => {
+    exportExcel('/export-category');
+  };
+
   /**
    * Render - Table Header
    * @returns
@@ -175,16 +181,24 @@ export const MainCategoryTable = () => {
           label={translate.press_enter_key_to_search}
         />
 
-        <FilterByStatus
-          status={categoryStatus.current}
-          onFilter={(e) => onFilter(e)}
-          label={translate.filter_by}
-        />
+        <div className="flex flex-column md:flex-row align-items-start md:align-items-end justify-content-center gap-3">
+          <FilterByStatus
+            status={categoryStatus.current}
+            onFilter={(e) => onFilter(e)}
+            label={translate.filter_by}
+          />
 
-        <FilterByDate
-          onFilter={(e) => onFilterByDate(e)}
-          label={translate.filter_by_date}
-        />
+          <FilterByDate onFilter={(e) => onFilterByDate(e)} label={translate.filter_by_date} />
+
+          <Button
+            outlined
+            icon="pi pi-cloud-download"
+            size='small'
+            onClick={handleExport}
+          />
+
+          <ImportExcel url={endpoints.importCategory} callback={loadingData} />
+        </div>
       </div>
     );
   };
@@ -251,8 +265,8 @@ export const MainCategoryTable = () => {
           mainPaginateParams.sort === "DESC"
             ? 1
             : mainPaginateParams.sort === "ASC"
-            ? -1
-            : 0
+              ? -1
+              : 0
         }
         loading={loading}
         sortMode="single"

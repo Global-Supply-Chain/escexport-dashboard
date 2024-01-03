@@ -25,6 +25,7 @@ import moment from 'moment';
 import { Card } from 'primereact/card';
 import { NavigateId } from '../../../shares/NavigateId';
 import { exportExcel } from '../../../helpers/export';
+import { ImportExcel } from '../../../helpers/import';
 
 const ItemTableView = () => {
 
@@ -216,6 +217,8 @@ const ItemTableView = () => {
                         size='small'
                         onClick={handleExport}
                     />
+
+                    <ImportExcel url={endpoints.importItem} callback={loadingData} />
                 </div>
             </div>
         )
