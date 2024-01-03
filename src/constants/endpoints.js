@@ -19,5 +19,7 @@ export const endpoints = {
     shop: "shop",
     count: "count",
     role: 'role',
-    permission: 'permission'
+    permission: 'permission',
+    importItem : 'import-item',
+    importCategory : 'import-category'
 }
