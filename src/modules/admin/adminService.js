@@ -30,8 +30,8 @@ export const adminService = {
         return response;
     },
 
-    update: async (dispatch, id, payload) => {
-        const response = await putRequest(`${endpoints.admin}/${id}`, payload);
+    update: async (dispatch, payload) => {
+        const response = await postRequest(`${endpoints.admin}/update`, payload);
         await httpServiceHandler(dispatch, response);
 
         if(response.status === 200) {

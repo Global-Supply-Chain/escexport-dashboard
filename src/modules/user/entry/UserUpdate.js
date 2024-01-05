@@ -7,15 +7,16 @@ import { payloadHandler } from '../../../helpers/handler';
 import { Button } from 'primereact/button';
 import { paths } from '../../../constants/paths';
 import { useNavigate, useParams } from 'react-router-dom';
-import { tooltipOptions } from '../../../constants/config';
 import { getRequest } from '../../../helpers/api';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dropdown } from 'primereact/dropdown';
 import { userService } from '../userService';
 import { userPayload } from '../userPayload';
 import { endpoints } from '../../../constants/endpoints';
+import { tooltipOptions } from "../../../constants/config";
 import { uploadFile } from '../../../helpers/uploadFile';
 import { Loading } from '../../../shares/Loading';
+import { Profile } from '../../../helpers/Profile';
 
 export const UserUpdate = ({ dataSource }) => {
 
@@ -29,7 +30,7 @@ export const UserUpdate = ({ dataSource }) => {
     const [loading, setLoading] = useState(false);
     const [userStatus, setUserStatus] = useState([]);
     const [payload, setPayload] = useState(userPayload.update);
-    
+
     /**
      * Loading Data
      */
@@ -38,11 +39,11 @@ export const UserUpdate = ({ dataSource }) => {
         await userService.show(dispatch, params.id);
 
         const response = await getRequest(`${endpoints.status}?type=user`);
-        if(response.status === 200) {
+        if (response.status === 200) {
             setUserStatus(response.data.user);
         };
         setLoading(false);
-    },[dispatch, params.id]);
+    }, [dispatch, params.id]);
 
     /**
      * user update
@@ -51,7 +52,23 @@ export const UserUpdate = ({ dataSource }) => {
      * **/
     const submitUpdateUser = async () => {
         setLoading(true);
-        await userService.update(dispatch, params.id, payload)
+
+        const {
+            name,
+            email,
+            phone,
+            profile,
+            status
+        } = payload;
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('phone', phone);
+        formData.append('email', email);
+        formData.append('profile', profile);
+        formData.append('status', status);
+        formData.append('id', payload.id);
+
+        await userService.update(dispatch, formData)
         setLoading(false)
     }
 
@@ -60,13 +77,13 @@ export const UserUpdate = ({ dataSource }) => {
     }, [loadingData]);
 
     useEffect(() => {
-        if(user) {
+        if (user) {
             setPayload(user);
         }
-    },[user])
+    }, [user])
 
     return (
-        <Card 
+        <Card
             title={translate.user_update}
             subTitle={translate.user_subtitle}
         >
@@ -75,29 +92,12 @@ export const UserUpdate = ({ dataSource }) => {
             <div className='grid'>
                 <div className='col-12 flex align-items-center justify-content-center'>
                     <form className="w-full flex flex-column justify-content-center align-items-center">
-                        <Avatar 
-                            className="mb-3"
-                            icon="pi pi-user" 
-                            size="xlarge" 
-                            shape="circle"
-                            image={payload.profile ? `${endpoints.image}/${payload.profile}` : null}
-                            onClick={() => {
-                                document.getElementById('profile').click();
-                            }}
-                        />
-                        <input 
-                            className='hidden'
-                            id="profile" 
-                            type='file' 
-                            accept="image/*"
-                            onChange={async (e) => {
-                                const result = await uploadFile.image(dispatch, e.target.files[0], 'ADMIN_PROIFLE');
-                                if(result.status === 200) {
-                                    payloadHandler(payload, result.data.id, 'profile', (updateValue) => {
-                                        setPayload(updateValue);
-                                    });
-                                }
-                            }}
+
+                        <Profile 
+                            payload={payload} 
+                            setPayload={setPayload} 
+                            field={'profile'}
+                            src={Number(payload.profile) &&`${endpoints.image}/${payload.profile}`}
                         />
 
                         <ValidationMessage field={'profile'} />
@@ -176,12 +176,12 @@ export const UserUpdate = ({ dataSource }) => {
                 <div className=' col-12 md:col-6 lg:col-4 py-3'>
                     <div className="flex flex-column gap-2">
                         <label htmlFor="status" className=' text-black'>{translate.status}</label>
-                        <Dropdown 
+                        <Dropdown
                             inputId='status'
                             name='status'
                             className="p-inputtext-sm text-black"
-                            options={userStatus} 
-                            placeholder="Select a user status" 
+                            options={userStatus}
+                            placeholder="Select a user status"
                             disabled={loading}
                             value={payload.status}
                             onChange={(e) => payloadHandler(payload, e.value, 'status', (updateValue) => {
