@@ -10,19 +10,13 @@ import { userService } from "../userService";
 import { ValidationMessage } from "../../../shares/ValidationMessage";
 import { payloadHandler } from "../../../helpers/handler";
 import { tooltipOptions } from "../../../constants/config";
-import { Avatar } from "primereact/avatar";
 import { BreadCrumb } from "../../../shares/BreadCrumb";
+import { userPayload } from "../userPayload";
+import { Profile } from "../../../helpers/Profile";
 
 export const UserCreate = () => {
   const [loading, setLoading] = useState(false);
-  const [payload, setPayload] = useState({
-    name: "",
-    profile: "",
-    email: "",
-    phone: "",
-    password: "",
-    confirm_password: "",
-  });
+  const [payload, setPayload] = useState(userPayload.store);
 
   const { translate } = useSelector(state => state.setting);
 
@@ -36,7 +30,24 @@ export const UserCreate = () => {
    * **/
   const submitUser = async () => {
     setLoading(true);
-    await userService.store(payload, dispatch);
+    const {
+      name,
+      phone,
+      profile,
+      email,
+      password,
+      confirm_password
+    } = payload;
+
+    const formData = new FormData();
+    formData.append('profile', profile);
+    formData.append('name', name);
+    formData.append('phone', phone);
+    formData.append('email', email);
+    formData.append('password', password);
+    formData.append('confirm_password', confirm_password);
+
+    await userService.store(formData, dispatch);
 
     setLoading(false);
   };
@@ -56,15 +67,13 @@ export const UserCreate = () => {
             <div className=" grid">
               <div className=" col-12 flex align-items-center justify-content-center">
                 <form>
-                  <Avatar
-                    icon="pi pi-user"
-                    size="xlarge"
-                    shape="circle"
-                    onClick={() => {
-                      document.getElementById("profile").click();
-                    }}
+
+                  <Profile 
+                    payload={payload} 
+                    setPayload={setPayload} 
+                    field={'profile'}
                   />
-                  <input id="profile" type="file" className=" hidden" />
+
                 </form>
               </div>
 

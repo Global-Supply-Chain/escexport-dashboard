@@ -13,12 +13,14 @@ export const adminPayload = {
         confirm_password: ""
     },
     update: {
+        id : "",
         name: "",
         profile: "",
         email: "",
         phone: "",
         role_id: null,
         password: "",
+        confirm_password :"",
         status: ""  
     },
     searchableFields: "id,name,email,phone",

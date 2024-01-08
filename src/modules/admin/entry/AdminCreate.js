@@ -18,6 +18,7 @@ import { endpoints } from "../../../constants/endpoints";
 import { Loading } from "../../../shares/Loading";
 import { authorizationService } from "../../authorization/authorizatonService";
 import { Dropdown } from "primereact/dropdown";
+import { Profile } from "../../../helpers/Profile";
 
 export const AdminCreate = () => {
 
@@ -59,7 +60,27 @@ export const AdminCreate = () => {
      */
     const submitCreateAdmin = async () => {
         setLoading(true);
-        await adminService.store(payload,dispatch);
+
+        const {
+            name,
+            email,
+            phone,
+            password,
+            confirm_password,
+            profile,
+            role_id
+        } = payload;
+
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('phone', phone);
+        formData.append('password', password);
+        formData.append('confirm_password', confirm_password);
+        formData.append('role_id', role_id);
+        formData.append('profile', profile);
+
+        await adminService.store(formData,dispatch);
         setLoading(false);
     }
 
@@ -80,29 +101,10 @@ export const AdminCreate = () => {
                     <div className="grid">
                         <div className='col-12 flex align-items-center justify-content-center'>
                             <form className="w-full flex flex-column justify-content-center align-items-center">
-                                <Avatar 
-                                    className="mb-3"
-                                    icon="pi pi-user" 
-                                    size="xlarge" 
-                                    shape="circle"
-                                    image={payload.profile ? `${endpoints.image}/${payload.profile}` : null}
-                                    onClick={() => {
-                                        document.getElementById('profile').click();
-                                    }}
-                                />
-                                <input 
-                                    className='hidden'
-                                    id="profile" 
-                                    type='file' 
-                                    accept="image/*"
-                                    onChange={async (e) => {
-                                        const result = await uploadFile.image(dispatch, e.target.files[0], 'ADMIN_PROIFLE');
-                                        if(result.status === 200) {
-                                            payloadHandler(payload, result.data.id, 'profile', (updateValue) => {
-                                                setPayload(updateValue);
-                                            });
-                                        }
-                                    }}
+                                <Profile
+                                    payload={payload}
+                                    setPayload={setPayload}
+                                    field={'profile'}
                                 />
 
                                 <ValidationMessage field={'file'} />
