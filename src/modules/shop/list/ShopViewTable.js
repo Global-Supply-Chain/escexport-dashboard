@@ -21,7 +21,7 @@ import moment from "moment";
 import { FilterByDate } from "../../../shares/FilterByDate";
 import { Card } from "primereact/card";
 import { NavigateId } from "../../../shares/NavigateId";
-import { exportExcel } from "../../../helpers/export";
+import { ExportExcel, exportExcel } from "../../../helpers/export";
 
 export const ShopViewTable = () => {
 
@@ -114,10 +114,6 @@ export const ShopViewTable = () => {
         dispatch(setPaginate(updatePaginateParams));
     };
 
-    const handleExport = async () => {
-        exportExcel('/export-shop')
-    };
-
     /**
      * Loading Data
      */
@@ -203,12 +199,7 @@ export const ShopViewTable = () => {
 
                     <FilterByDate onFilter={(e) => onFilterByDate(e)} label={translate.filter_by_date} />
 
-                    <Button
-                        outlined
-                        icon="pi pi-cloud-download"
-                        size='small'
-                        onClick={handleExport}
-                    />
+                    <ExportExcel url={endpoints.exportShop} />
                 </div>
             </div>
         )

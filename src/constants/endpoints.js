@@ -20,6 +20,11 @@ export const endpoints = {
     count: "count",
     role: 'role',
     permission: 'permission',
+    exportItem : 'export-item',
     importItem : 'import-item',
-    importCategory : 'import-category'
+    importCategory : 'import-category',
+    exportCategory : 'export-category',
+    exportOrder : 'export-order',
+    exportShop : 'export-shop',
+    exportUser : 'export-user'
 }

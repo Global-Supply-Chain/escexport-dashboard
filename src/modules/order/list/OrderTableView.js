@@ -23,7 +23,7 @@ import moment from 'moment';
 import { FilterByDate } from '../../../shares/FilterByDate';
 import { Card } from 'primereact/card';
 import { NavigateId } from '../../../shares/NavigateId';
-import { exportExcel } from '../../../helpers/export';
+import { ExportExcel, exportExcel } from '../../../helpers/export';
 
 export const OrderTableView = () => {
 
@@ -157,10 +157,6 @@ export const OrderTableView = () => {
         loadingData();
     }, [loadingData])
 
-    const handleExport = () => {
-        exportExcel('/export-order')
-    };
-
     /**
      * Table Footer Render
      * **/
@@ -211,12 +207,7 @@ export const OrderTableView = () => {
 
                     <FilterByDate onFilter={(e) => onFilterByDate(e)} label={translate.filter_by_date} />
 
-                    <Button
-                        outlined
-                        icon="pi pi-cloud-download"
-                        size='small'
-                        onClick={handleExport}
-                    />
+                    <ExportExcel url={endpoints.exportOrder} />
                 </div>
             </div>
         )

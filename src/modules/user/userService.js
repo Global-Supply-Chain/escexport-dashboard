@@ -30,8 +30,8 @@ export const userService = {
         return response;
     },
 
-    update: async (dispatch, id, payload) => {
-        const response = await putRequest(`${endpoints.user}/${id}`, payload);
+    update: async (dispatch, payload) => {
+        const response = await postRequest(`${endpoints.user}/update`, payload);
         await httpServiceHandler(dispatch, response);
 
         if(response.status === 200) {
@@ -48,6 +48,7 @@ export const userService = {
 
     show: async (dispatch, id) => {
         const response = await getRequest(`${endpoints.user}/${id}`);
+        console.log(response);
         await httpServiceHandler(dispatch, response);
 
         if(response.status === 200) {

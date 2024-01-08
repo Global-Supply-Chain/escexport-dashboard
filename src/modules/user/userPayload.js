@@ -2,11 +2,20 @@ import { paginateOptions } from "../../constants/config";
 
 export const userPayload = {
     update: {
+        id: "",
         name: "",
         profile: "",
         email: "",
         phone: "",
-        status : ""
+        status: ""
+    },
+    store: {
+        name: "",
+        profile: '',
+        email: "",
+        phone: "",
+        password: "",
+        confirm_password: "",
     },
     columns: [
         { field: "id", header: "ID", sortable: true, show: true },
@@ -14,7 +23,7 @@ export const userPayload = {
         { field: "email", header: "Email", sortable: true, show: true },
         { field: "phone", header: "Phone", sortable: true, show: true },
         { field: "email_verified_at", header: "Email Verified", sortable: true, show: true },
-        { filed: "phone_verfified_at", header: "Phone Verified", sortable: true, show : true },
+        { filed: "phone_verfified_at", header: "Phone Verified", sortable: true, show: true },
         { field: "status", header: "Status", show: true }
     ],
     paginateParams: {

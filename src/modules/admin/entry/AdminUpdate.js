@@ -17,6 +17,7 @@ import { paths } from "../../../constants/paths";
 import { getRequest } from "../../../helpers/api";
 import { Loading } from "../../../shares/Loading";
 import { authorizationService } from "../../authorization/authorizatonService";
+import { Profile } from "../../../helpers/Profile";
 
 export const AdminUpdate = () => {
 
@@ -34,7 +35,31 @@ export const AdminUpdate = () => {
 
     const submitUpdateAdmin = async () => {
         setLoading(true);
-        await adminService.update(dispatch, params.id, payload);
+
+        const {
+            id,
+            name,
+            email,
+            phone,
+            role_id,
+            profile,
+            password,
+            confirm_password,
+            status
+        } = payload;
+
+        const formData = new FormData();
+        formData.append('id', id);
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('phone', phone);
+        formData.append('role_id', role_id);
+        formData.append('profile', profile);
+        formData.append('password', password);
+        formData.append('confirm_password', confirm_password);
+        formData.append('status', status);
+
+        await adminService.update(dispatch, formData);
         setLoading(false);
     }
 
@@ -42,7 +67,7 @@ export const AdminUpdate = () => {
         setLoading(true);
         const response = await getRequest(`${endpoints.status}?type=user`);
 
-        if(response.status === 200) {
+        if (response.status === 200) {
             setAdminStatus(response.data.user);
         }
         const result = await authorizationService.roleIndex(dispatch);
@@ -58,21 +83,22 @@ export const AdminUpdate = () => {
 
         await adminService.show(dispatch, params.id);
         setLoading(false);
-    },[dispatch, params.id]);
+    }, [dispatch, params.id]);
 
     useEffect(() => {
         loadingData();
-    },[loadingData]);
+    }, [loadingData]);
 
     useEffect(() => {
-        if(admin) {
+        if (admin) {
             setPayload(admin);
         }
-    },[admin])
+    }, [admin])
+    console.log(admin);
 
-    return(
+    return (
         <div className="col-12">
-            <Card 
+            <Card
                 title={translate.admin_update}
                 subTitle={translate.admin_subtitle}
             >
@@ -82,39 +108,22 @@ export const AdminUpdate = () => {
                 <div className="grid">
                     <div className='col-12 flex align-items-center justify-content-center'>
                         <form className="w-full flex flex-column justify-content-center align-items-center">
-                            <Avatar 
-                                className="mb-3"
-                                icon="pi pi-user" 
-                                size="xlarge" 
-                                shape="circle"
-                                image={payload.profile ? `${endpoints.image}/${payload.profile}` : null}
-                                onClick={() => {
-                                    document.getElementById('profile').click();
-                                }}
-                            />
-                            <input 
-                                className='hidden'
-                                id="profile" 
-                                type='file' 
-                                accept="image/*"
-                                onChange={async (e) => {
-                                    const result = await uploadFile.image(dispatch, e.target.files[0], 'ADMIN_PROIFLE');
-                                    if(result.status === 200) {
-                                        payloadHandler(payload, result.data.id, 'profile', (updateValue) => {
-                                            setPayload(updateValue);
-                                        });
-                                    }
-                                }}
+                            <Profile
+                                payload={payload}
+                                setPayload={setPayload}
+                                field={'profile'}
+                                src={Number(payload.profile) ? `${endpoints.image}/${payload.profile}` : null}
                             />
 
                             <ValidationMessage field={'file'} />
+                            <ValidationMessage field={'profile'} />
                         </form>
                     </div>
 
                     <div className="col-12 md:col-4 lg:col-4 my-3">
                         <label htmlFor="name" className='input-label'>{translate.name}</label>
                         <div className="p-inputgroup mt-2">
-                            <InputText 
+                            <InputText
                                 id="name"
                                 name="name"
                                 autoComplete="admin name"
@@ -123,7 +132,7 @@ export const AdminUpdate = () => {
                                 value={payload.name ? payload.name : ""}
                                 aria-describedby="name-help"
                                 tooltip="Administrator's full name"
-                                tooltipOptions={{...tooltipOptions}}
+                                tooltipOptions={{ ...tooltipOptions }}
                                 disabled={loading}
                                 onChange={(e) => payloadHandler(payload, e.target.value, 'name', (updateValue) => {
                                     setPayload(updateValue);
@@ -136,7 +145,7 @@ export const AdminUpdate = () => {
                     <div className="col-12 md:col-4 lg:col-4 my-3">
                         <label htmlFor="email" className='input-label'>{translate.email}</label>
                         <div className="p-inputgroup mt-2">
-                            <InputText 
+                            <InputText
                                 id="email"
                                 name="admin email"
                                 autoComplete="admin email"
@@ -146,7 +155,7 @@ export const AdminUpdate = () => {
                                 placeholder="Enter email address"
                                 value={payload.email ? payload.email : ""}
                                 tooltip="Email Address (admin@example.com)"
-                                tooltipOptions={{...tooltipOptions}}
+                                tooltipOptions={{ ...tooltipOptions }}
                                 disabled={loading}
                                 onChange={(e) => payloadHandler(payload, e.target.value, 'email', (updateValue) => {
                                     setPayload(updateValue);
@@ -159,7 +168,7 @@ export const AdminUpdate = () => {
                     <div className="col-12 md:col-4 lg:col-4 my-3">
                         <label htmlFor="phone" className='input-label'>{translate.phone}</label>
                         <div className="p-inputgroup mt-2">
-                            <InputText 
+                            <InputText
                                 id="phone"
                                 name="admin phone"
                                 autoComplete="admin phone"
@@ -168,7 +177,7 @@ export const AdminUpdate = () => {
                                 placeholder="Enter mobile phone number"
                                 value={payload.phone ? payload.phone : ""}
                                 tooltip="Phone number can not start with (+95) and must be start with 9xxxxx"
-                                tooltipOptions={{...tooltipOptions}}
+                                tooltipOptions={{ ...tooltipOptions }}
                                 disabled={loading}
                                 onChange={(e) => payloadHandler(payload, e.target.value, 'phone', (updateValue) => {
                                     setPayload(updateValue);
@@ -181,13 +190,13 @@ export const AdminUpdate = () => {
                     <div className="col-12 md:col-4 lg:col-4 my-3">
                         <div className="flex flex-column gap-2">
                             <label htmlFor="status" className='input-label'>{translate.status}</label>
-                            <Dropdown 
+                            <Dropdown
                                 className="p-inputtext-sm text-black"
                                 inputId="status"
                                 name="status"
                                 autoComplete="admin status"
-                                options={adminStatus} 
-                                placeholder="Select admin status" 
+                                options={adminStatus}
+                                placeholder="Select admin status"
                                 disabled={loading}
                                 value={payload.status}
                                 onChange={(e) => payloadHandler(payload, e.value, 'status', (updateValue) => {
@@ -201,7 +210,7 @@ export const AdminUpdate = () => {
                     <div className="col-12 md:col-4 lg:col-4 my-3">
                         <label htmlFor="password" className='input-label'>{translate.password}</label>
                         <div className="p-inputgroup mt-2">
-                            <InputText 
+                            <InputText
                                 id="password"
                                 name="admin password"
                                 className="p-inputtext-sm"
@@ -210,7 +219,7 @@ export const AdminUpdate = () => {
                                 placeholder="Enter password"
                                 value={payload.password ? payload.password : ""}
                                 tooltip="Password must be contain special chars"
-                                tooltipOptions={{...tooltipOptions}}
+                                tooltipOptions={{ ...tooltipOptions }}
                                 disabled={loading}
                                 onChange={(e) => payloadHandler(payload, e.target.value, 'password', (updateValue) => {
                                     setPayload(updateValue);
@@ -223,7 +232,7 @@ export const AdminUpdate = () => {
                     <div className="col-12 md:col-4 lg:col-4 my-3">
                         <label htmlFor="confirm-password" className='input-label'>{translate.con_password}</label>
                         <div className="p-inputgroup mt-2">
-                            <InputText 
+                            <InputText
                                 id="confirm-password"
                                 name="confirm password for admin"
                                 className="p-inputtext-sm"
@@ -232,7 +241,7 @@ export const AdminUpdate = () => {
                                 placeholder="Enter confirmation password"
                                 value={payload.confirm_password ? payload.confirm_password : ""}
                                 tooltip="Confirm password must be same password"
-                                tooltipOptions={{...tooltipOptions}}
+                                tooltipOptions={{ ...tooltipOptions }}
                                 disabled={loading}
                                 onChange={(e) => payloadHandler(payload, e.target.value, 'confirm_password', (updateValue) => {
                                     setPayload(updateValue);
@@ -243,28 +252,28 @@ export const AdminUpdate = () => {
                     </div>
 
                     <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                            <label htmlFor="role" className='input-label'>{translate.role}</label>
-                            <div className="p-inputgroup mt-2">
-                                <Dropdown
-                                    inputId="role"
-                                    name="role"
-                                    autoComplete="admin role"
-                                    value={payload.role_id}
-                                    onChange={(e) => payloadHandler(payload, e.value, 'role_id', (updateValue) => {
-                                        setPayload(updateValue);
-                                    })}
-                                    options={roleList}
-                                    placeholder="Select a role"
-                                    disabled={loading}
-                                    className="p-inputtext-sm"
-                                />
-                            </div>
-                            <ValidationMessage field="role_id" />
+                        <label htmlFor="role" className='input-label'>{translate.role}</label>
+                        <div className="p-inputgroup mt-2">
+                            <Dropdown
+                                inputId="role"
+                                name="role"
+                                autoComplete="admin role"
+                                value={payload.role_id}
+                                onChange={(e) => payloadHandler(payload, e.value, 'role_id', (updateValue) => {
+                                    setPayload(updateValue);
+                                })}
+                                options={roleList}
+                                placeholder="Select a role"
+                                disabled={loading}
+                                className="p-inputtext-sm"
+                            />
                         </div>
+                        <ValidationMessage field="role_id" />
+                    </div>
 
                     <div className="col-12">
                         <div className="flex flex-row justify-content-end align-items-center">
-                            <Button 
+                            <Button
                                 className="mx-2"
                                 label={translate.cancel}
                                 severity="secondary"
@@ -274,7 +283,7 @@ export const AdminUpdate = () => {
                                 onClick={() => navigate(paths.admin)}
                             />
 
-                            <Button 
+                            <Button
                                 className="mx-2"
                                 label={translate.update}
                                 severity="danger"
