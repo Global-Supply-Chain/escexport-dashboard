@@ -56,7 +56,7 @@ export const UserUpdate = ({ dataSource }) => {
 
         const formData = formBuilder(payload,userPayload.update);
 
-        await userService.update(dispatch, JSON.stringify(formData),params.id)
+        await userService.update(dispatch, formData,params.id)
         setLoading(false)
     }
 
