@@ -2,7 +2,6 @@
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
-import { Avatar } from "primereact/avatar";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -13,12 +12,11 @@ import { payloadHandler } from "../../../helpers/handler";
 import { paths } from "../../../constants/paths";
 import { adminService } from "../adminService";
 import { ValidationMessage } from "../../../shares/ValidationMessage";
-import { uploadFile } from "../../../helpers/uploadFile";
-import { endpoints } from "../../../constants/endpoints";
 import { Loading } from "../../../shares/Loading";
 import { authorizationService } from "../../authorization/authorizatonService";
 import { Dropdown } from "primereact/dropdown";
-import { Profile } from "../../../helpers/Profile";
+import { Profile } from "../../../shares/Profile";
+import { formBuilder } from "../../../helpers/formBuilder";
 
 export const AdminCreate = () => {
 
@@ -61,24 +59,7 @@ export const AdminCreate = () => {
     const submitCreateAdmin = async () => {
         setLoading(true);
 
-        const {
-            name,
-            email,
-            phone,
-            password,
-            confirm_password,
-            profile,
-            role_id
-        } = payload;
-
-        const formData = new FormData();
-        formData.append('name', name);
-        formData.append('email', email);
-        formData.append('phone', phone);
-        formData.append('password', password);
-        formData.append('confirm_password', confirm_password);
-        formData.append('role_id', role_id);
-        formData.append('profile', profile);
+        const formData = formBuilder(payload,adminPayload.create);
 
         await adminService.store(formData,dispatch);
         setLoading(false);

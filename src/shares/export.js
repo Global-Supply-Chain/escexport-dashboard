@@ -1,7 +1,7 @@
 import { Button } from "primereact/button";
 import { keys } from "../constants/config";
 import { baseURL } from "../constants/endpoints";
-import { getData } from "./localstorage";
+import { getData } from "../helpers/localstorage";
 
 
 export const ExportExcel = ({url}) => {

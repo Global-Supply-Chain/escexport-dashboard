@@ -12,7 +12,8 @@ import { payloadHandler } from "../../../helpers/handler";
 import { tooltipOptions } from "../../../constants/config";
 import { BreadCrumb } from "../../../shares/BreadCrumb";
 import { userPayload } from "../userPayload";
-import { Profile } from "../../../helpers/Profile";
+import { Profile } from "../../../shares/Profile";
+import { formBuilder } from "../../../helpers/formBuilder";
 
 export const UserCreate = () => {
   const [loading, setLoading] = useState(false);
@@ -30,22 +31,7 @@ export const UserCreate = () => {
    * **/
   const submitUser = async () => {
     setLoading(true);
-    const {
-      name,
-      phone,
-      profile,
-      email,
-      password,
-      confirm_password
-    } = payload;
-
-    const formData = new FormData();
-    formData.append('profile', profile);
-    formData.append('name', name);
-    formData.append('phone', phone);
-    formData.append('email', email);
-    formData.append('password', password);
-    formData.append('confirm_password', confirm_password);
+    const formData = formBuilder(payload,userPayload.store);
 
     await userService.store(formData, dispatch);
 
@@ -68,7 +54,7 @@ export const UserCreate = () => {
               <div className=" col-12 flex align-items-center justify-content-center">
                 <form>
 
-                  <Profile 
+                  <Profile
                     payload={payload} 
                     setPayload={setPayload} 
                     field={'profile'}

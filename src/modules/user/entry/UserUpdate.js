@@ -16,7 +16,8 @@ import { endpoints } from '../../../constants/endpoints';
 import { tooltipOptions } from "../../../constants/config";
 import { uploadFile } from '../../../helpers/uploadFile';
 import { Loading } from '../../../shares/Loading';
-import { Profile } from '../../../helpers/Profile';
+import { Profile } from '../../../shares/Profile';
+import { formBuilder } from '../../../helpers/formBuilder';
 
 export const UserUpdate = ({ dataSource }) => {
 
@@ -53,22 +54,9 @@ export const UserUpdate = ({ dataSource }) => {
     const submitUpdateUser = async () => {
         setLoading(true);
 
-        const {
-            name,
-            email,
-            phone,
-            profile,
-            status
-        } = payload;
-        const formData = new FormData();
-        formData.append('name', name);
-        formData.append('phone', phone);
-        formData.append('email', email);
-        formData.append('profile', profile);
-        formData.append('status', status);
-        formData.append('id', payload.id);
+        const formData = formBuilder(payload,userPayload.update);
 
-        await userService.update(dispatch, formData)
+        await userService.update(dispatch, formData,params.id)
         setLoading(false)
     }
 
@@ -97,7 +85,7 @@ export const UserUpdate = ({ dataSource }) => {
                             payload={payload} 
                             setPayload={setPayload} 
                             field={'profile'}
-                            src={Number(payload.profile) &&`${endpoints.image}/${payload.profile}`}
+                            src={Number(payload.profile) ? `${endpoints.image}/${payload.profile}` : null}
                         />
 
                         <ValidationMessage field={'profile'} />

@@ -1,11 +1,9 @@
-import { Avatar } from "primereact/avatar";
 import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext"
 import { Dropdown } from 'primereact/dropdown';
 import { useCallback, useEffect, useState } from "react";
 import { adminPayload } from "../adminPayload";
 import { endpoints } from "../../../constants/endpoints";
-import { uploadFile } from "../../../helpers/uploadFile";
 import { useDispatch, useSelector } from "react-redux";
 import { payloadHandler } from "../../../helpers/handler";
 import { ValidationMessage } from "../../../shares/ValidationMessage";
@@ -17,7 +15,8 @@ import { paths } from "../../../constants/paths";
 import { getRequest } from "../../../helpers/api";
 import { Loading } from "../../../shares/Loading";
 import { authorizationService } from "../../authorization/authorizatonService";
-import { Profile } from "../../../helpers/Profile";
+import { Profile } from "../../../shares/Profile";
+import { formBuilder } from "../../../helpers/formBuilder";
 
 export const AdminUpdate = () => {
 
@@ -36,28 +35,7 @@ export const AdminUpdate = () => {
     const submitUpdateAdmin = async () => {
         setLoading(true);
 
-        const {
-            id,
-            name,
-            email,
-            phone,
-            role_id,
-            profile,
-            password,
-            confirm_password,
-            status
-        } = payload;
-
-        const formData = new FormData();
-        formData.append('id', id);
-        formData.append('name', name);
-        formData.append('email', email);
-        formData.append('phone', phone);
-        formData.append('role_id', role_id);
-        formData.append('profile', profile);
-        formData.append('password', password);
-        formData.append('confirm_password', confirm_password);
-        formData.append('status', status);
+        const formData = formBuilder(payload,adminPayload.update);
 
         await adminService.update(dispatch, formData);
         setLoading(false);

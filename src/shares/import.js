@@ -2,9 +2,9 @@
 
 import { Button } from 'primereact/button';
 import React from 'react'
-import { postRequest } from './api';
+import { postRequest } from '../helpers/api';
 import { useDispatch } from 'react-redux';
-import { updateNotification } from '../shares/shareSlice';
+import { updateNotification } from './shareSlice';
 import { baseURL } from '../constants/endpoints';
 
 export const ImportExcel = ({ url, callback }) => {

@@ -23,7 +23,7 @@ import moment from 'moment';
 import { FilterByDate } from '../../../shares/FilterByDate';
 import { Card } from 'primereact/card';
 import { NavigateId } from '../../../shares/NavigateId';
-import { ExportExcel, exportExcel } from '../../../helpers/export';
+import { ExportExcel } from "../../../shares/export";
 
 export const UserTableView = () => {
 
