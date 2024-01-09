@@ -256,7 +256,6 @@ export const FaqTableView = () => {
                                         const countryCode = countries.map(country => country.code.toLowerCase())
                                         return countryCode.map((code) => {
                                             if(code === language?.code?.toLowerCase()){
-                                                console.log(value[col.field]);
                                                 return <div key={code}>{isJSONString(value[col.field]) ? JSON.parse(value[col.field])[language?.code?.toLowerCase()] : value[col.field]}</div>
                                             }
                                         })
