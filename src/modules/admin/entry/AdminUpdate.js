@@ -1,11 +1,9 @@
-import { Avatar } from "primereact/avatar";
 import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext"
 import { Dropdown } from 'primereact/dropdown';
 import { useCallback, useEffect, useState } from "react";
 import { adminPayload } from "../adminPayload";
 import { endpoints } from "../../../constants/endpoints";
-import { uploadFile } from "../../../helpers/uploadFile";
 import { useDispatch, useSelector } from "react-redux";
 import { payloadHandler } from "../../../helpers/handler";
 import { ValidationMessage } from "../../../shares/ValidationMessage";
@@ -17,7 +15,7 @@ import { paths } from "../../../constants/paths";
 import { getRequest } from "../../../helpers/api";
 import { Loading } from "../../../shares/Loading";
 import { authorizationService } from "../../authorization/authorizatonService";
-import { Profile } from "../../../helpers/Profile";
+import { Profile } from "../../../shares/Profile";
 
 export const AdminUpdate = () => {
 

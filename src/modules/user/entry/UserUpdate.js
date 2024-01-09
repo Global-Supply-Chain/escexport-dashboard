@@ -16,7 +16,7 @@ import { endpoints } from '../../../constants/endpoints';
 import { tooltipOptions } from "../../../constants/config";
 import { uploadFile } from '../../../helpers/uploadFile';
 import { Loading } from '../../../shares/Loading';
-import { Profile } from '../../../helpers/Profile';
+import { Profile } from '../../../shares/Profile';
 import { formBuilder } from '../../../helpers/formBuilder';
 
 export const UserUpdate = ({ dataSource }) => {

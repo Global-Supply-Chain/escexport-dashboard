@@ -48,7 +48,6 @@ export const userService = {
 
     show: async (dispatch, id) => {
         const response = await getRequest(`${endpoints.user}/${id}`);
-        console.log(response);
         await httpServiceHandler(dispatch, response);
 
         if(response.status === 200) {
