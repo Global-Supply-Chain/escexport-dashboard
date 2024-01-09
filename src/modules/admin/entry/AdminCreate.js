@@ -16,6 +16,7 @@ import { Loading } from "../../../shares/Loading";
 import { authorizationService } from "../../authorization/authorizatonService";
 import { Dropdown } from "primereact/dropdown";
 import { Profile } from "../../../shares/Profile";
+import { formBuilder } from "../../../helpers/formBuilder";
 
 export const AdminCreate = () => {
 
@@ -58,24 +59,7 @@ export const AdminCreate = () => {
     const submitCreateAdmin = async () => {
         setLoading(true);
 
-        const {
-            name,
-            email,
-            phone,
-            password,
-            confirm_password,
-            profile,
-            role_id
-        } = payload;
-
-        const formData = new FormData();
-        formData.append('name', name);
-        formData.append('email', email);
-        formData.append('phone', phone);
-        formData.append('password', password);
-        formData.append('confirm_password', confirm_password);
-        formData.append('role_id', role_id);
-        formData.append('profile', profile);
+        const formData = formBuilder(payload,adminPayload.create);
 
         await adminService.store(formData,dispatch);
         setLoading(false);
