@@ -1,5 +1,3 @@
-
-
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { auditColumns, countries, paginateOptions } from '../../../constants/config';
@@ -23,6 +21,15 @@ import { FilterByDate } from '../../../shares/FilterByDate';
 import moment from 'moment';
 import { Card } from 'primereact/card';
 import { NavigateId } from '../../../shares/NavigateId';
+
+function isJSONString(str) {
+    try {
+      JSON.parse(str);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 
 export const FaqTableView = () => {
 
@@ -249,7 +256,8 @@ export const FaqTableView = () => {
                                         const countryCode = countries.map(country => country.code.toLowerCase())
                                         return countryCode.map((code) => {
                                             if(code === language?.code?.toLowerCase()){
-                                                return <div key={code}>{JSON.parse(value[col.field])[language?.code?.toLowerCase()]}</div>
+                                                console.log(value[col.field]);
+                                                return <div key={code}>{isJSONString(value[col.field]) ? JSON.parse(value[col.field])[language?.code?.toLowerCase()] : value[col.field]}</div>
                                             }
                                         })
                                     default:

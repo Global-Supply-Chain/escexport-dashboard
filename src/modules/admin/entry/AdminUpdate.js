@@ -72,7 +72,6 @@ export const AdminUpdate = () => {
             setPayload(admin);
         }
     }, [admin])
-    console.log(admin);
 
     return (
         <div className="col-12">
