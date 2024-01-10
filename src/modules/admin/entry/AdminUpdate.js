@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { payloadHandler } from "../../../helpers/handler";
 import { ValidationMessage } from "../../../shares/ValidationMessage";
 import { tooltipOptions } from "../../../constants/config";
-import { Button } from "primereact/button";
 import { useNavigate, useParams } from "react-router-dom";
 import { adminService } from "../adminService";
 import { paths } from "../../../constants/paths";
@@ -17,6 +16,7 @@ import { Loading } from "../../../shares/Loading";
 import { authorizationService } from "../../authorization/authorizatonService";
 import { Profile } from "../../../shares/Profile";
 import { formBuilder } from "../../../helpers/formBuilder";
+import { FormMainAction } from "../../../shares/FormMainAction";
 
 export const AdminUpdate = () => {
 
@@ -35,7 +35,7 @@ export const AdminUpdate = () => {
     const submitUpdateAdmin = async () => {
         setLoading(true);
 
-        const formData = formBuilder(payload,adminPayload.update);
+        const formData = formBuilder(payload, adminPayload.update);
 
         await adminService.update(dispatch, formData);
         setLoading(false);
@@ -72,7 +72,6 @@ export const AdminUpdate = () => {
             setPayload(admin);
         }
     }, [admin])
-    console.log(admin);
 
     return (
         <div className="col-12">
@@ -249,28 +248,15 @@ export const AdminUpdate = () => {
                         <ValidationMessage field="role_id" />
                     </div>
 
-                    <div className="col-12">
-                        <div className="flex flex-row justify-content-end align-items-center">
-                            <Button
-                                className="mx-2"
-                                label={translate.cancel}
-                                severity="secondary"
-                                outlined
-                                size='small'
-                                disabled={loading}
-                                onClick={() => navigate(paths.admin)}
-                            />
+                    <FormMainAction
+                        cancel={translate.cancel}
+                        cancelClick={() => navigate(paths.admin)}
+                        submit={translate.update}
+                        submitClick={submitUpdateAdmin}
+                        loading={loading}
+                    />
 
-                            <Button
-                                className="mx-2"
-                                label={translate.update}
-                                severity="danger"
-                                size='small'
-                                disabled={loading}
-                                onClick={() => submitUpdateAdmin()}
-                            />
-                        </div>
-                    </div>
+
                 </div>
             </Card>
         </div>

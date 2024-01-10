@@ -1,10 +1,8 @@
-import { Avatar } from 'primereact/avatar';
 import { Card } from 'primereact/card';
 import { InputText } from 'primereact/inputtext';
 import React, { useCallback, useEffect, useState } from 'react'
 import { ValidationMessage } from '../../../shares/ValidationMessage';
 import { payloadHandler } from '../../../helpers/handler';
-import { Button } from 'primereact/button';
 import { paths } from '../../../constants/paths';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getRequest } from '../../../helpers/api';
@@ -14,12 +12,12 @@ import { userService } from '../userService';
 import { userPayload } from '../userPayload';
 import { endpoints } from '../../../constants/endpoints';
 import { tooltipOptions } from "../../../constants/config";
-import { uploadFile } from '../../../helpers/uploadFile';
 import { Loading } from '../../../shares/Loading';
 import { Profile } from '../../../shares/Profile';
 import { formBuilder } from '../../../helpers/formBuilder';
+import { FormMainAction } from '../../../shares/FormMainAction';
 
-export const UserUpdate = ({ dataSource }) => {
+export const UserUpdate = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -54,9 +52,9 @@ export const UserUpdate = ({ dataSource }) => {
     const submitUpdateUser = async () => {
         setLoading(true);
 
-        const formData = formBuilder(payload,userPayload.update);
+        const formData = formBuilder(payload, userPayload.update);
 
-        await userService.update(dispatch, formData,params.id)
+        await userService.update(dispatch, formData, params.id)
         setLoading(false)
     }
 
@@ -81,9 +79,9 @@ export const UserUpdate = ({ dataSource }) => {
                 <div className='col-12 flex align-items-center justify-content-center'>
                     <form className="w-full flex flex-column justify-content-center align-items-center">
 
-                        <Profile 
-                            payload={payload} 
-                            setPayload={setPayload} 
+                        <Profile
+                            payload={payload}
+                            setPayload={setPayload}
                             field={'profile'}
                             src={Number(payload.profile) ? `${endpoints.image}/${payload.profile}` : null}
                         />
@@ -181,27 +179,15 @@ export const UserUpdate = ({ dataSource }) => {
                     </div>
                 </div>
 
-                <div className=' md:col-12 mx-2 md:mx-0 my-3'>
-                    <div className=' flex align-items-center justify-content-end'>
-                        <div className=' flex align-items-center justify-content-between gap-3'>
-                            <Button
-                                label={translate.cancel}
-                                severity="secondary"
-                                outlined
-                                size='small'
-                                onClick={() => navigate(paths.user)}
-                            />
+                <FormMainAction
+                    cancel={translate.cancel}
+                    cancelClick={() => navigate(paths.user)}
+                    submit={translate.update}
+                    submitClick={submitUpdateUser}
+                    loading={loading}
+                />
 
-                            <Button
-                                severity="danger"
-                                size='small'
-                                disabled={loading}
-                                label={translate.update}
-                                onClick={() => submitUpdateUser()}
-                            />
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </Card>
     )

@@ -6,16 +6,15 @@ import { ValidationMessage } from '../../../shares/ValidationMessage';
 import { InputText } from 'primereact/inputtext';
 import { payloadHandler } from '../../../helpers/handler';
 import { tooltipOptions } from '../../../constants/config';
-import { Checkbox } from 'primereact/checkbox';
-import { Button } from 'primereact/button';
 import { paths } from '../../../constants/paths';
 import { Card } from 'primereact/card';
-import DeleteDialogButton from '../../../shares/DeleteDialogButton';
 import { endpoints } from '../../../constants/endpoints';
 import { shopPayload } from '../shopPayload';
 import { regionService } from '../../region/regionService';
 import { shopService } from '../shopService';
 import { Loading } from '../../../shares/Loading';
+import { FormMainAction } from '../../../shares/FormMainAction';
+import { DeleteConfirm } from '../../../shares/DeleteConfirm';
 
 export const UpdateShop = () => {
 
@@ -27,7 +26,6 @@ export const UpdateShop = () => {
   const [loading, setLoading] = useState(false);
   const [regionList, setRegionList] = useState([]);
   const [payload, setPayload] = useState(shopPayload.update);
-  const [visible, setVisible] = useState(false);
 
   const loadingData = useCallback(async () => {
     setLoading(true)
@@ -72,27 +70,11 @@ export const UpdateShop = () => {
 
         <div className=' grid'>
 
-          <div className=' col-12 flex align-items-center justify-content-end'>
-            <div>
-
-              <DeleteDialogButton
-                visible={visible}
-                setVisible={setVisible}
-                url={endpoints.shop}
-                id={params.id}
-                redirect={paths.shop}
-              />
-
-              <Button
-                size='small'
-                severity='danger'
-                outlined
-                onClick={() => setVisible(true)}
-              >
-                <i className=' pi pi-trash'></i>
-              </Button>
-            </div>
-          </div>
+          <DeleteConfirm
+            url={endpoints.shop}
+            id={params.id}
+            redirect={paths.shop}
+          />
 
           <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
             <label htmlFor="region_id" className='input-label'> {translate.region} (required*) </label>
@@ -203,28 +185,13 @@ export const UpdateShop = () => {
             </div>
           </div>
 
-          <div className="col-12">
-            <div className="flex flex-row justify-content-end align-items-center">
-              <Button
-                className="mx-2"
-                label={translate.cancel}
-                severity="secondary"
-                outlined
-                size='small'
-                disabled={loading}
-                onClick={() => navigate(paths.shop)}
-              />
-
-              <Button
-                className="mx-2"
-                label={translate.update}
-                severity="danger"
-                size='small'
-                disabled={loading}
-                onClick={() => submitShopUpdate()}
-              />
-            </div>
-          </div>
+          <FormMainAction
+            cancel={translate.cancel}
+            cancelClick={() => navigate(paths.shop)}
+            submit={translate.update}
+            submitClick={submitShopUpdate}
+            loading={loading}
+          />
 
         </div>
 

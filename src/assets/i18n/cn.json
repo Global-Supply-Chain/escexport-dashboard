@@ -26,6 +26,7 @@
     "order_statics" : "阶次统计",
     "order": "命令",
     "order_list": "订单",
+    "order_update": "订单更新",
     "total" : "全部的",
     "view_more" : "查看更多",
     "verified" : "已验证",
@@ -37,6 +38,7 @@
     "disable": "禁用",
     "delete": "删除",
     "user": "用户",
+    "user_name": "用户名",
     "user_statics": "用户统计",
     "user_list": "用户列表",
     "user_create": "用户创建",
@@ -120,5 +122,12 @@
     "status": "地位",
     "title": "标题",
     "drag_and_drop": "将图像拖放到此处",
-    "select_all": "全选"
+    "select_all": "全选",
+    "delivery_address" : "邮寄地址",
+    "delivery_contact_person" : "送货联络人",
+    "delivery_contact_phone" : "送货联系电话",
+    "discount" : "折扣",
+    "delivery_feed" : "输送饲料",
+    "total_amount" : "总金额",
+    "payment_type" : "付款方式"
 }

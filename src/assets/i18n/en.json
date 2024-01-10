@@ -26,6 +26,7 @@
     "order_statics" : "Order Statics",
     "order": "Order",
     "order_list": "Order List",
+    "order_update": "Order Update",
     "total" : "Total",
     "view_more" : "View More",
     "verified" : "Verified",
@@ -37,6 +38,7 @@
     "disable": "Disable",
     "delete": "Delete",
     "user": "User",
+    "user_name" : "User Name",
     "user_statics": "User Statics",
     "user_list": "User List",
     "user_create": "User Create",
@@ -120,6 +122,12 @@
     "status": "Status",
     "title": "Title",
     "drag_and_drop": "Drag and Drop Image Here",
-    "select_all": "Select All"
-
+    "select_all": "Select All",
+    "delivery_address" : "Delivery Address",
+    "delivery_contact_person" : "Delivery Contact Person",
+    "delivery_contact_phone" : "Delivery Contact Phone",
+    "discount" : "Discount",
+    "delivery_feed" : "Delivery Feed",
+    "total_amount" : "Total Amount",
+    "payment_type" : "Payment Type"
 }

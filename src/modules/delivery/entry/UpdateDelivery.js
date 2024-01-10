@@ -10,12 +10,12 @@ import { payloadHandler } from '../../../helpers/handler';
 import { deliveryPayload } from '../deliveryPayload';
 import { tooltipOptions } from '../../../constants/config';
 import { Checkbox } from 'primereact/checkbox';
-import { Button } from 'primereact/button';
 import { paths } from '../../../constants/paths';
 import { Card } from 'primereact/card';
-import DeleteDialogButton from '../../../shares/DeleteDialogButton';
 import { endpoints } from '../../../constants/endpoints';
 import { Loading } from '../../../shares/Loading';
+import { FormMainAction } from '../../../shares/FormMainAction';
+import { DeleteConfirm } from '../../../shares/DeleteConfirm';
 
 export const UpdateDelivery = () => {
 
@@ -27,7 +27,6 @@ export const UpdateDelivery = () => {
   const [loading, setLoading] = useState(false);
   const [userList, setUserList] = useState([]);
   const [payload, setPayload] = useState(deliveryPayload.update);
-  const [visible, setVisible] = useState(false);
 
   const loadingData = useCallback(async () => {
     setLoading(true)
@@ -50,7 +49,7 @@ export const UpdateDelivery = () => {
   }, [loadingData])
 
   useEffect(() => {
-    if(delivery){
+    if (delivery) {
       setPayload(delivery);
     }
   }, [delivery])
@@ -72,27 +71,11 @@ export const UpdateDelivery = () => {
 
         <div className=' grid'>
 
-          <div className=' col-12 flex align-items-center justify-content-end'>
-            <div>
-
-              <DeleteDialogButton
-                visible={visible}
-                setVisible={setVisible}
-                url={endpoints.delivery}
-                id={params.id}
-                redirect={paths.delivery}
-              />
-
-              <Button
-                size='small'
-                severity='danger'
-                outlined
-                onClick={() => setVisible(true)}
-              >
-                <i className=' pi pi-trash'></i>
-              </Button>
-            </div>
-          </div>
+          <DeleteConfirm
+            url={endpoints.delivery}
+            id={params.id}
+            redirect={paths.delivery}
+          />
 
           <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
             <label htmlFor="user" className='input-label'> {translate.user} (required*) </label>
@@ -203,28 +186,13 @@ export const UpdateDelivery = () => {
             </div>
           </div>
 
-          <div className="col-12">
-            <div className="flex flex-row justify-content-end align-items-center">
-              <Button
-                className="mx-2"
-                label={translate.cancel}
-                severity="secondary"
-                outlined
-                size='small'
-                disabled={loading}
-                onClick={() => navigate(paths.delivery)}
-              />
-
-              <Button
-                className="mx-2"
-                label={translate.update}
-                severity="danger"
-                size='small'
-                disabled={loading}
-                onClick={() => submitDeliveryUpdate()}
-              />
-            </div>
-          </div>
+          <FormMainAction
+            cancel={translate.cancel}
+            cancelClick={() => navigate(paths.delivery)}
+            submit={translate.update}
+            submitClick={submitDeliveryUpdate}
+            loading={loading}
+          />
 
         </div>
 

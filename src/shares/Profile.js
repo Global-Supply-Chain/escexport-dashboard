@@ -13,11 +13,11 @@ export const Profile = ({ payload, setPayload, src = null, field }) => {
         }
 
         const objectUrl = URL.createObjectURL(selectedFile)
-        setPreview(objectUrl)
+        setPreview(src ? src : objectUrl)
 
         // free memory when ever this component is unmounted
         return () => URL.revokeObjectURL(objectUrl)
-    }, [selectedFile])
+    }, [selectedFile, src])
 
     const onSelectFile = e => {
         if (!e.target.files || e.target.files.length === 0) {
@@ -44,16 +44,19 @@ export const Profile = ({ payload, setPayload, src = null, field }) => {
                     document.getElementById("profile").click();
                 }}
             >
-                {selectedFile === null ? (
+                {selectedFile === undefined && src === null && (
                     <span className={'pi pi-user'}></span>
-                ) : (
-                    <img
-                        src={preview}
-                        width={100}
-                        height={100}
-                        style={{ borderRadius: '50%' }}
-                    />
                 )}
+                {
+                    preview && (
+                        <img
+                            src={preview}
+                            width={100}
+                            height={100}
+                            style={{ borderRadius: '50%' }}
+                        />
+                    )
+                }
             </div>
             <input
                 id="profile"
