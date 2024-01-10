@@ -5,13 +5,13 @@ import { payloadHandler } from '../../../helpers/handler';
 import { InputText } from 'primereact/inputtext';
 import { Loading } from '../../../shares/Loading';
 import { Card } from 'primereact/card';
-import { Button } from 'primereact/button';
 import { paths } from '../../../constants/paths';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ValidationMessage } from '../../../shares/ValidationMessage';
 import { tooltipOptions } from '../../../constants/config';
 import { authorizationService } from '../authorizatonService';
+import { FormMainAction } from '../../../shares/FormMainAction';
 
 export const RoleCreate = () => {
 
@@ -29,7 +29,7 @@ export const RoleCreate = () => {
      * **/
     const submitRoleCreate = async () => {
         setLoading(true);
-        await authorizationService.roleCreate(dispatch,payload);
+        await authorizationService.roleCreate(dispatch, payload);
         setLoading(false);
     }
 
@@ -95,28 +95,13 @@ export const RoleCreate = () => {
                             <ValidationMessage field="description" />
                         </div>
 
-                        <div className="col-12">
-                            <div className="flex flex-row justify-content-end align-items-center">
-                                <Button
-                                    className="mx-2"
-                                    label={translate.cancel}
-                                    severity="secondary"
-                                    outlined
-                                    size='small'
-                                    disabled={loading}
-                                    onClick={() => navigate(paths.role)}
-                                />
-
-                                <Button
-                                    className="mx-2"
-                                    label={translate.submit}
-                                    severity="danger"
-                                    size='small'
-                                    disabled={loading}
-                                    onClick={() => submitRoleCreate()}
-                                />
-                            </div>
-                        </div>
+                        <FormMainAction
+                            cancel={translate.cancel}
+                            cancelClick={() => navigate(paths.role)}
+                            submit={translate.submit}
+                            submitClick={submitRoleCreate}
+                            loading={loading}
+                        />
 
                     </div>
 

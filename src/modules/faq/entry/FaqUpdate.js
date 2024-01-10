@@ -5,10 +5,8 @@ import { InputText } from 'primereact/inputtext';
 import { countries, tooltipOptions } from '../../../constants/config';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button } from 'primereact/button';
 import { paths } from '../../../constants/paths';
 import { faqService } from '../faqService';
-import DeleteDialogButton from '../../../shares/DeleteDialogButton';
 import { endpoints } from '../../../constants/endpoints';
 import { generalStatus } from '../../../helpers/StatusHandler';
 import { Dropdown } from 'primereact/dropdown';
@@ -16,6 +14,8 @@ import { Loading } from '../../../shares/Loading';
 import { Badge } from 'primereact/badge';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Divider } from 'primereact/divider';
+import { FormMainAction } from '../../../shares/FormMainAction';
+import { DeleteConfirm } from '../../../shares/DeleteConfirm';
 
 export const FaqUpdate = () => {
     const dynamicForm = Object.fromEntries(
@@ -41,7 +41,6 @@ export const FaqUpdate = () => {
     const payload = useRef(dynamicForm);
     const [statusPayload, setStatusPayload] = useState(faq?.status);
     const [loading, setLoading] = useState(false);
-    const [visible, setVisible] = useState(false);
     const [status, setStatus] = useState([]);
     const [prevValue, setPrevValue] = useState();
 
@@ -80,25 +79,25 @@ export const FaqUpdate = () => {
      * **/
     const submitFaqUpdate = async () => {
         setLoading(true);
-            const keys = Object.keys(payload.current).map((keys) => keys);
+        const keys = Object.keys(payload.current).map((keys) => keys);
 
-            const answers = JSON.stringify(
-                Object.fromEntries(
-                    keys.map((value) => {
-                        return [value, payload.current[value].answer ? payload.current[value].answer : JSON.parse(prevValue.answer)[value]];
-                    })
-                )
-            );
-            // setAnswer(answers);
-        
-            const questions = JSON.stringify(
-                Object.fromEntries(
-                    keys.map((value) => {
-                        return [value, payload.current[value].question ? payload.current[value].question : JSON.parse(prevValue.question)[value]];
-                    })
-                )
-            );
-            // setQuestion(questions);
+        const answers = JSON.stringify(
+            Object.fromEntries(
+                keys.map((value) => {
+                    return [value, payload.current[value].answer ? payload.current[value].answer : JSON.parse(prevValue.answer)[value]];
+                })
+            )
+        );
+        // setAnswer(answers);
+
+        const questions = JSON.stringify(
+            Object.fromEntries(
+                keys.map((value) => {
+                    return [value, payload.current[value].question ? payload.current[value].question : JSON.parse(prevValue.question)[value]];
+                })
+            )
+        );
+        // setQuestion(questions);
 
         const mainPayload = {
             answer: answers,
@@ -121,27 +120,11 @@ export const FaqUpdate = () => {
 
                 <div className=' grid'>
 
-                    <div className=' col-12 flex align-items-center justify-content-end'>
-                        <div>
-
-                            <DeleteDialogButton
-                                visible={visible}
-                                setVisible={setVisible}
-                                url={endpoints.faq}
-                                id={params.id}
-                                redirect={paths.faq}
-                            />
-
-                            <Button
-                                size='small'
-                                severity='danger'
-                                outlined
-                                onClick={() => setVisible(true)}
-                            >
-                                <i className=' pi pi-trash'></i>
-                            </Button>
-                        </div>
-                    </div>
+                    <DeleteConfirm 
+                        url={endpoints.faq}
+                        id={params.id}
+                        redirect={paths.faq}
+                    />
 
                     {prevValue && countries.map((value, index) => {
                         const codeNameQuestion = value.code.toLowerCase();
@@ -225,28 +208,13 @@ export const FaqUpdate = () => {
                         </div>
                     </div>
 
-                    <div className="col-12">
-                        <div className="flex flex-row justify-content-end align-items-center">
-                            <Button
-                                className="mx-2"
-                                label="CANCEL"
-                                severity="secondary"
-                                outlined
-                                size='small'
-                                disabled={loading}
-                                onClick={() => navigate(paths.faq)}
-                            />
-
-                            <Button
-                                className="mx-2"
-                                label="UPDATE"
-                                severity="danger"
-                                size='small'
-                                disabled={loading}
-                                onClick={() => submitFaqUpdate()}
-                            />
-                        </div>
-                    </div>
+                    <FormMainAction
+                        cancel={translate.cancel}
+                        cancelClick={() => navigate(paths.faq)}
+                        submit={translate.update}
+                        submitClick={submitFaqUpdate}
+                        loading={loading}
+                    />
 
                 </div>
 

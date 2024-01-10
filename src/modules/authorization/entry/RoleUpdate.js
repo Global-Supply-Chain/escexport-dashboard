@@ -7,13 +7,13 @@ import { paths } from '../../../constants/paths';
 import { InputText } from 'primereact/inputtext';
 import { payloadHandler } from '../../../helpers/handler';
 import { ValidationMessage } from '../../../shares/ValidationMessage';
-import { Button } from 'primereact/button';
 import { tooltipOptions } from '../../../constants/config';
 import { Card } from 'primereact/card';
 import { authorizationService } from '../authorizatonService';
 import { MultiSelect } from 'primereact/multiselect';
+import { FormMainAction } from '../../../shares/FormMainAction';
 
-const formatMultiSelect = (value,preValue) => {
+const formatMultiSelect = (value, preValue) => {
     const permissionFormat = value?.map((per) => {
         let id = [];
         if (per?.id) {
@@ -32,10 +32,10 @@ const formatMultiSelect = (value,preValue) => {
     });
 
     const result = permissionFormat.concat(concetPreValue);
-    const final = result.flat()?.filter((value,index,self) => self.indexOf(value) === index);
+    const final = result.flat()?.filter((value, index, self) => self.indexOf(value) === index);
 
     return final;
-    
+
 }
 
 export const RoleUpdate = ({ dataSource, callback }) => {
@@ -55,11 +55,11 @@ export const RoleUpdate = ({ dataSource, callback }) => {
      * **/
     const submitUpdateRole = async () => {
         setLoading(true);
-        const permissionFormat = formatMultiSelect(payload?.permissions,dataSource?.role.permissions)
+        const permissionFormat = formatMultiSelect(payload?.permissions, dataSource?.role.permissions)
         const mainPayload = {
             name: payload.name,
             description: payload.description,
-            permissions : permissionFormat
+            permissions: permissionFormat
         }
 
         await authorizationService.roleUpdate(dispatch, dataSource.id, mainPayload);
@@ -129,7 +129,7 @@ export const RoleUpdate = ({ dataSource, callback }) => {
                     <div className="p-inputgroup mt-2">
                         <MultiSelect
                             inputId='permission'
-                            
+
                             value={payload?.permissions}
                             onChange={(e) => {
                                 payloadHandler(payload, e.value, 'permissions', (updateValue) => {
@@ -147,28 +147,13 @@ export const RoleUpdate = ({ dataSource, callback }) => {
                     <ValidationMessage field="permissions" />
                 </div>
 
-                <div className="col-12">
-                    <div className="flex flex-row justify-content-end align-items-center">
-                        <Button
-                            className="mx-2"
-                            label={translate.cancel}
-                            severity="secondary"
-                            outlined
-                            size='small'
-                            disabled={loading}
-                            onClick={() => navigate(paths.role)}
-                        />
-
-                        <Button
-                            className="mx-2"
-                            label={translate.update}
-                            severity="danger"
-                            size='small'
-                            disabled={loading}
-                            onClick={() => submitUpdateRole()}
-                        />
-                    </div>
-                </div>
+                <FormMainAction
+                    cancel={translate.cancel}
+                    cancelClick={() => navigate(paths.role)}
+                    submit={translate.update}
+                    submitClick={submitUpdateRole}
+                    loading={loading}
+                />
 
             </div>
 

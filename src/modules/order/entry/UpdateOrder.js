@@ -6,7 +6,6 @@ import { deliveryService } from '../../delivery/deliveryService';
 import { orderPayload } from '../orderPayload';
 import { Card } from 'primereact/card';
 import { paths } from '../../../constants/paths';
-import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { userService } from '../../user/userService';
 import { tooltipOptions } from '../../../constants/config';
@@ -16,6 +15,7 @@ import { endpoints } from '../../../constants/endpoints';
 import { InputText } from 'primereact/inputtext';
 import { ValidationMessage } from '../../../shares/ValidationMessage';
 import { Loading } from '../../../shares/Loading';
+import { FormMainAction } from '../../../shares/FormMainAction';
 
 export const UpdateOrder = () => {
 
@@ -30,6 +30,7 @@ export const UpdateOrder = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { order } = useSelector((state) => state.order);
+    const { translate } = useSelector(state => state.setting);
 
     /**
     * Loading delivery address
@@ -40,7 +41,7 @@ export const UpdateOrder = () => {
         if (result.status === 200) {
             const formatData = result.data?.map((delivery) => {
                 return {
-                    label: delivery?.address?.substring(0,30)+'...',
+                    label: delivery?.address?.substring(0, 30) + '...',
                     value: delivery?.id
                 }
             })
@@ -58,10 +59,10 @@ export const UpdateOrder = () => {
         }
 
         const response = await getRequest(`/${endpoints.status}?type=${endpoints.paymentType}`);
-        if(response.status === 200) {
+        if (response.status === 200) {
             const formateData = response.data.payment_type?.map((payment) => {
                 return {
-                    label : payment, 
+                    label: payment,
                     value: payment
                 }
             })
@@ -69,10 +70,10 @@ export const UpdateOrder = () => {
         }
 
         const orderResponse = await getRequest(`/${endpoints.status}?type=${endpoints.order}`);
-        if(orderResponse.status === 200) {
+        if (orderResponse.status === 200) {
             const formateData = orderResponse.data.order?.map((order) => {
                 return {
-                    label : order, 
+                    label: order,
                     value: order
                 }
             })
@@ -95,13 +96,13 @@ export const UpdateOrder = () => {
 
     const submitOrderUpdate = async () => {
         setLoading(true);
-        await orderService.update(dispatch,payload.id,payload);
+        await orderService.update(dispatch, payload.id, payload);
         setLoading(false);
     }
 
     return (
         <Card
-            title={'Update Order'}
+            title={translate.order_update}
         >
 
             <Loading loading={loading} />
@@ -109,7 +110,7 @@ export const UpdateOrder = () => {
             <div className=' grid'>
 
                 <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                    <label htmlFor="delivery" className='input-label'> Delivery Address (required*) </label>
+                    <label htmlFor="delivery" className='input-label'> {translate.delivery_address} (required*) </label>
                     <div className="p-inputgroup mt-2">
                         <Dropdown
                             id="delivery"
@@ -127,7 +128,7 @@ export const UpdateOrder = () => {
                 </div>
 
                 <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
-                    <label htmlFor="user" className='input-label'> User (required*) </label>
+                    <label htmlFor="user" className='input-label'> {translate.user} (required*) </label>
                     <div className="p-inputgroup mt-2">
                         <Dropdown
                             id='user'
@@ -146,7 +147,7 @@ export const UpdateOrder = () => {
 
                 <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="name" className=' text-black'>User Name (required*)</label>
+                        <label htmlFor="name" className=' text-black'> {translate.user_name} (required*)</label>
                         <InputText
                             className="p-inputtext-sm text-black"
                             id="name"
@@ -166,7 +167,7 @@ export const UpdateOrder = () => {
 
                 <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="phone" className=' text-black'>Phone</label>
+                        <label htmlFor="phone" className=' text-black'>{translate.phone}</label>
                         <InputText
                             className="p-inputtext-sm text-black"
                             id="phone"
@@ -186,7 +187,7 @@ export const UpdateOrder = () => {
 
                 <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="email" className=' text-black'>Email</label>
+                        <label htmlFor="email" className=' text-black'>{translate.email}</label>
                         <InputText
                             className="p-inputtext-sm text-black"
                             id="email"
@@ -206,7 +207,7 @@ export const UpdateOrder = () => {
 
                 <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="delivery_address" className=' text-black'>Delivery Address</label>
+                        <label htmlFor="delivery_address" className=' text-black'>{translate.delivery_address}</label>
                         <InputText
                             className="p-inputtext-sm text-black"
                             id="delivery_address"
@@ -226,7 +227,7 @@ export const UpdateOrder = () => {
 
                 <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="delivery_contact_person" className=' text-black'>Delivery Contact Person</label>
+                        <label htmlFor="delivery_contact_person" className=' text-black'>{translate.delivery_contact_person}</label>
                         <InputText
                             className="p-inputtext-sm text-black"
                             id="delivery_contact_person"
@@ -246,7 +247,7 @@ export const UpdateOrder = () => {
 
                 <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="delivery_contact_phone" className=' text-black'>Delivery Contact Phone</label>
+                        <label htmlFor="delivery_contact_phone" className=' text-black'>{translate.delivery_contact_phone}</label>
                         <InputText
                             className="p-inputtext-sm text-black"
                             id="delivery_contact_phone"
@@ -267,7 +268,7 @@ export const UpdateOrder = () => {
 
                 <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="discount" className=' text-black'>Discount</label>
+                        <label htmlFor="discount" className=' text-black'>{translate.discount}</label>
                         <InputText
                             className="p-inputtext-sm text-black"
                             id="discount"
@@ -288,7 +289,7 @@ export const UpdateOrder = () => {
 
                 <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="delivery_feed" className=' text-black'>Delivery Feed</label>
+                        <label htmlFor="delivery_feed" className=' text-black'>{translate.delivery_feed}</label>
                         <InputText
                             className="p-inputtext-sm text-black"
                             id="delivery_feed"
@@ -309,7 +310,7 @@ export const UpdateOrder = () => {
 
                 <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="total_amount" className=' text-black'>Total Amount</label>
+                        <label htmlFor="total_amount" className=' text-black'>{translate.total_amount}</label>
                         <InputText
                             className="p-inputtext-sm text-black"
                             id="total_amount"
@@ -330,7 +331,7 @@ export const UpdateOrder = () => {
 
                 <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="payment" className=' text-black'>Payment Type</label>
+                        <label htmlFor="payment" className=' text-black'>{translate.payment_type}</label>
                         <Dropdown
                             options={paymentTypeList}
                             placeholder="Select a payment type"
@@ -348,7 +349,7 @@ export const UpdateOrder = () => {
 
                 <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="status" className=' text-black'>Status</label>
+                        <label htmlFor="status" className=' text-black'>{translate.status}</label>
                         <Dropdown
                             id="status"
                             options={orderStatusList}
@@ -365,29 +366,13 @@ export const UpdateOrder = () => {
                     </div>
                 </div>
 
-                <div className=' md:col-12 mx-2 md:mx-0 my-3'>
-                    <div className=' flex align-items-center justify-content-end'>
-                        <div className=' flex align-items-center justify-content-between gap-3'>
-
-                            <Button
-                                label="CANCEL"
-                                severity="secondary"
-                                outlined
-                                size='small'
-                                onClick={() => navigate(paths.order)}
-                            />
-
-                            <Button
-                                severity="danger"
-                                size='small'
-                                disabled={loading}
-                                label="UPDATE"
-                                onClick={() => submitOrderUpdate()}
-                            />
-
-                        </div>
-                    </div>
-                </div>
+                <FormMainAction
+                    cancel={translate.cancel}
+                    cancelClick={() => navigate(paths.order)}
+                    submit={translate.update}
+                    submitClick={submitOrderUpdate}
+                    loading={loading}
+                />
 
             </div>
 

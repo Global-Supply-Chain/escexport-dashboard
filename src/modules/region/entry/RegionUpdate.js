@@ -10,11 +10,11 @@ import { InputText } from 'primereact/inputtext';
 import { tooltipOptions } from '../../../constants/config';
 import { regionService } from '../regionService';
 import { ValidationMessage } from '../../../shares/ValidationMessage';
-import { Button } from 'primereact/button';
 import { paths } from '../../../constants/paths';
-import DeleteDialogButton from '../../../shares/DeleteDialogButton';
 import { generalStatus } from '../../../helpers/StatusHandler';
 import { Loading } from '../../../shares/Loading';
+import { FormMainAction } from '../../../shares/FormMainAction';
+import { DeleteConfirm } from '../../../shares/DeleteConfirm';
 
 export const RegionUpdate = () => {
 
@@ -22,7 +22,6 @@ export const RegionUpdate = () => {
     const [loading, setLoading] = useState(false);
     const [payload, setPayload] = useState(regionPayload.update);
     const [status, setStatus] = useState([]);
-    const [visible, setVisible] = useState(false);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -72,27 +71,11 @@ export const RegionUpdate = () => {
 
             <div className=' grid'>
 
-                <div className=' col-12 flex align-items-center justify-content-end'>
-                    <div>
-
-                        <DeleteDialogButton
-                            visible={visible}
-                            setVisible={setVisible}
-                            url={endpoints.region}
-                            id={params.id}
-                            redirect={paths.region}
-                        />
-
-                        <Button
-                            size='small'
-                            severity='danger'
-                            outlined
-                            onClick={() => setVisible(true)}
-                        >
-                            <i className=' pi pi-trash'></i>
-                        </Button>
-                    </div>
-                </div>
+                <DeleteConfirm 
+                    id={params.id}
+                    url={endpoints.region}
+                    redirect={paths.region}
+                />
 
                 <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                     <div className="flex flex-column gap-2">
@@ -137,28 +120,13 @@ export const RegionUpdate = () => {
                     </div>
                 </div>
 
-                <div className="col-12">
-                    <div className="flex flex-row justify-content-end align-items-center">
-                        <Button
-                            className="mx-2"
-                            label={translate.cancel}
-                            severity="secondary"
-                            outlined
-                            size='small'
-                            disabled={loading}
-                            onClick={() => navigate(paths.region)}
-                        />
-
-                        <Button
-                            className="mx-2"
-                            label={translate.update}
-                            severity="danger"
-                            size='small'
-                            disabled={loading}
-                            onClick={submitRegionUpdate}
-                        />
-                    </div>
-                </div>
+                <FormMainAction 
+                    cancel={translate.cancel}
+                    cancelClick={() => navigate(paths.region)}
+                    submit={translate.update}
+                    submitClick={submitRegionUpdate}
+                    loading={loading}
+                />
 
             </div>
 

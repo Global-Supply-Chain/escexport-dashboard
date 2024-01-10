@@ -5,7 +5,6 @@ import { InputText } from "primereact/inputtext";
 import { countries, tooltipOptions } from "../../../constants/config";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Button } from "primereact/button";
 import { paths } from "../../../constants/paths";
 import { BreadCrumb } from "../../../shares/BreadCrumb";
 import { Loading } from "../../../shares/Loading";
@@ -13,6 +12,7 @@ import { InputTextarea } from "primereact/inputtextarea";
 import { Divider } from "primereact/divider";
 import { Badge } from "primereact/badge";
 import { faqService } from "../faqService";
+import { FormMainAction } from "../../../shares/FormMainAction";
 
 export const FaqCreate = () => {
   const dynamicForm = Object.fromEntries(
@@ -137,28 +137,14 @@ export const FaqCreate = () => {
               );
             })}
 
-            <div className="col-12">
-              <div className="flex flex-row justify-content-end align-items-center">
-                <Button
-                  className="mx-2"
-                  label={translate.cancel}
-                  severity="secondary"
-                  outlined
-                  size="small"
-                  disabled={loading}
-                  onClick={() => navigate(paths.faq)}
-                />
+            <FormMainAction
+              cancel={translate.cancel}
+              cancelClick={() => navigate(paths.faq)}
+              submit={translate.submit}
+              submitClick={submitFaqCreate}
+              loading={loading}
+            />
 
-                <Button
-                  className="mx-2"
-                  label={translate.submit}
-                  severity="danger"
-                  size="small"
-                  disabled={loading}
-                  onClick={() => submitFaqCreate()}
-                />
-              </div>
-            </div>
           </div>
         </Card>
       </div>

@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { tooltipOptions } from '../../../constants/config';
 import { BreadCrumb } from '../../../shares/BreadCrumb';
 import { Card } from 'primereact/card';
-import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { pointService } from '../pointSerivce';
@@ -15,6 +14,7 @@ import { endpoints } from '../../../constants/endpoints';
 import { getRequest } from '../../../helpers/api';
 import { Dropdown } from 'primereact/dropdown';
 import { Loading } from '../../../shares/Loading';
+import { FormMainAction } from '../../../shares/FormMainAction';
 
 const PointCreate = () => {
 
@@ -118,29 +118,13 @@ const PointCreate = () => {
                             </div>
                         </div>
 
-                        <div className=' md:col-12 mx-2 md:mx-0 my-3'>
-                            <div className=' flex align-items-center justify-content-end'>
-                                <div className=' flex align-items-center justify-content-between gap-3'>
-
-                                    <Button
-                                        label={translate.cancel}
-                                        severity="secondary"
-                                        outlined
-                                        size='small'
-                                        onClick={() => navigate(paths.point)}
-                                    />
-
-                                    <Button
-                                        severity="danger"
-                                        size='small'
-                                        disabled={loading}
-                                        label={translate.submit}
-                                        onClick={() => submitCreatePoint()}
-                                    />
-
-                                </div>
-                            </div>
-                        </div>
+                        <FormMainAction
+                            cancel={translate.cancel}
+                            cancelClick={() => navigate(paths.point)}
+                            submit={translate.submit}
+                            submitClick={submitCreatePoint}
+                            loading={loading}
+                        />
 
                     </div>
 

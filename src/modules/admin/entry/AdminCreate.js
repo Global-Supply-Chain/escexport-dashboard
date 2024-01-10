@@ -1,6 +1,5 @@
 
 import { Card } from "primereact/card";
-import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,14 +16,14 @@ import { authorizationService } from "../../authorization/authorizatonService";
 import { Dropdown } from "primereact/dropdown";
 import { Profile } from "../../../shares/Profile";
 import { formBuilder } from "../../../helpers/formBuilder";
+import { FormMainAction } from "../../../shares/FormMainAction";
 
 export const AdminCreate = () => {
 
     const [payload, setPayload] = useState(adminPayload.create);
     const [loading, setLoading] = useState(false);
     const [roleList, setRoleList] = useState([]);
-
-    const { roles } = useSelector(state => state.auth);
+    
     const { translate } = useSelector(state => state.setting);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -221,28 +220,15 @@ export const AdminCreate = () => {
                             <ValidationMessage field="confirm_password" />
                         </div>
 
-                        <div className="col-12">
-                            <div className="flex flex-row justify-content-end align-items-center">
-                                <Button 
-                                    className="mx-2"
-                                    label={translate.cancel}
-                                    severity="secondary"
-                                    outlined
-                                    size='small'
-                                    disabled={loading}
-                                    onClick={() => navigate(paths.admin)}
-                                />
+                        <FormMainAction
+                            cancel={translate.cancel}
+                            cancelClick={() => navigate(paths.admin)}
+                            submit={translate.submit}
+                            submitClick={submitCreateAdmin}
+                            loading={loading}
+                        />
 
-                                <Button 
-                                    className="mx-2"
-                                    label={translate.submit}
-                                    severity="danger"
-                                    size='small'
-                                    disabled={loading}
-                                    onClick={() => submitCreateAdmin()}
-                                />
-                            </div>
-                        </div>
+
                     </div>
                 </Card>
             </div>

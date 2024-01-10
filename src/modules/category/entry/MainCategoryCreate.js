@@ -6,7 +6,6 @@ import { categoryPayload } from "../categoryPayload";
 import { tooltipOptions } from "../../../constants/config";
 import { payloadHandler } from "../../../helpers/handler";
 import { ValidationMessage } from "../../../shares/ValidationMessage";
-import { Button } from "primereact/button";
 import { useNavigate } from "react-router-dom";
 import { paths } from "../../../constants/paths";
 import { Avatar } from "primereact/avatar";
@@ -15,6 +14,7 @@ import { uploadFile } from "../../../helpers/uploadFile";
 import { useDispatch, useSelector } from "react-redux";
 import { categoryService } from "../categoryService";
 import { Loading } from "../../../shares/Loading";
+import { FormMainAction } from "../../../shares/FormMainAction";
 
 export const MainCategoryCreate = () => {
   const navigate = useNavigate();
@@ -155,28 +155,13 @@ export const MainCategoryCreate = () => {
               <ValidationMessage field="description" />
             </div>
 
-            <div className="col-12">
-              <div className="flex flex-row justify-content-end align-items-center">
-                <Button
-                  className="mx-2"
-                  label={translate.cancel}
-                  severity="secondary"
-                  outlined
-                  size="small"
-                  disabled={loading}
-                  onClick={() => navigate(paths.category)}
-                />
-
-                <Button
-                  className="mx-2"
-                  label={translate.submit}
-                  severity="danger"
-                  size="small"
-                  disabled={loading}
-                  onClick={() => submitMainCategory()}
-                />
-              </div>
-            </div>
+            <FormMainAction
+              cancel={translate.cancel}
+              cancelClick={() => navigate(paths.category)}
+              submit={translate.submit}
+              submitClick={submitMainCategory}
+              loading={loading}
+            />
           </div>
         </Card>
       </div>

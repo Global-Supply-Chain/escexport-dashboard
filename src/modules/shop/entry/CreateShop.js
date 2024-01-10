@@ -7,13 +7,13 @@ import { payloadHandler } from '../../../helpers/handler'
 import { useDispatch, useSelector } from 'react-redux'
 import { InputText } from 'primereact/inputtext'
 import { tooltipOptions } from '../../../constants/config';
-import { Button } from 'primereact/button'
 import { paths } from '../../../constants/paths'
 import { useNavigate } from 'react-router-dom'
 import { shopService } from '../shopService'
 import { shopPayload } from '../shopPayload'
 import { regionService } from '../../region/regionService'
 import { Loading } from '../../../shares/Loading'
+import { FormMainAction } from '../../../shares/FormMainAction'
 
 export const CreateShop = () => {
 
@@ -54,8 +54,6 @@ export const CreateShop = () => {
     useEffect(() => {
         loadingRegionData()
     }, [loadingRegionData])
-
-    console.log(regionList);
 
     return (
         <div className=' grid'>
@@ -182,28 +180,13 @@ export const CreateShop = () => {
                             </div>
                         </div>
 
-                        <div className="col-12">
-                            <div className="flex flex-row justify-content-end align-items-center">
-                                <Button
-                                    className="mx-2"
-                                    label={translate.cancel}
-                                    severity="secondary"
-                                    outlined
-                                    size='small'
-                                    disabled={loading}
-                                    onClick={() => navigate(paths.shop)}
-                                />
-
-                                <Button
-                                    className="mx-2"
-                                    label={translate.submit}
-                                    severity="danger"
-                                    size='small'
-                                    disabled={loading}
-                                    onClick={() => submitShopCreate()}
-                                />
-                            </div>
-                        </div>
+                        <FormMainAction 
+                            cancel={translate.cancel}
+                            cancelClick={() => navigate(paths.shop)}
+                            submit={translate.submit}
+                            submitClick={submitShopCreate}
+                            loading={loading}
+                        />
 
                     </div>
 
