@@ -26,6 +26,7 @@
     "order_statics" : "အော်ဒါတည်ငြိမ်မှု",
     "order": "အော်ဒါ",
     "order_list": "အော်ဒါစာရင်း",
+    "order_update": "အော်ဒါအပ်ဒိတ်",
     "total" : "စုစုပေါင်း",
     "view_more" : "ပိုမိုကြည့်ရှုပါ",
     "verified" : "စိစစ်ပြီး",
@@ -37,6 +38,7 @@
     "disable": "ပိတ်ပင်ထားသည်",
     "delete": "ဖျက်ထားသည်",
     "user": "အသုံးပြုသူ",
+    "user_name": "အသုံးပြုသူအမည်",
     "user_statics": "အသုံးပြုသူတည်ငြိမ်မှု",
     "user_list": "အသုံးပြုသူစာရင်း",
     "user_create": "အသုံးပြုသူဖန်တီးပါ",
@@ -120,5 +122,12 @@
     "status": "အခြေအနေ",
     "title": "ခေါင်းစဥ်",
     "drag_and_drop": "ပုံအား ဤနေရာတွင် ဆွဲချပါ",
-    "select_all": "အားလုံးကို ရွေးပါ"
+    "select_all": "အားလုံးကို ရွေးပါ",
+    "delivery_address" : "ပေးပို့ရမည့်လိပ်စာ",
+    "delivery_contact_person" : "ပို့ဆောင်ဆက်သွယ်သူ",
+    "delivery_contact_phone" : "Delivery ဆက်သွယ်ရန် ဖုန်း",
+    "discount" : "လျှော့စျေး",
+    "delivery_feed" : "Delivery ကျသင့်ငွေ",
+    "total_amount" : "စုစုပေါင်းတန်ဖိုး",
+    "payment_type" : "ငွေပေးချေမှုအမျိုးအစား"
 }

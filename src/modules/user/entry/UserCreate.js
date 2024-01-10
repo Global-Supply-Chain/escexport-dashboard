@@ -1,4 +1,3 @@
-import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
@@ -14,6 +13,7 @@ import { BreadCrumb } from "../../../shares/BreadCrumb";
 import { userPayload } from "../userPayload";
 import { Profile } from "../../../shares/Profile";
 import { formBuilder } from "../../../helpers/formBuilder";
+import { FormMainAction } from "../../../shares/FormMainAction";
 
 export const UserCreate = () => {
   const [loading, setLoading] = useState(false);
@@ -31,7 +31,7 @@ export const UserCreate = () => {
    * **/
   const submitUser = async () => {
     setLoading(true);
-    const formData = formBuilder(payload,userPayload.store);
+    const formData = formBuilder(payload, userPayload.store);
 
     await userService.store(formData, dispatch);
 
@@ -55,8 +55,8 @@ export const UserCreate = () => {
                 <form>
 
                   <Profile
-                    payload={payload} 
-                    setPayload={setPayload} 
+                    payload={payload}
+                    setPayload={setPayload}
                     field={'profile'}
                   />
 
@@ -211,27 +211,14 @@ export const UserCreate = () => {
                 </div>
               </div>
 
-              <div className=" md:col-12 mx-2 md:mx-0 my-3">
-                <div className=" flex align-items-center justify-content-end">
-                  <div className=" flex align-items-center justify-content-between gap-3">
-                    <Button
-                      label={translate.cancel}
-                      severity="secondary"
-                      outlined
-                      size="small"
-                      onClick={() => navigate(paths.user)}
-                    />
+              <FormMainAction
+                cancel={translate.cancel}
+                cancelClick={() => navigate(paths.user)}
+                submit={translate.submit}
+                submitClick={submitUser}
+                loading={loading}
+              />
 
-                    <Button
-                      severity="danger"
-                      size="small"
-                      disabled={loading}
-                      label={translate.submit}
-                      onClick={() => submitUser()}
-                    />
-                  </div>
-                </div>
-              </div>
             </div>
           </Card>
         </div>

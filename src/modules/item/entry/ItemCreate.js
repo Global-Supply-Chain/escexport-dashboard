@@ -19,6 +19,7 @@ import { Badge } from "primereact/badge";
 import { AppEditor } from "../../../shares/AppEditor";
 import { getRequest } from "../../../helpers/api";
 import { endpoints } from "../../../constants/endpoints";
+import { FormMainAction } from "../../../shares/FormMainAction";
 
 const ItemCreate = () => {
   const [loading, setLoading] = useState(false);
@@ -538,27 +539,15 @@ const ItemCreate = () => {
               </div>
             </div>
 
-            <div className=" md:col-12 mx-2 md:mx-0 my-3">
-              <div className=" flex align-items-center justify-content-end">
-                <div className=" flex align-items-center justify-content-between gap-3">
-                  <Button
-                    label={translate.cancel}
-                    severity="secondary"
-                    outlined
-                    size="small"
-                    onClick={() => navigate(paths.item)}
-                  />
+            <FormMainAction
+              cancel={translate.cancel}
+              cancelClick={() => navigate(paths.item)}
+              submit={translate.submit}
+              submitClick={handleItemClick}
+              loading={loading}
+            />
 
-                  <Button
-                    severity="danger"
-                    size="small"
-                    disabled={loading}
-                    label={translate.submit}
-                    onClick={handleItemClick}
-                  />
-                </div>
-              </div>
-            </div>
+
           </div>
         </Card>
       </div>

@@ -7,12 +7,11 @@ import { Dropdown } from 'primereact/dropdown';
 import { ValidationMessage } from '../../../shares/ValidationMessage';
 import { InputText } from 'primereact/inputtext';
 import { Checkbox } from 'primereact/checkbox';
-import { renderHeader, tooltipOptions } from '../../../constants/config';
+import { tooltipOptions } from '../../../constants/config';
 import { Button } from 'primereact/button';
 import { payloadHandler } from '../../../helpers/handler';
 import { paths } from '../../../constants/paths';
 import { itemService } from '../itemService';
-import DeleteDialogButton from '../../../shares/DeleteDialogButton';
 import { generalStatus } from '../../../helpers/StatusHandler';
 import { Loading } from '../../../shares/Loading';
 import { Column } from 'primereact/column';
@@ -22,6 +21,8 @@ import { FileUpload } from 'primereact/fileupload';
 import { Badge } from 'primereact/badge';
 import { AppEditor } from '../../../shares/AppEditor';
 import { DataTable } from 'primereact/datatable';
+import { DeleteConfirm } from '../../../shares/DeleteConfirm';
+import { FormMainAction } from '../../../shares/FormMainAction';
 
 const ItemUpdate = () => {
 
@@ -30,8 +31,9 @@ const ItemUpdate = () => {
     const [categoryList, setCategoryList] = useState([]);
     const [shopList, setShopList] = useState([]);
     const [status, setStatus] = useState([]);
-    const [visible, setVisible] = useState(false);
     const [payload, setPayload] = useState(itemPayload.update);
+    let [currentImage, setCurrentImage] = useState(payload.images);
+    const [rmImage, setRmImage] = useState([]);
     const [content, setContent] = useState('');
     const fileUploadRef = useRef();
     const [selectPhoto, setSelectPhoto] = useState([]);
@@ -40,8 +42,6 @@ const ItemUpdate = () => {
     const { translate } = useSelector(state => state.setting);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const header = renderHeader();
 
     const onTemplateSelect = (e) => {
         setSelectPhoto(e.files);
@@ -137,52 +137,24 @@ const ItemUpdate = () => {
             "custom-cancel-btn p-button-danger p-button-rounded p-button-outlined",
     };
 
-    /**
-     * Create item
-     * payload [category_id,name,code,description,content,price,sell_price,out_of_stock]
-     * **/
-    const handleItemClick = async () => {
-        setLoading(false);
-        const {
-            category_id,
-            out_of_stock,
-            shop_id,
-            name,
-            description,
-            code,
-            instock,
-            price,
-            sell_price,
-        } = payload;
-
-        const formData = new FormData();
-
-        selectPhoto.map((value, index) => {
-            formData.append(`images[${index}]`, value);
-            return value;
-        });
-
-        formData.append("content", content);
-        formData.append("category_id", category_id);
-        formData.append(
-            "out_of_stock",
-            out_of_stock === "true" ? Number(0) : Number(1)
-        );
-        formData.append("sell_price", sell_price);
-        formData.append("price", price);
-        formData.append("description", description);
-        formData.append("code", code);
-        formData.append("instock", instock);
-        formData.append("name", name);
-        formData.append("shop_id", shop_id);
-        formData.append("method", "PUT");
-
-        await itemService.store(dispatch, formData);
-        setLoading(false);
-    };
-
     const imageBodyTemplate = (value) => {
         return <img src={`${endpoints.image}/${value}`} className="w-6rem shadow-2 border-round" />
+    }
+
+    const imageActionTemplate = (value) => {
+        return (
+            <Button
+                size='small'
+                severity='danger'
+                outlined
+                onClick={() => {
+                    rmImage.push(currentImage.filter((image) => image === value)[0]);
+                    setCurrentImage(currentImage.filter((image) => image !== value))
+                }}
+            >
+                <i className=' pi pi-trash'></i>
+            </Button>
+        )
     }
 
     /**
@@ -266,6 +238,10 @@ const ItemUpdate = () => {
         }
     }, [item])
 
+    useEffect(() => {
+        setCurrentImage(payload.images)
+    }, [payload.images])
+
     /**
      * update item
      * payload [category_id,name,code,description,price,sell_price,out_of_stock,content,status]
@@ -273,7 +249,47 @@ const ItemUpdate = () => {
      * **/
     const submitItemUpdate = async () => {
         setLoading(true);
-        await itemService.update(dispatch, payload?.id, payload)
+        const {
+            category_id,
+            out_of_stock,
+            shop_id,
+            name,
+            description,
+            code,
+            instock,
+            price,
+            sell_price,
+        } = payload;
+
+        const formData = new FormData();
+        console.log(selectPhoto);
+        // selectPhoto.map((value, index) => {
+
+        //     formData.append(`images[${index}]`, value);
+        //     return value;
+        // });
+
+        currentImage = currentImage.concat(selectPhoto);
+
+        formData.append("content", content);
+        formData.append("category_id", category_id);
+        formData.append(
+            "out_of_stock",
+            out_of_stock === "true" ? Number(0) : Number(1)
+        );
+        formData.append("sell_price", sell_price);
+        formData.append("price", price);
+        formData.append("description", description);
+        formData.append("code", code);
+        formData.append("instock", instock);
+        formData.append("name", name);
+        formData.append("shop_id", shop_id);
+        formData.append("method", "PUT");
+
+        console.log(currentImage);
+
+        // await itemService.store(dispatch, formData);
+        // await itemService.update(dispatch, payload?.id, payload)
         setLoading(false);
     }
 
@@ -288,34 +304,19 @@ const ItemUpdate = () => {
 
             <div className=' grid'>
 
-                <div className=' col-12 flex align-items-center justify-content-end'>
-                    <div>
-
-                        <DeleteDialogButton
-                            visible={visible}
-                            setVisible={setVisible}
-                            url={paths.item}
-                            id={params?.id}
-                            redirect={paths.item}
-                        />
-
-                        <Button
-                            size='small'
-                            severity='danger'
-                            outlined
-                            onClick={() => setVisible(true)}
-                        >
-                            <i className=' pi pi-trash'></i>
-                        </Button>
-                    </div>
-                </div>
+                <DeleteConfirm
+                    url={paths.item}
+                    id={params?.id}
+                    redirect={paths.item}
+                />
 
                 <div className=' col-12'>
-                    <DataTable 
-                        value={payload.images} 
-                        tableStyle={{ minWidth: '60rem' }} 
+                    <DataTable
+                        value={currentImage}
+                        tableStyle={{ minWidth: '60rem' }}
                     >
                         <Column field='image' header="Image" body={imageBodyTemplate}></Column>
+                        <Column field='image' header="Action" body={imageActionTemplate}></Column>
                     </DataTable>
                 </div>
 
@@ -559,29 +560,13 @@ const ItemUpdate = () => {
                     </div>
                 </div>
 
-                <div className=' md:col-12 mx-2 md:mx-0 my-3'>
-                    <div className=' flex align-items-center justify-content-end'>
-                        <div className=' flex align-items-center justify-content-between gap-3'>
-
-                            <Button
-                                label={translate.cancel}
-                                severity="secondary"
-                                outlined
-                                size='small'
-                                onClick={() => navigate(paths.item)}
-                            />
-
-                            <Button
-                                severity="danger"
-                                size='small'
-                                disabled={loading}
-                                label={translate.update}
-                                onClick={() => submitItemUpdate()}
-                            />
-
-                        </div>
-                    </div>
-                </div>
+                <FormMainAction
+                    cancel={translate.cancel}
+                    cancelClick={() => navigate(paths.item)}
+                    submit={translate.update}
+                    submitClick={submitItemUpdate}
+                    loading={loading}
+                />
 
             </div>
 

@@ -15,6 +15,7 @@ import { categoryService } from "../categoryService";
 import { Dropdown } from "primereact/dropdown";
 import { Card } from "primereact/card";
 import { getRequest } from "../../../helpers/api";
+import { FormMainAction } from "../../../shares/FormMainAction";
 
 export const MainCategoryUpdate = () => {
   const navigate = useNavigate();
@@ -63,7 +64,7 @@ export const MainCategoryUpdate = () => {
     >
       <div className="grid">
         <div className="col-12 flex align-items-center justify-content-end">
-          <Button 
+          <Button
             outlined
             size="small"
             tooltip="View Sub Categories"
@@ -202,28 +203,14 @@ export const MainCategoryUpdate = () => {
           <ValidationMessage field="category_id" />
         </div>
 
-        <div className="col-12">
-          <div className="flex flex-row justify-content-end align-items-center">
-            <Button
-              className="mx-2"
-              label={translate.cancel}
-              severity="secondary"
-              outlined
-              size="small"
-              disabled={loading}
-              onClick={() => navigate(paths.category)}
-            />
+        <FormMainAction
+          cancel={translate.cancel}
+          cancelClick={() => navigate(paths.category)}
+          submit={translate.update}
+          submitClick={submitMainCategoryUpdate}
+          loading={loading}
+        />
 
-            <Button
-              className="mx-2"
-              label={translate.update}
-              severity="danger"
-              size="small"
-              disabled={loading}
-              onClick={() => submitMainCategoryUpdate()}
-            />
-          </div>
-        </div>
       </div>
     </Card>
   );

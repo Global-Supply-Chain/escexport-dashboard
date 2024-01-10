@@ -1,6 +1,5 @@
 import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
-import { Button } from "primereact/button";
 import { BreadCrumb } from "../../../shares/BreadCrumb";
 import { uploadFile } from "../../../helpers/uploadFile";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +14,7 @@ import { Image } from "primereact/image";
 import { Loading } from "../../../shares/Loading";
 import { paths } from "../../../constants/paths";
 import { useNavigate } from "react-router-dom";
+import { FormMainAction } from "../../../shares/FormMainAction";
 
 export const CreatePromotion = () => {
 
@@ -72,42 +72,42 @@ export const CreatePromotion = () => {
                         </div>
 
                         <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
-                                <div className="flex flex-column gap-2">
-                                    <label htmlFor="title" className=' text-black'>{translate.title}</label>
-                                    <InputText
-                                        className="p-inputtext-sm text-black"
-                                        id="title"
-                                        aria-describedby="title-help"
-                                        tooltip='User full title'
-                                        tooltipOptions={{...tooltipOptions}}
-                                        placeholder='Enter promotion title'
-                                        disabled={loading}
-                                        onChange={(e) => payloadHandler(payload, e.target.value, 'title', (updateValue) => {
-                                            setPayload(updateValue);
-                                        })}
-                                    />
-                                    <ValidationMessage field={"title"} />
-                                </div>
+                            <div className="flex flex-column gap-2">
+                                <label htmlFor="title" className=' text-black'>{translate.title}</label>
+                                <InputText
+                                    className="p-inputtext-sm text-black"
+                                    id="title"
+                                    aria-describedby="title-help"
+                                    tooltip='User full title'
+                                    tooltipOptions={{ ...tooltipOptions }}
+                                    placeholder='Enter promotion title'
+                                    disabled={loading}
+                                    onChange={(e) => payloadHandler(payload, e.target.value, 'title', (updateValue) => {
+                                        setPayload(updateValue);
+                                    })}
+                                />
+                                <ValidationMessage field={"title"} />
                             </div>
+                        </div>
 
                         <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
-                                <div className="flex flex-column gap-2">
-                                    <label htmlFor="url" className=' text-black'>{translate.promotion_url}</label>
-                                    <InputText
-                                        className="p-inputtext-sm text-black"
-                                        id="url"
-                                        aria-describedby="url-help"
-                                        tooltip='Promotion url'
-                                        tooltipOptions={{...tooltipOptions}}
-                                        placeholder='Enter promotion url'
-                                        disabled={loading}
-                                        onChange={(e) => payloadHandler(payload, e.target.value, 'url', (updateValue) => {
-                                            setPayload(updateValue);
-                                        })}
-                                    />
-                                    <ValidationMessage field={"url"} />
-                                </div>
+                            <div className="flex flex-column gap-2">
+                                <label htmlFor="url" className=' text-black'>{translate.promotion_url}</label>
+                                <InputText
+                                    className="p-inputtext-sm text-black"
+                                    id="url"
+                                    aria-describedby="url-help"
+                                    tooltip='Promotion url'
+                                    tooltipOptions={{ ...tooltipOptions }}
+                                    placeholder='Enter promotion url'
+                                    disabled={loading}
+                                    onChange={(e) => payloadHandler(payload, e.target.value, 'url', (updateValue) => {
+                                        setPayload(updateValue);
+                                    })}
+                                />
+                                <ValidationMessage field={"url"} />
                             </div>
+                        </div>
 
                         <div className=" col-12 md:col-4 lg:ocl-4">
                             <div className=" flex flex-column gap-2">
@@ -131,24 +131,13 @@ export const CreatePromotion = () => {
                             </div>
                         </div>
 
-                        <div className="col-12">
-                            <div className="flex flex-row justify-content-end align-items-center">
-                            <Button 
-                                className="mx-2"
-                                label={translate.cancel}
-                                severity="secondary"
-                                outlined
-                                size='small'
-                                disabled={loading}
-                                onClick={() => navigate(paths.promotion)}
-                            />
-                                <Button
-                                    severity="danger"
-                                    label={translate.submit}
-                                    onClick={submitPromotionCreate}
-                                />
-                            </div>
-                        </div>
+                        <FormMainAction
+                            cancel={translate.cancel}
+                            cancelClick={() => navigate(paths.promotion)}
+                            submit={translate.submit}
+                            submitClick={submitPromotionCreate}
+                            loading={loading}
+                        />
                     </div>
                 </Card>
             </div>

@@ -6,12 +6,12 @@ import { regionService } from '../regionService';
 import { InputText } from 'primereact/inputtext';
 import { Card } from 'primereact/card';
 import { ValidationMessage } from '../../../shares/ValidationMessage';
-import { Button } from 'primereact/button';
 import { tooltipOptions } from '../../../constants/config';
 import { paths } from '../../../constants/paths';
 import { payloadHandler } from '../../../helpers/handler';
 import { BreadCrumb } from '../../../shares/BreadCrumb';
 import { Loading } from '../../../shares/Loading';
+import { FormMainAction } from '../../../shares/FormMainAction';
 
 export const RegionCreate = () => {
 
@@ -68,28 +68,13 @@ export const RegionCreate = () => {
                                 </div>
                             </div>
 
-                            <div className="col-12">
-                                <div className="flex flex-row justify-content-end align-items-center">
-                                    <Button
-                                        className="mx-2"
-                                        label={translate.cancel}
-                                        severity="secondary"
-                                        outlined
-                                        size='small'
-                                        disabled={loading}
-                                        onClick={() => navigate(paths.region)}
-                                    />
-
-                                    <Button
-                                        className="mx-2"
-                                        label={translate.submit}
-                                        severity="danger"
-                                        size='small'
-                                        disabled={loading}
-                                        onClick={submitRegionCreate}
-                                    />
-                                </div>
-                            </div>
+                            <FormMainAction
+                                cancel={translate.cancel}
+                                cancelClick={() => navigate(paths.region)}
+                                submit={translate.submit}
+                                submitClick={submitRegionCreate}
+                                loading={loading}
+                            />
 
                         </div>
 

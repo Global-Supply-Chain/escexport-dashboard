@@ -12,20 +12,19 @@ import { InputText } from 'primereact/inputtext';
 import { payloadHandler } from '../../../helpers/handler';
 import { uploadFile } from '../../../helpers/uploadFile';
 import { tooltipOptions } from '../../../constants/config';
-import { Button } from 'primereact/button';
-import DeleteDialogButton from '../../../shares/DeleteDialogButton';
 import { paths } from '../../../constants/paths';
 import { Dropdown } from 'primereact/dropdown';
 import { generalStatus } from '../../../helpers/StatusHandler';
 import { Loading } from '../../../shares/Loading';
 import { useNavigate } from "react-router-dom";
+import { FormMainAction } from '../../../shares/FormMainAction';
+import { DeleteConfirm } from '../../../shares/DeleteConfirm';
 
 const UpdatePromotion = () => {
 
   const params = useParams();
   const [payload, setPayload] = useState(promotionPayload.update);
   const [status, setStatus] = useState([]);
-  const [visible, setVisible] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -84,27 +83,11 @@ const UpdatePromotion = () => {
 
           <div className="grid">
 
-            <div className=' col-12 flex align-items-center justify-content-end'>
-              <div>
-
-                <DeleteDialogButton
-                  visible={visible}
-                  setVisible={setVisible}
-                  url={paths.promotion}
-                  id={params.id}
-                  redirect={paths.promotion}
-                />
-
-                <Button
-                  size='small'
-                  severity='danger'
-                  outlined
-                  onClick={() => setVisible(true)}
-                >
-                  <i className=' pi pi-trash'></i>
-                </Button>
-              </div>
-            </div>
+            <DeleteConfirm
+              url={paths.promotion}
+              id={params.id}
+              redirect={paths.promotion}
+            />
 
             <div className=" col-12 flex justify-content-center align-items-center">
 
@@ -207,24 +190,14 @@ const UpdatePromotion = () => {
               </div>
             </div>
 
-            <div className="col-12">
-              <div className="flex flex-row justify-content-end align-items-center">
-                <Button
-                  className="mx-2"
-                  label={translate.cancel}
-                  severity="secondary"
-                  outlined
-                  size='small'
-                  disabled={loading}
-                  onClick={() => navigate(paths.promotion)}
-                />
-                <Button
-                  severity="danger"
-                  label={translate.update}
-                  onClick={submitPromotionUpdate}
-                />
-              </div>
-            </div>
+            <FormMainAction
+              cancel={translate.cancel}
+              cancelClick={() => navigate(paths.promotion)}
+              submit={translate.update}
+              submitClick={submitPromotionUpdate}
+              loading={loading}
+            />
+
           </div>
         </Card>
       </div>

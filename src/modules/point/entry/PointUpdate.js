@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { tooltipOptions } from '../../../constants/config';
 import { Card } from 'primereact/card';
-import { Button } from 'primereact/button';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { pointService } from '../pointSerivce';
@@ -13,14 +12,14 @@ import { InputText } from 'primereact/inputtext';
 import { endpoints } from '../../../constants/endpoints';
 import { getRequest } from '../../../helpers/api';
 import { Dropdown } from 'primereact/dropdown';
-import DeleteDialogButton from '../../../shares/DeleteDialogButton';
 import { Loading } from '../../../shares/Loading';
+import { FormMainAction } from '../../../shares/FormMainAction';
+import { DeleteConfirm } from '../../../shares/DeleteConfirm';
 
 const PointUpdate = () => {
     const [loading, setLoading] = useState(false);
     const [payload, setPayload] = useState(pointPayload.update);
     const [pointLabelStatus, setPointLabelStatus] = useState([]);
-    const [visible, setVisible] = useState(false);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -80,27 +79,11 @@ const PointUpdate = () => {
 
                     <div className=' grid'>
 
-                        <div className=' col-12 flex align-items-center justify-content-end'>
-                            <div>
-
-                                <DeleteDialogButton
-                                    visible={visible}
-                                    setVisible={setVisible}
-                                    url={paths.point}
-                                    id={params?.id}
-                                    redirect={paths.point}
-                                />
-
-                                <Button
-                                    size='small'
-                                    severity='danger'
-                                    outlined
-                                    onClick={() => setVisible(true)}
-                                >
-                                    <i className=' pi pi-trash'></i>
-                                </Button>
-                            </div>
-                        </div>
+                        <DeleteConfirm
+                            url={paths.point}
+                            id={params?.id}
+                            redirect={paths.point}
+                        />
 
                         <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
                             <div className="flex flex-column gap-2">
@@ -146,29 +129,13 @@ const PointUpdate = () => {
                             </div>
                         </div>
 
-                        <div className=' md:col-12 mx-2 md:mx-0 my-3'>
-                            <div className=' flex align-items-center justify-content-end'>
-                                <div className=' flex align-items-center justify-content-between gap-3'>
-
-                                    <Button
-                                        label={translate.cancel}
-                                        severity="secondary"
-                                        outlined
-                                        size='small'
-                                        onClick={() => navigate(paths.point)}
-                                    />
-
-                                    <Button
-                                        severity="danger"
-                                        size='small'
-                                        disabled={loading}
-                                        label={translate.update}
-                                        onClick={() => submitUpdatePoint()}
-                                    />
-
-                                </div>
-                            </div>
-                        </div>
+                        <FormMainAction
+                            cancel={translate.cancel}
+                            cancelClick={() => navigate(paths.point)}
+                            submit={translate.update}
+                            submitClick={submitUpdatePoint}
+                            loading={loading}
+                        />
 
                     </div>
 
