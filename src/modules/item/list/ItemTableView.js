@@ -190,7 +190,7 @@ const ItemTableView = () => {
     */
     const HeaderRender = () => {
         return (
-            <div className="w-full flex flex-column md:flex-row justify-content-between md:justify-content-start align-items-start md:align-items-end gap-3">
+            <div className="w-full flex flex-column md:flex-row justify-content-between md:justify-content-start align-items-start md:align-items-center gap-3">
                 <Search
                     tooltipLabel={"search item by id, name, code, description,content,price,sell price,out of stock, status"}
                     placeholder={"Search item"}
