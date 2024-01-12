@@ -129,5 +129,7 @@
     "discount" : "折扣",
     "delivery_feed" : "输送饲料",
     "total_amount" : "总金额",
-    "payment_type" : "付款方式"
+    "payment_type" : "付款方式",
+    "remove_permission" : "删除权限",
+    "keyword_search" : "关键词搜索"
 }

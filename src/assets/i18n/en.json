@@ -129,5 +129,7 @@
     "discount" : "Discount",
     "delivery_feed" : "Delivery Feed",
     "total_amount" : "Total Amount",
-    "payment_type" : "Payment Type"
+    "payment_type" : "Payment Type",
+    "remove_permission" : "Remove Permission",
+    "keyword_search" : "Keyword Search"
 }

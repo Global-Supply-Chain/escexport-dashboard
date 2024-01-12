@@ -84,7 +84,7 @@ export const RoleHasPermissionTableView = ({ dataSource, callback }) => {
             <div className=' flex align-items-center justify-content-end'>
                 <Button
                     type='submit'
-                    label='REMOVE PERMISSION'
+                    label={translate.remove_permission}
                     disabled={isDisable}
                     severity='danger'
                     onClick={submitRoleRemovePermission}
@@ -119,7 +119,7 @@ export const RoleHasPermissionTableView = ({ dataSource, callback }) => {
                     id="search"
                     value={globalFilterValue} 
                     onChange={onGlobalFilterChange} 
-                    placeholder="Keyword Search" />
+                    placeholder={translate.keyword_search} />
                 </span>
             </div>
 
