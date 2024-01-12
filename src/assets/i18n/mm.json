@@ -129,5 +129,7 @@
     "discount" : "လျှော့စျေး",
     "delivery_feed" : "Delivery ကျသင့်ငွေ",
     "total_amount" : "စုစုပေါင်းတန်ဖိုး",
-    "payment_type" : "ငွေပေးချေမှုအမျိုးအစား"
+    "payment_type" : "ငွေပေးချေမှုအမျိုးအစား",
+    "remove_permission" : "ခွင့်ပြုချက်ကိုဖယ်ရှားပါ။",
+    "keyword_search" : "ခွင့်ပြုချက်ရှာဖွေမှု"
 }
