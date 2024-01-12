@@ -287,8 +287,7 @@ const ItemUpdate = () => {
         formData.append("method", "PUT");
 
         console.log(currentImage);
-
-        // await itemService.store(dispatch, formData);
+        
         // await itemService.update(dispatch, payload?.id, payload)
         setLoading(false);
     }
