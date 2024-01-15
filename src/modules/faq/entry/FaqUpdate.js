@@ -16,6 +16,7 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { Divider } from 'primereact/divider';
 import { FormMainAction } from '../../../shares/FormMainAction';
 import { DeleteConfirm } from '../../../shares/DeleteConfirm';
+import { isJSONString } from '../../../helpers/isJsonString';
 
 export const FaqUpdate = () => {
     const dynamicForm = Object.fromEntries(
@@ -148,7 +149,7 @@ export const FaqUpdate = () => {
                                                 tooltip="Faq question"
                                                 tooltipOptions={{ ...tooltipOptions }}
                                                 placeholder="Enter faq question"
-                                                defaultValue={prevValue?.question ? JSON.parse(prevValue?.question)[codeNameQuestion] : ""}
+                                                defaultValue={isJSONString(prevValue?.question) ? JSON.parse(prevValue?.question)[codeNameQuestion] : prevValue?.question}
                                                 disabled={loading}
                                                 onChange={(e) => {
                                                     const codeNameQuestion = value.code.toLowerCase();
@@ -173,7 +174,7 @@ export const FaqUpdate = () => {
                                             tooltipOptions={{ ...tooltipOptions }}
                                             placeholder="Enter faq answer"
                                             disabled={loading}
-                                            defaultValue={prevValue?.answer ? JSON.parse(prevValue?.answer)[codeNameQuestion] : ""}
+                                            defaultValue={isJSONString(prevValue?.answer) ? JSON.parse(prevValue?.answer)[codeNameQuestion] : prevValue?.answer}
                                             onChange={(e) => {
                                                 const codeName = value.code.toLowerCase();
                                                 payload.current[codeName].answer = e.target.value;
