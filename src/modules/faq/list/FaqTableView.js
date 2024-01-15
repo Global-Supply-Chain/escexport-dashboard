@@ -21,15 +21,7 @@ import { FilterByDate } from '../../../shares/FilterByDate';
 import moment from 'moment';
 import { Card } from 'primereact/card';
 import { NavigateId } from '../../../shares/NavigateId';
-
-function isJSONString(str) {
-    try {
-      JSON.parse(str);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
+import { isJSONString } from '../../../helpers/isJsonString';
 
 export const FaqTableView = () => {
 
