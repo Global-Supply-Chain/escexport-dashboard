@@ -10,6 +10,10 @@ export const paths = {
     promotionCreate: "/promotion/new",
     promotionDetail: "/promotion/:id",
 
+    discount: "/discount",
+    discountCreate: "/discount/new",
+    discountDetail: "/discount/:id",
+
     user: "/user",
     userCreate : "/user/new",
     userDetail : "user/:id",

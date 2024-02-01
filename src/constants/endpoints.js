@@ -5,6 +5,7 @@ export const endpoints = {
     admin: "admin",
     user: "user",
     promotion: "promotion",
+    memberDiscount: "member-discount",
     category: "category",
     generalStatus: "general",
     paymentType: "payment_type",

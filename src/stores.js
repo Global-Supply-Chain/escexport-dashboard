@@ -15,6 +15,7 @@ import shopSlice from "./modules/shop/shopSlice";
 import dashboardSlice from "./modules/dashboard/dashboardSlice";
 import authorizationSlice from "./modules/authorization/authorizationSlice";
 import settingSlice from "./modules/setting/settingSlice";
+import discountSlice from "./modules/discount/discountSlice";
 
 export const stores = configureStore({
    reducer: {
@@ -33,7 +34,8 @@ export const stores = configureStore({
     shop: shopSlice,
     dashboard: dashboardSlice,
     auth : authorizationSlice,
-    setting: settingSlice
+    setting: settingSlice,
+    discount: discountSlice
    },
    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
       serializableCheck: false
