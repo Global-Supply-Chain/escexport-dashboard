@@ -46,22 +46,41 @@ export const items = [
             }
         ]
     },
+    // {
+    //     key: '3',
+    //     label: 'menu_promotion',
+    //     icon: 'pi pi-fw pi-verified',
+    //     children: [
+    //         {
+    //             key: '3-1',
+    //             label: 'menu_list',
+    //             icon: 'pi pi-fw pi-list',
+    //             url: paths.promotion
+    //         },
+    //         {
+    //             key: '3-2',
+    //             label: 'menu_create',
+    //             icon: 'pi pi-fw pi-plus',
+    //             url: paths.promotionCreate
+    //         }
+    //     ]
+    // },
     {
         key: '3',
-        label: 'menu_promotion',
+        label: 'menu_discount',
         icon: 'pi pi-fw pi-verified',
         children: [
             {
                 key: '3-1',
                 label: 'menu_list',
                 icon: 'pi pi-fw pi-list',
-                url: paths.promotion
+                url: paths.discount
             },
             {
                 key: '3-2',
                 label: 'menu_create',
                 icon: 'pi pi-fw pi-plus',
-                url: paths.promotionCreate
+                url: paths.discountCreate
             }
         ]
     },

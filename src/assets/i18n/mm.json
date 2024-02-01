@@ -7,6 +7,7 @@
     "menu_user": "အသုံးပြုသူ",
     "menu_administrator": "စီမံခန့်ခွဲသူ",
     "menu_promotion": "ပရိုမိုးရှင်း",
+    "menu_discount" : "လျှော့စျေး",
     "menu_category": "အမျိုးအစား",
     "menu_main_category": "ပင်မအမျိုးအစား",
     "menu_item": "ပစ္စည်းများ",
@@ -131,5 +132,15 @@
     "total_amount": "စုစုပေါင်းတန်ဖိုး",
     "payment_type": "ငွေပေးချေမှုအမျိုးအစား",
     "remove_permission": "ခွင့်ပြုချက်ကိုဖယ်ရှားပါ။",
-    "keyword_search": "ခွင့်ပြုချက်ရှာဖွေမှု"
+    "keyword_search": "ခွင့်ပြုချက်ရှာဖွေမှု",
+    "discount_list": "လျှော့စျေးစာရင်း",
+    "discount_create" : "လျှော့စျေး ဖန်တီးပါ။",
+    "discount_update" : "လျှော့စျေးအပ်ဒိတ်",
+    "discount_percentage" : "လျှော့စျေးရာခိုင်နှုန်း",
+    "discount_fix_amount" : "လျှော့စျေးပြင်ဆင်မှု ပမာဏ",
+    "expend_limit" : "ကန့်သတ်ချက်ကို သုံးစွဲပါ။",
+    "is_expend_limit" : "အသုံးစရိတ်ကန့်သတ်ချက်ဖြစ်ပါသည်။",
+    "is_fix_amount" : "ပြင်ဆင်မှု ပမာဏဖြစ်သည်။",
+    "start_date" : "စတင်သည့်ရက်စွဲ",
+    "end_date" : "ကုန်ဆုံးရက်စွဲ"
 }
