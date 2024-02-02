@@ -8,6 +8,8 @@
     "menu_administrator": "行政人员",
     "menu_promotion": "晋升",
     "menu_discount" : "折扣",
+    "menu_member_card" : "会员卡",
+    "menu_member": "成员",
     "menu_category": "类别",
     "menu_main_category": "主要类别",
     "menu_item": "项目",
@@ -142,5 +144,14 @@
     "is_expend_limit" : "是消费限额",
     "is_fix_amount" : "是固定金额",
     "start_date" : "开始日期",
-    "end_date" : "结束日期"
+    "end_date" : "结束日期",
+    "member_id" : "会员ID",
+    "member_card": "会员卡",
+    "member_card_list" : "会员卡清单",
+    "member_card_create" : "会员卡创建",
+    "member_card_update" : "会员卡更新",
+    "member_list": "会员名单",
+    "member_create": "会员创建",
+    "expired_at" : "过期时间",
+    "amount" : "数量"
 }

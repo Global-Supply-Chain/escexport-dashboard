@@ -8,6 +8,8 @@
     "menu_administrator": "Administrator",
     "menu_promotion": "Promotion",
     "menu_discount" : "Discount",
+    "menu_member": "Member",
+    "menu_member_card" : "Member Card",
     "menu_category": "Category",
     "menu_main_category": "Main Category",
     "menu_item": "Item",
@@ -142,5 +144,14 @@
     "is_expend_limit" : "Is Expend Limit",
     "is_fix_amount" : "Is Fix Amount",
     "start_date" : "Start Date",
-    "end_date" : "End Date"
+    "end_date" : "End Date",
+    "member_id" : "Member ID",
+    "member_card": "Member Card",
+    "member_card_list" : "Member Card List",
+    "member_card_create" : "Member Card Create",
+    "member_card_update" : "Member Card Update",
+    "member_list": "Member List",
+    "member_create": "Member Create",
+    "expired_at" : "Expired At",
+    "amount" : "Amount"
 }
