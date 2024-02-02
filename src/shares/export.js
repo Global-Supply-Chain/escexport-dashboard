@@ -15,7 +15,6 @@ export const ExportExcel = ({url}) => {
             const response = await fetch(baseURL +'/'+ url, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json', // Adjust the content type if needed
                     'authorization': `Bearer ${getData(keys.API_TOKEN)}`,
                     'Content-Disposition': 'attachment; filename=exportedFile.xlsx',
                     'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',

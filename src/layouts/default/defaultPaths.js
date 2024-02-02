@@ -46,22 +46,79 @@ export const items = [
             }
         ]
     },
+    // {
+    //     key: '3',
+    //     label: 'menu_promotion',
+    //     icon: 'pi pi-fw pi-verified',
+    //     children: [
+    //         {
+    //             key: '3-1',
+    //             label: 'menu_list',
+    //             icon: 'pi pi-fw pi-list',
+    //             url: paths.promotion
+    //         },
+    //         {
+    //             key: '3-2',
+    //             label: 'menu_create',
+    //             icon: 'pi pi-fw pi-plus',
+    //             url: paths.promotionCreate
+    //         }
+    //     ]
+    // },
     {
         key: '3',
-        label: 'menu_promotion',
-        icon: 'pi pi-fw pi-verified',
+        label: 'menu_discount',
+        icon: 'pi pi-fw pi-box',
         children: [
             {
                 key: '3-1',
                 label: 'menu_list',
                 icon: 'pi pi-fw pi-list',
-                url: paths.promotion
+                url: paths.discount
             },
             {
                 key: '3-2',
                 label: 'menu_create',
                 icon: 'pi pi-fw pi-plus',
-                url: paths.promotionCreate
+                url: paths.discountCreate
+            }
+        ]
+    },
+    {
+        key: '16',
+        label: 'menu_member_card',
+        icon: 'pi pi-fw pi-id-card',
+        children: [
+            {
+                key: '16-1',
+                label: 'menu_list',
+                icon: 'pi pi-fw pi-list',
+                url: paths.memberCard
+            },
+            {
+                key: '16-2',
+                label: 'menu_create',
+                icon: 'pi pi-fw pi-plus',
+                url: paths.memberCardCreate
+            }
+        ]
+    },
+    {
+        key: '17',
+        label: 'menu_member',
+        icon: 'pi pi-fw pi-user-plus',
+        children: [
+            {
+                key: '17-1',
+                label: 'menu_list',
+                icon: 'pi pi-fw pi-list',
+                url: paths.member
+            },
+            {
+                key: '17-2',
+                label: 'menu_create',
+                icon: 'pi pi-fw pi-plus',
+                url: paths.memberCreate
             }
         ]
     },
