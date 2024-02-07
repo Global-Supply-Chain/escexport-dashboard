@@ -154,6 +154,11 @@
     "member_list": "会员名单",
     "member_create": "会员创建",
     "member_order_list": "会员订单列表",
+    "card_number" : "卡号",
+    "card_type" : "卡的种类",
+    "order_number" : "订单号",
+    "pay_amount" : "支付金额",
+    "is_wallet" : "是钱包",
     "expired_at" : "过期时间",
     "amount" : "数量"
 }

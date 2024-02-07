@@ -154,6 +154,11 @@
     "member_list": "အဖွဲ့ဝင်စာရင်း",
     "member_creaet": "အဖွဲ့ဝင်ဖန်တီးပါ။",
     "member_order_list" : "အဖွဲ့ဝင် Order စာရင်း",
+    "card_number" : "ကတ်နံပါတ်",
+    "card_type" : "ကတ်အမျိုးအစား",
+    "order_number" : "အော်ဒါနံပါတ်",
+    "pay_amount" : "ငွေပမာဏ",
+    "is_wallet" : "ပိုက်ဆံအိတ်",
     "expired_at" : "သက်တမ်းကုန်ဆုံးရက်",
     "amount" : "ပမာဏ"
 }
