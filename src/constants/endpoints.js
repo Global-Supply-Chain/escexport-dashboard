@@ -5,6 +5,7 @@ export const endpoints = {
     admin: "admin",
     user: "user",
     promotion: "promotion",
+    memberOrder: "member-order",
     memberDiscount: "member-discount",
     memberCard: "member-card",
     member: "member",

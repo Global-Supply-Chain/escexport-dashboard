@@ -8,6 +8,7 @@
     "menu_administrator": "Administrator",
     "menu_promotion": "Promotion",
     "menu_discount" : "Discount",
+    "menu_member_order": "Member Order",
     "menu_member": "Member",
     "menu_member_card" : "Member Card",
     "menu_category": "Category",
@@ -152,6 +153,7 @@
     "member_card_update" : "Member Card Update",
     "member_list": "Member List",
     "member_create": "Member Create",
+    "member_order_list": "Member Order List",
     "expired_at" : "Expired At",
     "amount" : "Amount"
 }
