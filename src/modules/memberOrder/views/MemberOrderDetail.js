@@ -14,6 +14,7 @@ export const MemberOrderDetail = () => {
     const params = useParams();
     const dispatch = useDispatch();
     const { memberOrder } = useSelector(state => state.memberOrder);
+    const { translate } = useSelector(state => state.setting);
 
     const loadingData = useCallback(async () => {
 
@@ -40,67 +41,67 @@ export const MemberOrderDetail = () => {
             >
                 <div className=' grid'>
                     <div className=' col-12 md:col-4 flex align-items-center justify-content-start gap-5'>
-                        <p className=' font-bold'>Name - </p>
+                        <p className=' font-bold'>{translate.name} - </p>
                         <p>{memberOrder?.name}</p>
                     </div>
 
                     <div className=' col-12 md:col-4 flex align-items-center justify-content-start gap-5'>
-                        <p className=' font-bold'>User Name - </p>
+                        <p className=' font-bold'>{translate.user_name} - </p>
                         <p>{memberOrder?.user_name}</p>
                     </div>
 
                     <div className=' col-12 md:col-4 flex align-items-center justify-content-start gap-5'>
-                        <p className='font-bold'>Email - </p>
+                        <p className='font-bold'>{translate.email} - </p>
                         <p>{memberOrder?.email}</p>
                     </div>
 
                     <div className=' col-12 md:col-4 flex align-items-center justify-content-start gap-5'>
-                        <p className=' font-bold'>Phone - </p>
+                        <p className=' font-bold'>{translate.phone} - </p>
                         <p>{memberOrder?.phone}</p>
                     </div>
 
                     <div className=' col-12 md:col-4 flex align-items-center justify-content-start gap-5'>
-                        <p className=' font-bold'>Member ID - </p>
+                        <p className=' font-bold'>{translate.member_id} - </p>
                         <p>{memberOrder?.member_id}</p>
                     </div>
 
                     <div className=' col-12 md:col-4 flex align-items-center justify-content-start gap-5'>
-                        <p className=' font-bold'>Card Number - </p>
+                        <p className=' font-bold'>{translate.card_number} - </p>
                         <p>{memberOrder?.card_number}</p>
                     </div>
 
                     <div className=' col-12 md:col-4 flex align-items-center justify-content-start gap-5'>
-                        <p className=' font-bold'>Card Type - </p>
+                        <p className=' font-bold'>{translate.card_type} - </p>
                         <p>{memberOrder?.card_type}</p>
                     </div>
 
                     <div className=' col-12 md:col-4 flex align-items-center justify-content-start gap-5'>
-                        <p className=' font-bold'>Orde Number - </p>
+                        <p className=' font-bold'>{translate.order_number} - </p>
                         <p>{memberOrder?.order_number}</p>
                     </div>
 
                     <div className=' col-12 md:col-4 flex align-items-center justify-content-start gap-5'>
-                        <p className=' font-bold'>Amount - </p>
+                        <p className=' font-bold'>{translate.amount} - </p>
                         <p>{memberOrder?.amount}</p>
                     </div>
 
                     <div className=' col-12 md:col-4 flex align-items-center justify-content-start gap-5'>
-                        <p className=' font-bold'>Discount - </p>
+                        <p className=' font-bold'>{translate.discount} - </p>
                         <p>{memberOrder?.discount}</p>
                     </div>
 
                     <div className=' col-12 md:col-4 flex align-items-center justify-content-start gap-5'>
-                        <p className=' font-bold'>Pay Amount - </p>
+                        <p className=' font-bold'>{translate.pay_amount} - </p>
                         <p>{memberOrder?.pay_amount}</p>
                     </div>
 
                     <div className=' col-12 md:col-4 flex align-items-center justify-content-start gap-5'>
-                        <p className=' font-bold'>Wallet - </p>
+                        <p className=' font-bold'>{translate.is_wallet} - </p>
                         <Checkbox disabled={true} checked={memberOrder?.is_wallet} />
                     </div>
 
                     <div className=' col-12 md:col-4 flex align-items-center justify-content-start gap-5'>
-                        <p className=' font-bold'>Status - </p>
+                        <p className=' font-bold'>{translate.status} - </p>
                         <Badge value={memberOrder?.status}></Badge>
                     </div>
 
