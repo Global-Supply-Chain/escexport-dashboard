@@ -8,6 +8,7 @@
     "menu_administrator": "စီမံခန့်ခွဲသူ",
     "menu_promotion": "ပရိုမိုးရှင်း",
     "menu_discount" : "လျှော့စျေး",
+    "menu_member_order" : "အဖွဲ့ဝင် Order",
     "menu_member_card" : "အဖွဲ့ဝင်ကတ်",
     "menu_member": "အဖွဲ့ဝင်",
     "menu_category": "အမျိုးအစား",
@@ -152,6 +153,7 @@
     "member_card_updaet" : "အဖွဲ့ဝင်ကတ်အပ်ဒိတ်",
     "member_list": "အဖွဲ့ဝင်စာရင်း",
     "member_creaet": "အဖွဲ့ဝင်ဖန်တီးပါ။",
+    "member_order_list" : "အဖွဲ့ဝင် Order စာရင်း",
     "expired_at" : "သက်တမ်းကုန်ဆုံးရက်",
     "amount" : "ပမာဏ"
 }

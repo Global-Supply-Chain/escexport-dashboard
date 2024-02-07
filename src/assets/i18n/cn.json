@@ -8,6 +8,7 @@
     "menu_administrator": "行政人员",
     "menu_promotion": "晋升",
     "menu_discount" : "折扣",
+    "menu_member_order" : "会员订单",
     "menu_member_card" : "会员卡",
     "menu_member": "成员",
     "menu_category": "类别",
@@ -152,6 +153,7 @@
     "member_card_update" : "会员卡更新",
     "member_list": "会员名单",
     "member_create": "会员创建",
+    "member_order_list": "会员订单列表",
     "expired_at" : "过期时间",
     "amount" : "数量"
 }
