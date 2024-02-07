@@ -136,7 +136,7 @@ export const MemberCardUpdate = () => {
                                         autoComplete='name'
                                         aria-describedby="name-help"
                                         tooltip='Member label'
-                                        value={payload.label}
+                                        value={payload.label ? payload.label : ''}
                                         tooltipOptions={{ ...tooltipOptions }}
                                         placeholder='Enter member label'
                                         disabled={loading}
@@ -155,7 +155,7 @@ export const MemberCardUpdate = () => {
                                         inputId='discount'
                                         autoComplete='discount name'
                                         name='discount'
-                                        value={payload.discount_id}
+                                        value={payload.discount_id ? payload.discount_id : ''}
                                         onChange={(e) => payloadHandler(payload, e.value, 'discount_id', (updateValue) => {
                                             setPayload(updateValue);
                                         })}

@@ -21,6 +21,7 @@ import { settingRoutes } from "./modules/setting/settingRoutes";
 import { discountRoutes } from "./modules/discount/discountRoutes";
 import { memberCardRoutes } from "./modules/memberCard/memberCardRoute";
 import { memberRoutes } from "./modules/member/memberRoute";
+import { memberOrderRoutes } from "./modules/memberOrder/memberOrderRoute";
 
 export const routers = createBrowserRouter([
     {
@@ -44,6 +45,7 @@ export const routers = createBrowserRouter([
             ...discountRoutes,
             ...memberCardRoutes,
             ...memberRoutes,
+            ...memberOrderRoutes,
             ...authorizationRoute,
             ...settingRoutes
         ]

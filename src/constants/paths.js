@@ -18,6 +18,9 @@ export const paths = {
     memberCreate: "/member/new",
     memberDetail: "/member/:id",
 
+    memberOrder: "/memberOrder",
+    memberOrderDetail: "/memberOrder/:id",
+
     discount: "/discount",
     discountCreate: "/discount/new",
     discountDetail: "/discount/:id",

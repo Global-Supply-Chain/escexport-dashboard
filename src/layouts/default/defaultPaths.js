@@ -123,6 +123,25 @@ export const items = [
         ]
     },
     {
+        key: '18',
+        label: 'menu_member_order',
+        icon: 'pi pi-fw pi-user-plus',
+        children: [
+            {
+                key: '18-1',
+                label: 'menu_list',
+                icon: 'pi pi-fw pi-list',
+                url: paths.memberOrder
+            },
+            // {
+            //     key: '17-2',
+            //     label: 'menu_create',
+            //     icon: 'pi pi-fw pi-plus',
+            //     url: paths.memberCreate
+            // }
+        ]
+    },
+    {
         key: '4',
         label: 'menu_category',
         icon: 'pi pi-fw pi-clone',
