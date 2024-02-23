@@ -153,6 +153,7 @@
     "member_card_update" : "Member Card Update",
     "member_list": "Member List",
     "member_create": "Member Create",
+    "member_update": "Member Update",
     "member_order_list": "Member Order List",
     "card_number" : "Card Number",
     "card_type" : "Card Type",

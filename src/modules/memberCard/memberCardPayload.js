@@ -28,7 +28,7 @@ export const memberCardPayload = {
     paginateParams: {
         page: 1,
         per_page: paginateOptions.rows,
-        columns: "id,label,discount_percentage,discount_fix_amount,expend_limit,is_expend_limit,is_fix_amount,start_date,end_date,status",
+        columns: "id,label,discount_id,front_background,back_background,expired_at,status",
         search: "",
         order: "id",
         sort: "DESC"
