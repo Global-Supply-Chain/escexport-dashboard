@@ -1,6 +1,5 @@
 import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
-import { Password } from "primereact/password";
 import { paths } from "../../../constants/paths";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,9 +10,9 @@ import { payloadHandler } from "../../../helpers/handler";
 import { tooltipOptions } from "../../../constants/config";
 import { BreadCrumb } from "../../../shares/BreadCrumb";
 import { userPayload } from "../userPayload";
-import { Profile } from "../../../shares/Profile";
-import { formBuilder } from "../../../helpers/formBuilder";
+import { Calendar } from 'primereact/calendar';
 import { FormMainAction } from "../../../shares/FormMainAction";
+import moment from "moment";
 
 export const UserCreate = () => {
   const [loading, setLoading] = useState(false);
@@ -25,17 +24,14 @@ export const UserCreate = () => {
   const dispatch = useDispatch();
 
   /**
-   * User Create
-   * Payload - [name,profile,email,phone,password,confirm_password]
-   * @returns
-   * **/
+   * Create user account
+   * @returns 
+   */
   const submitUser = async () => {
     setLoading(true);
-    const formData = formBuilder(payload, userPayload.store);
-
-    await userService.store(formData, dispatch);
-
+    await userService.store(payload, dispatch);
     setLoading(false);
+    return;
   };
 
   return (
@@ -51,43 +47,21 @@ export const UserCreate = () => {
             subTitle={translate.user_subtitle}
           >
             <div className=" grid">
-              <div className=" col-12 flex align-items-center justify-content-center">
-                <form>
-
-                  <Profile
-                    payload={payload}
-                    setPayload={setPayload}
-                    field={'profile'}
-                  />
-
-                </form>
-              </div>
-
-              <div className=" col-12 md:col-6 lg:col-4 my-3">
-                <div className="flex flex-column">
-                  <label htmlFor="name" className=" text-black">
-                    {translate.name} (required)
-                  </label>
+              <div className=" col-12 md:col-6 lg:col-4 py-3">
+                <div className="flex flex-column gap-2">
+                  <label htmlFor="name" className=" text-black"> {translate.name} (required) </label>
                   <InputText
                     className="p-inputtext-sm text-black"
                     id="name"
                     name={'name'}
-                    autoComplete="User name"
                     aria-describedby="name-help"
-                    tooltip="User full name"
+                    tooltip={translate.name}
                     tooltipOptions={{ ...tooltipOptions }}
-                    placeholder="Enter user name"
+                    placeholder={translate.name}
                     disabled={loading}
-                    onChange={(e) =>
-                      payloadHandler(
-                        payload,
-                        e.target.value,
-                        "name",
-                        (updateValue) => {
-                          setPayload(updateValue);
-                        }
-                      )
-                    }
+                    onChange={(e) => payloadHandler(payload, e.target.value, "name", (updateValue) => {
+                      setPayload(updateValue);
+                    })}
                   />
                   <ValidationMessage field={"name"} />
                 </div>
@@ -95,60 +69,41 @@ export const UserCreate = () => {
 
               <div className=" col-12 md:col-6 lg:col-4 py-3">
                 <div className="flex flex-column gap-2">
-                  <label htmlFor="email" className=" text-black">
-                    {translate.email} (required)
-                  </label>
+                  <label htmlFor="email" className=" text-black"> {translate.email} (required) </label>
                   <InputText
                     className="p-inputtext-sm text-black"
                     keyfilter={"email"}
                     id="email"
                     name="email"
-                    autoComplete="User email"
                     aria-describedby="email-help"
-                    tooltip="User email"
+                    tooltip={translate.email}
                     tooltipOptions={{ ...tooltipOptions }}
-                    placeholder="Enter user email"
+                    placeholder={translate.email}
                     disabled={loading}
-                    onChange={(e) =>
-                      payloadHandler(
-                        payload,
-                        e.target.value,
-                        "email",
-                        (updateValue) => {
-                          setPayload(updateValue);
-                        }
-                      )
-                    }
+                    onChange={(e) => payloadHandler(payload, e.target.value, "email", (updateValue) => {
+                      setPayload(updateValue);
+                    })}
                   />
                   <ValidationMessage field={"email"} />
                 </div>
               </div>
+
               <div className=" col-12 md:col-6 lg:col-4 py-3">
                 <div className="flex flex-column gap-2">
-                  <label htmlFor="phone" className=" text-black">
-                    {translate.phone} (required)
-                  </label>
+                  <label htmlFor="phone" className=" text-black"> {translate.phone} (required) </label>
                   <InputText
                     className="p-inputtext-sm text-black"
                     keyfilter={"num"}
                     id="phone"
                     name="phone"
-                    autoComplete="user phone"
                     aria-describedby="phone-help"
-                    tooltip="User phone"
+                    tooltip={translate.phone}
                     tooltipOptions={{ ...tooltipOptions }}
-                    placeholder="Enter user phone"
+                    placeholder={translate.phone}
                     disabled={loading}
-                    onChange={(e) =>
-                      payloadHandler(
-                        payload,
-                        e.target.value,
-                        "phone",
-                        (updateValue) => {
-                          setPayload(updateValue);
-                        }
-                      )
-                    }
+                    onChange={(e) => payloadHandler(payload, e.target.value, "phone", (updateValue) => {
+                      setPayload(updateValue);
+                    })}
                   />
                   <ValidationMessage field={"phone"} />
                 </div>
@@ -156,70 +111,90 @@ export const UserCreate = () => {
 
               <div className=" col-12 md:col-6 lg:col-4 py-3">
                 <div className="flex flex-column gap-2">
-                  <label htmlFor="password" className=" text-black">
-                    {translate.password} (required)
-                  </label>
-                  <Password
+                  <label htmlFor="dob" className=" text-black"> {translate.dob} </label>
+                  <Calendar
                     className="p-inputtext-sm text-black"
-                    inputId="password"
-                    name={"password"}
-                    tooltip="Password must be contain special chars"
+                    placeholder="Choose Birthday"
+                    id="dob"
+                    name="dob"
+                    tooltip={translate.dob}
                     tooltipOptions={{ ...tooltipOptions }}
                     disabled={loading}
-                    onChange={(e) =>
-                      payloadHandler(
-                        payload,
-                        e.target.value,
-                        "password",
-                        (updateValue) => {
-                          setPayload(updateValue);
-                        }
-                      )
-                    }
-                    feedback={false}
-                    tabIndex={1}
+                    dateFormat="yy/mm/dd"
+                    onChange={(e) => payloadHandler(payload, moment(e.target.value).format('YYYY/MM/DD'), "dob", (updateValue) => {
+                      setPayload(updateValue);
+                    })}
                   />
-                  <ValidationMessage field={"password"} />
+                  <ValidationMessage field={"dob"} />
                 </div>
               </div>
+
               <div className=" col-12 md:col-6 lg:col-4 py-3">
                 <div className="flex flex-column gap-2">
-                  <label htmlFor="con_password" className=" text-black">
-                    {translate.con_password} (required)
-                  </label>
-                  <Password
+                  <label htmlFor="occupation" className=" text-black"> {translate.occupation} </label>
+                  <InputText
                     className="p-inputtext-sm text-black"
-                    inputId={'con_password'}
-                    name={"con_password"}
-                    tooltip="Confirm password must be same password"
+                    id="occupation"
+                    name="occupation"
+                    aria-describedby="occupation-help"
+                    tooltip={translate.occupation}
                     tooltipOptions={{ ...tooltipOptions }}
+                    placeholder={translate.occupation}
                     disabled={loading}
-                    onChange={(e) =>
-                      payloadHandler(
-                        payload,
-                        e.target.value,
-                        "confirm_password",
-                        (updateValue) => {
-                          setPayload(updateValue);
-                        }
-                      )
-                    }
-                    feedback={false}
-                    tabIndex={1}
+                    onChange={(e) => payloadHandler(payload, e.target.value, "occupation", (updateValue) => {
+                      setPayload(updateValue);
+                    })}
                   />
-                  <ValidationMessage field={"confirm_password"} />
+                  <ValidationMessage field={"occupation"} />
                 </div>
               </div>
 
-              <FormMainAction
-                cancel={translate.cancel}
-                cancelClick={() => navigate(paths.user)}
-                submit={translate.submit}
-                submitClick={submitUser}
-                loading={loading}
-              />
+              <div className=" col-12 md:col-6 lg:col-4 py-3">
+                <div className="flex flex-column gap-2">
+                  <label htmlFor="position" className=" text-black"> {translate.position} </label>
+                  <InputText
+                    className="p-inputtext-sm text-black"
+                    id="position"
+                    name="position"
+                    aria-describedby="position-help"
+                    tooltip={translate.position}
+                    tooltipOptions={{ ...tooltipOptions }}
+                    placeholder={translate.position}
+                    disabled={loading}
+                    onChange={(e) => payloadHandler(payload, e.target.value, "position", (updateValue) => {
+                      setPayload(updateValue);
+                    })}
+                  />
+                  <ValidationMessage field={"position"} />
+                </div>
+              </div>
 
+              <div className=" col-12 md:col-8 lg:col-8 py-3">
+                <div className="flex flex-column gap-2">
+                  <label htmlFor="address" className=" text-black"> {translate.address} </label>
+                  <InputText
+                    className="p-inputtext-sm text-black"
+                    id="address"
+                    name="address"
+                    aria-describedby="address-help"
+                    tooltip={translate.address}
+                    tooltipOptions={{ ...tooltipOptions }}
+                    placeholder={translate.address}
+                    disabled={loading}
+                    onChange={(e) => payloadHandler(payload, e.target.value, "address", (updateValue) => {
+                      setPayload(updateValue);
+                    })}
+                  />
+                  <ValidationMessage field={"address"} />
+                </div>
+              </div>
             </div>
+
+            <FormMainAction
+              onCancel={() => navigate(paths.user)}
+              onSubmit={() => submitUser()}
+              loading={loading}
+            />
           </Card>
         </div>
       </div>

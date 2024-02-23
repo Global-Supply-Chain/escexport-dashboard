@@ -161,5 +161,8 @@
     "pay_amount" : "Pay Amount",
     "is_wallet" : "Is Wallet",
     "expired_at" : "Expired At",
-    "amount" : "Amount"
+    "amount" : "Amount",
+    "dob" : "Birthday",
+    "occupation": "Occupation",
+    "position": "Position"
 }

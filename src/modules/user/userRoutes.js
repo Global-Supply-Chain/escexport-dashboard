@@ -17,7 +17,7 @@ export const userRoutes = [
             return{
                 breadcrumbs: [
                     { label: "Dashboard", url: paths.dashboard },
-                    { label: "List", url: paths.user },
+                    { label: "Create", url: paths.userCreate },
                 ],
                 role: role,
                 permission: permission
@@ -32,8 +32,7 @@ export const userRoutes = [
             return{
                 breadcrumbs: [
                     { label: "Dashboard", url: paths.dashboard },
-                    { label: "User", url: paths.user },
-                    { label: "Create", url: paths.userCreate },
+                    { label: "List", url: paths.user },
                 ],
                 role: ['ADMINISTRATOR']
             }
@@ -48,6 +47,7 @@ export const userRoutes = [
                 breadcrumbs: [
                     { label: "Dashboard", url: paths.dashboard },
                     { label: "List", url: paths.user },
+                    { label: "Create", url: paths.userCreate },
                 ],
                 role: ['ADMINISTRATOR']
             }
