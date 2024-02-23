@@ -134,7 +134,7 @@ export const MemberUpdate = () => {
 
                 <div className=' col-12'>
                     <Card
-                        title={translate.member_create}
+                        title={translate.member_update}
 
                     >
 

@@ -153,6 +153,7 @@
     "member_card_update" : "会员卡更新",
     "member_list": "会员名单",
     "member_create": "会员创建",
+    "member_update": "会员更新",
     "member_order_list": "会员订单列表",
     "card_number" : "卡号",
     "card_type" : "卡的种类",
