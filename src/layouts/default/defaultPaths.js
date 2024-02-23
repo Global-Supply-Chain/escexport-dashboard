@@ -125,7 +125,7 @@ export const items = [
     {
         key: '18',
         label: 'menu_member_order',
-        icon: 'pi pi-fw pi-user-plus',
+        icon: 'pi pi-fw pi-shopping-bag',
         children: [
             {
                 key: '18-1',
