@@ -75,7 +75,6 @@ export const UserTableView = () => {
      */
     const onSort = (event) => {
         const sortOrder = event.sortOrder === 1 ? "DESC" : "ASC";
-        console.log(event);
         dispatch(
             setPaginate({
                 ...paginateParams,

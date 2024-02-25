@@ -4,6 +4,11 @@ import { getData } from "../helpers/localstorage";
 const paginatorLeft = <Button type="button" icon="pi pi-refresh" text />;
 // const paginatorRight = <Button type="button" icon="pi pi-download" text />;
 
+export const env = [
+    'https://api.gscexport.com/dashboard',
+    'http://localhost:8000/dashboard',
+];
+
 export const paginateOptions = {
     rows: 10,
     rowsPerPageOptions: [10,50,100,150,500,1000],

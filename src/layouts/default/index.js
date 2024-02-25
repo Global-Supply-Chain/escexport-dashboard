@@ -1,10 +1,10 @@
 import { PrimeReactProvider } from 'primereact/api';
 import { AppToolbar } from "./components/AppToolbar";
 import { AppSidebar } from "./components/AppSidebar";
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { getData } from '../../helpers/localstorage';
 import { keys } from '../../constants/config';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Notification } from '../../shares/Notification';
 
 const layoutOptions = {
@@ -17,11 +17,21 @@ export const DefaultLayout = () => {
     const token = getData(keys.API_TOKEN);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if(!token) {
-           navigate('/auth/login');
+    const location = useLocation();
+
+    const authRedirect = useCallback(async () => {
+        if(token && location.pathname === '/') {
+            navigate('/dashboard');
         }
-    },[token, navigate]);
+
+        if(!token) {
+            navigate("/auth/login");
+        }
+    },[token, location, navigate]);
+
+    useEffect(() => {
+        authRedirect();
+    },[authRedirect]);
 
     return(
         <> 
