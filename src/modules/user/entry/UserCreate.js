@@ -1,5 +1,6 @@
 import { Card } from "primereact/card";
 import { InputText } from "primereact/inputtext";
+import { Dropdown } from 'primereact/dropdown';
 import { paths } from "../../../constants/paths";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -29,7 +30,11 @@ export const UserCreate = () => {
    */
   const submitUser = async () => {
     setLoading(true);
-    await userService.store(payload, dispatch);
+    const response = await userService.store(payload, dispatch);
+    console.log(response);
+    if(response.data) {
+      navigate(`${paths.user}/${response.data.id}`);
+    }
     setLoading(false);
     return;
   };
@@ -166,6 +171,27 @@ export const UserCreate = () => {
                     })}
                   />
                   <ValidationMessage field={"position"} />
+                </div>
+              </div>
+
+              <div className=" col-12 md:col-8 lg:col-4 py-3">
+                <div className="flex flex-column gap-2">
+                  <label htmlFor="gender" className=" text-black"> {translate.gender} </label>
+                  <Dropdown
+                    inputId='gender'
+                    name='gender'
+                    className="p-inputtext-sm text-black"
+                    options={["MALE", "FEMALE"]}
+                    placeholder={translate.gender}
+                    tooltip={translate.gender}
+                    tooltipOptions={{ ...tooltipOptions }}
+                    disabled={loading}
+                    value={payload.gender}
+                    onChange={(e) => payloadHandler(payload, e.value, 'gender', (updateValue) => {
+                      setPayload(updateValue);
+                    })}
+                  />
+                  <ValidationMessage field={"gender"} />
                 </div>
               </div>
 

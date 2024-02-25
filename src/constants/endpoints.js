@@ -1,7 +1,7 @@
 import { env } from "./config"
 
 /** env[0] = Production | env[1] = Local */
-export const baseURL = env[0];
+export const baseURL = env[1];
 
 export const endpoints = {
     login: "auth/login",

@@ -164,5 +164,6 @@
     "amount" : "Amount",
     "dob" : "Birthday",
     "occupation": "Occupation",
-    "position": "Position"
+    "position": "Position",
+    "gender" : "Gender"
 }

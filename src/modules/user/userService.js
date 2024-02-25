@@ -1,5 +1,6 @@
+import moment from "moment";
 import { endpoints } from "../../constants/endpoints"
-import { getRequest, postRequest, putRequest } from "../../helpers/api"
+import { getRequest, postRequest } from "../../helpers/api"
 import { httpServiceHandler } from "../../helpers/handler";
 import { updateNotification } from "../../shares/shareSlice";
 import { index, update } from "./userSlice";
@@ -31,7 +32,7 @@ export const userService = {
     },
 
     update: async (dispatch, payload,id) => {
-        const response = await putRequest(`${endpoints.user}/${id}`, payload);
+        const response = await postRequest(`${endpoints.user}/${id}`, payload);
         await httpServiceHandler(dispatch, response);
 
         if(response.status === 200) {
@@ -51,7 +52,9 @@ export const userService = {
         await httpServiceHandler(dispatch, response);
 
         if(response.status === 200) {
-            dispatch(update(response.data));
+            let user = response.data;
+            user.dob = moment(user.dob).local().toDate();
+            dispatch(update(user));
         }
         
         return response;

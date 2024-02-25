@@ -1,13 +1,13 @@
+import moment from "moment";
 import { paginateOptions } from "../../constants/config";
 
 export const userPayload = {
     update: {
         id: "",
         name: "",
-        profile: "",
+        gender: "MALE",
         email: "",
         phone: "",
-        dob: "",
         occupation: "",
         position: "",
         address: "",
@@ -17,7 +17,8 @@ export const userPayload = {
         name: "",
         email: "",
         phone: "",
-        dob: "",
+        gender: "MALE",
+        dob: moment().format("YYYY/MM/DD"),
         occupation: "",
         position: "",
         address: ""
@@ -25,6 +26,7 @@ export const userPayload = {
     columns: [
         { field: "id", header: "ID", sortable: true, show: true },
         { field: "name", header: "Full Name", sortable: true, show: true },
+        { field: "gender", header: "Gender", sortable: true, show: true },
         { field: "email", header: "Email", sortable: true, show: true },
         { field: "phone", header: "Phone", sortable: true, show: true },
         { field: "dob", header: "Birth Date", sortable: true, show: true },
@@ -38,7 +40,7 @@ export const userPayload = {
     paginateParams: {
         page: 1,
         per_page: paginateOptions.rows,
-        columns: "id,name,email,phone,occupation,position,dob,address,status",
+        columns: "id,name,email,phone,gender,occupation,position,dob,address,status",
         search: "",
         order: "id",
         sort: "DESC"
