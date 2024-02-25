@@ -1,27 +1,31 @@
 import { Button } from "primereact/button"
+import { useSelector } from "react-redux";
 
 
-export const FormMainAction = ({ cancel, cancelClick, submit, submitClick, loading }) => {
+export const FormMainAction = ({ onCancel, onSubmit, loading }) => {
+
+    const { translate } = useSelector(state => state.setting);
+
     return (
-        <div className="col-12">
+        <div className="col-12 mt-3">
             <div className="flex flex-row justify-content-end align-items-center">
                 <Button
                     className="mx-2"
-                    label={cancel}
+                    label={translate.cancel}
                     severity="secondary"
                     outlined
                     size='small'
                     disabled={loading}
-                    onClick={cancelClick}
+                    onClick={onCancel}
                 />
 
                 <Button
                     className="mx-2"
-                    label={submit}
+                    label={translate.submit}
                     severity="danger"
                     size='small'
                     disabled={loading}
-                    onClick={submitClick}
+                    onClick={onSubmit}
                 />
             </div>
         </div>

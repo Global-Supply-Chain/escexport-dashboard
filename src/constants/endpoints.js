@@ -1,4 +1,7 @@
-export const baseURL = "http://localhost:8000/dashboard";
+import { env } from "./config"
+
+/** env[0] = Production | env[1] = Local */
+export const baseURL = env[1];
 
 export const endpoints = {
     login: "auth/login",
