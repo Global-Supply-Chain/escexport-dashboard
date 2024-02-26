@@ -105,7 +105,7 @@ export const MemberCardUpdate = () => {
 
                         <div className=' grid'>
 
-                            <div className=' col-12 md:col-6 my-3 md:my-0'>
+                            <div className=' col-12 md:col-6 py-3'>
                                 <MemberCardImg
                                     payload={payload}
                                     setPayload={setPayload}
@@ -115,7 +115,7 @@ export const MemberCardUpdate = () => {
                                 <ValidationMessage field={"front_background"} />
                             </div>
 
-                            <div className=' col-12 md:col-6 my-3 md:my-0'>
+                            <div className=' col-12 md:col-6 py-3'>
                                 <MemberCardImg
                                     payload={payload}
                                     setPayload={setPayload}
@@ -126,7 +126,7 @@ export const MemberCardUpdate = () => {
                             </div>
 
 
-                            <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+                            <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
                                     <label htmlFor="name" className=' text-black'>{translate.label} (required*)</label>
                                     <InputText
@@ -148,7 +148,7 @@ export const MemberCardUpdate = () => {
                                 </div>
                             </div>
 
-                            <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
+                            <div className="col-12 md:col-4 lg:col-4 py-3">
                                 <label htmlFor="discount" className='input-label'>{translate.discount} (required*) </label>
                                 <div className="p-inputgroup mt-2">
                                     <Dropdown
@@ -168,7 +168,7 @@ export const MemberCardUpdate = () => {
                                 <ValidationMessage field="discount_id" />
                             </div>
 
-                            <div className=" col-12 md:col-6 lg:col-4 my-3 md:my-0">
+                            <div className=" col-12 md:col-6 lg:col-4 py-3">
                                 <div className="flex flex-column gap-2">
                                     <label htmlFor="expired_at" className=" text-black">
                                         {translate.expired_at}
@@ -195,7 +195,7 @@ export const MemberCardUpdate = () => {
                                 </div>
                             </div>
 
-                            <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+                            <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
                                     <label htmlFor="status" className=' text-black'>{translate.status}</label>
                                     <Dropdown

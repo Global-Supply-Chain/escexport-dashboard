@@ -92,7 +92,7 @@ export const MainCategoryCreate = () => {
               </form>
             </div>
 
-            <div className="col-12 md:col-4 lg:col-4 my-3">
+            <div className="col-12 md:col-4 lg:col-4 py-3">
               <label htmlFor="title" className="input-label">
                 {translate.title}
               </label>
@@ -123,7 +123,7 @@ export const MainCategoryCreate = () => {
               <ValidationMessage field="title" />
             </div>
 
-            <div className="col-12 md:col-8 lg:col-8 my-3">
+            <div className="col-12 md:col-8 lg:col-8 py-3">
               <label htmlFor="description" className="input-label">
                 {translate.description}
               </label>

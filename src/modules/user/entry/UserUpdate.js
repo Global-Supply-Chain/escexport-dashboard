@@ -85,7 +85,7 @@ export const UserUpdate = () => {
               payload={payload}
               setPayload={setPayload}
               field={'profile'}
-              src={Number(payload.profile) ? `${endpoints.image}/${payload.profile}` : null}
+              src={payload.image ? `${endpoints.image}/${payload.image.image}` : null}
             />
 
             <ValidationMessage field={'profile'} />
@@ -170,7 +170,7 @@ export const UserUpdate = () => {
               tooltipOptions={{ ...tooltipOptions }}
               disabled={loading}
               dateFormat="yy/mm/dd"
-              value={payload.dob}
+              value={new Date(payload.dob)}
               onChange={(e) => payloadHandler(payload, e.target.value, "dob", (updateValue) => {
                 setPayload(updateValue);
               })}

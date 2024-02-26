@@ -107,7 +107,7 @@ const UpdatePromotion = () => {
               <ValidationMessage field={'image'} />
             </div>
 
-            <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+            <div className=' col-12 md:col-6 lg:col-4 py-3'>
               <div className="flex flex-column gap-2">
                 <label htmlFor="title" className=' text-black'>{translate.title}</label>
                 <InputText
@@ -127,7 +127,7 @@ const UpdatePromotion = () => {
               </div>
             </div>
 
-            <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+            <div className=' col-12 md:col-6 lg:col-4 py-3'>
               <div className="flex flex-column gap-2">
                 <label htmlFor="url" className=' text-black'>{translate.promotion_url}</label>
                 <InputText
@@ -147,7 +147,7 @@ const UpdatePromotion = () => {
               </div>
             </div>
 
-            <div className=" col-12 md:col-4 lg:ocl-4">
+            <div className=" col-12 md:col-4 lg:col-4 py-3">
               <div className=" flex flex-column gap-2">
                 <label htmlFor="promotion" className=' text-black'>{translate.promotion_image}</label>
                 <InputText
@@ -169,7 +169,7 @@ const UpdatePromotion = () => {
               </div>
             </div>
 
-            <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+            <div className=' col-12 md:col-6 lg:col-4 py-3'>
               <div className="flex flex-column gap-2">
                 <label htmlFor="status" className=' text-black'>{translate.status}</label>
                 <Dropdown

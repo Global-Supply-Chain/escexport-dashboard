@@ -91,7 +91,7 @@ export const AdminCreate = () => {
                             </form>
                         </div>
 
-                        <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
+                        <div className="col-12 md:col-4 lg:col-4 py-3">
                             <label htmlFor="name" className='input-label'>{translate.name} (required)</label>
                             <div className="p-inputgroup mt-2">
                                 <InputText 
@@ -113,7 +113,7 @@ export const AdminCreate = () => {
                             <ValidationMessage field="name" />
                         </div>
 
-                        <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
+                        <div className="col-12 md:col-4 lg:col-4 py-3">
                             <label htmlFor="email" className='input-label'>{translate.email} (required) </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText 
@@ -136,7 +136,7 @@ export const AdminCreate = () => {
                             <ValidationMessage field="email" />
                         </div>
 
-                        <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
+                        <div className="col-12 md:col-4 lg:col-4 py-3">
                             <label htmlFor="phone" className='input-label'>{translate.phone} (required) </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText 
@@ -158,7 +158,7 @@ export const AdminCreate = () => {
                             <ValidationMessage field="phone" />
                         </div>
 
-                        <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
+                        <div className="col-12 md:col-4 lg:col-4 py-3">
                             <label htmlFor="role" className='input-label'>{translate.role} (required*) </label>
                             <div className="p-inputgroup mt-2">
                                 <Dropdown
@@ -178,7 +178,7 @@ export const AdminCreate = () => {
                             <ValidationMessage field="role_id" />
                         </div>
 
-                        <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
+                        <div className="col-12 md:col-4 lg:col-4 py-3">
                             <label htmlFor="password" className='input-label'>{translate.password} (required) </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText 
@@ -199,7 +199,7 @@ export const AdminCreate = () => {
                             <ValidationMessage field="password" />
                         </div>
 
-                        <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
+                        <div className="col-12 md:col-4 lg:col-4 py-3">
                             <label htmlFor="confirm-password" className='input-label'>{translate.con_password} (required) </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText 

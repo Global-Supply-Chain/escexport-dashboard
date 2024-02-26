@@ -111,7 +111,7 @@ const CategoryUpdate = () => {
                     </div>
                 </div>
 
-                <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+                <div className=' col-12 md:col-6 lg:col-4 py-3'>
                     <div className="flex flex-column gap-2">
                         <label htmlFor="title" className=' text-black'>Title</label>
                         <InputText
@@ -131,7 +131,7 @@ const CategoryUpdate = () => {
                     </div>
                 </div>
 
-                <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
+                <div className="col-12 md:col-4 lg:col-4 py-3">
                     <label htmlFor="email" className='input-label'>Level</label>
                     <div className="p-inputgroup mt-2">
                         <InputText
@@ -154,7 +154,7 @@ const CategoryUpdate = () => {
 
                 {
                     payload.category_id && (
-                        <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
+                        <div className="col-12 md:col-4 lg:col-4 py-3">
                             <label htmlFor="phone" className='input-label'> Category </label>
                             <div className="p-inputgroup mt-2">
                                 <Dropdown
@@ -173,7 +173,7 @@ const CategoryUpdate = () => {
                     )
                 }
 
-                <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
+                <div className="col-12 md:col-4 lg:col-4 py-3">
                     <label htmlFor="password" className='input-label'> Description </label>
                     <div className="p-inputgroup mt-2">
                         <InputText

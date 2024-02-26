@@ -96,7 +96,7 @@ export const DiscountUpdate = () => {
                         <div className=' grid'>
 
 
-                            <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+                            <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
                                     <label htmlFor="label" className=' text-black'>{translate.label} (required*)</label>
                                     <InputText
@@ -118,7 +118,7 @@ export const DiscountUpdate = () => {
                                 </div>
                             </div>
 
-                            <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+                            <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
                                     <label htmlFor="discount_percentage" className=' text-black'>{translate.discount_percentage} (required*)</label>
                                     <InputText
@@ -141,7 +141,7 @@ export const DiscountUpdate = () => {
                                 </div>
                             </div>
 
-                            <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+                            <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
                                     <label htmlFor="discount_fix_amount" className=' text-black'>{translate.discount_fix_amount} (required*)</label>
                                     <InputText
@@ -164,7 +164,7 @@ export const DiscountUpdate = () => {
                                 </div>
                             </div>
 
-                            <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+                            <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
                                     <label htmlFor="expend_limit" className=' text-black'>{translate.expend_limit} (required*)</label>
                                     <InputText
@@ -187,7 +187,7 @@ export const DiscountUpdate = () => {
                                 </div>
                             </div>
 
-                            <div className=" col-12 md:col-6 lg:col-4 my-3 md:my-0">
+                            <div className=" col-12 md:col-6 lg:col-4 py-3">
                                 <div className="flex flex-column gap-2">
                                     <label htmlFor="is_expend_limit" className=" text-black">
                                         {translate.is_expend_limit}
@@ -220,7 +220,7 @@ export const DiscountUpdate = () => {
                                 </div>
                             </div>
 
-                            <div className=" col-12 md:col-6 lg:col-4 my-3 md:my-0">
+                            <div className=" col-12 md:col-6 lg:col-4 py-3">
                                 <div className="flex flex-column gap-2">
                                     <label htmlFor="is_fix_amount" className=" text-black">
                                         {translate.is_fix_amount}
@@ -253,7 +253,7 @@ export const DiscountUpdate = () => {
                                 </div>
                             </div>
 
-                            <div className=" col-12 md:col-6 lg:col-4 my-3 md:my-0">
+                            <div className=" col-12 md:col-6 lg:col-4 py-3">
                                 <div className="flex flex-column gap-2">
                                     <label htmlFor="start_date" className=" text-black">
                                         {translate.start_date}
@@ -280,7 +280,7 @@ export const DiscountUpdate = () => {
                                 </div>
                             </div>
 
-                            <div className=" col-12 md:col-6 lg:col-4 my-3 md:my-0">
+                            <div className=" col-12 md:col-6 lg:col-4 py-3">
                                 <div className="flex flex-column gap-2">
                                     <label htmlFor="end_date" className=" text-black">
                                         {translate.end_date}
@@ -307,7 +307,7 @@ export const DiscountUpdate = () => {
                                 </div>
                             </div>
 
-                            <div className=' col-12 md:col-6 lg:col-4 py-2'>
+                            <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
                                     <label htmlFor="status" className=' text-black'>{translate.status}</label>
                                     <Dropdown
