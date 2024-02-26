@@ -76,7 +76,7 @@ export const UpdateShop = () => {
             redirect={paths.shop}
           />
 
-          <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
+          <div className="col-12 md:col-4 lg:col-4 py-3">
             <label htmlFor="region_id" className='input-label'> {translate.region} (required*) </label>
             <div className="p-inputgroup mt-2">
               <Dropdown
@@ -96,7 +96,7 @@ export const UpdateShop = () => {
             <ValidationMessage field="region_id" />
           </div>
 
-          <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
+          <div className="col-12 md:col-4 lg:col-4 py-3">
             <label htmlFor="name" className='input-label'>{translate.name}</label>
             <div className="p-inputgroup mt-2">
               <InputText
@@ -118,7 +118,7 @@ export const UpdateShop = () => {
             <ValidationMessage field="name" />
           </div>
 
-          <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
+          <div className="col-12 md:col-4 lg:col-4 py-3">
             <label htmlFor="phone" className='input-label'>{translate.phone}</label>
             <div className="p-inputgroup mt-2">
               <InputText
@@ -141,7 +141,7 @@ export const UpdateShop = () => {
             <ValidationMessage field="phone" />
           </div>
 
-          <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
+          <div className="col-12 md:col-4 lg:col-4 py-3">
             <label htmlFor="address" className='input-label'>{translate.address}</label>
             <div className="p-inputgroup mt-2">
               <InputText
@@ -163,7 +163,7 @@ export const UpdateShop = () => {
             <ValidationMessage field="address" />
           </div>
 
-          <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+          <div className=' col-12 md:col-6 lg:col-4 py-3'>
             <div className="flex flex-column gap-2">
               <label htmlFor="location" className=' text-black'>{translate.location}</label>
               <InputText

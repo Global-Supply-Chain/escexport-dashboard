@@ -133,7 +133,7 @@ export const FaqUpdate = () => {
                         return (
                             <div className="col-12" key={`faq_lang_${index}`}>
                                 <div className="grid">
-                                    <div className="col-12 md:col-12 my-3 md:my-0">
+                                    <div className="col-12 md:col-12 py-3">
                                         <div className="flex flex-column gap-2">
                                             <div className="flex flex-row align-items-center justify-content-between">
                                                 <label htmlFor="question" className="text-black">
@@ -161,7 +161,7 @@ export const FaqUpdate = () => {
                                     </div>
                                 </div>
 
-                                <div className=" col-12 md:col-12 my-3 md:my-0">
+                                <div className=" col-12 md:col-12 py-3">
                                     <div className="flex flex-column gap-2">
                                         <label htmlFor="answer" className=" text-black">
                                             {translate.answer} (required*)
@@ -190,7 +190,7 @@ export const FaqUpdate = () => {
                         );
                     })}
 
-                    <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+                    <div className=' col-12 md:col-6 lg:col-4 py-3'>
                         <div className="flex flex-column gap-2">
                             <label htmlFor="status" className=' text-black'>{translate.status}</label>
                             <Dropdown

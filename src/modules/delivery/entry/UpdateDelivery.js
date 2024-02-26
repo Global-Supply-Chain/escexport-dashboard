@@ -77,7 +77,7 @@ export const UpdateDelivery = () => {
             redirect={paths.delivery}
           />
 
-          <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
+          <div className="col-12 md:col-4 lg:col-4 py-3">
             <label htmlFor="user" className='input-label'> {translate.user} (required*) </label>
             <div className="p-inputgroup mt-2">
               <Dropdown
@@ -97,7 +97,7 @@ export const UpdateDelivery = () => {
             <ValidationMessage field="user_id" />
           </div>
 
-          <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
+          <div className="col-12 md:col-4 lg:col-4 py-3">
             <label htmlFor="address" className='input-label'>{translate.address}</label>
             <div className="p-inputgroup mt-2">
               <InputText
@@ -119,7 +119,7 @@ export const UpdateDelivery = () => {
             <ValidationMessage field="address" />
           </div>
 
-          <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
+          <div className="col-12 md:col-4 lg:col-4 py-3">
             <label htmlFor="phone" className='input-label'>{translate.contact_phone}</label>
             <div className="p-inputgroup mt-2">
               <InputText
@@ -142,7 +142,7 @@ export const UpdateDelivery = () => {
             <ValidationMessage field="contact_phone" />
           </div>
 
-          <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
+          <div className="col-12 md:col-4 lg:col-4 py-3">
             <label htmlFor="person" className='input-label'>{translate.contact_person}</label>
             <div className="p-inputgroup mt-2">
               <InputText
@@ -164,7 +164,7 @@ export const UpdateDelivery = () => {
             <ValidationMessage field="contact_person" />
           </div>
 
-          <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+          <div className=' col-12 md:col-6 lg:col-4 py-3'>
             <div className="flex flex-column gap-2">
               <label htmlFor="is_default" className=' text-black'>{translate.default}</label>
               <Checkbox
