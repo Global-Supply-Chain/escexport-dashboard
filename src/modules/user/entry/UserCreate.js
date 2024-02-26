@@ -31,7 +31,6 @@ export const UserCreate = () => {
   const submitUser = async () => {
     setLoading(true);
     const response = await userService.store(payload, dispatch);
-    console.log(response);
     if(response.data) {
       navigate(`${paths.user}/${response.data.id}`);
     }
@@ -217,7 +216,9 @@ export const UserCreate = () => {
             </div>
 
             <FormMainAction
+              cancel={translate.cancel}
               onCancel={() => navigate(paths.user)}
+              submit={translate.submit}
               onSubmit={() => submitUser()}
               loading={loading}
             />
