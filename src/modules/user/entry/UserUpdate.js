@@ -284,7 +284,9 @@ export const UserUpdate = () => {
         </div>
 
         <FormMainAction
+          cancel={translate.cancel}
           onCancel={() => navigate(paths.user)}
+          submit={translate.update}
           onSubmit={() => submitUpdateUser()}
           loading={loading}
         />

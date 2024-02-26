@@ -259,9 +259,9 @@ export const DiscountCreate = () => {
 
                             <FormMainAction
                                 cancel={translate.cancel}
-                                cancelClick={() => navigate(paths.discount)}
+                                onCancel={() => navigate(paths.discount)}
                                 submit={translate.submit}
-                                submitClick={submitDiscountCreate}
+                                onSubmit={submitDiscountCreate}
                                 loading={loading}
                             />
 
