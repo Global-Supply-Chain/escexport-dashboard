@@ -561,9 +561,9 @@ const ItemUpdate = () => {
 
                 <FormMainAction
                     cancel={translate.cancel}
-                    cancelClick={() => navigate(paths.item)}
+                    onCancel={() => navigate(paths.item)}
                     submit={translate.update}
-                    submitClick={submitItemUpdate}
+                    onSubmit={submitItemUpdate}
                     loading={loading}
                 />
 

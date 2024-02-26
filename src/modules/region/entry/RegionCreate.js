@@ -70,9 +70,9 @@ export const RegionCreate = () => {
 
                             <FormMainAction
                                 cancel={translate.cancel}
-                                cancelClick={() => navigate(paths.region)}
+                                onCancel={() => navigate(paths.region)}
                                 submit={translate.submit}
-                                submitClick={submitRegionCreate}
+                                onSubmit={submitRegionCreate}
                                 loading={loading}
                             />
 

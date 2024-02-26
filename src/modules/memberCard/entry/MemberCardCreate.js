@@ -173,9 +173,9 @@ export const MemberCardCreate = () => {
 
                             <FormMainAction
                                 cancel={translate.cancel}
-                                cancelClick={() => navigate(paths.memberCard)}
+                                onCancel={() => navigate(paths.memberCard)}
                                 submit={translate.submit}
-                                submitClick={submitMemberCardCreate}
+                                onSubmit={submitMemberCardCreate}
                                 loading={loading}
                             />
 

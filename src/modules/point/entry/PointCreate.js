@@ -120,9 +120,9 @@ const PointCreate = () => {
 
                         <FormMainAction
                             cancel={translate.cancel}
-                            cancelClick={() => navigate(paths.point)}
+                            onCancel={() => navigate(paths.point)}
                             submit={translate.submit}
-                            submitClick={submitCreatePoint}
+                            onSubmit={submitCreatePoint}
                             loading={loading}
                         />
 

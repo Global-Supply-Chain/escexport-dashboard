@@ -205,9 +205,9 @@ export const MainCategoryUpdate = () => {
 
         <FormMainAction
           cancel={translate.cancel}
-          cancelClick={() => navigate(paths.category)}
+          onCancel={() => navigate(paths.category)}
           submit={translate.update}
-          submitClick={submitMainCategoryUpdate}
+          onSubmit={submitMainCategoryUpdate}
           loading={loading}
         />
 

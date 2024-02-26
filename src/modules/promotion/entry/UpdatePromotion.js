@@ -192,9 +192,9 @@ const UpdatePromotion = () => {
 
             <FormMainAction
               cancel={translate.cancel}
-              cancelClick={() => navigate(paths.promotion)}
+              onCancel={() => navigate(paths.promotion)}
               submit={translate.update}
-              submitClick={submitPromotionUpdate}
+              onSubmit={submitPromotionUpdate}
               loading={loading}
             />
 

@@ -211,9 +211,9 @@ export const FaqUpdate = () => {
 
                     <FormMainAction
                         cancel={translate.cancel}
-                        cancelClick={() => navigate(paths.faq)}
+                        onCancel={() => navigate(paths.faq)}
                         submit={translate.update}
-                        submitClick={submitFaqUpdate}
+                        onSubmit={submitFaqUpdate}
                         loading={loading}
                     />
 

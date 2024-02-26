@@ -541,9 +541,9 @@ const ItemCreate = () => {
 
             <FormMainAction
               cancel={translate.cancel}
-              cancelClick={() => navigate(paths.item)}
+              onCancel={() => navigate(paths.item)}
               submit={translate.submit}
-              submitClick={handleItemClick}
+              onSubmit={handleItemClick}
               loading={loading}
             />
 
