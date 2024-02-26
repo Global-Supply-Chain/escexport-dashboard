@@ -10,6 +10,7 @@ export const userPayload = {
         phone: "",
         occupation: "",
         position: "",
+        profile : "",
         address: "",
         status: ""
     },

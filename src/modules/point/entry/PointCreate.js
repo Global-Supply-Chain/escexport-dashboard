@@ -73,7 +73,7 @@ const PointCreate = () => {
 
                     <div className=' grid'>
 
-                        <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+                        <div className=' col-12 md:col-6 lg:col-4 py-3'>
                             <div className="flex flex-column gap-2">
                                 <label htmlFor="label" className=' text-black'>{translate.label}</label>
                                 <Dropdown
@@ -94,7 +94,7 @@ const PointCreate = () => {
                             </div>
                         </div>
 
-                        <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+                        <div className=' col-12 md:col-6 lg:col-4 py-3'>
                             <div className="flex flex-column gap-2">
                                 <label htmlFor="point" className=' text-black'>{translate.point}</label>
                                 <InputText

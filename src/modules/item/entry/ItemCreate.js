@@ -254,7 +254,7 @@ const ItemCreate = () => {
               />
             </div>
 
-            <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
+            <div className="col-12 md:col-4 lg:col-4 py-3">
               <label htmlFor="category" className="input-label">
                 {translate.category} (required*)
               </label>
@@ -283,7 +283,7 @@ const ItemCreate = () => {
               <ValidationMessage field="category_id" />
             </div>
 
-            <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
+            <div className="col-12 md:col-4 lg:col-4 py-3">
               <label htmlFor="shop" className="input-label">
                 {translate.shop} (required*)
               </label>
@@ -312,7 +312,7 @@ const ItemCreate = () => {
               <ValidationMessage field="shop_id" />
             </div>
 
-            <div className=" col-12 md:col-6 lg:col-4 my-3 md:my-0">
+            <div className=" col-12 md:col-6 lg:col-4 py-3">
               <div className="flex flex-column gap-2">
                 <label htmlFor="name" className=" text-black">
                   {translate.name} (required*)
@@ -342,7 +342,7 @@ const ItemCreate = () => {
               </div>
             </div>
 
-            <div className=" col-12 md:col-6 lg:col-4 my-3 md:my-0">
+            <div className=" col-12 md:col-6 lg:col-4 py-3">
               <div className="flex flex-column gap-2">
                 <label htmlFor="code" className=" text-black">
                   {translate.code} (required*)
@@ -371,7 +371,7 @@ const ItemCreate = () => {
               </div>
             </div>
 
-            <div className=" col-12 md:col-6 lg:col-4 my-3 md:my-0">
+            <div className=" col-12 md:col-6 lg:col-4 py-3">
               <div className="flex flex-column gap-2">
                 <label htmlFor="description" className=" text-black">
                   {translate.description}
@@ -403,7 +403,7 @@ const ItemCreate = () => {
               </div>
             </div>
 
-            <div className=" col-12 md:col-6 lg:col-4 my-3 md:my-0">
+            <div className=" col-12 md:col-6 lg:col-4 py-3">
               <div className="flex flex-column gap-2">
                 <label htmlFor="price" className=" text-black">
                   {translate.price}
@@ -436,7 +436,7 @@ const ItemCreate = () => {
               </div>
             </div>
 
-            <div className=" col-12 md:col-6 lg:col-4 my-3 md:my-0">
+            <div className=" col-12 md:col-6 lg:col-4 py-3">
               <div className="flex flex-column gap-2">
                 <label htmlFor="sell_price" className=" text-black">
                   {translate.sell_price} (required*)
@@ -468,7 +468,7 @@ const ItemCreate = () => {
               </div>
             </div>
 
-            <div className=" col-12 md:col-6 lg:col-4 my-3 md:my-0">
+            <div className=" col-12 md:col-6 lg:col-4 py-3">
               <div className="flex flex-column gap-2">
                 <label htmlFor="instock" className=" text-black">
                   {translate.instock} (required*)
@@ -500,7 +500,7 @@ const ItemCreate = () => {
               </div>
             </div>
 
-            <div className=" col-12 md:col-6 lg:col-4 my-3 md:my-0">
+            <div className=" col-12 md:col-6 lg:col-4 py-3">
               <div className="flex flex-column gap-2">
                 <label htmlFor="out_of_stock" className=" text-black">
                   {translate.outstock}
@@ -531,7 +531,7 @@ const ItemCreate = () => {
               </div>
             </div>
 
-            <div className=" col-12 my-3 md:my-0">
+            <div className=" col-12 py-3">
               <div className="flex flex-column gap-2">
                 <span className=" text-black">{translate.content} </span>
                 <AppEditor onChange={(e) => setContent(e)} />

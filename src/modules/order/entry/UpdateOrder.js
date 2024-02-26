@@ -109,7 +109,7 @@ export const UpdateOrder = () => {
 
             <div className=' grid'>
 
-                <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
+                <div className="col-12 md:col-4 lg:col-4 py-3">
                     <label htmlFor="delivery" className='input-label'> {translate.delivery_address} (required*) </label>
                     <div className="p-inputgroup mt-2">
                         <Dropdown
@@ -127,7 +127,7 @@ export const UpdateOrder = () => {
                     <ValidationMessage field="delivery_address_id" />
                 </div>
 
-                <div className="col-12 md:col-4 lg:col-4 my-3 md:my-0">
+                <div className="col-12 md:col-4 lg:col-4 py-3">
                     <label htmlFor="user" className='input-label'> {translate.user} (required*) </label>
                     <div className="p-inputgroup mt-2">
                         <Dropdown
@@ -145,7 +145,7 @@ export const UpdateOrder = () => {
                     <ValidationMessage field="user_id" />
                 </div>
 
-                <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+                <div className=' col-12 md:col-6 lg:col-4 py-3'>
                     <div className="flex flex-column gap-2">
                         <label htmlFor="name" className=' text-black'> {translate.user_name} (required*)</label>
                         <InputText
@@ -165,7 +165,7 @@ export const UpdateOrder = () => {
                     </div>
                 </div>
 
-                <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+                <div className=' col-12 md:col-6 lg:col-4 py-3'>
                     <div className="flex flex-column gap-2">
                         <label htmlFor="phone" className=' text-black'>{translate.phone}</label>
                         <InputText
@@ -185,7 +185,7 @@ export const UpdateOrder = () => {
                     </div>
                 </div>
 
-                <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+                <div className=' col-12 md:col-6 lg:col-4 py-3'>
                     <div className="flex flex-column gap-2">
                         <label htmlFor="email" className=' text-black'>{translate.email}</label>
                         <InputText
@@ -205,7 +205,7 @@ export const UpdateOrder = () => {
                     </div>
                 </div>
 
-                <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+                <div className=' col-12 md:col-6 lg:col-4 py-3'>
                     <div className="flex flex-column gap-2">
                         <label htmlFor="delivery_address" className=' text-black'>{translate.delivery_address}</label>
                         <InputText
@@ -225,7 +225,7 @@ export const UpdateOrder = () => {
                     </div>
                 </div>
 
-                <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+                <div className=' col-12 md:col-6 lg:col-4 py-3'>
                     <div className="flex flex-column gap-2">
                         <label htmlFor="delivery_contact_person" className=' text-black'>{translate.delivery_contact_person}</label>
                         <InputText
@@ -245,7 +245,7 @@ export const UpdateOrder = () => {
                     </div>
                 </div>
 
-                <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+                <div className=' col-12 md:col-6 lg:col-4 py-3'>
                     <div className="flex flex-column gap-2">
                         <label htmlFor="delivery_contact_phone" className=' text-black'>{translate.delivery_contact_phone}</label>
                         <InputText
@@ -266,7 +266,7 @@ export const UpdateOrder = () => {
                     </div>
                 </div>
 
-                <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+                <div className=' col-12 md:col-6 lg:col-4 py-3'>
                     <div className="flex flex-column gap-2">
                         <label htmlFor="discount" className=' text-black'>{translate.discount}</label>
                         <InputText
@@ -287,7 +287,7 @@ export const UpdateOrder = () => {
                     </div>
                 </div>
 
-                <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+                <div className=' col-12 md:col-6 lg:col-4 py-3'>
                     <div className="flex flex-column gap-2">
                         <label htmlFor="delivery_feed" className=' text-black'>{translate.delivery_feed}</label>
                         <InputText
@@ -308,7 +308,7 @@ export const UpdateOrder = () => {
                     </div>
                 </div>
 
-                <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+                <div className=' col-12 md:col-6 lg:col-4 py-3'>
                     <div className="flex flex-column gap-2">
                         <label htmlFor="total_amount" className=' text-black'>{translate.total_amount}</label>
                         <InputText
@@ -329,7 +329,7 @@ export const UpdateOrder = () => {
                     </div>
                 </div>
 
-                <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+                <div className=' col-12 md:col-6 lg:col-4 py-3'>
                     <div className="flex flex-column gap-2">
                         <label htmlFor="payment" className=' text-black'>{translate.payment_type}</label>
                         <Dropdown
@@ -347,7 +347,7 @@ export const UpdateOrder = () => {
                     </div>
                 </div>
 
-                <div className=' col-12 md:col-6 lg:col-4 my-3 md:my-0'>
+                <div className=' col-12 md:col-6 lg:col-4 py-3'>
                     <div className="flex flex-column gap-2">
                         <label htmlFor="status" className=' text-black'>{translate.status}</label>
                         <Dropdown
