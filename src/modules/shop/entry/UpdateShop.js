@@ -187,9 +187,9 @@ export const UpdateShop = () => {
 
           <FormMainAction
             cancel={translate.cancel}
-            cancelClick={() => navigate(paths.shop)}
+            onCancel={() => navigate(paths.shop)}
             submit={translate.update}
-            submitClick={submitShopUpdate}
+            onSubmit={submitShopUpdate}
             loading={loading}
           />
 

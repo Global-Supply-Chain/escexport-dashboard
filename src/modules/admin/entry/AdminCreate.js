@@ -222,9 +222,9 @@ export const AdminCreate = () => {
 
                         <FormMainAction
                             cancel={translate.cancel}
-                            cancelClick={() => navigate(paths.admin)}
+                            onCancel={() => navigate(paths.admin)}
                             submit={translate.submit}
-                            submitClick={submitCreateAdmin}
+                            onSubmit={submitCreateAdmin}
                             loading={loading}
                         />
 

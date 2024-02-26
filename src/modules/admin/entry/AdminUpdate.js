@@ -250,9 +250,9 @@ export const AdminUpdate = () => {
 
                     <FormMainAction
                         cancel={translate.cancel}
-                        cancelClick={() => navigate(paths.admin)}
+                        onCancel={() => navigate(paths.admin)}
                         submit={translate.update}
-                        submitClick={submitUpdateAdmin}
+                        onSubmit={submitUpdateAdmin}
                         loading={loading}
                     />
 

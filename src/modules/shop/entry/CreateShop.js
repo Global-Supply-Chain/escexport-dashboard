@@ -182,9 +182,9 @@ export const CreateShop = () => {
 
                         <FormMainAction 
                             cancel={translate.cancel}
-                            cancelClick={() => navigate(paths.shop)}
+                            onCancel={() => navigate(paths.shop)}
                             submit={translate.submit}
-                            submitClick={submitShopCreate}
+                            onSubmit={submitShopCreate}
                             loading={loading}
                         />
 

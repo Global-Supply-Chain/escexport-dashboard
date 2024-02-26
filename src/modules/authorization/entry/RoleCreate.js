@@ -97,9 +97,9 @@ export const RoleCreate = () => {
 
                         <FormMainAction
                             cancel={translate.cancel}
-                            cancelClick={() => navigate(paths.role)}
+                            onCancel={() => navigate(paths.role)}
                             submit={translate.submit}
-                            submitClick={submitRoleCreate}
+                            onSubmit={submitRoleCreate}
                             loading={loading}
                         />
 

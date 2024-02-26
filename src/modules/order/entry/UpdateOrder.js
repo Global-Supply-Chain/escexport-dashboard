@@ -368,9 +368,9 @@ export const UpdateOrder = () => {
 
                 <FormMainAction
                     cancel={translate.cancel}
-                    cancelClick={() => navigate(paths.order)}
+                    onCancel={() => navigate(paths.order)}
                     submit={translate.update}
-                    submitClick={submitOrderUpdate}
+                    onSubmit={submitOrderUpdate}
                     loading={loading}
                 />
 

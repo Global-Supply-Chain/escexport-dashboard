@@ -218,9 +218,9 @@ export const MemberCardUpdate = () => {
 
                             <FormMainAction
                                 cancel={translate.cancel}
-                                cancelClick={() => navigate(paths.memberCard)}
+                                onCancel={() => navigate(paths.memberCard)}
                                 submit={translate.update}
-                                submitClick={submitMemberCardCreate}
+                                onSubmit={submitMemberCardCreate}
                                 loading={loading}
                             />
 
