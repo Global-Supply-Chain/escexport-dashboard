@@ -10,7 +10,7 @@ export const userPayload = {
         phone: "",
         occupation: "",
         position: "",
-        profile : "",
+        profile: "",
         address: "",
         status: ""
     },
@@ -25,25 +25,45 @@ export const userPayload = {
         address: ""
     },
     columns: [
-        { field: "id", header: "ID", sortable: true, show: true },
-        { field: "name", header: "Full Name", sortable: true, show: true },
-        { field: "gender", header: "Gender", sortable: true, show: true },
-        { field: "email", header: "Email", sortable: true, show: true },
-        { field: "phone", header: "Phone", sortable: true, show: true },
-        { field: "dob", header: "Birth Date", sortable: true, show: true },
-        { field: "occupation", header: "Occupation", sortable: true, show: true },
-        { field: "position", header: "Position", sortable: true, show: true },
-        { field: "address", header: "Address", sortable: true, show: true },
-        { field: "email_verified_at", header: "Email Verified", sortable: true, show: true },
-        { filed: "phone_verfified_at", header: "Phone Verified", sortable: true, show: true },
+        { field: "id", header: "ID", sortable: true, show: true, with: "250px" },
+        { field: "name", header: "Full Name", sortable: true, show: true, with: "250px" },
+        { field: "gender", header: "Gender", sortable: true, show: true, with: "50px" },
+        { field: "email", header: "Email", sortable: true, show: true, with: "250px" },
+        { field: "phone", header: "Phone", sortable: true, show: true, with: "250px" },
+        { field: "dob", header: "Birth Date", sortable: true, show: true, with: "150px" },
+        { field: "age", header: "Age", sortable: false, show: true, with: "100px" },
+        { field: "occupation", header: "Occupation", sortable: true, show: true, with: "250px" },
+        { field: "position", header: "Position", sortable: true, show: true, with: "250px" },
+        { field: "address", header: "Address", sortable: true, show: true, with: "350px" },
+        { field: "email_verified_at", header: "Email Verified", sortable: true, show: true, with: "250px" },
+        { filed: "phone_verfified_at", header: "Phone Verified", sortable: true, show: true, with: "250px" },
         { field: "status", header: "Status", show: true }
     ],
     paginateParams: {
         page: 1,
         per_page: paginateOptions.rows,
-        columns: "id,name,email,phone,gender,occupation,position,dob,address,status",
+        columns: "id,name,email,phone,gender,occupation,position,dob,address",
         search: "",
         order: "id",
         sort: "DESC"
-    }
+    },
+    filter: [
+        { 
+            type: "status",
+            value: []
+        },
+        {
+            type: "verified",
+            value: [
+                {
+                    label: "Email Verified",
+                    value: "email_verified"
+                },
+                {
+                    label: "Phone Verified",
+                    value: "phone_verified",
+                }
+            ]
+        }
+    ]
 }

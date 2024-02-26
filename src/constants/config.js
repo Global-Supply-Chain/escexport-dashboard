@@ -5,8 +5,8 @@ const paginatorLeft = <Button type="button" icon="pi pi-refresh" text />;
 // const paginatorRight = <Button type="button" icon="pi pi-download" text />;
 
 export const env = [
-    'https://api.gscexport.com/dashboard',
-    'http://localhost:8000/dashboard',
+    'https://api.gscexport.com/',
+    'http://localhost:8000',
 ];
 
 export const paginateOptions = {

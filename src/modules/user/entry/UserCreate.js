@@ -48,7 +48,7 @@ export const UserCreate = () => {
         <div className=" col-12">
           <Card
             title={translate.user_create}
-            subTitle={translate.user_subtitle}
+            // subTitle={translate.user_subtitle}
           >
             <div className=" grid">
               <div className=" col-12 md:col-6 lg:col-4 py-3">
@@ -73,7 +73,7 @@ export const UserCreate = () => {
 
               <div className=" col-12 md:col-6 lg:col-4 py-3">
                 <div className="flex flex-column gap-2">
-                  <label htmlFor="email" className=" text-black"> {translate.email} (required) </label>
+                  <label htmlFor="email" className=" text-black"> {translate.email} </label>
                   <InputText
                     className="p-inputtext-sm text-black"
                     keyfilter={"email"}
@@ -118,7 +118,7 @@ export const UserCreate = () => {
                   <label htmlFor="dob" className=" text-black"> {translate.dob} </label>
                   <Calendar
                     className="p-inputtext-sm text-black"
-                    placeholder="Choose Birthday"
+                    placeholder={translate.dob}
                     id="dob"
                     name="dob"
                     tooltip={translate.dob}

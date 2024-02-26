@@ -24,13 +24,13 @@ export const Profile = ({ payload, setPayload, src = null, field }) => {
             setSelectedFile(undefined)
             return
         }
-
+        const objectUrl = URL.createObjectURL(selectedFile)
         // I've kept this example simple by using the first image instead of multiple
-        setSelectedFile(e.target.files[0])
+        setSelectedFile(objectUrl)
     }
 
     useEffect(() => {
-        if(src !== null){
+        if (src !== null) {
             setPreview(src)
         }
     }, [src])
@@ -47,13 +47,18 @@ export const Profile = ({ payload, setPayload, src = null, field }) => {
                 {selectedFile === undefined && src === null && (
                     <span className={'pi pi-user'}></span>
                 )}
+                {console.log(preview)}
                 {
+
                     preview && (
                         <img
                             src={preview}
                             width={100}
                             height={100}
                             style={{ borderRadius: '50%' }}
+
+                            alt='user profile'
+                            title='user profile'
                         />
                     )
                 }
