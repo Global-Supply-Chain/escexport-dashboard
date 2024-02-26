@@ -212,9 +212,9 @@ export const MemberCreate = () => {
 
                             <FormMainAction
                                 cancel={translate.cancel}
-                                cancelClick={() => navigate(paths.member)}
+                                onCancel={() => navigate(paths.member)}
                                 submit={translate.submit}
-                                submitClick={submitMemberCreate}
+                                onSubmit={submitMemberCreate}
                                 loading={loading}
                             />
 

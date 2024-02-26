@@ -157,9 +157,9 @@ export const MainCategoryCreate = () => {
 
             <FormMainAction
               cancel={translate.cancel}
-              cancelClick={() => navigate(paths.category)}
+              onCancel={() => navigate(paths.category)}
               submit={translate.submit}
-              submitClick={submitMainCategory}
+              onSubmit={submitMainCategory}
               loading={loading}
             />
           </div>

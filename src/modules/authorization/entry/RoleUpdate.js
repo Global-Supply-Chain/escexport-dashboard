@@ -149,9 +149,9 @@ export const RoleUpdate = ({ dataSource, callback }) => {
 
                 <FormMainAction
                     cancel={translate.cancel}
-                    cancelClick={() => navigate(paths.role)}
+                    onCancel={() => navigate(paths.role)}
                     submit={translate.update}
-                    submitClick={submitUpdateRole}
+                    onSubmit={submitUpdateRole}
                     loading={loading}
                 />
 

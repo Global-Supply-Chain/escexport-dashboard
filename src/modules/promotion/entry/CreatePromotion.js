@@ -133,9 +133,9 @@ export const CreatePromotion = () => {
 
                         <FormMainAction
                             cancel={translate.cancel}
-                            cancelClick={() => navigate(paths.promotion)}
+                            onCancel={() => navigate(paths.promotion)}
                             submit={translate.submit}
-                            submitClick={submitPromotionCreate}
+                            onSubmit={submitPromotionCreate}
                             loading={loading}
                         />
                     </div>

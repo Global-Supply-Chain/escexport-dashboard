@@ -188,9 +188,9 @@ export const UpdateDelivery = () => {
 
           <FormMainAction
             cancel={translate.cancel}
-            cancelClick={() => navigate(paths.delivery)}
+            onCancel={() => navigate(paths.delivery)}
             submit={translate.update}
-            submitClick={submitDeliveryUpdate}
+            onSubmit={submitDeliveryUpdate}
             loading={loading}
           />
 

@@ -184,9 +184,9 @@ export const CreateDelivery = () => {
 
                         <FormMainAction
                             cancel={translate.cancel}
-                            cancelClick={() => navigate(paths.delivery)}
+                            onCancel={() => navigate(paths.delivery)}
                             submit={translate.submit}
-                            submitClick={submitDeliveryCreate}
+                            onSubmit={submitDeliveryCreate}
                             loading={loading}
                         />
 

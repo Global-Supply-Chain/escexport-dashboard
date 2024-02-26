@@ -122,9 +122,9 @@ export const RegionUpdate = () => {
 
                 <FormMainAction 
                     cancel={translate.cancel}
-                    cancelClick={() => navigate(paths.region)}
+                    onCancel={() => navigate(paths.region)}
                     submit={translate.update}
-                    submitClick={submitRegionUpdate}
+                    onSubmit={submitRegionUpdate}
                     loading={loading}
                 />
 
