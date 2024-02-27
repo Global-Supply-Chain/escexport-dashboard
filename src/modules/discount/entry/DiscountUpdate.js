@@ -71,11 +71,12 @@ export const DiscountUpdate = () => {
                 is_fix_amount: discount.is_fix_amount,
                 start_date: new Date(discount.start_date),
                 end_date: new Date(discount.end_date),
-                status : discount.status
+                status: discount.status
             }
             setPayload(formatDate);
         }
-    }, [discount, payload])
+    }, [discount])
+
 
     return (
         <>
@@ -92,101 +93,8 @@ export const DiscountUpdate = () => {
                         <Loading loading={loading} />
 
                         <div className=' grid'>
-
-                            <div className=' col-12 md:col-6 lg:col-4 py-3'>
-                                <div className="flex flex-column gap-2">
-                                    <label htmlFor="label" className=' text-black'>{translate.label} (required*)</label>
-                                    <InputText
-                                        className="p-inputtext-sm text-black"
-                                        id="label"
-                                        name="label"
-                                        autoComplete='label'
-                                        value={payload ? payload.label : ""}
-                                        aria-describedby="label help"
-                                        tooltip='Member label'
-                                        tooltipOptions={{ ...tooltipOptions }}
-                                        placeholder='Enter member label'
-                                        disabled={loading}
-                                        onChange={(e) => payloadHandler(payload, e.target.value, 'label', (updateValue) => {
-                                            setPayload(updateValue);
-                                        })}
-                                    />
-                                    <ValidationMessage field={"label"} />
-                                </div>
-                            </div>
-
-                            <div className=' col-12 md:col-6 lg:col-4 py-3'>
-                                <div className="flex flex-column gap-2">
-                                    <label htmlFor="discount_percentage" className=' text-black'>{translate.discount_percentage} (required*)</label>
-                                    <InputText
-                                        className="p-inputtext-sm text-black"
-                                        id="discount_percentage"
-                                        name="discount_percentage"
-                                        value={payload ? payload.discount_percentage : ""}
-                                        keyfilter={'int'}
-                                        autoComplete='discount percentage'
-                                        aria-describedby="discount percentage help"
-                                        tooltip='Member label'
-                                        tooltipOptions={{ ...tooltipOptions }}
-                                        placeholder='Enter member discount percentage'
-                                        disabled={loading ? loading : !isFixAmount}
-                                        onChange={(e) => payloadHandler(payload, e.target.value, 'discount_percentage', (updateValue) => {
-                                            setPayload(updateValue);
-                                        })}
-                                    />
-                                    <ValidationMessage field={"discount_percentage"} />
-                                </div>
-                            </div>
-
-                            <div className=' col-12 md:col-6 lg:col-4 py-3'>
-                                <div className="flex flex-column gap-2">
-                                    <label htmlFor="discount_fix_amount" className=' text-black'>{translate.discount_fix_amount} (required*)</label>
-                                    <InputText
-                                        className="p-inputtext-sm text-black"
-                                        id="discount_fix_amount"
-                                        name="discount_fix_amount"
-                                        keyfilter={'int'}
-                                        value={payload ? payload.discount_fix_amount : ""}
-                                        autoComplete='discount fix amount'
-                                        aria-describedby="discount fix amount help"
-                                        tooltip='Member label'
-                                        tooltipOptions={{ ...tooltipOptions }}
-                                        placeholder='Enter member discount fix amount'
-                                        disabled={loading ? loading : isFixAmount}
-                                        onChange={(e) => payloadHandler(payload, e.target.value, 'discount_fix_amount', (updateValue) => {
-                                            setPayload(updateValue);
-                                        })}
-                                    />
-                                    <ValidationMessage field={"discount_fix_amount"} />
-                                </div>
-                            </div>
-
-                            <div className=' col-12 md:col-6 lg:col-4 py-3'>
-                                <div className="flex flex-column gap-2">
-                                    <label htmlFor="expend_limit" className=' text-black'>{translate.expend_limit} (required*)</label>
-                                    <InputText
-                                        disabled={loading ? loading : !isExpenLimit}
-                                        className="p-inputtext-sm text-black"
-                                        id="expend_limit"
-                                        name="expend_limit"
-                                        keyfilter={'int'}
-                                        value={payload ? payload.expend_limit : ""}
-                                        autoComplete='expend limit'
-                                        aria-describedby="expend limit help"
-                                        tooltip='Member label'
-                                        tooltipOptions={{ ...tooltipOptions }}
-                                        placeholder='Enter member discount fix amount'
-                                        onChange={(e) => payloadHandler(payload, e.target.value, 'expend_limit', (updateValue) => {
-                                            setPayload(updateValue);
-                                        })}
-                                    />
-                                    <ValidationMessage field={"expend_limit"} />
-                                </div>
-                            </div>
-
-                            <div className=" col-12 md:col-6 lg:col-4 py-3">
-                                <div className="flex flex-row align-items-center h-full gap-2">
-                                  
+                            <div className=" col-12 md:col-6 lg:col-6 py-3">
+                                <div className="flex flex-row gap-2">
                                     <Checkbox
                                         className="p-inputtext-sm"
                                         inputId="is_expend_limit"
@@ -197,6 +105,8 @@ export const DiscountUpdate = () => {
                                         tooltipOptions={{ ...tooltipOptions }}
                                         placeholder={translate.is_expend_limit}
                                         disabled={loading}
+                                        value={isExpenLimit}
+                                        // value={payload.is_expend_limit}
                                         checked={payload ? payload.is_expend_limit : ""}
                                         onChange={(e) => {
                                             setIsExpendLimit(e.checked);
@@ -211,19 +121,12 @@ export const DiscountUpdate = () => {
                                         }
                                         }
                                     />
-
-                                    <label htmlFor="is_expend_limit" className=" text-black">
-                                        {translate.is_expend_limit}
-                                    </label>
-                                    <ValidationMessage field={"is_expend_limit"} />
-                                      
+                                    <label htmlFor="is_expend_limit" className="text-black"> {translate.is_expend_limit} </label>
                                 </div>
                             </div>
 
                             <div className=" col-12 md:col-6 lg:col-4 py-3">
-
-                                <div className="flex flex-row align-items-center h-full gap-2">
-
+                                <div className="flex flex-row gap-2">
                                     <Checkbox
                                         className="p-inputtext-sm"
                                         inputId="is_fix_amount"
@@ -248,12 +151,29 @@ export const DiscountUpdate = () => {
                                         }
                                         }
                                     />
+                                    <label htmlFor="is_fix_amount" className="text-black"> {translate.is_fix_amount} </label>
+                                </div>
+                            </div>
 
-                                    <label htmlFor="is_fix_amount" className=" text-black">
-                                        {translate.is_fix_amount}
-                                    </label>
-                                    <ValidationMessage field={"is_fix_amount"} />
-
+                            <div className=' col-12 md:col-6 lg:col-4 py-3'>
+                                <div className="flex flex-column gap-2">
+                                    <label htmlFor="label" className='text-black'> {translate.label} </label>
+                                    <InputText
+                                        className="p-inputtext-sm"
+                                        id="label"
+                                        name="label"
+                                        autoComplete='label'
+                                        value={payload ? payload.label : ""}
+                                        aria-describedby="label help"
+                                        tooltip={translate.label}
+                                        tooltipOptions={{ ...tooltipOptions }}
+                                        placeholder={translate.label}
+                                        disabled={loading}
+                                        onChange={(e) => payloadHandler(payload, e.target.value, 'label', (updateValue) => {
+                                            setPayload(updateValue);
+                                        })}
+                                    />
+                                    <ValidationMessage field={"label"} />
                                 </div>
                             </div>
 
@@ -373,7 +293,6 @@ export const DiscountUpdate = () => {
                                     <ValidationMessage field={"expend_limit"} />
                                 </div>
                             </div>
-
 
                             <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
