@@ -17,8 +17,12 @@ h1,h2,h3,h4,h5,h6{
 
 .text-black {
     color: #000 !important;
+    font-weight: 500!important;
 }
 
+.text-black > span {
+    color: red;
+}
 .text-gray {
     color: #6c757d;
 }
