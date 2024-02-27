@@ -11,7 +11,7 @@ import { DataTable } from 'primereact/datatable';
 import { PaginatorRight } from '../../../shares/PaginatorRight';
 import { Column } from 'primereact/column';
 import { Status } from '../../../shares/Status';
-import { datetime } from '../../../helpers/datetime';
+import { dateAge, dateFormat, datetime } from '../../../helpers/datetime';
 import { paths } from '../../../constants/paths';
 import { Paginator } from 'primereact/paginator';
 import { setPaginate } from '../userSlice';
@@ -109,10 +109,10 @@ export const UserTableView = () => {
         if (e.startDate === "" || e.endDate === "") {
             delete updatePaginateParams.start_date;
             delete updatePaginateParams.end_date;
-          } else {
+        } else {
             updatePaginateParams.start_date = moment(e.startDate).format("yy-MM-DD");
             updatePaginateParams.end_date = moment(e.endDate).format("yy-MM-DD");
-          }
+        }
 
         dispatch(setDateFilter(e));
         dispatch(setPaginate(updatePaginateParams));
@@ -233,27 +233,32 @@ export const UserTableView = () => {
                     return (
                         <Column
                             key={`user_col_index_${index}`}
-                            style={{ minWidth: "250px" }}
+                            style={{ minWidth: col.with }}
                             field={col.field}
                             header={col.header}
-                            sortable
+                            sortable={col.sortable}
                             body={(value) => {
 
                                 switch (col.field) {
                                     case "id":
-                                      return (
-                                        <NavigateId
-                                          url={`${paths.user}/${value[col.field]}`}
-                                          value={value[col.field]}
-                                        />
-                                      );
+                                        return (
+                                            <NavigateId
+                                                url={`${paths.user}/${value[col.field]}`}
+                                                value={value[col.field]}
+                                            />
+                                        );
+                                    case 'dob':
+                                        return <span> {dateFormat(value[col.field], "DEFAULT")} </span>
+                                    case 'age':
+                                        const userAge = dateAge(value['dob']);
+                                        return <span> {userAge.age} {userAge.unit} </span>
                                     case "status":
-                                      return <Status status={value[col.field]} />;
+                                        return <Status status={value[col.field]} />;
                                     case "email_verified_at":
                                         return <span>{datetime.long(value[col.field])}</span>
                                     default:
-                                      return value[col.field];
-                                  }
+                                        return value[col.field];
+                                }
                             }}
                         />
                     )

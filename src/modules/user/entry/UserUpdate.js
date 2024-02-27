@@ -14,10 +14,10 @@ import { userPayload } from '../userPayload';
 import { endpoints } from '../../../constants/endpoints';
 import { tooltipOptions } from "../../../constants/config";
 import { Loading } from '../../../shares/Loading';
-import { Profile } from '../../../shares/Profile';
 import { formBuilder } from '../../../helpers/formBuilder';
 import { FormMainAction } from '../../../shares/FormMainAction';
 import moment from 'moment';
+import { ImageUpload } from '../../../shares/ImageUpload';
 
 export const UserUpdate = () => {
 
@@ -52,8 +52,9 @@ export const UserUpdate = () => {
    */
   const submitUpdateUser = async () => {
     setLoading(true);
-    let updatePayload = {...payload};
+    let updatePayload = { ...payload };
     updatePayload.dob = moment(updatePayload.dob).format('YYYY/MM/DD');
+
     const formData = formBuilder(updatePayload, userPayload.update);
     await userService.update(dispatch, formData, params.id)
     setLoading(false);
@@ -73,29 +74,26 @@ export const UserUpdate = () => {
   return (
     <Card
       title={translate.user_update}
-      subTitle={translate.user_subtitle}
+      // subTitle={translate.user_subtitle}
     >
       <Loading loading={loading} />
 
       <div className='grid'>
         <div className='col-12 flex align-items-center justify-content-center'>
-          <form className="w-full flex flex-column justify-content-center align-items-center">
-
-            <Profile
-              payload={payload}
-              setPayload={setPayload}
-              field={'profile'}
-              src={payload.image ? `${endpoints.image}/${payload.image.image}` : null}
+          <div className='w-full flex flex-column justify-content-center align-items-center'>
+            <ImageUpload
+              preview={payload.image ? payload.image.image : null}
+              onSelect={(e) => payloadHandler(payload, e, 'profile', (updateValue) => {
+                setPayload(updateValue);
+              })}
             />
-
             <ValidationMessage field={'profile'} />
-            <ValidationMessage field={'file'} />
-          </form>
+          </div>
         </div>
 
         <div className=" col-12 md:col-6 lg:col-4 py-3">
           <div className="flex flex-column gap-2">
-            <label htmlFor="name" className=" text-black"> {translate.name} (required) </label>
+            <label htmlFor="name" className=" text-black"> {translate.name} </label>
             <InputText
               className="p-inputtext-sm text-black"
               id="name"
@@ -116,7 +114,7 @@ export const UserUpdate = () => {
 
         <div className=" col-12 md:col-6 lg:col-4 py-3">
           <div className="flex flex-column gap-2">
-            <label htmlFor="email" className=" text-black"> {translate.email} (required) </label>
+            <label htmlFor="email" className=" text-black"> {translate.email} </label>
             <InputText
               className="p-inputtext-sm text-black"
               keyfilter={"email"}
@@ -138,7 +136,7 @@ export const UserUpdate = () => {
 
         <div className=" col-12 md:col-6 lg:col-4 py-3">
           <div className="flex flex-column gap-2">
-            <label htmlFor="phone" className=" text-black"> {translate.phone} (required) </label>
+            <label htmlFor="phone" className=" text-black"> {translate.phone} </label>
             <InputText
               className="p-inputtext-sm text-black"
               keyfilter={"num"}
@@ -163,7 +161,7 @@ export const UserUpdate = () => {
             <label htmlFor="dob" className=" text-black"> {translate.dob} </label>
             <Calendar
               className="p-inputtext-sm text-black"
-              placeholder="Choose Birthday"
+              placeholder={translate.dob}
               id="dob"
               name="dob"
               tooltip={translate.dob}

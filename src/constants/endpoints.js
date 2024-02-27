@@ -16,7 +16,7 @@ export const endpoints = {
     generalStatus: "general",
     paymentType: "payment_type",
     item: "item",
-    image: `${baseURL}/media`,
+    image: `${baseURL}/storage/images`,
     status: "status",
     point: "point",
     delivery: "delivery-address",

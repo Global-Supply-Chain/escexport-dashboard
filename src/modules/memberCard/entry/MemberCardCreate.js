@@ -17,6 +17,7 @@ import { memberCardPayload } from '../memberCardPayload';
 import { MemberCardImg } from '../../../shares/MemberCardImg';
 import { discountService } from '../../discount/discountService';
 import { Dropdown } from 'primereact/dropdown';
+import { formBuilder } from '../../../helpers/formBuilder';
 
 export const MemberCardCreate = () => {
 
@@ -55,13 +56,9 @@ export const MemberCardCreate = () => {
 
     const submitMemberCardCreate = async () => {
         setLoading(true);
-
-        const formData = new FormData();
-        formData.append("label", payload.label);
-        formData.append("discount_id", payload.discount_id);
-        formData.append("front_background", payload.front_background)
-        formData.append("back_background", payload.back_background);
-        formData.append("expired_at", payload.expired_at);
+        let updatePayload = { ...payload };
+        updatePayload.expired_at = moment(updatePayload.expired_at).format('yy-MM-DD')
+        const formData = formBuilder(updatePayload,memberCardPayload.create)
 
         await memberCardService.store(formData, dispatch);
         setLoading(false);
@@ -158,8 +155,8 @@ export const MemberCardCreate = () => {
                                         onChange={(e) =>
                                             payloadHandler(
                                                 payload,
-                                                moment(e.target.value).format("yy-MM-DD"),
-                                                "start_date",
+                                                e.target.value,
+                                                "expired_at",
                                                 (updateValue) => {
                                                     setPayload(updateValue);
                                                 }
