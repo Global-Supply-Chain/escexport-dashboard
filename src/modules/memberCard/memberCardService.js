@@ -31,7 +31,7 @@ export const memberCardService = {
     },
 
     update: async (dispatch, id, payload) => {
-        const response = await putRequest(`${endpoints.memberCard}/${id}`, payload);
+        const response = await postRequest(`${endpoints.memberCard}/${id}`, payload);
         await httpServiceHandler(dispatch, response);
 
         if(response.status === 200) {

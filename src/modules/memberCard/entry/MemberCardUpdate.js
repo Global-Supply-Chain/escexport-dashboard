@@ -18,6 +18,7 @@ import { discountService } from '../../discount/discountService';
 import { Dropdown } from 'primereact/dropdown';
 import { endpoints } from '../../../constants/endpoints';
 import { generalStatus } from '../../../helpers/StatusHandler';
+import { formBuilder } from '../../../helpers/formBuilder';
 
 export const MemberCardUpdate = () => {
 
@@ -78,15 +79,17 @@ export const MemberCardUpdate = () => {
 
     const submitMemberCardCreate = async () => {
         setLoading(true);
+        let updatePayload = { ...payload };
+        updatePayload.expired_at = moment(updatePayload.expired_at).format("yy-MM-DD")
+        // const formData = new FormData();
+        // formData.append("label", payload.label);
+        // formData.append("discount_id", payload.discount_id);
+        // formData.append("front_background", payload.front_background)
+        // formData.append("back_background", payload.back_background);
+        // formData.append("expired_at", payload.expired_at);
+        const formData = formBuilder(payload, memberCardPayload.update);
 
-        const formData = new FormData();
-        formData.append("label", payload.label);
-        formData.append("discount_id", payload.discount_id);
-        formData.append("front_background", payload.front_background)
-        formData.append("back_background", payload.back_background);
-        formData.append("expired_at", payload.expired_at);
-
-        await memberCardService.store(formData, dispatch);
+        await memberCardService.update(dispatch, params.id, formData);
         setLoading(false);
     }
 
@@ -110,7 +113,7 @@ export const MemberCardUpdate = () => {
                                     payload={payload}
                                     setPayload={setPayload}
                                     field={'front_background'}
-                                    src={Number(payload.front_background) ? `${endpoints.image}/${payload.front_background}` : null}
+                                    src={payload.front_background ? `${endpoints.image}/${payload.front_background}` : null}
                                 />
                                 <ValidationMessage field={"front_background"} />
                             </div>

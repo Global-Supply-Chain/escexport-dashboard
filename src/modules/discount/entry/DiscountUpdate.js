@@ -329,9 +329,9 @@ export const DiscountUpdate = () => {
 
                             <FormMainAction
                                 cancel={translate.cancel}
-                                cancelClick={() => navigate(paths.discount)}
+                                onCancel={() => navigate(paths.discount)}
                                 submit={translate.update}
-                                submitClick={submitDiscountUpdate}
+                                onSubmit={submitDiscountUpdate}
                                 loading={loading}
                             />
 
