@@ -7,7 +7,6 @@ import { ValidationMessage } from '../../../shares/ValidationMessage';
 import { tooltipOptions } from '../../../constants/config';
 import { paths } from '../../../constants/paths';
 import { payloadHandler } from '../../../helpers/handler';
-import { BreadCrumb } from '../../../shares/BreadCrumb';
 import { Loading } from '../../../shares/Loading';
 import { FormMainAction } from '../../../shares/FormMainAction';
 import { Calendar } from 'primereact/calendar';
@@ -70,7 +69,7 @@ export const MemberUpdate = () => {
         }
 
         setLoading(false);
-    }, [dispatch]);
+    }, [dispatch,params.id]);
 
     useEffect(() => {
         loadingUserData()
@@ -149,6 +148,7 @@ export const MemberUpdate = () => {
                                         inputId='user'
                                         autoComplete='user name'
                                         name='user'
+                                        filter
                                         value={payload.user_id}
                                         onChange={(e) => payloadHandler(payload, e.value, 'user_id', (updateValue) => {
                                             setPayload(updateValue);
@@ -169,6 +169,7 @@ export const MemberUpdate = () => {
                                         inputId='member_card'
                                         autoComplete='member card'
                                         name='member card'
+                                        filter
                                         value={payload.membercard_id}
                                         onChange={(e) => payloadHandler(payload, e.value, 'membercard_id', (updateValue) => {
                                             setPayload(updateValue);

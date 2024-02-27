@@ -195,9 +195,11 @@ export const DiscountTableView = () => {
                                     case "expend_limit":
                                         return <span> {Number(value[col.field]).toLocaleString()} Ks </span>
                                     case "start_date":
-                                      return value[col.field] === null ? <span>Not choose</span> : dateFormat(value[col.field],'DATETIME_LONG')
+
+                                      return value[col.field] === null ? <span>Not choose</span> : moment(value[col.field]).format('yy-MM-DD')
                                     case "end_date":
-                                      return value[col.field] === null ? <span>Not choose</span> : dateFormat(value[col.field],'DATETIME_LONG')
+                                      return value[col.field] === null ? <span>Not choose</span> : moment(value[col.field]).format('yy-MM-DD')
+
                                     case "status":
                                       return <Status status={value[col.field]} />;
                                     default:

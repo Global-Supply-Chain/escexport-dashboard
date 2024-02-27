@@ -262,6 +262,7 @@ const ItemCreate = () => {
                 <Dropdown
                   inputId="category"
                   name="item category"
+                  filter
                   autoComplete="item category"
                   value={payload.category_id}
                   onChange={(e) =>
@@ -291,6 +292,7 @@ const ItemCreate = () => {
                 <Dropdown
                   inputId="shop"
                   name="shop item"
+                  filter
                   autoComplete="shop item"
                   value={payload.shop_id}
                   onChange={(e) =>

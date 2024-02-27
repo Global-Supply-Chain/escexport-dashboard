@@ -109,6 +109,7 @@ export const MemberCreate = () => {
                                         inputId='user'
                                         autoComplete='user name'
                                         name='user'
+                                        filter
                                         value={payload.user_id}
                                         onChange={(e) => payloadHandler(payload, e.value, 'user_id', (updateValue) => {
                                             setPayload(updateValue);
@@ -129,6 +130,7 @@ export const MemberCreate = () => {
                                         inputId='member_card'
                                         autoComplete='member card'
                                         name='member card'
+                                        filter
                                         value={payload.membercard_id}
                                         onChange={(e) => payloadHandler(payload, e.value, 'membercard_id', (updateValue) => {
                                             setPayload(updateValue);

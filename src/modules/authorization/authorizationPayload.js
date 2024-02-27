@@ -4,11 +4,13 @@ import { paginateOptions } from "../../constants/config";
 export const authorizationPayload = {
     createRole: {
         name : '',
+        is_merchant : "",
         description : '',
     },
     updateRole: {
         name : '',
         description : '',
+        is_merchant : '',
         permissions : []
     },
     roleColumns: [

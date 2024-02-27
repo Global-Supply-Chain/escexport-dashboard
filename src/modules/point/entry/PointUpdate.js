@@ -92,6 +92,7 @@ const PointUpdate = () => {
                                     inputId='label'
                                     name="label"
                                     autoComplete='label'
+                                    filter
                                     options={pointLabelStatus}
                                     placeholder="Select a point label"
                                     disabled={loading}
