@@ -49,8 +49,8 @@ export const DiscountUpdate = () => {
 
         const format = {
             ...payload,
-            start_date : moment(payload.start_date).format("yy-MM-DD"),
-            end_date : moment(payload.end_date).format("yy-MM-DD"),
+            start_date: moment(payload.start_date).format("yy-MM-DD"),
+            end_date: moment(payload.end_date).format("yy-MM-DD"),
         }
         await discountService.update(dispatch, params.id, format)
         setLoading(false);
@@ -188,10 +188,7 @@ export const DiscountUpdate = () => {
                             </div>
 
                             <div className=" col-12 md:col-6 lg:col-4 py-3">
-                                <div className="flex flex-column gap-2">
-                                    <label htmlFor="is_expend_limit" className=" text-black">
-                                        {translate.is_expend_limit}
-                                    </label>
+                                <div className="flex flex-row align-items-center h-full gap-2">
                                     <Checkbox
                                         className="p-inputtext-sm text-black"
                                         inputId="is_expend_limit"
@@ -216,15 +213,15 @@ export const DiscountUpdate = () => {
                                         }
                                         }
                                     />
+                                    <label htmlFor="is_expend_limit" className=" text-black">
+                                        {translate.is_expend_limit}
+                                    </label>
                                     <ValidationMessage field={"is_expend_limit"} />
                                 </div>
                             </div>
 
                             <div className=" col-12 md:col-6 lg:col-4 py-3">
-                                <div className="flex flex-column gap-2">
-                                    <label htmlFor="is_fix_amount" className=" text-black">
-                                        {translate.is_fix_amount}
-                                    </label>
+                                <div className="flex flex-row align-items-center h-full gap-2">
                                     <Checkbox
                                         className="p-inputtext-sm text-black"
                                         inputId="is_fix_amount"
@@ -249,6 +246,9 @@ export const DiscountUpdate = () => {
                                         }
                                         }
                                     />
+                                    <label htmlFor="is_fix_amount" className=" text-black">
+                                        {translate.is_fix_amount}
+                                    </label>
                                     <ValidationMessage field={"is_fix_amount"} />
                                 </div>
                             </div>

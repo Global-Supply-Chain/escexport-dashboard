@@ -189,9 +189,9 @@ export const DiscountTableView = () => {
                                     case "is_fix_amount":
                                       return <Checkbox checked={value[col.field]} />
                                     case "start_date":
-                                      return value[col.field] === null ? <span>Not choose</span> : value[col.field]
+                                      return value[col.field] === null ? <span>Not choose</span> : moment(value[col.field]).format('yy-MM-DD')
                                     case "end_date":
-                                      return value[col.field] === null ? <span>Not choose</span> : value[col.field]
+                                      return value[col.field] === null ? <span>Not choose</span> : moment(value[col.field]).format('yy-MM-DD')
                                     case "status":
                                       return <Status status={value[col.field]} />;
                                     case "address":

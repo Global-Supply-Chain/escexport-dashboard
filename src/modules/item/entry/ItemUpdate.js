@@ -343,6 +343,7 @@ const ItemUpdate = () => {
                             inputId='category'
                             name="category"
                             autoComplete='item category'
+                            filter
                             value={payload.category_id}
                             onChange={(e) => payloadHandler(payload, e.value, 'category_id', (updateValue) => {
                                 setPayload(updateValue);
@@ -363,6 +364,7 @@ const ItemUpdate = () => {
                             inputId='shop'
                             name="shop item"
                             autoComplete='shop item'
+                            filter
                             value={payload.shop_id}
                             onChange={(e) => payloadHandler(payload, e.value, 'shop_id', (updateValue) => {
                                 setPayload(updateValue);

@@ -53,7 +53,7 @@ export const MemberCardUpdate = () => {
         await memberCardService.show(dispatch, params.id)
 
         setLoading(false);
-    }, [dispatch]);
+    }, [dispatch,params.id]);
 
     useEffect(() => {
         loadingDiscountData()
@@ -158,6 +158,7 @@ export const MemberCardUpdate = () => {
                                         inputId='discount'
                                         autoComplete='discount name'
                                         name='discount'
+                                        filter
                                         value={payload.discount_id ? payload.discount_id : ''}
                                         onChange={(e) => payloadHandler(payload, e.value, 'discount_id', (updateValue) => {
                                             setPayload(updateValue);

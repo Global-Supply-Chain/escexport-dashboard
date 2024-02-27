@@ -129,8 +129,7 @@ export const RoleUpdate = ({ dataSource, callback }) => {
                     <div className="p-inputgroup mt-2">
                         <MultiSelect
                             inputId='permission'
-
-                            value={payload?.permissions}
+                            value={payload ? payload?.permissions : null}
                             onChange={(e) => {
                                 payloadHandler(payload, e.value, 'permissions', (updateValue) => {
                                     setPayload(updateValue);
@@ -138,7 +137,7 @@ export const RoleUpdate = ({ dataSource, callback }) => {
                             }}
                             filter
                             optionLabel="name"
-                            options={dataSource?.permissionList}
+                            options={dataSource ? dataSource?.permissionList : null}
                             placeholder="Select a permission"
                             disabled={loading}
                             className="p-inputtext-sm"
