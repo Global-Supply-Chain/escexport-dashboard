@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Paginator } from "primereact/paginator";
 import { Status } from "../../../shares/Status";
 import { paths } from "../../../constants/paths";
-import { datetime } from "../../../helpers/datetime";
+import { dateFormat, datetime } from "../../../helpers/datetime";
 import { setDateFilter } from "../../../shares/shareSlice";
 import moment from "moment";
 import { FilterByDate } from "../../../shares/FilterByDate";
@@ -170,32 +170,36 @@ export const DiscountTableView = () => {
                     return (
                         <Column
                             key={`discount_index_${index}`}
-                            style={{ minWidth: "250px" }}
+                            style={{ minWidth: `${col.with}px` }}
                             field={col.field}
                             header={col.header}
                             sortable
                             body={(value) => {
 
                                 switch (col.field) {
-                                    case "id":
+                                    case "label":
                                       return (
                                         <NavigateId
-                                          url={`${paths.discount}/${value[col.field]}`}
+                                          url={`${paths.discount}/${value.id}`}
                                           value={value[col.field]}
                                         />
                                       );
+                                    case "discount_percentage":
+                                        return <span> {value[col.field] ? value[col.field] : 0} % </span>
                                     case "is_expend_limit":
                                       return <Checkbox checked={value[col.field]} />
                                     case "is_fix_amount":
                                       return <Checkbox checked={value[col.field]} />
+                                    case "discount_fix_amount":
+                                        return <span> {Number(value[col.field]).toLocaleString()} Ks </span>
+                                    case "expend_limit":
+                                        return <span> {Number(value[col.field]).toLocaleString()} Ks </span>
                                     case "start_date":
-                                      return value[col.field] === null ? <span>Not choose</span> : value[col.field]
+                                      return value[col.field] === null ? <span>Not choose</span> : dateFormat(value[col.field],'DATETIME_LONG')
                                     case "end_date":
-                                      return value[col.field] === null ? <span>Not choose</span> : value[col.field]
+                                      return value[col.field] === null ? <span>Not choose</span> : dateFormat(value[col.field],'DATETIME_LONG')
                                     case "status":
                                       return <Status status={value[col.field]} />;
-                                    case "address":
-                                        return <span>{value[col.field]?.substring(0, 8)}...</span>;
                                     default:
                                       return value[col.field];
                                   }
