@@ -13,7 +13,7 @@ export const discountRoutes = [
             return{
                 breadcrumbs: [
                     { label: "Dashboard", url: paths.dashboard },
-                    { label: "List", url: paths.discount },
+                    { label: "Create", url: paths.discountCreate },
                 ],
                 role: ['ADMINISTRATOR']
             }
@@ -41,7 +41,8 @@ export const discountRoutes = [
             return {
                 breadcrumbs: [
                     { label: "Dashboard", url: paths.dashboard },
-                    { label: "List", url: paths.discount }
+                    { label: "List", url: paths.discount },
+                    { label: "Create", url: paths.discountCreate }
                 ]
             }
         }
