@@ -70,10 +70,10 @@ export const DiscountUpdate = () => {
                 is_expend_limit: discount.is_expend_limit,
                 is_fix_amount: discount.is_fix_amount,
                 start_date: new Date(discount.start_date),
-                end_date: new Date(discount.end_date)
+                end_date: new Date(discount.end_date),
+                status : discount.status
             }
             setPayload(formatDate);
-            console.log(payload);
         }
     }, [discount])
 

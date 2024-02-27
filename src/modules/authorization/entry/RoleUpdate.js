@@ -12,6 +12,7 @@ import { Card } from 'primereact/card';
 import { authorizationService } from '../authorizatonService';
 import { MultiSelect } from 'primereact/multiselect';
 import { FormMainAction } from '../../../shares/FormMainAction';
+import { Checkbox } from 'primereact/checkbox';
 
 const formatMultiSelect = (value, preValue) => {
     const permissionFormat = value?.map((per) => {
@@ -42,6 +43,7 @@ export const RoleUpdate = ({ dataSource, callback }) => {
 
     const [loading, setLoading] = useState(false);
     const [payload, setPayload] = useState(authorizationPayload.updateRole);
+    const [isMerchant, setIsMerchant] = useState(false);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -59,6 +61,7 @@ export const RoleUpdate = ({ dataSource, callback }) => {
         const mainPayload = {
             name: payload.name,
             description: payload.description,
+            is_merchant: isMerchant,
             permissions: permissionFormat
         }
 
@@ -71,6 +74,7 @@ export const RoleUpdate = ({ dataSource, callback }) => {
     useEffect(() => {
         if (dataSource) {
             setPayload(dataSource?.role)
+            setIsMerchant(dataSource?.is_merchant)
         }
     }, [dataSource])
 
@@ -124,6 +128,31 @@ export const RoleUpdate = ({ dataSource, callback }) => {
                     <ValidationMessage field="description" />
                 </div>
 
+                <div className=" col-12 md:col-6 lg:col-4 py-3">
+                    <div className="flex flex-row align-items-center h-full gap-2">
+                        <Checkbox
+                            className="p-inputtext-sm text-black"
+                            inputId="is_merchant"
+                            name="is merchant"
+                            autoComplete="is merchant"
+                            aria-describedby="is merchant help"
+                            tooltip="Member is merchant"
+                            tooltipOptions={{ ...tooltipOptions }}
+                            placeholder="Enter member is merchant"
+                            disabled={loading}
+                            checked={isMerchant ? isMerchant : ''}
+                            onChange={(e) => {
+                                setIsMerchant(e.checked);
+                            }
+                            }
+                        />
+                        <label htmlFor="is_merchant" className=" text-black">
+                            {translate.is_merchant}
+                        </label>
+                        <ValidationMessage field={"is_merchant"} />
+                    </div>
+                </div>
+
                 <div className="col-12 md:col-4 lg:col-4 py-3">
                     <label htmlFor='permission' className='input-label'> {translate.permission} </label>
                     <div className="p-inputgroup mt-2">
@@ -136,6 +165,7 @@ export const RoleUpdate = ({ dataSource, callback }) => {
                                 })
                             }}
                             filter
+                            display="chip"
                             optionLabel="name"
                             options={dataSource ? dataSource?.permissionList : null}
                             placeholder="Select a permission"
