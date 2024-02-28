@@ -33,6 +33,7 @@ export const RoleDetail = () => {
     const [permissionList, setPermissionList] = useState([]);
     const [roleHasPermissionList, setRoleHasPermissionList] = useState([]);
     const [differentPermissionList, setDifferentPermissionList] = useState([]);
+    const [isMerchant, setIsMerchant] = useState(false);
     const [dataSource, setDataSource] = useState({
         id: params.id,
         permissionList: permissionList,
@@ -51,7 +52,9 @@ export const RoleDetail = () => {
     const loadingData = useCallback(async () => {
         setLoading(true);
         const response = await authorizationService.roleShow(dispatch,params.id)
+
         if (response.status === 200) {
+            setIsMerchant(response.data.is_merchant)
             setRoleHasPermissionList(response?.data?.permissions)
         }
         setLoading(false);
@@ -100,9 +103,10 @@ export const RoleDetail = () => {
         setDataSource({
             id : params.id,
             permissionList : differentPermissionList,
+            is_merchant : isMerchant,
             role: role
         })
-    }, [params.id, differentPermissionList, role])
+    }, [params.id, differentPermissionList, role, isMerchant])
 
     return (
         <div className=' grid'>

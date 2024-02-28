@@ -160,6 +160,7 @@
     "order_number" : "Order Number",
     "pay_amount" : "Pay Amount",
     "is_wallet" : "Is Wallet",
+    "is_merchant" : "Is Merchant",
     "expired_at" : "Expired At",
     "amount" : "Amount",
     "dob" : "Birthday",

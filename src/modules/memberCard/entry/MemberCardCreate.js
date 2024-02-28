@@ -130,6 +130,7 @@ export const MemberCardCreate = () => {
                                         autoComplete='discount name'
                                         name='discount'
                                         value={payload.discount_id}
+                                        filter
                                         onChange={(e) => payloadHandler(payload, e.value, 'discount_id', (updateValue) => {
                                             setPayload(updateValue);
                                         })}

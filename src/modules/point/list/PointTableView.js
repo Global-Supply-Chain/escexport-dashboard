@@ -1,5 +1,3 @@
-
-
 import React, { useRef, useState, useEffect, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -10,10 +8,8 @@ import { Column } from 'primereact/column';
 import { paths } from '../../../constants/paths';
 import { datetime } from '../../../helpers/datetime';
 import { Search } from '../../../shares/Search';
-import { Calendar } from 'primereact/calendar';
 import { pointPayload } from '../pointPayload';
 import { pointService } from '../pointSerivce';
-import { Dropdown } from 'primereact/dropdown';
 import { Paginator } from 'primereact/paginator';
 import { Button } from 'primereact/button';
 import { setPaginate } from '../pointSlice';
@@ -37,21 +33,6 @@ const PointTableView = () => {
     const total = useRef(0);
     const columns = useRef(pointPayload.columns);
     const showColumns = useRef(columns.current.filter(col => col.show === true));
-
-    const dropdown = [
-        {
-            label: "Item",
-            value: "T0001"
-        },
-        {
-            label: "Item",
-            value: "T0001"
-        },
-        {
-            label: "Item",
-            value: "T0001"
-        }
-    ];
 
     /**
      * Event - Paginate Page Change
@@ -103,10 +84,10 @@ const PointTableView = () => {
         if (e.startDate === "" || e.endDate === "") {
             delete updatePaginateParams.start_date;
             delete updatePaginateParams.end_date;
-          } else {
+        } else {
             updatePaginateParams.start_date = moment(e.startDate).format("yy-MM-DD");
             updatePaginateParams.end_date = moment(e.endDate).format("yy-MM-DD");
-          }
+        }
 
         dispatch(setDateFilter(e));
         dispatch(setPaginate(updatePaginateParams));
@@ -118,7 +99,7 @@ const PointTableView = () => {
     const FooterRender = () => {
         return (
             <div className=' flex items-center justify-content-between'>
-                <div>{translate.total} - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
+                <div>{translate.total} - <span style={{ color: "#4338CA" }}> {total.current > 0 ? total.current : 0}</span></div>
                 <div className=' flex align-items-center gap-3'>
                     <Button
                         outlined
@@ -128,11 +109,13 @@ const PointTableView = () => {
                             dispatch(setPaginate(pointPayload.paginateParams));
                             dispatch(setDateFilter({ startDate: "", endDate: "" }));
                         }}
+                        disabled={total.current > 0 ? false : true}
                     />
                     <PaginatorRight
                         show={showAuditColumn}
                         onHandler={(e) => setShowAuditColumn(e)}
                         label={translate.audit_columns}
+                        disabled={total.current > 0 ? false : true}
                     />
                 </div>
             </div>
@@ -151,9 +134,14 @@ const PointTableView = () => {
                     placeholder={"Search point"}
                     onSearch={(e) => onSearchChange(e)}
                     label={translate.press_enter_key_to_search}
+                    disabled={total.current > 0 ? false : true}
                 />
 
-                <FilterByDate onFilter={(e) => onFilterByDate(e)} label={translate.filter_by} />
+                <FilterByDate
+                    onFilter={(e) => onFilterByDate(e)}
+                    label={translate.filter_by}
+                    disabled={total.current > 0 ? false : true}
+                />
 
             </div>
         )
@@ -188,7 +176,7 @@ const PointTableView = () => {
                 value={points}
                 sortField={paginateParams.order}
                 sortOrder={paginateParams.sort === 'DESC' ? 1 : paginateParams.sort === 'ASC' ? -1 : 0}
-                onSort={onSort}
+                onSort={total.current > 0 ? onSort : null}
                 sortMode={paginateOptions.sortMode}
                 loading={loading}
                 emptyMessage="No point found."
@@ -207,15 +195,15 @@ const PointTableView = () => {
                             body={(value) => {
                                 switch (col.field) {
                                     case "id":
-                                      return (
-                                        <NavigateId
-                                          url={`${paths.point}/${value[col.field]}`}
-                                          value={value[col.field]}
-                                        />
-                                      );
+                                        return (
+                                            <NavigateId
+                                                url={`${paths.point}/${value[col.field]}`}
+                                                value={value[col.field]}
+                                            />
+                                        );
                                     default:
-                                      return value[col.field];
-                                  }
+                                        return value[col.field];
+                                }
 
                             }}
                         />
@@ -235,15 +223,19 @@ const PointTableView = () => {
                     )
                 })}
             </DataTable>
-            <Paginator
-                first={first.current}
-                rows={paginateParams.per_page}
-                totalRecords={total?.current}
-                rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
-                template={"FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"}
-                currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
-                onPageChange={onPageChange}
-            />
+            {
+                total.current > 0 && (
+                    <Paginator
+                        first={first.current}
+                        rows={paginateParams.per_page}
+                        totalRecords={total?.current}
+                        rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
+                        template={"FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"}
+                        currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
+                        onPageChange={onPageChange}
+                    />
+                )
+            }
         </Card>
     )
 }

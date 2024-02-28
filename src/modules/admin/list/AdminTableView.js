@@ -159,7 +159,7 @@ export const AdminTableView = () => {
       <div className="flex items-center justify-content-between">
         <div>
           {translate.total} -
-          <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span>
+          <span style={{ color: "#4338CA" }}>{total.current > 0 ? total.current : 0}</span>
         </div>
         <div className=" flex align-items-center gap-3">
           <Button
@@ -171,11 +171,13 @@ export const AdminTableView = () => {
               dispatch(setStatusFilter("ALL"));
               dispatch(setDateFilter({ startDate: "", endDate: "" }));
             }}
+            disabled={total.current > 0 ? false : true}
           />
           <PaginatorRight
             show={showAuditColumn}
             onHandler={(e) => setShowAuditColumn(e)}
             label={translate.audit_columns}
+            disabled={total.current > 0 ? false : true}
           />
         </div>
       </div>
@@ -193,15 +195,21 @@ export const AdminTableView = () => {
           placeholder={"Search admin account"}
           onSearch={(e) => onSearchChange(e)}
           label={translate.press_enter_key_to_search}
+          disabled={total.current > 0 ? false : true}
         />
 
         <FilterByStatus
           status={adminStatus.current}
           onFilter={(e) => onFilter(e)}
           label={translate.filter_by}
+          disabled={total.current > 0 ? false : true}
         />
 
-        <FilterByDate onFilter={(e) => onFilterByDate(e)} label={translate.filter_by_date} />
+        <FilterByDate
+          onFilter={(e) => onFilterByDate(e)}
+          label={translate.filter_by_date}
+          disabled={total.current > 0 ? false : true}
+        />
       </div>
     );
   };
@@ -217,10 +225,10 @@ export const AdminTableView = () => {
           paginateParams.sort === "DESC"
             ? 1
             : paginateParams.sort === "ASC"
-            ? -1
-            : 0
+              ? -1
+              : 0
         }
-        onSort={onSort}
+        onSort={total.current > 0 ? onSort : null}
         lazy={paginateOptions.lazy}
         loading={loading}
         resizableColumns={paginateOptions.resizableColumns}
@@ -285,17 +293,21 @@ export const AdminTableView = () => {
             );
           })}
       </DataTable>
-      <Paginator
-        first={first.current}
-        rows={paginateParams.per_page}
-        totalRecords={total?.current}
-        rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
-        template={
-          "FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"
-        }
-        currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
-        onPageChange={onPageChange}
-      />
+      {
+        total.current > 0 && (
+          <Paginator
+            first={first.current}
+            rows={paginateParams.per_page}
+            totalRecords={total?.current}
+            rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
+            template={
+              "FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"
+            }
+            currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
+            onPageChange={onPageChange}
+          />
+        )
+      }
     </Card>
   );
 };

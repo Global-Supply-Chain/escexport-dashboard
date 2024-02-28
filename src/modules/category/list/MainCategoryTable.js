@@ -176,6 +176,7 @@ export const MainCategoryTable = () => {
           placeholder={"Search main category"}
           onSearch={(e) => onSearchChange(e)}
           label={translate.press_enter_key_to_search}
+          disabled={total.current > 0 ? false : true}
         />
 
         <div className="flex flex-column md:flex-row align-items-start md:align-items-end justify-content-center gap-3">
@@ -183,13 +184,25 @@ export const MainCategoryTable = () => {
             status={categoryStatus.current}
             onFilter={(e) => onFilter(e)}
             label={translate.filter_by}
+            disabled={total.current > 0 ? false : true}
           />
 
-          <FilterByDate onFilter={(e) => onFilterByDate(e)} label={translate.filter_by_date} />
+          <FilterByDate
+            onFilter={(e) => onFilterByDate(e)}
+            label={translate.filter_by_date}
+            disabled={total.current > 0 ? false : true}
+          />
 
-          <ExportExcel url={endpoints.exportCategory} />
+          <ExportExcel
+            url={endpoints.exportCategory}
+            disabled={total.current > 0 ? false : true}
+          />
 
-          <ImportExcel url={endpoints.importCategory} callback={loadingData} />
+          <ImportExcel
+            url={endpoints.importCategory}
+            callback={loadingData}
+            disabled={total.current > 0 ? false : true}
+          />
         </div>
       </div>
     );
@@ -218,7 +231,7 @@ export const MainCategoryTable = () => {
       <div className="flex items-center justify-content-between">
         <div>
           {translate.total} -
-          <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span>
+          <span style={{ color: "#4338CA" }}> {total.current > 0 ? total.current : 0}</span>
         </div>
         <div className=" flex align-items-center gap-3">
           <Button
@@ -232,11 +245,13 @@ export const MainCategoryTable = () => {
               dispatch(setStatusFilter("ALL"));
               dispatch(setDateFilter({ startDate: "", endDate: "" }));
             }}
+            disabled={total.current > 0 ? false : true}
           />
           <PaginatorRight
             show={showAuditColumn}
             onHandler={(e) => setShowAuditColumn(e)}
             label={translate.audit_columns}
+            disabled={total.current > 0 ? false : true}
           />
         </div>
       </div>
@@ -266,7 +281,7 @@ export const MainCategoryTable = () => {
         globalFilterFields={categoryPayload.columns}
         header={<HeaderRender />}
         footer={<FooterRender />}
-        onSort={onSort}
+        onSort={total.current > 0 ? onSort : null}
       >
         {showColumns.current.map((col, index) => {
           return (
@@ -312,17 +327,21 @@ export const MainCategoryTable = () => {
           })}
       </DataTable>
 
-      <Paginator
-        first={first.current}
-        rows={mainPaginateParams.per_page}
-        totalRecords={total.current}
-        rowsPerPageOptions={paginateOptions.rowsPerPageOptions}
-        template={
-          "FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"
-        }
-        currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
-        onPageChange={onPageChange}
-      />
+      {
+        total.current > 0 && (
+          <Paginator
+            first={first.current}
+            rows={mainPaginateParams.per_page}
+            totalRecords={total.current}
+            rowsPerPageOptions={paginateOptions.rowsPerPageOptions}
+            template={
+              "FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"
+            }
+            currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
+            onPageChange={onPageChange}
+          />
+        )
+      }
     </Card>
   );
 };

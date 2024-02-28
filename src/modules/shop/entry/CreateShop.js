@@ -79,6 +79,7 @@ export const CreateShop = () => {
                                     inputId='region'
                                     autoComplete='region name'
                                     name='region'
+                                    filter
                                     value={payload.region_id}
                                     onChange={(e) => payloadHandler(payload, e.value, 'region_id', (updateValue) => {
                                         setPayload(updateValue);

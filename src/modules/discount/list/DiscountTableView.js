@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Paginator } from "primereact/paginator";
 import { Status } from "../../../shares/Status";
 import { paths } from "../../../constants/paths";
-import { dateFormat, datetime } from "../../../helpers/datetime";
+import { datetime } from "../../../helpers/datetime";
 import { setDateFilter } from "../../../shares/shareSlice";
 import moment from "moment";
 import { FilterByDate } from "../../../shares/FilterByDate";
@@ -82,10 +82,10 @@ export const DiscountTableView = () => {
         if (e.startDate === "" || e.endDate === "") {
             delete updatePaginateParams.start_date;
             delete updatePaginateParams.end_date;
-          } else {
+        } else {
             updatePaginateParams.start_date = moment(e.startDate).format("yy-MM-DD");
             updatePaginateParams.end_date = moment(e.endDate).format("yy-MM-DD");
-          }
+        }
 
         dispatch(setDateFilter(e));
         dispatch(setPaginate(updatePaginateParams));
@@ -110,7 +110,7 @@ export const DiscountTableView = () => {
     const FooterRender = () => {
         return (
             <div className=' flex items-center justify-content-between'>
-                <div>{translate.total} - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
+                <div>{translate.total} - <span style={{ color: "#4338CA" }}>{total.current > 0 ? total.current : 0}</span></div>
                 <div className=' flex align-items-center gap-3'>
                     <Button
                         outlined
@@ -120,11 +120,13 @@ export const DiscountTableView = () => {
                             dispatch(setPaginate(discountPayload.paginateParams));
                             dispatch(setDateFilter({ startDate: "", endDate: "" }));
                         }}
+                        disabled={total.current > 0 ? false : true}
                     />
                     <PaginatorRight
                         show={showAuditColumn}
                         onHandler={(e) => setShowAuditColumn(e)}
                         label={translate.audit_columns}
+                        disabled={total.current > 0 ? false : true}
                     />
                 </div>
             </div>
@@ -142,8 +144,13 @@ export const DiscountTableView = () => {
                     placeholder={"Search delivery address"}
                     onSearch={(e) => onSearchChange(e)}
                     label={translate.press_enter_key_to_search}
+                    disabled={total.current > 0 ? false : true}
                 />
-                <FilterByDate onFilter={(e) => onFilterByDate(e)} label={translate.filter_by} />
+                <FilterByDate
+                    onFilter={(e) => onFilterByDate(e)}
+                    label={translate.filter_by}
+                    disabled={total.current > 0 ? false : true}
+                />
             </div>
         )
     }
@@ -158,7 +165,7 @@ export const DiscountTableView = () => {
                 value={discounts}
                 sortField={paginateParams.order}
                 sortOrder={paginateParams.sort === 'DESC' ? 1 : paginateParams.sort === 'ASC' ? -1 : 0}
-                onSort={onSort}
+                onSort={total.current > 0 ? onSort : null}
                 loading={loading}
                 emptyMessage="No discount found."
                 globalFilterFields={discountPayload.columns}
@@ -178,31 +185,33 @@ export const DiscountTableView = () => {
 
                                 switch (col.field) {
                                     case "label":
-                                      return (
-                                        <NavigateId
-                                          url={`${paths.discount}/${value.id}`}
-                                          value={value[col.field]}
-                                        />
-                                      );
+                                        return (
+                                            <NavigateId
+                                                url={`${paths.discount}/${value.id}`}
+                                                value={value[col.field]}
+                                            />
+                                        );
                                     case "discount_percentage":
                                         return <span> {value[col.field] ? value[col.field] : 0} % </span>
                                     case "is_expend_limit":
-                                      return <Checkbox checked={value[col.field]} />
+                                        return <Checkbox checked={value[col.field]} />
                                     case "is_fix_amount":
-                                      return <Checkbox checked={value[col.field]} />
+                                        return <Checkbox checked={value[col.field]} />
                                     case "discount_fix_amount":
                                         return <span> {Number(value[col.field]).toLocaleString()} Ks </span>
                                     case "expend_limit":
                                         return <span> {Number(value[col.field]).toLocaleString()} Ks </span>
                                     case "start_date":
-                                      return value[col.field] === null ? <span>Not choose</span> : dateFormat(value[col.field],'DATETIME_LONG')
+
+                                        return value[col.field] === null ? <span>Not choose</span> : moment(value[col.field]).format('yy-MM-DD')
                                     case "end_date":
-                                      return value[col.field] === null ? <span>Not choose</span> : dateFormat(value[col.field],'DATETIME_LONG')
+                                        return value[col.field] === null ? <span>Not choose</span> : moment(value[col.field]).format('yy-MM-DD')
+
                                     case "status":
-                                      return <Status status={value[col.field]} />;
+                                        return <Status status={value[col.field]} />;
                                     default:
-                                      return value[col.field];
-                                  }
+                                        return value[col.field];
+                                }
                             }}
                         />
                     )
@@ -221,15 +230,19 @@ export const DiscountTableView = () => {
                     )
                 })}
             </DataTable>
-            <Paginator
-                first={first.current}
-                rows={paginateParams.per_page}
-                totalRecords={total.current}
-                rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
-                template={"FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"}
-                currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
-                onPageChange={onPageChange}
-            />
+            {
+                total.current > 0 && (
+                    <Paginator
+                        first={first.current}
+                        rows={paginateParams.per_page}
+                        totalRecords={total.current}
+                        rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
+                        template={"FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"}
+                        currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
+                        onPageChange={onPageChange}
+                    />
+                )
+            }
         </Card>
     )
 }

@@ -46,7 +46,7 @@ export const authorizationService = {
         return response;
     },
     rolePermissionRemove: async (dispatch,id,payload) => {
-        const response = await postRequest(`${endpoints.role}/${id}/remove-permission`, payload);
+        const response = await putRequest(`${endpoints.role}/${id}/remove-permission`, payload);
         await httpServiceHandler(dispatch, response);
 
         if(response.status === 200){

@@ -70,11 +70,13 @@ export const DiscountUpdate = () => {
                 is_expend_limit: discount.is_expend_limit,
                 is_fix_amount: discount.is_fix_amount,
                 start_date: new Date(discount.start_date),
-                end_date: new Date(discount.end_date)
+                end_date: new Date(discount.end_date),
+                status: discount.status
             }
             setPayload(formatDate);
         }
-    }, [discount, payload])
+    }, [discount])
+
 
     return (
         <>
@@ -103,6 +105,7 @@ export const DiscountUpdate = () => {
                                         tooltipOptions={{ ...tooltipOptions }}
                                         placeholder={translate.is_expend_limit}
                                         disabled={loading}
+                                        value={payload.is_expend_limit ? payload.is_expend_limit : ''}
                                         checked={payload ? payload.is_expend_limit : ""}
                                         onChange={(e) => {
                                             setIsExpendLimit(e.checked);
@@ -133,6 +136,7 @@ export const DiscountUpdate = () => {
                                         tooltipOptions={{ ...tooltipOptions }}
                                         placeholder={translate.is_fix_amount}
                                         disabled={loading}
+                                        value={payload.is_fix_amount ? payload.is_fix_amount : ''}
                                         checked={payload ? payload.is_fix_amount : ''}
                                         onChange={(e) => {
                                             setIsFixAmount(e.checked)
@@ -159,7 +163,7 @@ export const DiscountUpdate = () => {
                                         id="label"
                                         name="label"
                                         autoComplete='label'
-                                        value={payload ? payload.label : ""}
+                                        value={payload.label ? payload.label : ""}
                                         aria-describedby="label help"
                                         tooltip={translate.label}
                                         tooltipOptions={{ ...tooltipOptions }}
@@ -181,7 +185,7 @@ export const DiscountUpdate = () => {
                                         className="p-inputtext-sm sm:w-full mt-3 md:mt-0"
                                         placeholder="Select Start Date"
                                         selectionMode={"single"}
-                                        value={payload.start_date}
+                                        value={payload.start_date ? payload.start_date : ''}
                                         onChange={(e) =>
                                             payloadHandler(
                                                 payload,
@@ -205,7 +209,7 @@ export const DiscountUpdate = () => {
                                         className="p-inputtext-sm sm:w-full mt-3 md:mt-0"
                                         placeholder="Select End Date"
                                         selectionMode={"single"}
-                                        value={payload.end_date}
+                                        value={payload.end_date ? payload.end_date : ''}
                                         onChange={(e) =>
                                             payloadHandler(
                                                 payload,
@@ -228,7 +232,7 @@ export const DiscountUpdate = () => {
                                         className="p-inputtext-sm text-black"
                                         id="discount_percentage"
                                         name="discount_percentage"
-                                        value={payload ? payload.discount_percentage : ""}
+                                        value={payload.discount_percentage ? payload.discount_percentage : ""}
                                         keyfilter={'int'}
                                         autoComplete='discount percentage'
                                         aria-describedby="discount percentage help"
@@ -252,7 +256,7 @@ export const DiscountUpdate = () => {
                                         id="discount_fix_amount"
                                         name="discount_fix_amount"
                                         keyfilter={'int'}
-                                        value={payload ? payload.discount_fix_amount : ""}
+                                        value={payload.discount_fix_amount ? payload.discount_fix_amount : ""}
                                         autoComplete='discount fix amount'
                                         aria-describedby="discount fix amount help"
                                         tooltip={translate.discount_fix_amount}
@@ -276,7 +280,7 @@ export const DiscountUpdate = () => {
                                         id="expend_limit"
                                         name="expend_limit"
                                         keyfilter={'int'}
-                                        value={payload ? payload.expend_limit : ""}
+                                        value={payload.expend_limit ? payload.expend_limit : ""}
                                         autoComplete='expend limit'
                                         aria-describedby="expend limit help"
                                         tooltip={translate.expend_limit}
@@ -290,7 +294,6 @@ export const DiscountUpdate = () => {
                                 </div>
                             </div>
 
-
                             <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
                                     <label htmlFor="status" className=' text-black'>{translate.status}</label>
@@ -301,7 +304,7 @@ export const DiscountUpdate = () => {
                                         options={memberStatus}
                                         placeholder="Select a member status"
                                         disabled={loading}
-                                        value={payload.status}
+                                        value={payload.status ? payload.status : ''}
                                         onChange={(e) => payloadHandler(payload, e.value, 'status', (updateValue) => {
                                             setPayload(updateValue);
                                         })}

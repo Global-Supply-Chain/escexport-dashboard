@@ -160,6 +160,7 @@
     "order_number" : "订单号",
     "pay_amount" : "支付金额",
     "is_wallet" : "是钱包",
+    "is_merchant" : "是商人",
     "expired_at" : "过期时间",
     "amount" : "数量",
     "dob": "生日",
