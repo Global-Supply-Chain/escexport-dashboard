@@ -159,7 +159,7 @@ const PromotionTableView = () => {
     const FooterRender = () => {
         return (
             <div className=' flex items-center justify-content-between'>
-                <div>{translate.total} - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
+                <div>{translate.total} - <span style={{ color: "#4338CA" }}> {total.current > 0 ? total.current : 0}</span></div>
                 <div className=' flex align-items-center gap-3'>
                     <Button
                         outlined
@@ -170,11 +170,13 @@ const PromotionTableView = () => {
                             dispatch(setStatusFilter("ALL"));
                             dispatch(setDateFilter({ startDate: "", endDate: "" }));
                         }}
+                        disabled={total.current > 0 ? false : true}
                     />
                     <PaginatorRight
                         show={showAuditColumn}
                         onHandler={(e) => setShowAuditColumn(e)}
                         label={translate.audit_columns}
+                        disabled={total.current > 0 ? false : true}
                     />
                 </div>
             </div>
@@ -192,15 +194,21 @@ const PromotionTableView = () => {
                     placeholder={"Search promotion"}
                     onSearch={(e) => onSearchChange(e)}
                     label={translate.press_enter_key_to_search}
+                    disabled={total.current > 0 ? false : true}
                 />
 
                 <FilterByStatus
                     status={promotionStatus.current}
                     onFilter={(e) => onFilter(e)}
                     label={translate.filter_by}
+                    disabled={total.current > 0 ? false : true}
                 />
 
-                <FilterByDate onFilter={(e) => onFilterByDate(e)} label={translate.filter_by_date} />
+                <FilterByDate 
+                    onFilter={(e) => onFilterByDate(e)} 
+                    label={translate.filter_by_date} 
+                    disabled={total.current > 0 ? false : true}
+                />
             </div>
         )
     }
@@ -217,7 +225,7 @@ const PromotionTableView = () => {
                 value={promotions}
                 sortField={paginateParams.order}
                 sortOrder={paginateParams.sort === 'DESC' ? 1 : paginateParams.sort === "ASC" ? -1 : 0}
-                onSort={onSort}
+                onSort={total.current > 0 ? onSort : null}
                 sortMode={paginateOptions.sortMode}
                 loading={loading}
                 emptyMessage="No promotion found."
@@ -265,15 +273,19 @@ const PromotionTableView = () => {
                     )
                 })}
             </DataTable>
-            <Paginator
-                first={first.current}
-                rows={paginateParams.per_page}
-                totalRecords={total?.current}
-                rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
-                template={"FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"}
-                currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
-                onPageChange={onPageChange}
-            />
+            {
+                total.current > 0 && (
+                    <Paginator
+                    first={first.current}
+                    rows={paginateParams.per_page}
+                    totalRecords={total?.current}
+                    rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
+                    template={"FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"}
+                    currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
+                    onPageChange={onPageChange}
+                />
+                )
+            }
 
         </Card>
     )

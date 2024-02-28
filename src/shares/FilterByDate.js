@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button } from "primereact/button";
 import { useSelector } from "react-redux";
 
-export const FilterByDate = ({ onFilter,label }) => {
+export const FilterByDate = ({ onFilter,label, disabled }) => {
   const currentDate = new Date();
 
   const { startFilterDate, endFilterDate } = useSelector(
@@ -30,6 +30,7 @@ export const FilterByDate = ({ onFilter,label }) => {
           className="p-inputtext-sm md:mr-2 sm:w-full"
           placeholder="Select Start Date"
           selectionMode={"single"}
+          disabled={disabled}
           disabledDates={[new Date(), maxStartDate]}
           maxDate={maxStartDate}
           value={startFilterDate ? startFilterDate : startDate}
@@ -43,6 +44,7 @@ export const FilterByDate = ({ onFilter,label }) => {
           className="p-inputtext-sm md:ml-2 sm:w-full mt-3 md:mt-0"
           placeholder="Select End Date"
           selectionMode={"single"}
+          disabled={disabled}
           value={endFilterDate ? endFilterDate : endDate}
           maxDate={currentDate}
           onChange={(e) => {
@@ -56,6 +58,7 @@ export const FilterByDate = ({ onFilter,label }) => {
             size="small"
             icon="pi pi-check"
             severity="primary"
+            disabled={disabled}
             outlined
             onClick={() => {
               if(startDate !== null && endDate !== null){
@@ -67,6 +70,7 @@ export const FilterByDate = ({ onFilter,label }) => {
           <Button
             size="small"
             icon="pi pi-sync"
+            disabled={disabled}
             severity="danger"
             outlined
             onClick={() => onFilter({ startDate: "", endDate: "" })}

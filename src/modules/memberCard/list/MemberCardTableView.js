@@ -81,10 +81,10 @@ export const MemberCardTableView = () => {
         if (e.startDate === "" || e.endDate === "") {
             delete updatePaginateParams.start_date;
             delete updatePaginateParams.end_date;
-          } else {
+        } else {
             updatePaginateParams.start_date = moment(e.startDate).format("yy-MM-DD");
             updatePaginateParams.end_date = moment(e.endDate).format("yy-MM-DD");
-          }
+        }
 
         dispatch(setDateFilter(e));
         dispatch(setPaginate(updatePaginateParams));
@@ -109,7 +109,7 @@ export const MemberCardTableView = () => {
     const FooterRender = () => {
         return (
             <div className=' flex items-center justify-content-between'>
-                <div>{translate.total} - <span style={{ color: "#4338CA" }}>{total ? total.current : 0}</span></div>
+                <div>{translate.total} - <span style={{ color: "#4338CA" }}> {total.current > 0 ? total.current : 0}</span></div>
                 <div className=' flex align-items-center gap-3'>
                     <Button
                         outlined
@@ -119,11 +119,13 @@ export const MemberCardTableView = () => {
                             dispatch(setPaginate(memberCardPayload.paginateParams));
                             dispatch(setDateFilter({ startDate: "", endDate: "" }));
                         }}
+                        disabled={total.current > 0 ? false : true}
                     />
                     <PaginatorRight
                         show={showAuditColumn}
                         onHandler={(e) => setShowAuditColumn(e)}
                         label={translate.audit_columns}
+                        disabled={total.current > 0 ? false : true}
                     />
                 </div>
             </div>
@@ -141,8 +143,13 @@ export const MemberCardTableView = () => {
                     placeholder={"Search delivery address"}
                     onSearch={(e) => onSearchChange(e)}
                     label={translate.press_enter_key_to_search}
+                    disabled={total.current > 0 ? false : true}
                 />
-                <FilterByDate onFilter={(e) => onFilterByDate(e)} label={translate.filter_by} />
+                <FilterByDate
+                    onFilter={(e) => onFilterByDate(e)}
+                    label={translate.filter_by}
+                    disabled={total.current > 0 ? false : true}
+                />
             </div>
         )
     }
@@ -157,7 +164,7 @@ export const MemberCardTableView = () => {
                 value={memberCards}
                 sortField={paginateParams.order}
                 sortOrder={paginateParams.sort === 'DESC' ? 1 : paginateParams.sort === 'ASC' ? -1 : 0}
-                onSort={onSort}
+                onSort={total.current > 0 ? onSort : null}
                 loading={loading}
                 emptyMessage="No discount found."
                 globalFilterFields={memberCardPayload.columns}
@@ -177,17 +184,17 @@ export const MemberCardTableView = () => {
 
                                 switch (col.field) {
                                     case "id":
-                                      return (
-                                        <NavigateId
-                                          url={`${paths.memberCardDetail}/${value[col.field]}`}
-                                          value={value[col.field]}
-                                        />
-                                      );
+                                        return (
+                                            <NavigateId
+                                                url={`${paths.memberCardDetail}/${value[col.field]}`}
+                                                value={value[col.field]}
+                                            />
+                                        );
                                     case "status":
-                                      return <Status status={value[col.field]} />;
+                                        return <Status status={value[col.field]} />;
                                     default:
-                                      return value[col.field];
-                                  }
+                                        return value[col.field];
+                                }
                             }}
                         />
                     )
@@ -206,15 +213,19 @@ export const MemberCardTableView = () => {
                     )
                 })}
             </DataTable>
-            <Paginator
-                first={first.current}
-                rows={paginateParams.per_page}
-                totalRecords={total.current}
-                rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
-                template={"FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"}
-                currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
-                onPageChange={onPageChange}
-            />
+            {
+                total.current > 0 && (
+                    <Paginator
+                        first={first.current}
+                        rows={paginateParams.per_page}
+                        totalRecords={total.current}
+                        rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
+                        template={"FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"}
+                        currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
+                        onPageChange={onPageChange}
+                    />
+                )
+            }
         </Card>
     )
 }

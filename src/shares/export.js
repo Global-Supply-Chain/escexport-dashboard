@@ -4,7 +4,7 @@ import { baseURL } from "../constants/endpoints";
 import { getData } from "../helpers/localstorage";
 
 
-export const ExportExcel = ({url}) => {
+export const ExportExcel = ({url, disabled}) => {
 
     const handleExport = async () => {
         const iframe = document.createElement('iframe');
@@ -53,6 +53,7 @@ export const ExportExcel = ({url}) => {
 
     return (
         <Button
+            disabled={disabled}
             outlined
             icon="pi pi-cloud-download"
             size='small'

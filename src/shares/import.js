@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { updateNotification } from './shareSlice';
 import { baseURL } from '../constants/endpoints';
 
-export const ImportExcel = ({ url, callback }) => {
+export const ImportExcel = ({ url, callback, disabled }) => {
     const dispatch = useDispatch()
 
     return (
@@ -15,6 +15,7 @@ export const ImportExcel = ({ url, callback }) => {
 
             <Button
                 outlined
+                disabled={disabled}
                 icon="pi pi-cloud-upload"
                 size='small'
                 onClick={() => {

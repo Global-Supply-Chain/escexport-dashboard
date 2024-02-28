@@ -271,7 +271,7 @@ export const items = [
     {
         key: '11',
         label: 'menu_region',
-        icon: 'pi pi-fw pi-flag',
+        icon: 'pi pi-fw pi-map',
         children: [
             {
                 key: '11-1',
@@ -290,7 +290,7 @@ export const items = [
     {
         key: '12',
         label: 'menu_shop',
-        icon: 'pi pi-fw pi-map',
+        icon: 'pi pi-fw pi-flag',
         children: [
             {
                 key: '12-1',
