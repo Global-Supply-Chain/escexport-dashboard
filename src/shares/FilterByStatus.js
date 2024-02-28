@@ -1,7 +1,7 @@
 import { Dropdown } from "primereact/dropdown";
 import { useSelector } from "react-redux";
 
-export const FilterByStatus = ({ status, onFilter, label }) => {
+export const FilterByStatus = ({ status, onFilter, label, disabled }) => {
   const { statusFilter } = useSelector((state) => state.share);
 
   return (
@@ -16,6 +16,7 @@ export const FilterByStatus = ({ status, onFilter, label }) => {
             options={status ?? []}
             value={statusFilter}
             tooltip="Filter by status"
+            disabled={disabled}
             onChange={(e) => {
               onFilter(e.target.value);
             }}

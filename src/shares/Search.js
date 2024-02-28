@@ -3,7 +3,7 @@ import { useState } from "react";
 import { tooltipOptions } from "../constants/config";
 import { getData, setData } from "../helpers/localstorage";
 
-export const Search = ({ onSearch, placeholder, tooltipLabel, label }) => {
+export const Search = ({ onSearch, placeholder, tooltipLabel, label, disabled }) => {
   const [keyword, setKeyword] = useState(getData("search"));
 
   return (
@@ -14,6 +14,7 @@ export const Search = ({ onSearch, placeholder, tooltipLabel, label }) => {
           id="tableSearch"
           name="tableSearch"
           className="p-inputtext-sm"
+          disabled={disabled}
           placeholder={placeholder}
           value={keyword ? keyword : ""}
           tooltip={tooltipLabel}
