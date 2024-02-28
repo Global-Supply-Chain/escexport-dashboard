@@ -13,7 +13,7 @@ export const memberRoutes = [
             return{
                 breadcrumbs: [
                     { label: "Dashboard", url: paths.dashboard },
-                    { label: "List", url: paths.member },
+                    { label: "Create", url: paths.memberCreate },
                 ],
                 role: ['ADMINISTRATOR']
             }
@@ -35,13 +35,14 @@ export const memberRoutes = [
     },
     {
         id: "memberDetail",
-        path: `/${paths.memberDetail}/:id`,
+        path: `/${paths.memberDetail}`,
         element: <MemberDetail />,
         loader: () => {
             return {
                 breadcrumbs: [
                     { label: "Dashboard", url: paths.dashboard },
-                    { label: "List", url: paths.member }
+                    { label: "List", url: paths.member },
+                    { label: "Create", url: paths.memberCardCreate}
                 ]
             }
         }

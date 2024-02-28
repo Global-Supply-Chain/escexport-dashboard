@@ -67,59 +67,27 @@ export const items = [
     // },
     {
         key: '3',
-        label: 'menu_discount',
-        icon: 'pi pi-fw pi-box',
-        children: [
-            {
-                key: '3-1',
-                label: 'menu_list',
-                icon: 'pi pi-fw pi-list',
-                url: paths.discount
-            },
-            {
-                key: '3-2',
-                label: 'menu_create',
-                icon: 'pi pi-fw pi-plus',
-                url: paths.discountCreate
-            }
-        ]
-    },
-    {
-        key: '16',
-        label: 'menu_member_card',
-        icon: 'pi pi-fw pi-id-card',
-        children: [
-            {
-                key: '16-1',
-                label: 'menu_list',
-                icon: 'pi pi-fw pi-list',
-                url: paths.memberCard
-            },
-            {
-                key: '16-2',
-                label: 'menu_create',
-                icon: 'pi pi-fw pi-plus',
-                url: paths.memberCardCreate
-            }
-        ]
-    },
-    {
-        key: '17',
         label: 'menu_member',
         icon: 'pi pi-fw pi-user-plus',
         children: [
             {
-                key: '17-1',
-                label: 'menu_list',
+                key: '3-1',
+                label: 'menu_members',
                 icon: 'pi pi-fw pi-list',
                 url: paths.member
             },
             {
-                key: '17-2',
-                label: 'menu_create',
-                icon: 'pi pi-fw pi-plus',
-                url: paths.memberCreate
-            }
+                key: '3-2',
+                label: 'menu_member_card',
+                icon: 'pi pi-fw pi-id-card',
+                url: paths.memberCard
+            },
+            {
+                key: '3-3',
+                label: 'menu_discount',
+                icon: 'pi pi-fw pi-money-bill',
+                url: paths.discount
+            },
         ]
     },
     {
@@ -141,63 +109,63 @@ export const items = [
             // }
         ]
     },
-    {
-        key: '4',
-        label: 'menu_category',
-        icon: 'pi pi-fw pi-clone',
-        children: [
-            {
-                key: '4-1',
-                label: 'menu_main_category',
-                icon: 'pi pi-fw pi-list',
-                url: paths.category
-            },
-            {
-                key: '4-2',
-                label: 'menu_create',
-                icon: 'pi pi-fw pi-plus',
-                url: paths.createMainCategory
-            },
-        ]
-    },
-    {
-        key: '5',
-        label: 'menu_item',
-        icon: 'pi pi-fw pi-inbox',
-        children: [
-            {
-                key: '5-1',
-                label: 'menu_list',
-                icon: 'pi pi-fw pi-list',
-                url: paths.item
-            },
-            {
-                key: '5-2',
-                label: 'menu_create',
-                icon: 'pi pi-fw pi-plus',
-                url: paths.itemCreate
-            }
-        ]
-    },
-    {
-        key: '6',
-        label: 'menu_delivery',
-        icon: 'pi pi-fw pi-car',
-        children: [
-            {
-                key: '6-1',
-                label: 'menu_list',
-                icon: 'pi pi-fw pi-list',
-                url: paths.delivery
-            },
-            {
-                key: '6-2',
-                label: 'menu_create',
-                icon: 'pi pi-fw pi-plus',
-                url: paths.deliveryCreate
-            }
-        ]
-    },
+    // {
+    //     key: '4',
+    //     label: 'menu_category',
+    //     icon: 'pi pi-fw pi-clone',
+    //     children: [
+    //         {
+    //             key: '4-1',
+    //             label: 'menu_main_category',
+    //             icon: 'pi pi-fw pi-list',
+    //             url: paths.category
+    //         },
+    //         {
+    //             key: '4-2',
+    //             label: 'menu_create',
+    //             icon: 'pi pi-fw pi-plus',
+    //             url: paths.createMainCategory
+    //         },
+    //     ]
+    // },
+    // {
+    //     key: '5',
+    //     label: 'menu_item',
+    //     icon: 'pi pi-fw pi-inbox',
+    //     children: [
+    //         {
+    //             key: '5-1',
+    //             label: 'menu_list',
+    //             icon: 'pi pi-fw pi-list',
+    //             url: paths.item
+    //         },
+    //         {
+    //             key: '5-2',
+    //             label: 'menu_create',
+    //             icon: 'pi pi-fw pi-plus',
+    //             url: paths.itemCreate
+    //         }
+    //     ]
+    // },
+    // {
+    //     key: '6',
+    //     label: 'menu_delivery',
+    //     icon: 'pi pi-fw pi-car',
+    //     children: [
+    //         {
+    //             key: '6-1',
+    //             label: 'menu_list',
+    //             icon: 'pi pi-fw pi-list',
+    //             url: paths.delivery
+    //         },
+    //         {
+    //             key: '6-2',
+    //             label: 'menu_create',
+    //             icon: 'pi pi-fw pi-plus',
+    //             url: paths.deliveryCreate
+    //         }
+    //     ]
+    // },
     // {
     //     key: '7',
     //     label: 'Media',
@@ -217,127 +185,127 @@ export const items = [
     //         // }
     //     ]
     // },
-    {
-        key: '8',
-        label: 'menu_point',
-        icon: 'pi pi-fw pi-ticket',
-        children: [
-            {
-                key: '8-1',
-                label: 'menu_list',
-                icon: 'pi pi-fw pi-list',
-                url: paths.point
-            },
-            {
-                key: '8-2',
-                label: 'menu_create',
-                icon: 'pi pi-fw pi-plus',
-                url: paths.pointCreate
-            }
-        ]
-    },
-    {
-        key: '9',
-        label: 'menu_order',
-        icon: 'pi pi-fw pi-shopping-cart',
-        children: [
-            {
-                key: '9-1',
-                label: 'menu_list',
-                icon: 'pi pi-fw pi-list',
-                url: paths.order
-            },
-        ]
-    },
-    {
-        key: '10',
-        label: 'menu_faq',
-        icon: 'pi pi-fw pi-comment',
-        children: [
-            {
-                key: '10-1',
-                label: 'menu_list',
-                icon: 'pi pi-fw pi-list',
-                url: paths.faq
-            },
-            {
-                key: '10-2',
-                label: 'menu_create',
-                icon: 'pi pi-fw pi-plus',
-                url: paths.faqCreate
-            }
-        ]
-    },
-    {
-        key: '11',
-        label: 'menu_region',
-        icon: 'pi pi-fw pi-map',
-        children: [
-            {
-                key: '11-1',
-                label: 'menu_list',
-                icon: 'pi pi-fw pi-list',
-                url: paths.region
-            },
-            {
-                key: '11-2',
-                label: 'menu_create',
-                icon: 'pi pi-fw pi-plus',
-                url: paths.regionCreate
-            }
-        ]
-    },
-    {
-        key: '12',
-        label: 'menu_shop',
-        icon: 'pi pi-fw pi-flag',
-        children: [
-            {
-                key: '12-1',
-                label: 'menu_list',
-                icon: 'pi pi-fw pi-list',
-                url: paths.shop
-            },
-            {
-                key: '12-2',
-                label: 'menu_create',
-                icon: 'pi pi-fw pi-plus',
-                url: paths.shopCreate
-            }
-        ]
-    },
-    {
-        key: '13',
-        label: 'menu_role',
-        icon: 'pi pi-fw pi-share-alt',
-        children: [
-            {
-                key: '13-1',
-                label: 'menu_list',
-                icon: 'pi pi-fw pi-list',
-                url: paths.role
-            },
-            {
-                key: '13-2',
-                label: 'menu_create',
-                icon: 'pi pi-fw pi-plus',
-                url: paths.roleCreate
-            }
-        ]
-    },
-    {
-        key: '14',
-        label: 'menu_permission',
-        icon: 'pi pi-fw pi-lock',
-        children: [
-            {
-                key: '14-1',
-                label: 'menu_list',
-                icon: 'pi pi-fw pi-list',
-                url: paths.permission
-            },
-        ]
-    },
+    // {
+    //     key: '8',
+    //     label: 'menu_point',
+    //     icon: 'pi pi-fw pi-ticket',
+    //     children: [
+    //         {
+    //             key: '8-1',
+    //             label: 'menu_list',
+    //             icon: 'pi pi-fw pi-list',
+    //             url: paths.point
+    //         },
+    //         {
+    //             key: '8-2',
+    //             label: 'menu_create',
+    //             icon: 'pi pi-fw pi-plus',
+    //             url: paths.pointCreate
+    //         }
+    //     ]
+    // },
+    // {
+    //     key: '9',
+    //     label: 'menu_order',
+    //     icon: 'pi pi-fw pi-shopping-cart',
+    //     children: [
+    //         {
+    //             key: '9-1',
+    //             label: 'menu_list',
+    //             icon: 'pi pi-fw pi-list',
+    //             url: paths.order
+    //         },
+    //     ]
+    // },
+    // {
+    //     key: '10',
+    //     label: 'menu_faq',
+    //     icon: 'pi pi-fw pi-comment',
+    //     children: [
+    //         {
+    //             key: '10-1',
+    //             label: 'menu_list',
+    //             icon: 'pi pi-fw pi-list',
+    //             url: paths.faq
+    //         },
+    //         {
+    //             key: '10-2',
+    //             label: 'menu_create',
+    //             icon: 'pi pi-fw pi-plus',
+    //             url: paths.faqCreate
+    //         }
+    //     ]
+    // },
+    // {
+    //     key: '11',
+    //     label: 'menu_region',
+    //     icon: 'pi pi-fw pi-map',
+    //     children: [
+    //         {
+    //             key: '11-1',
+    //             label: 'menu_list',
+    //             icon: 'pi pi-fw pi-list',
+    //             url: paths.region
+    //         },
+    //         {
+    //             key: '11-2',
+    //             label: 'menu_create',
+    //             icon: 'pi pi-fw pi-plus',
+    //             url: paths.regionCreate
+    //         }
+    //     ]
+    // },
+    // {
+    //     key: '12',
+    //     label: 'menu_shop',
+    //     icon: 'pi pi-fw pi-flag',
+    //     children: [
+    //         {
+    //             key: '12-1',
+    //             label: 'menu_list',
+    //             icon: 'pi pi-fw pi-list',
+    //             url: paths.shop
+    //         },
+    //         {
+    //             key: '12-2',
+    //             label: 'menu_create',
+    //             icon: 'pi pi-fw pi-plus',
+    //             url: paths.shopCreate
+    //         }
+    //     ]
+    // },
+    // {
+    //     key: '13',
+    //     label: 'menu_role',
+    //     icon: 'pi pi-fw pi-share-alt',
+    //     children: [
+    //         {
+    //             key: '13-1',
+    //             label: 'menu_list',
+    //             icon: 'pi pi-fw pi-list',
+    //             url: paths.role
+    //         },
+    //         {
+    //             key: '13-2',
+    //             label: 'menu_create',
+    //             icon: 'pi pi-fw pi-plus',
+    //             url: paths.roleCreate
+    //         }
+    //     ]
+    // },
+    // {
+    //     key: '14',
+    //     label: 'menu_permission',
+    //     icon: 'pi pi-fw pi-lock',
+    //     children: [
+    //         {
+    //             key: '14-1',
+    //             label: 'menu_list',
+    //             icon: 'pi pi-fw pi-list',
+    //             url: paths.permission
+    //         },
+    //     ]
+    // },
     {
         key: '15',
         url: "/setting",

@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Paginator } from "primereact/paginator";
 import { Status } from "../../../shares/Status";
 import { paths } from "../../../constants/paths";
-import { datetime } from "../../../helpers/datetime";
+import { dateFormat, datetime } from "../../../helpers/datetime";
 import { setDateFilter } from "../../../shares/shareSlice";
 import moment from "moment";
 import { FilterByDate } from "../../../shares/FilterByDate";
@@ -176,20 +176,22 @@ export const MemberCardTableView = () => {
                     return (
                         <Column
                             key={`member_card_index_${index}`}
-                            style={{ minWidth: "250px" }}
+                            style={{ minWidth: `${col.width}px` }}
                             field={col.field}
                             header={col.header}
                             sortable
                             body={(value) => {
 
                                 switch (col.field) {
-                                    case "id":
+                                    case "label":
                                         return (
                                             <NavigateId
-                                                url={`${paths.memberCardDetail}/${value[col.field]}`}
+                                                url={`${paths.memberCard}/${value['id']}`}
                                                 value={value[col.field]}
                                             />
                                         );
+                                    case "expired_at":
+                                            return <span> {dateFormat(value[col.field], "DEFAULT")} </span>
                                     case "status":
                                         return <Status status={value[col.field]} />;
                                     default:

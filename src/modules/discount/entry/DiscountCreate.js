@@ -219,7 +219,6 @@ export const DiscountCreate = () => {
                                 </div>
                             </div>
 
-
                             <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
                                     <label htmlFor="expend_limit" className='text-black'>{translate.expend_limit} </label>

@@ -14,7 +14,6 @@ import { Calendar } from 'primereact/calendar';
 import moment from 'moment';
 import { memberCardService } from '../memberCardService';
 import { memberCardPayload } from '../memberCardPayload';
-import { MemberCardImg } from '../../../shares/MemberCardImg';
 import { discountService } from '../../discount/discountService';
 import { Dropdown } from 'primereact/dropdown';
 import { formBuilder } from '../../../helpers/formBuilder';
@@ -60,8 +59,11 @@ export const MemberCardCreate = () => {
         updatePayload.expired_at = moment(updatePayload.expired_at).format('yy-MM-DD')
         const formData = formBuilder(updatePayload,memberCardPayload.create)
 
-        await memberCardService.store(formData, dispatch);
-        setLoading(false);
+        const result = await memberCardService.store(formData, dispatch);
+        if(result.data) {
+            setLoading(false);
+            navigate(`${paths.memberCardDetail}/${result.data.id}`);
+        }
     }
 
     return (
@@ -75,44 +77,23 @@ export const MemberCardCreate = () => {
                 <div className=' col-12'>
                     <Card
                         title={translate.member_card_create}
-
                     >
 
                         <Loading loading={loading} />
 
                         <div className=' grid'>
-
-                            <div className=' col-12 md:col-6 py-3'>
-                                <MemberCardImg
-                                    payload={payload}
-                                    setPayload={setPayload}
-                                    field={'front_background'}
-                                />
-                                <ValidationMessage field={"front_background"} />
-                            </div>
-
-                            <div className=' col-12 md:col-6 my-3 md:my-0'>
-                                <MemberCardImg
-                                    payload={payload}
-                                    setPayload={setPayload}
-                                    field={'back_background'}
-                                />
-                                <ValidationMessage field={"back_background"} />
-                            </div>
-
-
                             <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="name" className=' text-black'>{translate.label} (required*)</label>
+                                    <label htmlFor="name" className='text-black'> {translate.label} <span> (required*) </span></label>
                                     <InputText
-                                        className="p-inputtext-sm text-black"
+                                        className="p-inputtext-sm"
                                         id="name"
                                         name="name"
                                         autoComplete='name'
                                         aria-describedby="name-help"
-                                        tooltip='Member label'
+                                        tooltip={translate.label}
                                         tooltipOptions={{ ...tooltipOptions }}
-                                        placeholder='Enter member label'
+                                        placeholder={translate.label}
                                         disabled={loading}
                                         onChange={(e) => payloadHandler(payload, e.target.value, 'label', (updateValue) => {
                                             setPayload(updateValue);
@@ -123,7 +104,7 @@ export const MemberCardCreate = () => {
                             </div>
 
                             <div className="col-12 md:col-4 lg:col-4 py-3">
-                                <label htmlFor="discount" className='input-label'>{translate.discount} (required*) </label>
+                                <label htmlFor="discount" className='input-label text-black'>{translate.discount} <span> (required*) </span> </label>
                                 <div className="p-inputgroup mt-2">
                                     <Dropdown
                                         inputId='discount'
@@ -135,7 +116,7 @@ export const MemberCardCreate = () => {
                                             setPayload(updateValue);
                                         })}
                                         options={discountList}
-                                        placeholder="Select a discount"
+                                        placeholder={translate.discount}
                                         disabled={loading}
                                         className="p-inputtext-sm"
                                     />
@@ -145,13 +126,11 @@ export const MemberCardCreate = () => {
 
                             <div className=" col-12 md:col-6 lg:col-4 py-3">
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="expired_at" className=" text-black">
-                                        {translate.expired_at}
-                                    </label>
+                                    <label htmlFor="expired_at" className="text-black">  {translate.expired_at} <span> (required*) </span> </label>
                                     <Calendar
                                         name='expired_at'
                                         className="p-inputtext-sm sm:w-full mt-3 md:mt-0"
-                                        placeholder="Select expired at"
+                                        placeholder={translate.expired_at}
                                         selectionMode={"single"}
                                         onChange={(e) =>
                                             payloadHandler(
@@ -178,7 +157,6 @@ export const MemberCardCreate = () => {
                             />
 
                         </div>
-
                     </Card>
                 </div>
             </div>
