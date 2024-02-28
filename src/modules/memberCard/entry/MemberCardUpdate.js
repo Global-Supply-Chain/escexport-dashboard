@@ -13,10 +13,8 @@ import { Calendar } from 'primereact/calendar';
 import moment from 'moment';
 import { memberCardService } from '../memberCardService';
 import { memberCardPayload } from '../memberCardPayload';
-import { MemberCardImg } from '../../../shares/MemberCardImg';
 import { discountService } from '../../discount/discountService';
 import { Dropdown } from 'primereact/dropdown';
-import { endpoints } from '../../../constants/endpoints';
 import { generalStatus } from '../../../helpers/StatusHandler';
 import { formBuilder } from '../../../helpers/formBuilder';
 
@@ -53,7 +51,7 @@ export const MemberCardUpdate = () => {
         await memberCardService.show(dispatch, params.id)
 
         setLoading(false);
-    }, [dispatch,params.id]);
+    }, [dispatch, params.id]);
 
     useEffect(() => {
         loadingDiscountData()
@@ -107,33 +105,11 @@ export const MemberCardUpdate = () => {
                         <Loading loading={loading} />
 
                         <div className=' grid'>
-
-                            <div className=' col-12 md:col-6 py-3'>
-                                <MemberCardImg
-                                    payload={payload}
-                                    setPayload={setPayload}
-                                    field={'front_background'}
-                                    src={payload.front_background ? `${endpoints.image}/${payload.front_background}` : null}
-                                />
-                                <ValidationMessage field={"front_background"} />
-                            </div>
-
-                            <div className=' col-12 md:col-6 py-3'>
-                                <MemberCardImg
-                                    payload={payload}
-                                    setPayload={setPayload}
-                                    field={'back_background'}
-                                    src={Number(payload.back_background) ? `${endpoints.image}/${payload.back_background}` : null}
-                                />
-                                <ValidationMessage field={"back_background"} />
-                            </div>
-
-
-                            <div className=' col-12 md:col-6 lg:col-4 py-3'>
+                            <div className=' col-12 md:col-3 lg:col-3 py-3'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="name" className=' text-black'>{translate.label} (required*)</label>
+                                    <label htmlFor="name" className='text-black'> {translate.label} </label>
                                     <InputText
-                                        className="p-inputtext-sm text-black"
+                                        className="p-inputtext-sm"
                                         id="name"
                                         name="name"
                                         autoComplete='name'
@@ -141,7 +117,7 @@ export const MemberCardUpdate = () => {
                                         tooltip='Member label'
                                         value={payload.label ? payload.label : ''}
                                         tooltipOptions={{ ...tooltipOptions }}
-                                        placeholder='Enter member label'
+                                        placeholder={translate.label}
                                         disabled={loading}
                                         onChange={(e) => payloadHandler(payload, e.target.value, 'label', (updateValue) => {
                                             setPayload(updateValue);
@@ -151,8 +127,8 @@ export const MemberCardUpdate = () => {
                                 </div>
                             </div>
 
-                            <div className="col-12 md:col-4 lg:col-4 py-3">
-                                <label htmlFor="discount" className='input-label'>{translate.discount} (required*) </label>
+                            <div className="col-12 md:col-3 lg:col-3 py-3">
+                                <label htmlFor="discount" className='input-label'> {translate.discount} </label>
                                 <div className="p-inputgroup mt-2">
                                     <Dropdown
                                         inputId='discount'
@@ -172,15 +148,13 @@ export const MemberCardUpdate = () => {
                                 <ValidationMessage field="discount_id" />
                             </div>
 
-                            <div className=" col-12 md:col-6 lg:col-4 py-3">
+                            <div className=" col-12 md:col-3 lg:col-3 py-3">
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="expired_at" className=" text-black">
-                                        {translate.expired_at}
-                                    </label>
+                                    <label htmlFor="expired_at" className="text-black"> {translate.expired_at} </label>
                                     <Calendar
                                         name='expired_at'
                                         className="p-inputtext-sm sm:w-full mt-3 md:mt-0"
-                                        placeholder="Select expired at"
+                                        placeholder={translate.expired_at}
                                         selectionMode={"single"}
                                         value={new Date(payload.expired_at)}
                                         onChange={(e) =>
@@ -199,9 +173,9 @@ export const MemberCardUpdate = () => {
                                 </div>
                             </div>
 
-                            <div className=' col-12 md:col-6 lg:col-4 py-3'>
+                            <div className=' col-12 md:col-3 lg:col-3 py-3'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="status" className=' text-black'>{translate.status}</label>
+                                    <label htmlFor="status" className='text-black'>{translate.status}</label>
                                     <Dropdown
                                         inputId='status'
                                         name="status"
@@ -210,7 +184,7 @@ export const MemberCardUpdate = () => {
                                         placeholder="Select a general status"
                                         disabled={loading}
                                         value={payload.status}
-                                        className="p-inputtext-sm text-black"
+                                        className="p-inputtext-sm"
                                         onChange={(e) => payloadHandler(payload, e.value, 'status', (updateValue) => {
                                             setPayload(updateValue);
                                         })}

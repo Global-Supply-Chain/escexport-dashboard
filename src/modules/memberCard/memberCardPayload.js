@@ -4,31 +4,24 @@ export const memberCardPayload = {
     create : {
         label : "",
         discount_id : "",
-        front_background : "",
-        back_background : "",
         expired_at : "",
     },
     update : {
         label : "",
         discount_id : "",
-        front_background : "",
-        back_background : "",
         expired_at : "",
         status : ""
     },
     columns: [
-        { field: "id", header: "ID", sortable: true, show: true },
-        { field: "label", header: "Label", sortable: true, show: true },
-        { field: "discount_name", header: "Discount Name", sortable: true, show: true },
-        { field: "front_background", header: "Front Background", sortable: true, show: true },
-        { field: "back_background", header: "Back Background", sortable: true, show: true },
-        { field: "expired_at", header: "Expired At", sortable: true, show: true },
-        { field: "status", header: "Status", show: true }
+        { field: "label", header: "Label", sortable: true, show: true, width: 250 },
+        { field: "discount_name", header: "Discount Name", sortable: true, show: true, width:  250 },
+        { field: "expired_at", header: "Expired At", sortable: true, show: true, width: 250 },
+        { field: "status", header: "Status", show: true, width: 100 }
     ],
     paginateParams: {
         page: 1,
         per_page: paginateOptions.rows,
-        columns: "id,label,discount_id,front_background,back_background,expired_at,status",
+        columns: "id,label,expired_at",
         search: "",
         order: "id",
         sort: "DESC"
