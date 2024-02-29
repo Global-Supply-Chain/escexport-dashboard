@@ -17,12 +17,14 @@ import { memberCardPayload } from '../memberCardPayload';
 import { discountService } from '../../discount/discountService';
 import { Dropdown } from 'primereact/dropdown';
 import { formBuilder } from '../../../helpers/formBuilder';
+import { AppEditor } from '../../../shares/AppEditor';
 
 export const MemberCardCreate = () => {
 
     const [loading, setLoading] = useState(false);
     const [payload, setPayload] = useState(memberCardPayload.create);
     const [discountList, setDiscountList] = useState([]);
+    const [desc, setDesc] = useState()
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -57,6 +59,7 @@ export const MemberCardCreate = () => {
         setLoading(true);
         let updatePayload = { ...payload };
         updatePayload.expired_at = moment(updatePayload.expired_at).format('yy-MM-DD')
+        updatePayload.description = desc;
         const formData = formBuilder(updatePayload,memberCardPayload.create)
 
         const result = await memberCardService.store(formData, dispatch);
@@ -145,6 +148,14 @@ export const MemberCardCreate = () => {
                                     />
 
                                     <ValidationMessage field={"expired_at"} />
+                                </div>
+                            </div>
+
+                            <div className=" col-12 py-3">
+                                <div className="flex flex-column gap-2">
+                                    <span className=" text-black">{translate.description} </span>
+                                    <AppEditor onChange={(e) => setDesc(e)} />
+                                    <ValidationMessage field={"description"} />
                                 </div>
                             </div>
 

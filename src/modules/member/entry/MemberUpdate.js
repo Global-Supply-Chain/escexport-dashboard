@@ -18,6 +18,7 @@ import { memberService } from '../memberService';
 import { memberCardService } from '../../memberCard/memberCardService';
 import { getRequest } from '../../../helpers/api';
 import { endpoints } from '../../../constants/endpoints';
+import { AppEditor } from '../../../shares/AppEditor';
 
 export const MemberUpdate = () => {
 
@@ -27,6 +28,7 @@ export const MemberUpdate = () => {
     const [memberCardList, setMemberCardList] = useState([]);
     const [memberList, setMemberList] = useState([]);
     const [memberStatus, setMemberStatus] = useState([]);
+    const [desc, setDesc] = useState();
 
     const params = useParams();
     const navigate = useNavigate();
@@ -117,12 +119,11 @@ export const MemberUpdate = () => {
     const submitMemberUpdate = async () => {
         setLoading(true);
 
-        const formatDate = {
-            ...payload,
-            expired_at : moment(payload.expired_at).format("yy-MM-DD")
-        }
+        let updatePayload = {...payload};
+        updatePayload.expired_at = moment(updatePayload.expired_at).format("yy-MM-DD")
+        updatePayload.description = desc;
 
-        await memberService.update(dispatch,params.id,formatDate);
+        await memberService.update(dispatch,params.id,updatePayload);
         setLoading(false);
     }
 
@@ -269,6 +270,14 @@ export const MemberUpdate = () => {
                                     />
 
                                     <ValidationMessage field={"status"} />
+                                </div>
+                            </div>
+
+                            <div className=" col-12 py-3">
+                                <div className="flex flex-column gap-2">
+                                    <span className=" text-black">{translate.description} </span>
+                                    <AppEditor value={payload.description} onChange={(e) => setDesc(e)} />
+                                    <ValidationMessage field={"description"} />
                                 </div>
                             </div>
 

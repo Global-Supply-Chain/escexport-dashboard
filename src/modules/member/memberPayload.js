@@ -7,6 +7,7 @@ export const memberPayload = {
         member_id : "",
         amount : "",
         expired_at : "",
+        description : ""
     },
     update : {
         user_id : "",
@@ -14,7 +15,8 @@ export const memberPayload = {
         member_id : "",
         amount : "",
         expired_at : "",
-        status : ""
+        status : "",
+        description : ''
     },
     columns: [
         { field: "id", header: "ID", sortable: true, show: true },

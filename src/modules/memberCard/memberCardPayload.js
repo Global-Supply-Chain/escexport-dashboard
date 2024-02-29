@@ -5,12 +5,14 @@ export const memberCardPayload = {
         label : "",
         discount_id : "",
         expired_at : "",
+        description : ""
     },
     update : {
         label : "",
         discount_id : "",
         expired_at : "",
-        status : ""
+        status : "",
+        description : ""
     },
     columns: [
         { field: "label", header: "Label", sortable: true, show: true, width: 250 },
