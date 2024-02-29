@@ -15,6 +15,7 @@ import { discountService } from '../discountService';
 import { Checkbox } from 'primereact/checkbox';
 import { Calendar } from 'primereact/calendar';
 import moment from 'moment';
+import { AppEditor } from '../../../shares/AppEditor';
 
 export const DiscountCreate = () => {
 
@@ -22,6 +23,7 @@ export const DiscountCreate = () => {
     const [payload, setPayload] = useState(discountPayload.create);
     const [isExpenLimit, setIsExpendLimit] = useState(false);
     const [isFixAmount, setIsFixAmount] = useState(false);
+    const [desc, setDesc] = useState();
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -29,7 +31,9 @@ export const DiscountCreate = () => {
 
     const submitDiscountCreate = async () => {
         setLoading(true);
-        await discountService.store(payload, dispatch);
+        let updatePayload = { ...payload };
+        updatePayload.description = desc;
+        await discountService.store(updatePayload, dispatch);
         setLoading(false);
     }
 
@@ -238,6 +242,14 @@ export const DiscountCreate = () => {
                                         })}
                                     />
                                     <ValidationMessage field={"expend_limit"} />
+                                </div>
+                            </div>
+
+                            <div className=" col-12 py-3">
+                                <div className="flex flex-column gap-2">
+                                    <span className=" text-black">{translate.description} </span>
+                                    <AppEditor onChange={(e) => setDesc(e)} />
+                                    <ValidationMessage field={"description"} />
                                 </div>
                             </div>
 
