@@ -17,6 +17,7 @@ import { discountService } from '../../discount/discountService';
 import { Dropdown } from 'primereact/dropdown';
 import { generalStatus } from '../../../helpers/StatusHandler';
 import { formBuilder } from '../../../helpers/formBuilder';
+import { AppEditor } from '../../../shares/AppEditor';
 
 export const MemberCardUpdate = () => {
 
@@ -24,6 +25,7 @@ export const MemberCardUpdate = () => {
     const [payload, setPayload] = useState(memberCardPayload.create);
     const [discountList, setDiscountList] = useState([]);
     const [status, setStatus] = useState([]);
+    const [desc, setDesc] = useState();
 
     const params = useParams();
     const navigate = useNavigate();
@@ -79,6 +81,7 @@ export const MemberCardUpdate = () => {
         setLoading(true);
         let updatePayload = { ...payload };
         updatePayload.expired_at = moment(updatePayload.expired_at).format("yy-MM-DD")
+        updatePayload.description = desc;
         // const formData = new FormData();
         // formData.append("label", payload.label);
         // formData.append("discount_id", payload.discount_id);
@@ -191,6 +194,14 @@ export const MemberCardUpdate = () => {
                                     />
 
                                     <ValidationMessage field={"status"} />
+                                </div>
+                            </div>
+
+                            <div className=" col-12 py-3">
+                                <div className="flex flex-column gap-2">
+                                    <span className=" text-black">{translate.description} </span>
+                                    <AppEditor value={payload.description} onChange={(e) => setDesc(e)} />
+                                    <ValidationMessage field={"description"} />
                                 </div>
                             </div>
 

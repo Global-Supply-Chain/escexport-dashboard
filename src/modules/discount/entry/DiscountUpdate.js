@@ -18,6 +18,7 @@ import moment from 'moment';
 import { endpoints } from '../../../constants/endpoints';
 import { Dropdown } from 'primereact/dropdown';
 import { getRequest } from '../../../helpers/api';
+import { AppEditor } from '../../../shares/AppEditor';
 
 export const DiscountUpdate = () => {
 
@@ -26,6 +27,7 @@ export const DiscountUpdate = () => {
     const [isExpenLimit, setIsExpendLimit] = useState(false);
     const [isFixAmount, setIsFixAmount] = useState(false);
     const [memberStatus, setMemberStatus] = useState([]);
+    const [desc, setDesc] = useState()
 
     const params = useParams();
     const navigate = useNavigate();
@@ -47,12 +49,12 @@ export const DiscountUpdate = () => {
     const submitDiscountUpdate = async () => {
         setLoading(true);
 
-        const format = {
-            ...payload,
-            start_date: moment(payload.start_date).format("yy-MM-DD"),
-            end_date: moment(payload.end_date).format("yy-MM-DD"),
-        }
-        await discountService.update(dispatch, params.id, format)
+        let updatePayload = { ...payload };
+        updatePayload.start_date = moment(updatePayload.start_date).format("yy-MM-DD");
+        updatePayload.end_date = moment(updatePayload.end_date).format("yy-MM-DD");
+        updatePayload.description = desc;
+
+        await discountService.update(dispatch, params.id, updatePayload)
         setLoading(false);
     }
 
@@ -311,6 +313,14 @@ export const DiscountUpdate = () => {
                                     />
 
                                     <ValidationMessage field={"status"} />
+                                </div>
+                            </div>
+
+                            <div className=" col-12 py-3">
+                                <div className="flex flex-column gap-2">
+                                    <span className=" text-black">{translate.description} </span>
+                                    <AppEditor value={payload.description} onChange={(e) => setDesc(e)} />
+                                    <ValidationMessage field={"description"} />
                                 </div>
                             </div>
 

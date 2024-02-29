@@ -9,7 +9,8 @@ export const discountPayload = {
         is_expend_limit : "",
         is_fix_amount : "",
         start_date : "",
-        end_date : ""
+        end_date : "",
+        description : ""
     },
     update : {
         label : "",
@@ -20,7 +21,8 @@ export const discountPayload = {
         is_fix_amount : "",
         start_date : "",
         end_date : "",
-        status : ""
+        status : "",
+        description : ""
     },
     columns: [
         { field: "label", header: "Label", sortable: true, show: true, with: 300 },

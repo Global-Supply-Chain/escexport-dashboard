@@ -17,11 +17,13 @@ import { memberPayload } from '../memberPayload';
 import { userService } from '../../user/userService';
 import { memberService } from '../memberService';
 import { memberCardService } from '../../memberCard/memberCardService';
+import { AppEditor } from '../../../shares/AppEditor';
 
 export const MemberCreate = () => {
 
     const [loading, setLoading] = useState(false);
     const [payload, setPayload] = useState(memberPayload.create);
+    const [desc, setDesc] = useState('');
     const [userList, setUserList] = useState([]);
     const [memberCardList, setMemberCardList] = useState([]);
 
@@ -80,7 +82,10 @@ export const MemberCreate = () => {
 
     const submitMemberCreate = async () => {
         setLoading(true);
-        await memberService.store(payload, dispatch);
+        let updatePayload = { ...payload };
+        updatePayload.description = desc;
+
+        await memberService.store(updatePayload, dispatch);
         setLoading(false);
     }
 
@@ -209,6 +214,14 @@ export const MemberCreate = () => {
                                     />
 
                                     <ValidationMessage field={"expired_at"} />
+                                </div>
+                            </div>
+
+                            <div className=" col-12 py-3">
+                                <div className="flex flex-column gap-2">
+                                    <span className=" text-black">{translate.description} </span>
+                                    <AppEditor onChange={(e) => setDesc(e)} />
+                                    <ValidationMessage field={"description"} />
                                 </div>
                             </div>
 
