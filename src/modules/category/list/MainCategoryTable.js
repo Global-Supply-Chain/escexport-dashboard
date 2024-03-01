@@ -176,7 +176,6 @@ export const MainCategoryTable = () => {
           placeholder={"Search main category"}
           onSearch={(e) => onSearchChange(e)}
           label={translate.press_enter_key_to_search}
-          disabled={total.current > 0 ? false : true}
         />
 
         <div className="flex flex-column md:flex-row align-items-start md:align-items-end justify-content-center gap-3">
@@ -184,24 +183,20 @@ export const MainCategoryTable = () => {
             status={categoryStatus.current}
             onFilter={(e) => onFilter(e)}
             label={translate.filter_by}
-            disabled={total.current > 0 ? false : true}
           />
 
           <FilterByDate
             onFilter={(e) => onFilterByDate(e)}
             label={translate.filter_by_date}
-            disabled={total.current > 0 ? false : true}
           />
 
           <ExportExcel
             url={endpoints.exportCategory}
-            disabled={total.current > 0 ? false : true}
           />
 
           <ImportExcel
             url={endpoints.importCategory}
             callback={loadingData}
-            disabled={total.current > 0 ? false : true}
           />
         </div>
       </div>
@@ -245,13 +240,11 @@ export const MainCategoryTable = () => {
               dispatch(setStatusFilter("ALL"));
               dispatch(setDateFilter({ startDate: "", endDate: "" }));
             }}
-            disabled={total.current > 0 ? false : true}
           />
           <PaginatorRight
             show={showAuditColumn}
             onHandler={(e) => setShowAuditColumn(e)}
             label={translate.audit_columns}
-            disabled={total.current > 0 ? false : true}
           />
         </div>
       </div>
@@ -281,7 +274,7 @@ export const MainCategoryTable = () => {
         globalFilterFields={categoryPayload.columns}
         header={<HeaderRender />}
         footer={<FooterRender />}
-        onSort={total.current > 0 ? onSort : null}
+        onSort={onSort}
       >
         {showColumns.current.map((col, index) => {
           return (
@@ -326,10 +319,7 @@ export const MainCategoryTable = () => {
             );
           })}
       </DataTable>
-
-      {
-        total.current > 0 && (
-          <Paginator
+      <Paginator
             first={first.current}
             rows={mainPaginateParams.per_page}
             totalRecords={total.current}
@@ -340,8 +330,6 @@ export const MainCategoryTable = () => {
             currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
             onPageChange={onPageChange}
           />
-        )
-      }
     </Card>
   );
 };
