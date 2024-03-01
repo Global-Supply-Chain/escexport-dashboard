@@ -16,7 +16,6 @@ import { memberCardPayload } from '../memberCardPayload';
 import { discountService } from '../../discount/discountService';
 import { Dropdown } from 'primereact/dropdown';
 import { generalStatus } from '../../../helpers/StatusHandler';
-import { formBuilder } from '../../../helpers/formBuilder';
 import { AppEditor } from '../../../shares/AppEditor';
 
 export const MemberCardUpdate = () => {
@@ -39,9 +38,9 @@ export const MemberCardUpdate = () => {
     const loadingDiscountData = useCallback(async () => {
         setLoading(true);
 
-        const result = await discountService.index(dispatch);
+        const result = await discountService.index(dispatch, memberCardPayload.discountPaginateParams);
         if (result.status === 200) {
-            const formatData = result.data?.map((region) => {
+            const formatData = result.data?.data?.map((region) => {
                 return {
                     label: region?.label,
                     value: region?.id
@@ -82,15 +81,8 @@ export const MemberCardUpdate = () => {
         let updatePayload = { ...payload };
         updatePayload.expired_at = moment(updatePayload.expired_at).format("yy-MM-DD")
         updatePayload.description = desc;
-        // const formData = new FormData();
-        // formData.append("label", payload.label);
-        // formData.append("discount_id", payload.discount_id);
-        // formData.append("front_background", payload.front_background)
-        // formData.append("back_background", payload.back_background);
-        // formData.append("expired_at", payload.expired_at);
-        const formData = formBuilder(payload, memberCardPayload.update);
 
-        await memberCardService.update(dispatch, params.id, formData);
+        await memberCardService.update(dispatch, params.id, updatePayload);
         setLoading(false);
     }
 

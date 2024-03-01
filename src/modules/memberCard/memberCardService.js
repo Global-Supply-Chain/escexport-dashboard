@@ -1,5 +1,5 @@
 import { endpoints } from "../../constants/endpoints"
-import { getRequest, postRequest } from "../../helpers/api"
+import { getRequest, postRequest, putRequest } from "../../helpers/api"
 import { httpServiceHandler } from "../../helpers/handler";
 import { updateNotification } from "../../shares/shareSlice";
 import { index, show, update } from "./memberCardSlice";
@@ -31,7 +31,7 @@ export const memberCardService = {
     },
 
     update: async (dispatch, id, payload) => {
-        const response = await postRequest(`${endpoints.memberCard}/${id}`, payload);
+        const response = await putRequest(`${endpoints.memberCard}/${id}`, payload);
         await httpServiceHandler(dispatch, response);
 
         if(response.status === 200) {
