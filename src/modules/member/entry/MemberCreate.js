@@ -18,6 +18,7 @@ import { userService } from '../../user/userService';
 import { memberService } from '../memberService';
 import { memberCardService } from '../../memberCard/memberCardService';
 import { AppEditor } from '../../../shares/AppEditor';
+import { getRequest } from '../../../helpers/api';
 
 export const MemberCreate = () => {
 
@@ -37,9 +38,10 @@ export const MemberCreate = () => {
     const loadingUserData = useCallback(async () => {
         setLoading(true);
 
-        const result = await userService.index(dispatch);
+        const result = await userService.index(dispatch, memberPayload.userPaginateParams);
+        console.log(result);
         if (result.status === 200) {
-            const formatData = result.data?.map((region) => {
+            const formatData = result.data?.data?.map((region) => {
                 return {
                     label: region?.name,
                     value: region?.id
@@ -61,9 +63,9 @@ export const MemberCreate = () => {
     const loadingMemberCardData = useCallback(async () => {
         setLoading(true);
 
-        const result = await memberCardService.index(dispatch);
+        const result = await memberCardService.index(dispatch, memberPayload.memberCardPaginateParams);
         if (result.status === 200) {
-            const formatData = result.data?.map((region) => {
+            const formatData = result.data?.data?.map((region) => {
                 return {
                     label: region?.label,
                     value: region?.id
@@ -78,6 +80,25 @@ export const MemberCreate = () => {
     useEffect(() => {
         loadingMemberCardData()
     }, [loadingMemberCardData])
+
+    const loadingMemberNextIds = useCallback(async () => {
+        setLoading(true);
+
+        const result = await getRequest(paths.memberNextId);
+        if(result.status === 200){
+            setPayload({
+                ...payload,
+                member_id : result.data
+            })
+        }
+
+
+        setLoading(false);
+    }, [payload])
+
+    useEffect(() => {
+        loadingMemberNextIds()
+    }, [loadingMemberNextIds])
 
 
     const submitMemberCreate = async () => {
@@ -162,7 +183,8 @@ export const MemberCreate = () => {
                                         tooltipOptions={{ ...tooltipOptions }}
                                         placeholder='Enter member id'
                                         disabled={loading}
-                                        onChange={(e) => payloadHandler(payload, e.target.value, 'member_id', (updateValue) => {
+                                        value={payload.member_id ? payload.member_id : ''}
+                                        onChange={(e) => payloadHandler(payload,e.target.value, 'member_id', (updateValue) => {
                                             setPayload(updateValue);
                                         })}
                                     />

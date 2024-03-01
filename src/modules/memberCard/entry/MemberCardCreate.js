@@ -36,9 +36,9 @@ export const MemberCardCreate = () => {
     const loadingDiscountData = useCallback(async () => {
         setLoading(true);
 
-        const result = await discountService.index(dispatch);
+        const result = await discountService.index(dispatch, memberCardPayload.discountPaginateParams);
         if (result.status === 200) {
-            const formatData = result.data?.map((region) => {
+            const formatData = result.data?.data?.map((region) => {
                 return {
                     label: region?.label,
                     value: region?.id
@@ -63,9 +63,10 @@ export const MemberCardCreate = () => {
         const formData = formBuilder(updatePayload,memberCardPayload.create)
 
         const result = await memberCardService.store(formData, dispatch);
-        if(result.data) {
+        console.log(result);
+        if(result.status === 200) {
             setLoading(false);
-            navigate(`${paths.memberCardDetail}/${result.data.id}`);
+            navigate(`${paths.memberCard}/${result.data.id}`);
         }
     }
 

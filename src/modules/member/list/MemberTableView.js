@@ -186,7 +186,7 @@ export const MemberTableView = () => {
                                     case "id":
                                         return (
                                             <NavigateId
-                                                url={`${paths.memberDetail}/${value[col.field]}`}
+                                                url={`${paths.member}/${value[col.field]}`}
                                                 value={value[col.field]}
                                             />
                                         );
