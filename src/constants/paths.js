@@ -17,6 +17,7 @@ export const paths = {
     member: "/member",
     memberCreate: "/member/new",
     memberDetail: "/member/:id",
+    memberNextId: "/member/next",
 
     memberOrder: "/memberOrder",
     memberOrderDetail: "/memberOrder/:id",

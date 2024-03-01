@@ -166,7 +166,6 @@ export const UserTableView = () => {
                         outlined
                         icon="pi pi-refresh"
                         size="small"
-                        disabled={total.current > 0 ? false : true}
                         onClick={() => {
                             dispatch(setPaginate(userPayload.paginateParams));
                             dispatch(setStatusFilter("ALL"));
@@ -177,7 +176,6 @@ export const UserTableView = () => {
                         show={showAuditColumn}
                         onHandler={(e) => setShowAuditColumn(e)}
                         label={translate.audit_columns}
-                        disabled={total.current > 0 ? false : true}
                     />
                 </div>
             </div>
@@ -195,7 +193,6 @@ export const UserTableView = () => {
                     placeholder={"Search user account"}
                     onSearch={(e) => onSearchChange(e)}
                     label={translate.press_enter_key_to_search}
-                    disabled={total.current > 0 ? false : true}
                 />
 
                 <div className=' flex flex-column md:flex-row align-items-start md:align-items-end justify-content-center gap-3'>
@@ -203,18 +200,15 @@ export const UserTableView = () => {
                         status={userStatus.current}
                         onFilter={(e) => onFilter(e)}
                         label={translate.filter_by}
-                        disabled={total.current > 0 ? false : true}
                     />
 
-                    <FilterByDate 
-                        onFilter={(e) => onFilterByDate(e)} 
-                        label={translate.filter_by_date} 
-                        disabled={total.current > 0 ? false : true}
+                    <FilterByDate
+                        onFilter={(e) => onFilterByDate(e)}
+                        label={translate.filter_by_date}
                     />
 
-                    <ExportExcel 
+                    <ExportExcel
                         url={endpoints.exportUser}
-                        disabled={total.current > 0 ? false : true}
                     />
                 </div>
             </div>
@@ -230,10 +224,10 @@ export const UserTableView = () => {
                 dataKey="id"
                 size="normal"
                 value={users}
-                
+
                 sortField={paginateParams.order}
                 sortOrder={paginateParams.sort === 'DESC' ? 1 : paginateParams.sort === 'ASC' ? -1 : 0}
-                onSort={total.current > 0 ? onSort : null}
+                onSort={onSort}
                 sortMode={paginateOptions.sortMode}
                 loading={loading}
                 emptyMessage="No user accounts found."
@@ -295,19 +289,15 @@ export const UserTableView = () => {
                     )
                 })}
             </DataTable>
-            {
-                total.current > 0 && (
-                    <Paginator
-                        first={first.current}
-                        rows={paginateParams.per_page}
-                        totalRecords={total?.current}
-                        rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
-                        template={"FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"}
-                        currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
-                        onPageChange={onPageChange}
-                    />
-                )
-            }
+            <Paginator
+                first={first.current}
+                rows={paginateParams.per_page}
+                totalRecords={total?.current}
+                rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
+                template={"FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"}
+                currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
+                onPageChange={onPageChange}
+            />
         </Card>
     )
 }

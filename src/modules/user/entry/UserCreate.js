@@ -53,7 +53,7 @@ export const UserCreate = () => {
             <div className=" grid">
               <div className=" col-12 md:col-6 lg:col-4 py-3">
                 <div className="flex flex-column gap-2">
-                  <label htmlFor="name" className=" text-black"> {translate.name} (required) </label>
+                  <label htmlFor="name" className=" text-black"> {translate.name} <span>(required)</span> </label>
                   <InputText
                     className="p-inputtext-sm text-black"
                     id="name"
@@ -94,7 +94,7 @@ export const UserCreate = () => {
 
               <div className=" col-12 md:col-6 lg:col-4 py-3">
                 <div className="flex flex-column gap-2">
-                  <label htmlFor="phone" className=" text-black"> {translate.phone} (required) </label>
+                  <label htmlFor="phone" className=" text-black"> {translate.phone} <span>(required)</span> </label>
                   <InputText
                     className="p-inputtext-sm text-black"
                     keyfilter={"num"}
@@ -179,7 +179,7 @@ export const UserCreate = () => {
                   <Dropdown
                     inputId='gender'
                     name='gender'
-                    className="p-inputtext-sm text-black"
+                    className="p-inputtext-sm"
                     options={["MALE", "FEMALE"]}
                     placeholder={translate.gender}
                     tooltip={translate.gender}

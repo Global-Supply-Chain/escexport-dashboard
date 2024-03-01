@@ -27,5 +27,15 @@ export const memberCardPayload = {
         search: "",
         order: "id",
         sort: "DESC"
+    },
+    discountPaginateParams: {
+        page: 1,
+        per_page: paginateOptions.rows,
+        columns: "id,label,discount_percentage,discount_fix_amount,expend_limit,start_date,end_date",
+        search: "",
+        order: "id",
+        sort: "DESC",
+        filter: "status",
+        value: "ACTIVE"
     }
 }

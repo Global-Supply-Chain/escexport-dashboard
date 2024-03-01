@@ -143,7 +143,7 @@ export const MemberUpdate = () => {
                         <div className=' grid'>
 
                             <div className="col-12 md:col-4 lg:col-4 py-3">
-                                <label htmlFor="user" className='input-label'>{translate.user} (required*) </label>
+                                <label htmlFor="user" className='input-label text-black'>{translate.user} <span>(required*)</span> </label>
                                 <div className="p-inputgroup mt-2">
                                     <Dropdown
                                         inputId='user'
@@ -164,7 +164,7 @@ export const MemberUpdate = () => {
                             </div>
 
                             <div className="col-12 md:col-4 lg:col-4 py-3">
-                                <label htmlFor="member_card" className='input-label'>{translate.member_card} (required*) </label>
+                                <label htmlFor="member_card" className='input-label text-black'>{translate.member_card} <span>(required*)</span> </label>
                                 <div className="p-inputgroup mt-2">
                                     <Dropdown
                                         inputId='member_card'
@@ -186,7 +186,7 @@ export const MemberUpdate = () => {
 
                             <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="amount" className=' text-black'>{translate.amount} (required*)</label>
+                                    <label htmlFor="amount" className=' text-black'>{translate.amount} <span>(required*)</span></label>
                                     <InputText
                                         className="p-inputtext-sm text-black"
                                         id="amount"
@@ -239,7 +239,7 @@ export const MemberUpdate = () => {
                                     <Dropdown
                                         inputId='member_id'
                                         name='member_id'
-                                        className="p-inputtext-sm text-black"
+                                        className="p-inputtext-sm"
                                         options={memberList}
                                         placeholder="Select a member id"
                                         disabled={loading}
@@ -259,7 +259,7 @@ export const MemberUpdate = () => {
                                     <Dropdown
                                         inputId='status'
                                         name='status'
-                                        className="p-inputtext-sm text-black"
+                                        className="p-inputtext-sm"
                                         options={memberStatus}
                                         placeholder="Select a member status"
                                         disabled={loading}
