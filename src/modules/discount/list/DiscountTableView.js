@@ -120,13 +120,11 @@ export const DiscountTableView = () => {
                             dispatch(setPaginate(discountPayload.paginateParams));
                             dispatch(setDateFilter({ startDate: "", endDate: "" }));
                         }}
-                        disabled={total.current > 0 ? false : true}
                     />
                     <PaginatorRight
                         show={showAuditColumn}
                         onHandler={(e) => setShowAuditColumn(e)}
                         label={translate.audit_columns}
-                        disabled={total.current > 0 ? false : true}
                     />
                 </div>
             </div>
@@ -144,12 +142,10 @@ export const DiscountTableView = () => {
                     placeholder={"Search delivery address"}
                     onSearch={(e) => onSearchChange(e)}
                     label={translate.press_enter_key_to_search}
-                    disabled={total.current > 0 ? false : true}
                 />
                 <FilterByDate
                     onFilter={(e) => onFilterByDate(e)}
                     label={translate.filter_by}
-                    disabled={total.current > 0 ? false : true}
                 />
             </div>
         )
@@ -165,7 +161,7 @@ export const DiscountTableView = () => {
                 value={discounts}
                 sortField={paginateParams.order}
                 sortOrder={paginateParams.sort === 'DESC' ? 1 : paginateParams.sort === 'ASC' ? -1 : 0}
-                onSort={total.current > 0 ? onSort : null}
+                onSort={onSort}
                 loading={loading}
                 emptyMessage="No discount found."
                 globalFilterFields={discountPayload.columns}
@@ -230,19 +226,15 @@ export const DiscountTableView = () => {
                     )
                 })}
             </DataTable>
-            {
-                total.current > 0 && (
-                    <Paginator
-                        first={first.current}
-                        rows={paginateParams.per_page}
-                        totalRecords={total.current}
-                        rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
-                        template={"FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"}
-                        currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
-                        onPageChange={onPageChange}
-                    />
-                )
-            }
+            <Paginator
+                first={first.current}
+                rows={paginateParams.per_page}
+                totalRecords={total.current}
+                rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
+                template={"FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"}
+                currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
+                onPageChange={onPageChange}
+            />
         </Card>
     )
 }

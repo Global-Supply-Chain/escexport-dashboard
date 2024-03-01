@@ -166,13 +166,11 @@ export const ShopViewTable = () => {
                             dispatch(setStatusFilter("ALL"));
                             dispatch(setDateFilter({ startDate: "", endDate: "" }));
                         }}
-                        disabled={total.current > 0 ? false : true}
                     />
                     <PaginatorRight
                         show={showAuditColumn}
                         onHandler={(e) => setShowAuditColumn(e)}
                         label={translate.audit_columns}
-                        disabled={total.current > 0 ? false : true}
                     />
                 </div>
             </div>
@@ -190,7 +188,6 @@ export const ShopViewTable = () => {
                     placeholder={"Search shop"}
                     onSearch={(e) => onSearchChange(e)}
                     label={translate.press_enter_key_to_search}
-                    disabled={total.current > 0 ? false : true}
                 />
 
                 <div className="flex flex-column md:flex-row align-items-start md:align-items-end justify-content-center gap-3">
@@ -198,18 +195,15 @@ export const ShopViewTable = () => {
                         status={shopStatus.current}
                         onFilter={(e) => onFilter(e)}
                         label={translate.filter_by}
-                        disabled={total.current > 0 ? false : true}
                     />
 
                     <FilterByDate
                         onFilter={(e) => onFilterByDate(e)}
                         label={translate.filter_by_date}
-                        disabled={total.current > 0 ? false : true}
                     />
 
                     <ExportExcel
                         url={endpoints.exportShop}
-                        disabled={total.current > 0 ? false : true}
                     />
                 </div>
             </div>
@@ -226,7 +220,7 @@ export const ShopViewTable = () => {
                 value={shops}
                 sortField={paginateParams.order}
                 sortOrder={paginateParams.sort === 'DESC' ? 1 : paginateParams.sort === 'ASC' ? -1 : 0}
-                onSort={total.current > 0 ? onSort : null}
+                onSort={onSort}
                 loading={loading}
                 emptyMessage="No shop found."
                 globalFilterFields={shopPayload.columns}
@@ -277,19 +271,15 @@ export const ShopViewTable = () => {
                     )
                 })}
             </DataTable>
-            {
-                total.current > 0 && (
-                    <Paginator
-                        first={first.current}
-                        rows={paginateParams.per_page}
-                        totalRecords={total?.current}
-                        rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
-                        template={"FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"}
-                        currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
-                        onPageChange={onPageChange}
-                    />
-                )
-            }
+            <Paginator
+                first={first.current}
+                rows={paginateParams.per_page}
+                totalRecords={total?.current}
+                rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
+                template={"FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"}
+                currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
+                onPageChange={onPageChange}
+            />
         </Card>
     )
 }

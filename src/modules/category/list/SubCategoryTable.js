@@ -107,7 +107,6 @@ export const SubCategoryTable = () => {
           placeholder={"Search sub category"}
           onSearch={(e) => onSearchChange(e)}
           label={translate.press_enter_key_to_search}
-          disabled={total.current > 0 ? false : true}
         />
       </div>
     );
@@ -146,7 +145,6 @@ export const SubCategoryTable = () => {
             onClick={() => {
               dispatch(setSubPaginate(categoryPayload.subPaginateParams));
             }}
-            disabled={total.current > 0 ? false : true}
           />
 
           <div className=" flex align-items-center gap-3">
@@ -154,7 +152,6 @@ export const SubCategoryTable = () => {
               show={showAuditColumn}
               onHandler={(e) => setShowAuditColumn(e)}
               label={translate.audit_columns}
-              disabled={total.current > 0 ? false : true}
             />
           </div>
         </div>
@@ -188,7 +185,7 @@ export const SubCategoryTable = () => {
         globalFilterFields={categoryPayload.subCategoryColumns}
         header={<HeaderRender />}
         footer={<FooterRender />}
-        onSort={total.current > 0 ? onSort : null}
+        onSort={onSort}
       >
         {showColumns.current.map((col, index) => {
           return (
@@ -240,10 +237,7 @@ export const SubCategoryTable = () => {
             );
           })}
       </DataTable>
-
-      {
-        total.current > 0 && (
-          <Paginator
+      <Paginator
             first={first.current}
             rows={subPaginateParams.per_page}
             totalRecords={total.current}
@@ -254,8 +248,6 @@ export const SubCategoryTable = () => {
             currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
             onPageChange={onPageChange}
           />
-        )
-      }
     </Card>
   );
 };

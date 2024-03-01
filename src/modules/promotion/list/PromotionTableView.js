@@ -170,13 +170,11 @@ const PromotionTableView = () => {
                             dispatch(setStatusFilter("ALL"));
                             dispatch(setDateFilter({ startDate: "", endDate: "" }));
                         }}
-                        disabled={total.current > 0 ? false : true}
                     />
                     <PaginatorRight
                         show={showAuditColumn}
                         onHandler={(e) => setShowAuditColumn(e)}
                         label={translate.audit_columns}
-                        disabled={total.current > 0 ? false : true}
                     />
                 </div>
             </div>
@@ -194,20 +192,17 @@ const PromotionTableView = () => {
                     placeholder={"Search promotion"}
                     onSearch={(e) => onSearchChange(e)}
                     label={translate.press_enter_key_to_search}
-                    disabled={total.current > 0 ? false : true}
                 />
 
                 <FilterByStatus
                     status={promotionStatus.current}
                     onFilter={(e) => onFilter(e)}
                     label={translate.filter_by}
-                    disabled={total.current > 0 ? false : true}
                 />
 
                 <FilterByDate 
                     onFilter={(e) => onFilterByDate(e)} 
                     label={translate.filter_by_date} 
-                    disabled={total.current > 0 ? false : true}
                 />
             </div>
         )
@@ -225,7 +220,7 @@ const PromotionTableView = () => {
                 value={promotions}
                 sortField={paginateParams.order}
                 sortOrder={paginateParams.sort === 'DESC' ? 1 : paginateParams.sort === "ASC" ? -1 : 0}
-                onSort={total.current > 0 ? onSort : null}
+                onSort={onSort}
                 sortMode={paginateOptions.sortMode}
                 loading={loading}
                 emptyMessage="No promotion found."
@@ -273,9 +268,7 @@ const PromotionTableView = () => {
                     )
                 })}
             </DataTable>
-            {
-                total.current > 0 && (
-                    <Paginator
+            <Paginator
                     first={first.current}
                     rows={paginateParams.per_page}
                     totalRecords={total?.current}
@@ -284,8 +277,6 @@ const PromotionTableView = () => {
                     currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
                     onPageChange={onPageChange}
                 />
-                )
-            }
 
         </Card>
     )
