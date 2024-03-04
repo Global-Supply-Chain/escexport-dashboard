@@ -179,8 +179,8 @@ export const MemberTableView = () => {
         return (
             <div className="w-full flex flex-column md:flex-row justify-content-between md:justify-content-start align-items-start md:align-items-center gap-3">
                 <Search
-                    tooltipLabel={"search delivery address by id, address, contact_person,contact_phone,default address"}
-                    placeholder={"Search delivery address"}
+                    tooltipLabel={memberPayload.paginateParams.columns}
+                    placeholder={translate.search}
                     onSearch={(e) => onSearchChange(e)}
                     label={translate.press_enter_key_to_search}
                 />
@@ -211,7 +211,7 @@ export const MemberTableView = () => {
                 sortOrder={paginateParams.sort === 'DESC' ? 1 : paginateParams.sort === 'ASC' ? -1 : 0}
                 onSort={onSort}
                 loading={loading}
-                emptyMessage="No discount found."
+                emptyMessage="No Records."
                 globalFilterFields={memberPayload.columns}
                 sortMode={paginateOptions.sortMode}
                 header={<HeaderRender />}
@@ -221,17 +221,17 @@ export const MemberTableView = () => {
                     return (
                         <Column
                             key={`member_index_${index}`}
-                            style={{ minWidth: "250px" }}
+                            style={{ minWidth: `${col.width}px` }}
                             field={col.field}
                             header={col.header}
                             sortable
                             body={(value) => {
 
                                 switch (col.field) {
-                                    case "id":
+                                    case "user_name":
                                         return (
                                             <NavigateId
-                                                url={`${paths.member}/${value[col.field]}`}
+                                                url={`${paths.member}/${value['id']}`}
                                                 value={value[col.field]}
                                             />
                                         );
@@ -260,6 +260,7 @@ export const MemberTableView = () => {
                     )
                 })}
             </DataTable>
+
             <Paginator
                 first={first.current}
                 rows={paginateParams.per_page}

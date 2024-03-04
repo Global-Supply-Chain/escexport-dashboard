@@ -189,8 +189,8 @@ export const UserTableView = () => {
         return (
             <div className="w-full flex flex-column md:flex-row justify-content-between md:justify-content-start align-items-start md:align-items-center gap-3">
                 <Search
-                    tooltipLabel={"search user by name, profile, reward point, coupons, phone, email, status"}
-                    placeholder={"Search user account"}
+                    tooltipLabel={userPayload.paginateParams.columns}
+                    placeholder={translate.search}
                     onSearch={(e) => onSearchChange(e)}
                     label={translate.press_enter_key_to_search}
                 />
@@ -246,10 +246,10 @@ export const UserTableView = () => {
                             body={(value) => {
 
                                 switch (col.field) {
-                                    case "id":
+                                    case "name":
                                         return (
                                             <NavigateId
-                                                url={`${paths.user}/${value[col.field]}`}
+                                                url={`${paths.user}/${value['id']}`}
                                                 value={value[col.field]}
                                             />
                                         );

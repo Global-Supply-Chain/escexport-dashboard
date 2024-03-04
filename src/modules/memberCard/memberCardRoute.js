@@ -1,6 +1,7 @@
 import { paths } from "../../constants/paths"
 import { MemberCardCreate } from "./entry/MemberCardCreate"
 import MemberCardDetail from "./views/MemberCardDetail"
+import { MemberCardDiscountList } from "./views/MemberCardDiscountList"
 import { MemberCardList } from "./views/MemberCardList"
 
 
@@ -43,6 +44,20 @@ export const memberCardRoutes = [
                     { label: "Dashboard", url: paths.dashboard },
                     { label: "List", url: paths.memberCard },
                     { label: "Create", url: paths.memberCard }
+                ]
+            }
+        }
+    },
+    {
+        id: "memberCardDiscountList",
+        path: `${paths.memberCard}/:id/discount`,
+        element: <MemberCardDiscountList />,
+        loader: () => {
+            return {
+                breadcrumbs: [
+                    { label: "Dashboard", url: paths.dashboard },
+                    { label: "List", url: paths.memberCard },
+                    { label: "Create", url: paths.memberCard },
                 ]
             }
         }

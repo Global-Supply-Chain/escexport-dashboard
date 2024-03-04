@@ -50,7 +50,10 @@ export const statusOptions = [
     { status: "DELETED", color: "chip-info" },
     { status: "PENDING", color: "chip-warn" },
     { status: "BLOCK", color: "chip-danger" },
-    { status: "COMPLETE", color: "chip-success" }
+    { status: "COMPLETE", color: "chip-success" },
+    { status: "MEMBER_WALLET", color: "chip-success" },
+    { status: "CASH", color: "chip-info" },
+    { status: "ONLINE_PAYMENT", color: "chip-warn" }
 ];
 
 export const tooltipOptions = {
