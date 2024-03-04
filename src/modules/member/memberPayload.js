@@ -5,7 +5,7 @@ export const memberPayload = {
         user_id : "",
         membercard_id : "",
         member_id : "",
-        amount : "",
+        amount : 0,
         expired_at : "",
         description : ""
     },
@@ -13,7 +13,7 @@ export const memberPayload = {
         user_id : "",
         membercard_id : "",
         member_id : "",
-        amount : "",
+        amount : 0,
         expired_at : "",
         status : "",
         description : ''
@@ -29,7 +29,7 @@ export const memberPayload = {
     paginateParams: {
         page: 1,
         per_page: paginateOptions.rows,
-        columns: "id,label,discount_percentage,discount_fix_amount,expend_limit,is_expend_limit,is_fix_amount,start_date,end_date,status",
+        columns: "id,label,discount_percentage,discount_fix_amount,expend_limit",
         search: "",
         order: "id",
         sort: "DESC"
