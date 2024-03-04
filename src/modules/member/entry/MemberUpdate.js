@@ -79,15 +79,7 @@ export const MemberUpdate = () => {
 
     useEffect(() => {
         if (member) {
-            const formatData = {
-                user_id: member.user_id,
-                membercard_id: member.membercard_id,
-                member_id: member.member_id,
-                amount: member.amount,
-                expired_at: new Date(member.expired_at),
-                status: member.status
-            }
-            setPayload(formatData)
+            setPayload(member)
         }
     }, [member])
 
