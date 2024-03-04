@@ -179,8 +179,8 @@ export const MemberCardTableView = () => {
         return (
             <div className="w-full flex flex-column md:flex-row justify-content-between md:justify-content-start align-items-start md:align-items-center gap-3">
                 <Search
-                    tooltipLabel={"search delivery address by id, address, contact_person,contact_phone,default address"}
-                    placeholder={"Search delivery address"}
+                    tooltipLabel={memberCardPayload.paginateParams.columns}
+                    placeholder={translate.search}
                     onSearch={(e) => onSearchChange(e)}
                     label={translate.press_enter_key_to_search}
                 />
