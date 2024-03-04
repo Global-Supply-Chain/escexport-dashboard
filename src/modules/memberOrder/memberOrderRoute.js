@@ -12,7 +12,9 @@ export const memberOrderRoutes = [
             return{
                 breadcrumbs: [
                     { label: "Dashboard", url: paths.dashboard },
-                    { label: "List", url: paths.memberOrder },
+                    { label: "Member", url: paths.member },
+                    { label: "Discount", url: paths.discount },
+                    { label: "Member Card", url: paths.memberCard },
                 ],
                 role: ['ADMINISTRATOR']
             }
@@ -26,7 +28,10 @@ export const memberOrderRoutes = [
             return{
                 breadcrumbs: [
                     { label: "Dashboard", url: paths.dashboard },
-                    { label: "List", url: paths.memberOrder },
+                    { label: "Member", url: paths.member },
+                    { label: "Discount", url: paths.discount },
+                    { label: "Member Card", url: paths.memberCard },
+                    { label: "Order", url: paths.memberOrder }
                 ],
                 role: ['ADMINISTRATOR']
             }

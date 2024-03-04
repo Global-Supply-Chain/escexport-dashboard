@@ -16,9 +16,9 @@ export const memberCardPayload = {
     },
     columns: [
         { field: "label", header: "Label", sortable: true, show: true, width: 250 },
-        { field: "discount_name", header: "Discount Name", sortable: true, show: true, width:  250 },
         { field: "expired_at", header: "Expired At", sortable: true, show: true, width: 250 },
-        { field: "status", header: "Status", show: true, width: 100 }
+        { field: "status", header: "Status", show: true, width: 100 },
+        { field: "discount_id", header: "View Discount", sortable: true, show: true, width:  100 },
     ],
     paginateParams: {
         page: 1,

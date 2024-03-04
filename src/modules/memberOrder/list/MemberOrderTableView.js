@@ -40,8 +40,6 @@ export const MemberOrderTableView = () => {
     const columns = useRef(memberOrderPayload?.columns);
     const showColumns = useRef(columns?.current?.filter(col => col.show === true));
 
-
-
     /**
      * Event - Paginate Page Change
      * @param {*} event 
@@ -208,7 +206,6 @@ export const MemberOrderTableView = () => {
                         onFilter={(e) => onFilterByDate(e)}
                         label={translate.filter_by_date}
                     />
-
                 </div>
             </div>
         )
@@ -219,7 +216,6 @@ export const MemberOrderTableView = () => {
         <Card
             title={translate.member_order_list}
         >
-
             <DataTable
                 dataKey="id"
                 size="normal"
@@ -238,19 +234,25 @@ export const MemberOrderTableView = () => {
                     return (
                         <Column
                             key={`user_col_index_${index}`}
-                            style={{ minWidth: "250px" }}
+                            style={{ minWidth: `${col.width}px` }}
                             field={col.field}
                             header={col.header}
-                            sortable
+                            sortable={col.sortable}
                             body={(value) => {
                                 switch (col.field) {
-                                    case "id":
+                                    case "order_number":
                                         return (
                                             <NavigateId
-                                                url={`${paths.memberOrder}/${value[col.field]}`}
+                                                url={`${paths.memberOrder}/${value['id']}`}
                                                 value={value[col.field]}
                                             />
                                         );
+                                    case "amount":
+                                        return <span> {value[col.field].toLocaleString()} Ks </span>
+                                    case "pay_amount":
+                                        return <span> {value[col.field].toLocaleString()} Ks </span>
+                                    case "discount":
+                                        return <span> - {value[col.field].toLocaleString()} Ks </span>
                                     case "status":
                                         return <Status status={value[col.field]} />;
                                     default:
