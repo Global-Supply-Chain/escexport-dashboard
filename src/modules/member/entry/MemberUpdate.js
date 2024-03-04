@@ -123,7 +123,7 @@ export const MemberUpdate = () => {
                         <div className=' grid'>
 
                             <div className="col-12 md:col-4 lg:col-4 py-3">
-                                <label htmlFor="user" className='input-label text-black'>{translate.user} <span>(required*)</span> </label>
+                                <label htmlFor="user" className='input-label text-black'>{translate.user} </label>
                                 <div className="p-inputgroup mt-2">
                                     <Dropdown
                                         inputId='user'
@@ -144,7 +144,7 @@ export const MemberUpdate = () => {
                             </div>
 
                             <div className="col-12 md:col-4 lg:col-4 py-3">
-                                <label htmlFor="member_card" className='input-label text-black'>{translate.member_card} <span>(required*)</span> </label>
+                                <label htmlFor="member_card" className='input-label text-black'>{translate.member_card} </label>
                                 <div className="p-inputgroup mt-2">
                                     <Dropdown
                                         inputId='member_card'
@@ -166,7 +166,7 @@ export const MemberUpdate = () => {
 
                             <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
-                                    <label htmlFor="amount" className=' text-black'>{translate.amount} <span>(required*)</span></label>
+                                    <label htmlFor="amount" className=' text-black'>{translate.amount} </label>
                                     <InputText
                                         className="p-inputtext-sm text-black"
                                         id="amount"
@@ -176,7 +176,7 @@ export const MemberUpdate = () => {
                                         tooltip='Member id label'
                                         tooltipOptions={{ ...tooltipOptions }}
                                         placeholder='Enter amount'
-                                        value={payload.amount ? payload.amount : ''}
+                                        value={payload.amount}
                                         disabled={loading}
                                         onChange={(e) => payloadHandler(payload, e.target.value, 'amount', (updateValue) => {
                                             setPayload(updateValue);

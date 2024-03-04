@@ -167,5 +167,6 @@
     "dob": "生日",
     "occupation": "职业",
     "position": "位置",
-    "gender" : "性别"
+    "gender" : "性别",
+    "search" : "搜索"
 }

@@ -179,8 +179,8 @@ export const MemberTableView = () => {
         return (
             <div className="w-full flex flex-column md:flex-row justify-content-between md:justify-content-start align-items-start md:align-items-center gap-3">
                 <Search
-                    tooltipLabel={"search delivery address by id, address, contact_person,contact_phone,default address"}
-                    placeholder={"Search delivery address"}
+                    tooltipLabel={memberPayload.paginateParams.columns}
+                    placeholder={translate.search}
                     onSearch={(e) => onSearchChange(e)}
                     label={translate.press_enter_key_to_search}
                 />
@@ -228,15 +228,17 @@ export const MemberTableView = () => {
                             body={(value) => {
 
                                 switch (col.field) {
-                                    case "id":
+                                    case "user_name":
                                         return (
                                             <NavigateId
-                                                url={`${paths.member}/${value[col.field]}`}
+                                                url={`${paths.member}/${value['id']}`}
                                                 value={value[col.field]}
                                             />
                                         );
                                     case "expired_at":
                                         return <span>{moment(value[col.field]).format("yy-MM-DD")}</span>
+                                    case "amount":
+                                        return <span> {value[col.field].toLocaleString()} Ks </span>
                                     case "status":
                                         return <Status status={value[col.field]} />;
                                     default:
