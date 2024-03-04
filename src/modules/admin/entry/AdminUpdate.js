@@ -166,9 +166,9 @@ export const AdminUpdate = () => {
 
                     <div className="col-12 md:col-4 lg:col-4 py-3">
                         <div className="flex flex-column gap-2">
-                            <label htmlFor="status" className='input-label'>{translate.status}</label>
+                            <label htmlFor="status" className='input-label text-black'>{translate.status}</label>
                             <Dropdown
-                                className="p-inputtext-sm text-black"
+                                className="p-inputtext-sm"
                                 inputId="status"
                                 name="status"
                                 autoComplete="admin status"
