@@ -63,20 +63,23 @@ export const DiscountUpdate = () => {
     }, [loadingData])
 
     useEffect(() => {
+
         if (discount) {
-            const formatDate = {
-                label: discount.label,
-                discount_percentage: discount.discount_percentage,
-                discount_fix_amount: discount.discount_fix_amount,
-                expend_limit: discount.expend_limit,
-                is_expend_limit: discount.is_expend_limit,
-                is_fix_amount: discount.is_fix_amount,
-                start_date: new Date(discount.start_date),
-                end_date: new Date(discount.end_date),
-                status: discount.status
-            }
-            setPayload(formatDate);
+            const formatData = {};
+        
+            Object.keys(discount).forEach(dis => {
+                if (Object.keys(discountPayload.update).includes(dis)) {
+                    if (dis === 'start_date' || dis === 'end_date') {
+                        formatData[dis] = new Date(discount[dis]);
+                    } else {
+                        formatData[dis] = discount[dis];
+                    }
+                }
+            });
+        
+            setPayload(formatData)
         }
+    
     }, [discount])
 
 
