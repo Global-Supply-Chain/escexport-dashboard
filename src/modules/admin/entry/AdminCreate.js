@@ -92,7 +92,7 @@ export const AdminCreate = () => {
                         </div>
 
                         <div className="col-12 md:col-4 lg:col-4 py-3">
-                            <label htmlFor="name" className='input-label'>{translate.name} (required)</label>
+                            <label htmlFor="name" className='input-label text-black'>{translate.name} <span>(required*)</span></label>
                             <div className="p-inputgroup mt-2">
                                 <InputText 
                                     id="name"
@@ -114,7 +114,7 @@ export const AdminCreate = () => {
                         </div>
 
                         <div className="col-12 md:col-4 lg:col-4 py-3">
-                            <label htmlFor="email" className='input-label'>{translate.email} (required) </label>
+                            <label htmlFor="email" className='input-label text-black'>{translate.email} <span>(required*)</span> </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText 
                                     id="email"
@@ -137,7 +137,7 @@ export const AdminCreate = () => {
                         </div>
 
                         <div className="col-12 md:col-4 lg:col-4 py-3">
-                            <label htmlFor="phone" className='input-label'>{translate.phone} (required) </label>
+                            <label htmlFor="phone" className='input-label text-black'>{translate.phone} <span>(required*)</span> </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText 
                                     id="phone"
@@ -159,7 +159,7 @@ export const AdminCreate = () => {
                         </div>
 
                         <div className="col-12 md:col-4 lg:col-4 py-3">
-                            <label htmlFor="role" className='input-label'>{translate.role} (required*) </label>
+                            <label htmlFor="role" className='input-label text-black'>{translate.role} <span>(required*)</span> </label>
                             <div className="p-inputgroup mt-2">
                                 <Dropdown
                                     inputId="role"
@@ -179,7 +179,7 @@ export const AdminCreate = () => {
                         </div>
 
                         <div className="col-12 md:col-4 lg:col-4 py-3">
-                            <label htmlFor="password" className='input-label'>{translate.password} (required) </label>
+                            <label htmlFor="password" className='input-label text-black'>{translate.password} <span>(required*)</span> </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText 
                                     id="password"
@@ -200,7 +200,7 @@ export const AdminCreate = () => {
                         </div>
 
                         <div className="col-12 md:col-4 lg:col-4 py-3">
-                            <label htmlFor="confirm-password" className='input-label'>{translate.con_password} (required) </label>
+                            <label htmlFor="confirm-password" className='input-label text-black'>{translate.con_password} <span>(required*)</span> </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText 
                                     id="confirm-password"
