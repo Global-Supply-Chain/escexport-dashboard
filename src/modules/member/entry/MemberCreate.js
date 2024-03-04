@@ -91,9 +91,6 @@ export const MemberCreate = () => {
                 member_id : result.data
             })
         }
-        console.log(result);
-
-
         setLoading(false);
     }, [])
 
@@ -107,7 +104,10 @@ export const MemberCreate = () => {
         let updatePayload = { ...payload };
         updatePayload.description = desc;
 
-        await memberService.store(updatePayload, dispatch);
+        const result = await memberService.store(updatePayload, dispatch);
+        if(result.data) {
+            navigate(`${paths.member}/${result.data.id}`)
+        }
         setLoading(false);
     }
 
@@ -208,6 +208,7 @@ export const MemberCreate = () => {
                                         tooltipOptions={{ ...tooltipOptions }}
                                         placeholder='Enter amount'
                                         disabled={loading}
+                                        value={payload.amount}
                                         onChange={(e) => payloadHandler(payload, e.target.value, 'amount', (updateValue) => {
                                             setPayload(updateValue);
                                         })}
