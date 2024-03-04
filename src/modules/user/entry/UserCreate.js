@@ -53,7 +53,7 @@ export const UserCreate = () => {
             <div className=" grid">
               <div className=" col-12 md:col-6 lg:col-4 py-3">
                 <div className="flex flex-column gap-2">
-                  <label htmlFor="name" className=" text-black"> {translate.name} <span>(required)</span> </label>
+                  <label htmlFor="name" className=" text-black"> {translate.name} <span>(required*)</span> </label>
                   <InputText
                     className="p-inputtext-sm text-black"
                     id="name"
@@ -73,7 +73,7 @@ export const UserCreate = () => {
 
               <div className=" col-12 md:col-6 lg:col-4 py-3">
                 <div className="flex flex-column gap-2">
-                  <label htmlFor="email" className=" text-black"> {translate.email} </label>
+                  <label htmlFor="email" className=" text-black"> {translate.email} <span> (required*) </span></label>
                   <InputText
                     className="p-inputtext-sm text-black"
                     keyfilter={"email"}
@@ -94,7 +94,7 @@ export const UserCreate = () => {
 
               <div className=" col-12 md:col-6 lg:col-4 py-3">
                 <div className="flex flex-column gap-2">
-                  <label htmlFor="phone" className=" text-black"> {translate.phone} <span>(required)</span> </label>
+                  <label htmlFor="phone" className=" text-black"> {translate.phone} <span>(required*)</span> </label>
                   <InputText
                     className="p-inputtext-sm text-black"
                     keyfilter={"num"}

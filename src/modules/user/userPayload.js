@@ -25,7 +25,6 @@ export const userPayload = {
         address: ""
     },
     columns: [
-        { field: "id", header: "ID", sortable: true, show: true, with: "250px" },
         { field: "name", header: "Full Name", sortable: true, show: true, with: "250px" },
         { field: "gender", header: "Gender", sortable: true, show: true, with: "50px" },
         { field: "email", header: "Email", sortable: true, show: true, with: "250px" },
@@ -42,28 +41,9 @@ export const userPayload = {
     paginateParams: {
         page: 1,
         per_page: paginateOptions.rows,
-        columns: "id,name,email,phone,gender,occupation,position,dob,address",
+        columns: "id,name,email,phone,occupation,position,dob,address",
         search: "",
         order: "id",
         sort: "DESC"
     },
-    filter: [
-        { 
-            type: "status",
-            value: []
-        },
-        {
-            type: "verified",
-            value: [
-                {
-                    label: "Email Verified",
-                    value: "email_verified"
-                },
-                {
-                    label: "Phone Verified",
-                    value: "phone_verified",
-                }
-            ]
-        }
-    ]
 }

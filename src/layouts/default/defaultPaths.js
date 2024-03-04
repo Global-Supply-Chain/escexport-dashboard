@@ -27,25 +27,6 @@ export const items = [
             },
         ]
     },
-    {
-        key: '2',
-        label: 'menu_administrator',
-        icon: 'pi pi-fw pi-users',
-        children: [
-            {
-                key: '2-1',
-                label: 'menu_list',
-                icon: 'pi pi-fw pi-list',
-                url: paths.admin
-            },
-            {
-                key: '2-2',
-                label: 'menu_create',
-                icon: 'pi pi-fw pi-plus',
-                url: paths.adminCreate
-            }
-        ]
-    },
     // {
     //     key: '3',
     //     label: 'menu_promotion',
@@ -88,25 +69,31 @@ export const items = [
                 icon: 'pi pi-fw pi-money-bill',
                 url: paths.discount
             },
+            {
+                key: '3-4',
+                label: 'menu_member_order',
+                icon: 'pi pi-fw pi-shopping-bag',
+                url: paths.memberOrder
+            },
         ]
     },
     {
-        key: '18',
-        label: 'menu_member_order',
-        icon: 'pi pi-fw pi-shopping-bag',
+        key: '2',
+        label: 'menu_administrator',
+        icon: 'pi pi-fw pi-users',
         children: [
             {
-                key: '18-1',
+                key: '2-1',
                 label: 'menu_list',
                 icon: 'pi pi-fw pi-list',
-                url: paths.memberOrder
+                url: paths.admin
             },
-            // {
-            //     key: '17-2',
-            //     label: 'menu_create',
-            //     icon: 'pi pi-fw pi-plus',
-            //     url: paths.memberCreate
-            // }
+            {
+                key: '2-2',
+                label: 'menu_create',
+                icon: 'pi pi-fw pi-plus',
+                url: paths.adminCreate
+            }
         ]
     },
     // {

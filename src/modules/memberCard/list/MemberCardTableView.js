@@ -21,6 +21,7 @@ import { memberCardService } from "../memberCardService";
 import { endpoints } from "../../../constants/endpoints";
 import { getRequest } from "../../../helpers/api";
 import { FilterByStatus } from "../../../shares/FilterByStatus";
+import { useNavigate } from "react-router-dom";
 
 export const MemberCardTableView = () => {
 
@@ -35,7 +36,7 @@ export const MemberCardTableView = () => {
     const first = useRef(0);
     const total = useRef(0);
     const generalStatus = useRef(['ALL']);
-
+    const navigate = useNavigate();
     /**
      * Event - Paginate Page Change
      * @param {*} event 
@@ -239,6 +240,8 @@ export const MemberCardTableView = () => {
                                         return <span> {dateFormat(value[col.field], "DEFAULT")} </span>
                                     case "status":
                                         return <Status status={value[col.field]} />;
+                                    case "discount_id":
+                                        return <Button onClick={() => navigate(`${paths.memberCard}/${value[col.field]}/discount`)}> View Discount </Button>
                                     default:
                                         return value[col.field];
                                 }

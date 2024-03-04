@@ -211,7 +211,7 @@ export const MemberTableView = () => {
                 sortOrder={paginateParams.sort === 'DESC' ? 1 : paginateParams.sort === 'ASC' ? -1 : 0}
                 onSort={onSort}
                 loading={loading}
-                emptyMessage="No discount found."
+                emptyMessage="No Records."
                 globalFilterFields={memberPayload.columns}
                 sortMode={paginateOptions.sortMode}
                 header={<HeaderRender />}
@@ -221,7 +221,7 @@ export const MemberTableView = () => {
                     return (
                         <Column
                             key={`member_index_${index}`}
-                            style={{ minWidth: "250px" }}
+                            style={{ minWidth: `${col.width}px` }}
                             field={col.field}
                             header={col.header}
                             sortable
@@ -262,6 +262,7 @@ export const MemberTableView = () => {
                     )
                 })}
             </DataTable>
+
             <Paginator
                 first={first.current}
                 rows={paginateParams.per_page}

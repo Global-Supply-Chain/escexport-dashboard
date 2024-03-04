@@ -19,12 +19,12 @@ export const memberPayload = {
         description : ''
     },
     columns: [
-        { field: "user_name", header: "User", sortable: true, show: true },
-        { field: "membercard_name", header: "Member Card", sortable: true, show: true },
-        { field: "member_id", header: "Member ID", sortable: true, show: true },
-        { field: "amount", header: "Amount", sortable: true, show: true },
-        { field: "expired_at", header: "Expired At", sortable: true, show: true },
-        { field: "status", header: "Status", show: true }
+        { field: "user_name", header: "User", sortable: true, show: true, width: 250 },
+        { field: "membercard_name", header: "Member Card", sortable: true, show: true, width: 250  },
+        { field: "member_id", header: "Member ID", sortable: true, show: true, width: 250 },
+        { field: "amount", header: "Amount", sortable: true, show: true, width: 250 },
+        { field: "expired_at", header: "Expired At", sortable: true, show: true, width: 250 },
+        { field: "status", header: "Status", show: true, width: 100 }
     ],
     paginateParams: {
         page: 1,
