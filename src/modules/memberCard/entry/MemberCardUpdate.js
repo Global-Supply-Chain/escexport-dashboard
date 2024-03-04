@@ -151,12 +151,12 @@ export const MemberCardUpdate = () => {
                                         className="p-inputtext-sm sm:w-full mt-3 md:mt-0"
                                         placeholder={translate.expired_at}
                                         selectionMode={"single"}
-                                        value={new Date(payload.expired_at)}
+                                        value={payload.expired_at ? new Date(payload.expired_at) : ""}
                                         onChange={(e) =>
                                             payloadHandler(
                                                 payload,
                                                 moment(e.target.value).format("yy-MM-DD"),
-                                                "start_date",
+                                                "expired_at",
                                                 (updateValue) => {
                                                     setPayload(updateValue);
                                                 }
