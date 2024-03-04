@@ -39,7 +39,7 @@ export const MemberCreate = () => {
         setLoading(true);
 
         const result = await userService.index(dispatch, memberPayload.userPaginateParams);
-        console.log(result);
+
         if (result.status === 200) {
             const formatData = result.data?.data?.map((region) => {
                 return {
@@ -91,10 +91,11 @@ export const MemberCreate = () => {
                 member_id : result.data
             })
         }
+        console.log(result);
 
 
         setLoading(false);
-    }, [payload])
+    }, [])
 
     useEffect(() => {
         loadingMemberNextIds()
@@ -109,6 +110,8 @@ export const MemberCreate = () => {
         await memberService.store(updatePayload, dispatch);
         setLoading(false);
     }
+
+    // console.log(payload);
 
     return (
         <>
