@@ -305,7 +305,7 @@ export const DiscountUpdate = () => {
                                     <Dropdown
                                         inputId='status'
                                         name='status'
-                                        className="p-inputtext-sm text-black"
+                                        className="p-inputtext-sm"
                                         options={memberStatus}
                                         placeholder="Select a member status"
                                         disabled={loading}
