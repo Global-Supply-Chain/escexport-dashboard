@@ -142,7 +142,7 @@ export const MemberUpdate = () => {
                                         autoComplete='user name'
                                         name='user'
                                         filter
-                                        value={payload.user_id}
+                                        value={payload.user_id ? payload.user_id : ''}
                                         onChange={(e) => payloadHandler(payload, e.value, 'user_id', (updateValue) => {
                                             setPayload(updateValue);
                                         })}
@@ -163,7 +163,7 @@ export const MemberUpdate = () => {
                                         autoComplete='member card'
                                         name='member card'
                                         filter
-                                        value={payload.membercard_id}
+                                        value={payload.membercard_id ? payload.membercard_id : ''}
                                         onChange={(e) => payloadHandler(payload, e.value, 'membercard_id', (updateValue) => {
                                             setPayload(updateValue);
                                         })}
@@ -188,7 +188,7 @@ export const MemberUpdate = () => {
                                         tooltip='Member id label'
                                         tooltipOptions={{ ...tooltipOptions }}
                                         placeholder='Enter amount'
-                                        value={payload.amount}
+                                        value={payload.amount ? payload.amount : ''}
                                         disabled={loading}
                                         onChange={(e) => payloadHandler(payload, e.target.value, 'amount', (updateValue) => {
                                             setPayload(updateValue);
@@ -208,7 +208,7 @@ export const MemberUpdate = () => {
                                         className="p-inputtext-sm sm:w-full mt-3 md:mt-0"
                                         placeholder="Select expired at"
                                         selectionMode={"single"}
-                                        value={payload.expired_at}
+                                        value={payload.expired_at ? new Date(payload.expired_at) : ''}
                                         onChange={(e) =>
                                             payloadHandler(
                                                 payload,
@@ -235,7 +235,7 @@ export const MemberUpdate = () => {
                                         options={memberList}
                                         placeholder="Select a member id"
                                         disabled={loading}
-                                        value={payload.member_id}
+                                        value={payload.member_id ? payload.member_id : ''}
                                         onChange={(e) => payloadHandler(payload, e.value, 'member_id', (updateValue) => {
                                             setPayload(updateValue);
                                         })}
@@ -255,7 +255,7 @@ export const MemberUpdate = () => {
                                         options={memberStatus}
                                         placeholder="Select a member status"
                                         disabled={loading}
-                                        value={payload.status}
+                                        value={payload.status ? payload.status : ''}
                                         onChange={(e) => payloadHandler(payload, e.value, 'status', (updateValue) => {
                                             setPayload(updateValue);
                                         })}
@@ -268,7 +268,7 @@ export const MemberUpdate = () => {
                             <div className=" col-12 py-3">
                                 <div className="flex flex-column gap-2">
                                     <span className=" text-black">{translate.description} </span>
-                                    <AppEditor value={payload.description} onChange={(e) => setDesc(e)} />
+                                    <AppEditor value={payload.description ? payload.description : ''} onChange={(e) => setDesc(e)} />
                                     <ValidationMessage field={"description"} />
                                 </div>
                             </div>
