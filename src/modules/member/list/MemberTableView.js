@@ -10,7 +10,7 @@ import { Paginator } from "primereact/paginator";
 import { Status } from "../../../shares/Status";
 import { paths } from "../../../constants/paths";
 import { datetime } from "../../../helpers/datetime";
-import { setDateFilter } from "../../../shares/shareSlice";
+import { setDateFilter, setStatusFilter } from "../../../shares/shareSlice";
 import moment from "moment";
 import { FilterByDate } from "../../../shares/FilterByDate";
 import { Card } from "primereact/card";
@@ -18,6 +18,9 @@ import { NavigateId } from "../../../shares/NavigateId";
 import { memberPayload } from "../memberPayload";
 import { setPaginate } from "../memberSlice";
 import { memberService } from "../memberService";
+import { getRequest } from "../../../helpers/api";
+import { endpoints } from "../../../constants/endpoints";
+import { FilterByStatus } from "../../../shares/FilterByStatus";
 
 export const MemberTableView = () => {
 
@@ -31,6 +34,7 @@ export const MemberTableView = () => {
     const showColumns = useRef(columns.current.filter(col => col.show === true));
     const first = useRef(0);
     const total = useRef(0);
+    const memberStatus = useRef(['All']);
 
     /**
      * Event - Paginate Page Change
@@ -45,6 +49,25 @@ export const MemberTableView = () => {
                 per_page: event?.rows,
             })
         );
+    };
+
+    /**
+* On Change Filter
+* @param {*} e
+*/
+    const onFilter = (e) => {
+        let updatePaginateParams = { ...paginateParams };
+
+        if (e === "ALL") {
+            updatePaginateParams.filter = "";
+            updatePaginateParams.value = "";
+        } else {
+            updatePaginateParams.filter = "status";
+            updatePaginateParams.value = e;
+        }
+
+        dispatch(setPaginate(updatePaginateParams));
+        dispatch(setStatusFilter(e));
     };
 
     /**
@@ -102,6 +125,25 @@ export const MemberTableView = () => {
         setLoading(false);
     }, [dispatch, paginateParams]);
 
+    /**
+    * loading User Status
+    */
+    const loadingStatus = useCallback(async () => {
+        const status = await getRequest(
+            `${endpoints.status}?type=member`
+        );
+
+        if (status.status === 200) {
+            memberStatus.current = memberStatus.current.concat(
+                status.data.member
+            );
+        }
+    }, []);
+
+    useEffect(() => {
+        loadingStatus();
+    }, [loadingStatus]);
+
     useEffect(() => {
         loadingData();
     }, [loadingData]);
@@ -142,6 +184,13 @@ export const MemberTableView = () => {
                     onSearch={(e) => onSearchChange(e)}
                     label={translate.press_enter_key_to_search}
                 />
+
+                <FilterByStatus
+                    status={memberStatus.current}
+                    onFilter={(e) => onFilter(e)}
+                    label={translate.filter_by}
+                />
+
                 <FilterByDate
                     onFilter={(e) => onFilterByDate(e)}
                     label={translate.filter_by}

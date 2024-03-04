@@ -10,7 +10,7 @@ import { Paginator } from "primereact/paginator";
 import { Status } from "../../../shares/Status";
 import { paths } from "../../../constants/paths";
 import { datetime } from "../../../helpers/datetime";
-import { setDateFilter } from "../../../shares/shareSlice";
+import { setDateFilter, setStatusFilter } from "../../../shares/shareSlice";
 import moment from "moment";
 import { FilterByDate } from "../../../shares/FilterByDate";
 import { Card } from "primereact/card";
@@ -19,6 +19,9 @@ import { discountService } from "../discountService";
 import { discountPayload } from "../discountPayload";
 import { setPaginate } from "../discountSlice";
 import { Checkbox } from "primereact/checkbox";
+import { FilterByStatus } from "../../../shares/FilterByStatus";
+import { endpoints } from "../../../constants/endpoints";
+import { getRequest } from "../../../helpers/api";
 
 export const DiscountTableView = () => {
 
@@ -32,6 +35,7 @@ export const DiscountTableView = () => {
     const showColumns = useRef(columns.current.filter(col => col.show === true));
     const first = useRef(0);
     const total = useRef(0);
+    const discountStatus = useRef(['ALL']);
 
     /**
      * Event - Paginate Page Change
@@ -92,6 +96,25 @@ export const DiscountTableView = () => {
     };
 
     /**
+    * On Change Filter
+    * @param {*} e
+    */
+    const onFilter = (e) => {
+        let updatePaginateParams = { ...paginateParams };
+
+        if (e === "ALL") {
+            updatePaginateParams.filter = "";
+            updatePaginateParams.value = "";
+        } else {
+            updatePaginateParams.filter = "status";
+            updatePaginateParams.value = e;
+        }
+
+        dispatch(setPaginate(updatePaginateParams));
+        dispatch(setStatusFilter(e));
+    };
+
+    /**
      * Loading Data
      */
     const loadingData = useCallback(async () => {
@@ -106,6 +129,25 @@ export const DiscountTableView = () => {
     useEffect(() => {
         loadingData();
     }, [loadingData]);
+
+    /**
+* loading User Status
+*/
+    const loadingStatus = useCallback(async () => {
+        const status = await getRequest(
+            `${endpoints.status}?type=member_discount`
+        );
+
+        if (status.status === 200) {
+            discountStatus.current = discountStatus.current.concat(
+                status.data.member_discount
+            );
+        }
+    }, []);
+
+    useEffect(() => {
+        loadingStatus();
+    }, [loadingStatus]);
 
     const FooterRender = () => {
         return (
@@ -143,6 +185,13 @@ export const DiscountTableView = () => {
                     onSearch={(e) => onSearchChange(e)}
                     label={translate.press_enter_key_to_search}
                 />
+
+                <FilterByStatus
+                    status={discountStatus.current}
+                    onFilter={(e) => onFilter(e)}
+                    label={translate.filter_by}
+                />
+
                 <FilterByDate
                     onFilter={(e) => onFilterByDate(e)}
                     label={translate.filter_by}
