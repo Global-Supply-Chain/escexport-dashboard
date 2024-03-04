@@ -26,7 +26,6 @@ export const MemberUpdate = () => {
     const [payload, setPayload] = useState(memberPayload.create);
     const [userList, setUserList] = useState([]);
     const [memberCardList, setMemberCardList] = useState([]);
-    const [memberList, setMemberList] = useState([]);
     const [memberStatus, setMemberStatus] = useState([]);
     const [desc, setDesc] = useState();
 
@@ -46,17 +45,6 @@ export const MemberUpdate = () => {
         if (response.status === 200) {
             setMemberStatus(response.data.member);
         };
-
-        const memberLists = await memberService.index(dispatch);
-        if (memberLists.status === 200) {
-            const formatData = memberLists.data?.map((member) => {
-                return {
-                    label: member?.member_id,
-                    value: member?.id
-                }
-            })
-            setMemberList(formatData);
-        }
 
         const result = await userService.index(dispatch);
         if (result.status === 200) {
@@ -228,12 +216,13 @@ export const MemberUpdate = () => {
                             <div className=' col-12 md:col-6 lg:col-4 py-3'>
                                 <div className="flex flex-column gap-2">
                                     <label htmlFor="member_id" className=' text-black'>{translate.member_id}</label>
-                                    <Dropdown
+                                    <InputText
                                         inputId='member_id'
                                         name='member_id'
                                         className="p-inputtext-sm"
-                                        options={memberList}
                                         placeholder="Select a member id"
+                                        tooltip='Member id'
+                                        tooltipOptions={{ ...tooltipOptions }}
                                         disabled={loading}
                                         value={payload.member_id ? payload.member_id : ''}
                                         onChange={(e) => payloadHandler(payload, e.value, 'member_id', (updateValue) => {
