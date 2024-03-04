@@ -238,7 +238,7 @@ export const MemberTableView = () => {
                                     case "expired_at":
                                         return <span>{moment(value[col.field]).format("yy-MM-DD")}</span>
                                     case "amount":
-                                        return <span> {value[col.field].toLocaleString()} Ks </span>
+                                        return <span> {value[col.field]?.toLocaleString()} Ks </span>
                                     case "status":
                                         return <Status status={value[col.field]} />;
                                     default:
