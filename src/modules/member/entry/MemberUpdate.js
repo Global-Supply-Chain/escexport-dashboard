@@ -208,7 +208,7 @@ export const MemberUpdate = () => {
                                         className="p-inputtext-sm sm:w-full mt-3 md:mt-0"
                                         placeholder="Select expired at"
                                         selectionMode={"single"}
-                                        value={payload.expired_at ? payload.expired_at : ''}
+                                        value={payload.expired_at ? new Date(payload.expired_at) : ''}
                                         onChange={(e) =>
                                             payloadHandler(
                                                 payload,
