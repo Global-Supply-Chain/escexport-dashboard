@@ -10,7 +10,7 @@ import { Paginator } from "primereact/paginator";
 import { Status } from "../../../shares/Status";
 import { paths } from "../../../constants/paths";
 import { dateFormat, datetime } from "../../../helpers/datetime";
-import { setDateFilter } from "../../../shares/shareSlice";
+import { setDateFilter, setStatusFilter } from "../../../shares/shareSlice";
 import moment from "moment";
 import { FilterByDate } from "../../../shares/FilterByDate";
 import { Card } from "primereact/card";
@@ -18,6 +18,9 @@ import { NavigateId } from "../../../shares/NavigateId";
 import { memberCardPayload } from "../memberCardPayload";
 import { setPaginate } from "../memberCardSlice";
 import { memberCardService } from "../memberCardService";
+import { endpoints } from "../../../constants/endpoints";
+import { getRequest } from "../../../helpers/api";
+import { FilterByStatus } from "../../../shares/FilterByStatus";
 
 export const MemberCardTableView = () => {
 
@@ -31,6 +34,7 @@ export const MemberCardTableView = () => {
     const showColumns = useRef(columns.current.filter(col => col.show === true));
     const first = useRef(0);
     const total = useRef(0);
+    const generalStatus = useRef(['ALL']);
 
     /**
      * Event - Paginate Page Change
@@ -91,6 +95,25 @@ export const MemberCardTableView = () => {
     };
 
     /**
+    * On Change Filter
+    * @param {*} e
+    */
+    const onFilter = (e) => {
+        let updatePaginateParams = { ...paginateParams };
+
+        if (e === "ALL") {
+            updatePaginateParams.filter = "";
+            updatePaginateParams.value = "";
+        } else {
+            updatePaginateParams.filter = "status";
+            updatePaginateParams.value = e;
+        }
+
+        dispatch(setPaginate(updatePaginateParams));
+        dispatch(setStatusFilter(e));
+    };
+
+    /**
      * Loading Data
      */
     const loadingData = useCallback(async () => {
@@ -105,6 +128,25 @@ export const MemberCardTableView = () => {
     useEffect(() => {
         loadingData();
     }, [loadingData]);
+
+    /**
+ * loading General Status
+*/
+    const loadingStatus = useCallback(async () => {
+        const generalStatusResponse = await getRequest(
+            `${endpoints.status}?type=general`
+        );
+
+        if (generalStatusResponse.status === 200) {
+            generalStatus.current = generalStatus.current.concat(
+                generalStatusResponse.data.general
+            );
+        }
+    }, []);
+
+    useEffect(() => {
+        loadingStatus();
+    }, [loadingStatus]);
 
     const FooterRender = () => {
         return (
@@ -142,6 +184,13 @@ export const MemberCardTableView = () => {
                     onSearch={(e) => onSearchChange(e)}
                     label={translate.press_enter_key_to_search}
                 />
+
+                <FilterByStatus
+                    status={generalStatus.current}
+                    onFilter={(e) => onFilter(e)}
+                    label={translate.filter_by}
+                />
+
                 <FilterByDate
                     onFilter={(e) => onFilterByDate(e)}
                     label={translate.filter_by}
