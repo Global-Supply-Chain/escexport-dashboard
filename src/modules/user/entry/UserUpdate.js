@@ -225,7 +225,7 @@ export const UserUpdate = () => {
             <Dropdown
               inputId='gender'
               name='gender'
-              className="p-inputtext-sm text-black"
+              className="p-inputtext-sm"
               options={["MALE", "FEMALE"]}
               placeholder={translate.gender}
               tooltip={translate.gender}
@@ -246,7 +246,7 @@ export const UserUpdate = () => {
             <Dropdown
               inputId='status'
               name='status'
-              className="p-inputtext-sm text-black"
+              className="p-inputtext-sm"
               options={userStatus}
               placeholder="Select a user status"
               disabled={loading}
