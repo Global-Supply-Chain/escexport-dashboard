@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 
 export const FilterByStatus = ({ status, onFilter, label, disabled }) => {
   const { statusFilter } = useSelector((state) => state.share);
+
   return (
     <div>
       <label htmlFor="status">{label}</label>
