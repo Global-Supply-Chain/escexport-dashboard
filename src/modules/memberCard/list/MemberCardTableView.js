@@ -115,24 +115,8 @@ export const MemberCardTableView = () => {
     };
 
     /**
-     * Loading Data
-     */
-    const loadingData = useCallback(async () => {
-        setLoading(true);
-        const response = await memberCardService.index(dispatch, paginateParams);
-        if (response.status === 200) {
-            total.current = response.data.total ? response.data.total : response.data.length;
-        }
-        setLoading(false);
-    }, [dispatch, paginateParams]);
-
-    useEffect(() => {
-        loadingData();
-    }, [loadingData]);
-
-    /**
- * loading General Status
-*/
+    * loading General Status
+    */
     const loadingStatus = useCallback(async () => {
         const generalStatusResponse = await getRequest(
             `${endpoints.status}?type=general`
@@ -145,9 +129,25 @@ export const MemberCardTableView = () => {
         }
     }, []);
 
+    /**
+     * Loading Data
+     */
+    const loadingData = useCallback(async () => {
+        setLoading(true);
+        const response = await memberCardService.index(dispatch, paginateParams);
+        if (response.status === 200) {
+            total.current = response.data.total ? response.data.total : response.data.length;
+        }
+        setLoading(false);
+    }, [dispatch, paginateParams]);
+
     useEffect(() => {
         loadingStatus();
     }, [loadingStatus]);
+
+    useEffect(() => {
+        loadingData();
+    }, [loadingData]);
 
     const FooterRender = () => {
         return (

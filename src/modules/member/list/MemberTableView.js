@@ -148,8 +148,6 @@ export const MemberTableView = () => {
         loadingData();
     }, [loadingData]);
 
-    console.log(memberStatus.current);
-
     const FooterRender = () => {
         return (
             <div className=' flex items-center justify-content-between'>
