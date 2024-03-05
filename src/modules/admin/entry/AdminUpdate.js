@@ -14,9 +14,9 @@ import { paths } from "../../../constants/paths";
 import { getRequest } from "../../../helpers/api";
 import { Loading } from "../../../shares/Loading";
 import { authorizationService } from "../../authorization/authorizatonService";
-import { Profile } from "../../../shares/Profile";
 import { formBuilder } from "../../../helpers/formBuilder";
 import { FormMainAction } from "../../../shares/FormMainAction";
+import { ImageUpload } from "../../../shares/ImageUpload";
 
 export const AdminUpdate = () => {
 
@@ -37,7 +37,7 @@ export const AdminUpdate = () => {
 
         const formData = formBuilder(payload, adminPayload.update);
 
-        await adminService.update(dispatch, formData);
+        await adminService.update(dispatch, formData, params.id);
         setLoading(false);
     }
 
@@ -85,11 +85,11 @@ export const AdminUpdate = () => {
                 <div className="grid">
                     <div className='col-12 flex align-items-center justify-content-center'>
                         <form className="w-full flex flex-column justify-content-center align-items-center">
-                            <Profile
-                                payload={payload}
-                                setPayload={setPayload}
-                                field={'profile'}
-                                src={Number(payload.profile) ? `${endpoints.image}/${payload.profile}` : null}
+                            <ImageUpload
+                                preview={payload.image ? payload.image.image : null}
+                                onSelect={(e) => payloadHandler(payload, e, 'profile', (updateValue) => {
+                                    setPayload(updateValue);
+                                })}
                             />
 
                             <ValidationMessage field={'file'} />

@@ -2,32 +2,31 @@ import React, { useEffect, useState } from 'react'
 import { payloadHandler } from '../helpers/handler';
 
 export const Profile = ({ payload, setPayload, src = null, field }) => {
-    const [selectedFile, setSelectedFile] = useState()
+    const [selectedFile, setSelectedFile] = useState(undefined)
     const [preview, setPreview] = useState(src)
 
     // create a preview as a side effect, whenever selected file is changed
     useEffect(() => {
-        if (!selectedFile) {
-            setPreview(undefined)
-            return
-        }
 
-        const objectUrl = URL.createObjectURL(selectedFile)
-        setPreview(src ? src : objectUrl)
+        setPreview(src);
 
         // free memory when ever this component is unmounted
-        return () => URL.revokeObjectURL(objectUrl)
-    }, [selectedFile, src])
+        return () => URL.revokeObjectURL(src)
+    }, [src])
 
     const onSelectFile = e => {
         if (!e.target.files || e.target.files.length === 0) {
             setSelectedFile(undefined)
             return
+        } else {
+            const file = e.target.files[0];
+            console.log(file);
+            const objectUrl = URL.createObjectURL(file);
+            // setSelectedFile(objectUrl);
         }
-        const objectUrl = URL.createObjectURL(selectedFile)
-        // I've kept this example simple by using the first image instead of multiple
-        setSelectedFile(objectUrl)
     }
+
+    console.log(selectedFile);
 
     useEffect(() => {
         if (src !== null) {
@@ -47,7 +46,7 @@ export const Profile = ({ payload, setPayload, src = null, field }) => {
                 {selectedFile === undefined && src === null && (
                     <span className={'pi pi-user'}></span>
                 )}
-                
+
                 {
 
                     preview && (
