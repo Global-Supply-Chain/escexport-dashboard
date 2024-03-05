@@ -278,7 +278,7 @@ export const DiscountTableView = () => {
             <Paginator
                 first={first.current}
                 rows={paginateParams.per_page}
-                totalRecords={total.current}
+                totalRecords={total?.current ? total.current : 0}
                 rowsPerPageOptions={paginateOptions?.rowsPerPageOptions}
                 template={"FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink RowsPerPageDropdown"}
                 currentPageReportTemplate="Total - {totalRecords} | {currentPage} of {totalPages}"
