@@ -47,7 +47,7 @@ export const Profile = ({ payload, setPayload, src = null, field }) => {
                 {selectedFile === undefined && src === null && (
                     <span className={'pi pi-user'}></span>
                 )}
-                {console.log(preview)}
+                
                 {
 
                     preview && (

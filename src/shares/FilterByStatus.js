@@ -14,7 +14,7 @@ export const FilterByStatus = ({ status, onFilter, label, disabled }) => {
             name="status"
             className="p-inputtext-sm w-full"
             options={status ?? []}
-            value={statusFilter}
+            value={!status.includes(statusFilter) ? 'ALL' : statusFilter}
             tooltip="Filter by status"
             disabled={disabled}
             onChange={(e) => {
