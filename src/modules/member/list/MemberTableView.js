@@ -34,7 +34,7 @@ export const MemberTableView = () => {
     const showColumns = useRef(columns.current.filter(col => col.show === true));
     const first = useRef(0);
     const total = useRef(0);
-    const memberStatus = useRef(['All']);
+    const memberStatus = useRef(['ALL']);
 
     /**
      * Event - Paginate Page Change
@@ -159,6 +159,7 @@ export const MemberTableView = () => {
                         size="small"
                         onClick={() => {
                             dispatch(setPaginate(memberPayload.paginateParams));
+                            dispatch(setStatusFilter("ALL"));
                             dispatch(setDateFilter({ startDate: "", endDate: "" }));
                         }}
                     />
