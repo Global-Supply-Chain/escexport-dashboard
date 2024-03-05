@@ -217,7 +217,6 @@ export const MemberUpdate = () => {
                                 <div className="flex flex-column gap-2">
                                     <label htmlFor="member_id" className=' text-black'>{translate.member_id}</label>
                                     <InputText
-                                        inputId='member_id'
                                         name='member_id'
                                         className="p-inputtext-sm"
                                         placeholder="Select a member id"
@@ -225,7 +224,7 @@ export const MemberUpdate = () => {
                                         tooltipOptions={{ ...tooltipOptions }}
                                         disabled={loading}
                                         value={payload.member_id ? payload.member_id : ''}
-                                        onChange={(e) => payloadHandler(payload, e.value, 'member_id', (updateValue) => {
+                                        onChange={(e) => payloadHandler(payload, e.target.value, 'member_id', (updateValue) => {
                                             setPayload(updateValue);
                                         })}
                                     />
