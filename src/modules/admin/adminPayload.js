@@ -5,7 +5,6 @@ import { getRequest } from "../../helpers/api";
 export const adminPayload = {
     create: {
         name: "",
-        profile: "",
         email: "",
         phone: "",
         role_id: "",
