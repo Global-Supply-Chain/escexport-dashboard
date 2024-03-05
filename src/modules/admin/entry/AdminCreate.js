@@ -59,7 +59,10 @@ export const AdminCreate = () => {
 
         const formData = formBuilder(payload,adminPayload.create);
 
-        await adminService.store(formData,dispatch);
+        const response =  await adminService.store(formData,dispatch);
+        if(response.data) {
+            navigate(`${paths.admin}/${response.data.id}`);
+          }
         setLoading(false);
     }
 
