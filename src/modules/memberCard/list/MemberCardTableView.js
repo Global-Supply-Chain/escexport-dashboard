@@ -160,6 +160,7 @@ export const MemberCardTableView = () => {
                         size="small"
                         onClick={() => {
                             dispatch(setPaginate(memberCardPayload.paginateParams));
+                            dispatch(setStatusFilter("ALL"));
                             dispatch(setDateFilter({ startDate: "", endDate: "" }));
                         }}
                     />
