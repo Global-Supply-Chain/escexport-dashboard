@@ -14,7 +14,6 @@ import { ValidationMessage } from "../../../shares/ValidationMessage";
 import { Loading } from "../../../shares/Loading";
 import { authorizationService } from "../../authorization/authorizatonService";
 import { Dropdown } from "primereact/dropdown";
-import { Profile } from "../../../shares/Profile";
 import { formBuilder } from "../../../helpers/formBuilder";
 import { FormMainAction } from "../../../shares/FormMainAction";
 
@@ -79,17 +78,6 @@ export const AdminCreate = () => {
                     <Loading loading={loading} />
 
                     <div className="grid">
-                        <div className='col-12 flex align-items-center justify-content-center'>
-                            <form className="w-full flex flex-column justify-content-center align-items-center">
-                                <Profile
-                                    payload={payload}
-                                    setPayload={setPayload}
-                                    field={'profile'}
-                                />
-
-                                <ValidationMessage field={'file'} />
-                            </form>
-                        </div>
 
                         <div className="col-12 md:col-4 lg:col-4 py-3">
                             <label htmlFor="name" className='input-label text-black'>{translate.name} <span>(required*)</span></label>
