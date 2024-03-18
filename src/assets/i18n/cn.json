@@ -168,5 +168,8 @@
     "occupation": "职业",
     "position": "位置",
     "gender" : "性别",
-    "search" : "搜索"
+    "search" : "搜索",
+    "app_type" : "应用类型",
+    "promotion_start_date" : "促销开始日期",
+    "promotion_end_date" : "促销结束日期"
 }

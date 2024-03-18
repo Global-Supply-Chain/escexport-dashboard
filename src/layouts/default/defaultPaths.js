@@ -9,20 +9,26 @@ export const items = [
         url: "/dashboard"
     },
     {
-        key: '1',
+        key: "1",
+        label: "menu_promotion",
+        icon: "pi pi-fw pi-verified",
+        url: paths.promotion
+    },
+    {
+        key: "2",
         label: "menu_user",
         icon: "pi pi-fw pi-user",
         children: [
             {
-                key: '1-1',
-                label: 'menu_list',
-                icon: 'pi pi-fw pi-list',
+                key: "2-1",
+                label: "menu_list",
+                icon: "pi pi-fw pi-list",
                 url: paths.user
             },
             {
-                key: '1-2',
-                label: 'menu_create',
-                icon: 'pi pi-fw pi-plus',
+                key: "2-2",
+                label: "menu_create",
+                icon: "pi pi-fw pi-plus",
                 url: paths.userCreate
             },
         ]
@@ -78,18 +84,18 @@ export const items = [
         ]
     },
     {
-        key: '2',
+        key: '4',
         label: 'menu_administrator',
         icon: 'pi pi-fw pi-users',
         children: [
             {
-                key: '2-1',
+                key: '4-1',
                 label: 'menu_list',
                 icon: 'pi pi-fw pi-list',
                 url: paths.admin
             },
             {
-                key: '2-2',
+                key: '4-2',
                 label: 'menu_create',
                 icon: 'pi pi-fw pi-plus',
                 url: paths.adminCreate
