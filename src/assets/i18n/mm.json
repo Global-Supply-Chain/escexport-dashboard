@@ -54,8 +54,8 @@
     "admin_update": "Admin အပ်ဒိတ်",
     "admin_subtitle": "စီမံခန့်ခွဲသူအကောင့်သည် စနစ်စီမံခန့်ခွဲမှုအတွက် ရည်ရွယ်သည်",
     "promotion_list": "ပရိုမိုးရှင်းစာရင်း",
-    "promotion_create": "ပရိုမိုးရှင်းဖန်တီးပါ",
-    "promotion_update": "ပရိုမိုးရှင်းအပ်ဒိတ်",
+    "promotion_create": "ပရိုမိုးရှင်းအသစ်စာရင်းသွင်းရန်",
+    "promotion_update": "ပရိုမိုးရှင်းအချက်လက်များပြင်ဆင်ရန်",
     "promotion_url": "ပရိုမိုးရှင်း url",
     "promotion_image": "ပရိုမိုးရှင်းပုံကို ရွေးပါ",
     "main_category_list": "အဓိကအမျိုးအစားစာရင်း",
@@ -168,5 +168,8 @@
     "occupation": "အလုပ်အကိုင်",
     "position": "ရာထူး",
     "gender" : "ကျား၊မ",
-    "search" : "ရှာဖွေရန်"
+    "search" : "ရှာဖွေရန်",
+    "app_type" : "app မျိုးအစားရွေးရန်",
+    "promotion_start_date": "ပရိုမိုးရှင်းစတင်သည့်ရက်စွဲ",
+    "promotion_end_date": "ပရိုမိုးရှင်းပြီးဆုံးသည့်ရက်စွဲ"
 }

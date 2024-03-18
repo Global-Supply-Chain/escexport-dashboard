@@ -168,5 +168,8 @@
     "occupation": "Occupation",
     "position": "Position",
     "gender" : "Gender",
-    "search" : "Search"
+    "search" : "Search",
+    "app_type" : "Application Type",
+    "promotion_start_date" : "Promotion Start Date",
+    "promotion_end_date" : "Promotion End Date"
 }
