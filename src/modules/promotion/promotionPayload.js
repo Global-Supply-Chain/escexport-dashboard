@@ -4,28 +4,37 @@ import { paginateOptions } from "../../constants/config";
 export const promotionPayload = {
     create : {
         title: "",
-        image: 0,
-        url: ""
+        image: "",
+        app_type: "",
+        start_date: "",
+        end_date: ""
     },
     update : {
         title: "",
-        image: 0,
-        url: "",
+        image: "",
+        app_type: "",
+        start_date: "",
+        end_date: "",
         status : ""
     },
     columns: [
-        { field: "id", header: "ID", sortable: true, show: true },
-        { field: "title", header: "Title", sortable: true, show: true },
-        { field: "image", header: "Image", sortable: true, show: true },
-        { field: "url", header: "Url", sortable: true, show: true },
+        { field: "title", header: "Title", sortable: true, show: true, with: 100 },
+        { field: "image", header: "Image", sortable: true, show: true, with: 100 },
+        { field: "app_type", header: "App Type", sortable: true, show: true, with: 100 },
+        { field: "start_date", header: "Start Date", sortable: true, show: true, with: 100 },
+        { field: "end_date", header: "End Date", sortable: true, show: true, with: 100 },
         { field: "status", header: "Status", show: true }
     ],
     paginateParams: {
         page: 1,
         per_page: paginateOptions.rows,
-        columns: "id,title,image,url,status",
+        columns: "id,title,app_type,start_date,end_date",
         search: "",
-        order: "",
-        sort: "DESC"
+        order: "id",
+        sort: "DESC",
+        filter: "status",
+        value : "ACTIVE",
+        start_date: "",
+        end_date: ""
     }
 }

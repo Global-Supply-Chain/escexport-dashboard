@@ -14,6 +14,7 @@ export const promotionRoutes = [
                 breadcrumbs: [
                     { label: "Dashboard", url: paths.dashboard },
                     { label: "Promotion", url: paths.promotion },
+                    { label: "Create", url: paths.promotionCreate }
                 ],
                 role: ['ADMINISTRATOR']
             }
