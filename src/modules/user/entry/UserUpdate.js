@@ -71,6 +71,8 @@ export const UserUpdate = () => {
     }
   }, [user])
 
+  console.log(user);
+
   return (
     <Card
       title={translate.user_update}
@@ -82,7 +84,7 @@ export const UserUpdate = () => {
         <div className='col-12 flex align-items-center justify-content-center'>
           <div className='w-full flex flex-column justify-content-center align-items-center'>
             <ImageUpload
-              preview={payload.image ? payload.image.image : null}
+              preview={payload.profile ? payload.profile.image : null}
               onSelect={(e) => payloadHandler(payload, e, 'profile', (updateValue) => {
                 setPayload(updateValue);
               })}

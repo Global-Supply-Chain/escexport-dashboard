@@ -28,6 +28,8 @@ export const ImageUpload = ({ preview, onSelect }) => {
         }
     },[payload]);
 
+    console.log(src);
+
     return (
         <>
             <div
