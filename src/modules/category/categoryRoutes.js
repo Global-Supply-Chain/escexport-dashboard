@@ -1,65 +1,48 @@
 import { paths } from "../../constants/paths";
-import { MainCategoryCreate } from "./entry/MainCategoryCreate";
-import { MainCategoryDetail } from "./view/MainCategoryDetail";
-import { MainCategoryList } from "./view/MainCategoryList";
-import { SubCategoryList } from "./view/SubCategoryList";
+import CategoryCreate from "./entry/CategoryCreate";
+import { CategoryList } from "./view/CategoryList";
+import CategoryDetail from "./view/CategoryDetail";
 
 export const categoryRoutes = [
     {
-        id: "mainCategory",
+        id: "category",
         path: paths.category,
-        element : <MainCategoryList />,
+        element : <CategoryList />,
         loader: () => {
             return {
                 breadcrumbs: [
                     { label: "Dashboard", url: paths.dashboard },
-                    { label: "Main Category", url: paths.category },
-                    { label: "Create", url: paths.createMainCategory },
+                    { label: "Category List", url: paths.category },
+                    { label: "Create", url: paths.createCategory },
                 ],
                 role: ['ADMINISTRATOR']
             }
         }
     },
     {
-        id: "createMainCategory",
-        path: paths.createMainCategory,
-        element : <MainCategoryCreate />,
+        id: "create_category",
+        path: paths.createCategory,
+        element: <CategoryCreate />,
         loader: () => {
             return {
                 breadcrumbs: [
                     { label: "Dashboard", url: paths.dashboard },
-                    { label: "Main Category", url: paths.category },
-                    { label: "Create", url: paths.createMainCategory },
+                    { label: "Category List", url: paths.category },
                 ],
                 role: ['ADMINISTRATOR']
             }
         }
     },
     {
-        id: "updateMainCategory",
-        path: paths.updateMainCategory,
-        element : <MainCategoryDetail />,
+        id: "update_category",
+        path: `${paths.category}/:id`,
+        element: <CategoryDetail />,
         loader: () => {
             return {
                 breadcrumbs: [
                     { label: "Dashboard", url: paths.dashboard },
-                    { label: "Main Category", url: paths.category },
-                    { label: "Create", url: paths.createMainCategory },
-                ],
-                role: ['ADMINISTRATOR']
-            }
-        }
-    },
-    {
-        id: "subCategory",
-        path: paths.subCategory,
-        element : <SubCategoryList />,
-        loader: () => {
-            return {
-                breadcrumbs: [
-                    { label: "Dashboard", url: paths.dashboard },
-                    { label: "Main Category", url: paths.category },
-                    { label: "Sub Category", url: null },
+                    { label: "Category List", url: paths.category },
+                    { label: "Create", url: paths.createCategory },
                 ],
                 role: ['ADMINISTRATOR']
             }

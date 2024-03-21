@@ -6,7 +6,6 @@ import { tooltipOptions } from '../../../constants/config';
 import { payloadHandler } from '../../../helpers/handler';
 import { ValidationMessage } from '../../../shares/ValidationMessage';
 import { Button } from 'primereact/button';
-import DeleteDialogButton from '../../../shares/DeleteDialogButton';
 import { paths } from '../../../constants/paths';
 import { Dropdown } from 'primereact/dropdown';
 import { categoryService } from '../categoryService';
@@ -14,37 +13,27 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { generalStatus } from '../../../helpers/StatusHandler';
 import { Loading } from '../../../shares/Loading';
+import { getRequest } from '../../../helpers/api';
+import { endpoints } from '../../../constants/endpoints';
+import { formBuilder } from '../../../helpers/formBuilder';
 
 const CategoryUpdate = () => {
 
     const params = useParams();
-    const [visible, setVisible] = useState(false);
     const [loading, setLoading] = useState(false);
     const [status, setStatus] = useState([]);
     const [payload, setPayload] = useState(categoryPayload.update);
-    const [categoryList, setCategoryList] = useState([{ label: categoryPayload.update.title, code: categoryPayload.update.id }]);
-
+    const [appType, setAppType] = useState([]);
     const { category } = useSelector((state) => state.category);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-
-    /**
-    * Loading Data
-    */
     const loadingData = useCallback(async () => {
         setLoading(true);
 
-        const result = await categoryService.index(dispatch);
-        if (result.status === 200) {
-            const formatData = result.data?.map((category) => {
-                return {
-                    label: category?.title,
-                    value: category?.id
-                }
-            })
-            console.log(formatData);
-            setCategoryList(formatData);
+        const appTypeResult = await getRequest(`${endpoints.status}?type=apptype`);
+        if(appTypeResult.status === 200) {
+            setAppType(appTypeResult.data.apptype);
         }
 
         await categoryService.show(dispatch, params.id);
@@ -56,10 +45,6 @@ const CategoryUpdate = () => {
         loadingData()
     }, [loadingData])
 
-    /**
-   * Return general status
-   * @returns {Array} Array that contain general status ACTIVE,DISABLE and DELETE
-   * **/
     useEffect(() => {
         generalStatus().then((data) => {
             setStatus(data)
@@ -75,10 +60,10 @@ const CategoryUpdate = () => {
 
     const submitUpdateCategory = async () => {
         setLoading(true);
-        await categoryService.update(dispatch, payload?.id, payload)
+        const formData = formBuilder(payload, categoryPayload.update);
+        await categoryService.update(dispatch, payload?.id, formData);
         setLoading(false);
     }
-
 
     return (
         <Card
@@ -88,92 +73,27 @@ const CategoryUpdate = () => {
             <Loading loading={loading} />
 
             <div className=' grid'>
-
-                <div className=' col-12 flex align-items-center justify-content-end'>
-                    <div>
-
-                        <DeleteDialogButton
-                            visible={visible}
-                            setVisible={setVisible}
-                            url={paths.category}
-                            id={params.id}
-                            redirect={paths.category}
-                        />
-
-                        <Button
-                            size='small'
-                            severity='danger'
-                            outlined
-                            onClick={() => setVisible(true)}
-                        >
-                            <i className=' pi pi-trash'></i>
-                        </Button>
-                    </div>
-                </div>
-
-                <div className=' col-12 md:col-6 lg:col-4 py-3'>
+                <div className=' col-12 md:col-3 lg:col-3 mt-3'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="title" className=' text-black'>Title</label>
+                        <label htmlFor="name" className=' text-black'> Name </label>
                         <InputText
                             className="p-inputtext-sm text-black"
-                            id="title"
+                            id="name"
                             aria-describedby="title-help"
-                            tooltip='Category title'
+                            tooltip='Category name'
                             tooltipOptions={{ ...tooltipOptions }}
-                            placeholder='Enter category title'
+                            placeholder='Enter category name'
                             disabled={loading}
-                            value={payload.title ? payload.title : ""}
-                            onChange={(e) => payloadHandler(payload, e.target.value, 'title', (updateValue) => {
+                            value={payload.name ? payload.name : ""}
+                            onChange={(e) => payloadHandler(payload, e.target.value, 'name', (updateValue) => {
                                 setPayload(updateValue);
                             })}
                         />
-                        <ValidationMessage field={"title"} />
+                        <ValidationMessage field={"name"} />
                     </div>
                 </div>
 
-                <div className="col-12 md:col-4 lg:col-4 py-3">
-                    <label htmlFor="email" className='input-label'>Level</label>
-                    <div className="p-inputgroup mt-2">
-                        <InputText
-                            id="level"
-                            className="p-inputtext-sm"
-                            keyfilter={'int'}
-                            aria-describedby="level-help"
-                            placeholder="Enter category level"
-                            value={payload.level ? payload.level : ""}
-                            tooltip="Category level"
-                            tooltipOptions={{ ...tooltipOptions }}
-                            disabled={loading}
-                            onChange={(e) => payloadHandler(payload, e.target.value, 'level', (updateValue) => {
-                                setPayload(updateValue);
-                            })}
-                        />
-                    </div>
-                    <ValidationMessage field="level" />
-                </div>
-
-                {
-                    payload.category_id && (
-                        <div className="col-12 md:col-4 lg:col-4 py-3">
-                            <label htmlFor="phone" className='input-label'> Category </label>
-                            <div className="p-inputgroup mt-2">
-                                <Dropdown
-                                    value={payload.category_id ? payload.category_id : ""}
-                                    onChange={(e) => payloadHandler(payload, e.value, 'category_id', (updateValue) => {
-                                        setPayload(updateValue);
-                                    })}
-                                    options={categoryList}
-                                    placeholder="Select a category"
-                                    disabled={loading}
-                                    className="p-inputtext-sm"
-                                />
-                            </div>
-                            <ValidationMessage field="category_id" />
-                        </div>
-                    )
-                }
-
-                <div className="col-12 md:col-4 lg:col-4 py-3">
+                <div className="col-12 md:col-3 lg:col-3 mt-3">
                     <label htmlFor="password" className='input-label'> Description </label>
                     <div className="p-inputgroup mt-2">
                         <InputText
@@ -194,15 +114,54 @@ const CategoryUpdate = () => {
                     <ValidationMessage field="description" />
                 </div>
 
-                <div className=' col-12 md:col-6 lg:col-4 py-3'>
+                <div className="col-12 md:col-3 lg:col-3 mt-3">
+                    <label htmlFor="icon" className='input-label'> Icon </label>
+                    <div className="p-inputgroup mt-2">
+                        <InputText
+                            type='file'
+                            id="icon"
+                            className="p-inputtext-sm"
+                            aria-describedby="title-help"
+                            tooltip="Category icon"
+                            tooltipOptions={{ ...tooltipOptions }}
+                            disabled={loading}
+                            onChange={(e) => payloadHandler(payload, e.target.files[0], 'icon', (updateValue) => {
+                                setPayload(updateValue);
+                            })}
+                        />
+                    </div>
+                    <ValidationMessage field="icon" />
+                </div>
+
+                <div className="col-12 md:col-3 lg:col-3 mt-3">
+                    <label htmlFor="appType" className='input-label'> App Type </label>
+                    <div className="p-inputgroup mt-2">
+                        <Dropdown
+                            inputId="role"
+                            name="role"
+                            autoComplete="admin role"
+                            value={payload.app_type}
+                            placeholder='Choose App Type'
+                            onChange={(e) => payloadHandler(payload, e.value, 'app_type', (updateValue) => {
+                                setPayload(updateValue);
+                            })}
+                            options={appType}
+                            disabled={loading}
+                            className="p-inputtext-sm"
+                        />
+                    </div>
+                    <ValidationMessage field="app_type" />
+                </div>
+
+                <div className=' col-12 md:col-3 lg:col-3 py-3'>
                     <div className="flex flex-column gap-2">
-                        <label htmlFor="phone" className=' text-black'>Status</label>
+                        <label htmlFor="phone" className='text-black'>Status</label>
                         <Dropdown
                             options={status}
                             placeholder="Select a general status"
                             disabled={loading}
                             value={payload.status}
-                            className="p-inputtext-sm text-black"
+                            className="p-inputtext-sm"
                             onChange={(e) => payloadHandler(payload, e.value, 'status', (updateValue) => {
                                 setPayload(updateValue);
                             })}
@@ -240,4 +199,4 @@ const CategoryUpdate = () => {
     )
 }
 
-export default CategoryUpdate
+export default CategoryUpdate;
