@@ -13,30 +13,27 @@ import { Button } from 'primereact/button';
 import { paths } from '../../../constants/paths';
 import { Dropdown } from 'primereact/dropdown';
 import { Loading } from '../../../shares/Loading';
+import { getRequest } from '../../../helpers/api';
+import { endpoints } from '../../../constants/endpoints';
+import { formBuilder } from '../../../helpers/formBuilder';
 
 const CategoryCreate = () => {
 
     const [loading, setLoading] = useState(false);
     const [payload, setPayload] = useState(categoryPayload.create);
-    const [categoryList, setCategoryList] = useState([]);
+    const [appType, setAppType] = useState([]);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    // const categoryList = useRef(state.category);
-
     const submitCategoryCreate = async () => {
         setLoading(true);
-        const result = await categoryService.store(payload, dispatch);
 
-        if(result.status === 200){
+        const formData = formBuilder(payload, categoryPayload.create);
+        const result = await categoryService.store(formData, dispatch);
 
-            categoryList.push({
-                label : result.data?.title,
-                value : result.data?.id
-            })
-
-            setCategoryList(categoryList);
+        if (result.status === 200) {
+            navigate(`${paths.category}/${result.data.id}`);
         }
 
         setLoading(false);
@@ -48,19 +45,13 @@ const CategoryCreate = () => {
     const loadingData = useCallback(async () => {
         setLoading(true);
 
-        const result = await categoryService.index(dispatch);
+        const result = await getRequest(`${endpoints.status}?type=apptype`);
         if (result.status === 200) {
-            const formatData = result.data?.map((category) => {
-                return {
-                    label : category?.title,
-                    value : category?.id
-                }
-            })
-            setCategoryList(formatData);
+            setAppType(result.data.apptype);
         }
 
         setLoading(false);
-    }, [dispatch]);
+    }, []);
 
     useEffect(() => {
         loadingData()
@@ -82,69 +73,66 @@ const CategoryCreate = () => {
                     <Loading loading={loading} />
 
                     <div className="grid">
-                        <div className="col-12 md:col-4 lg:col-4 my-3">
-                            <label htmlFor="name" className='input-label'>Title</label>
+                        <div className="col-12 md:col-3 lg:col-3 mt-3">
+                            <label htmlFor="name" className='input-label'> Name </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText
-                                    id="title"
+                                    id="name"
                                     className="p-inputtext-sm"
-                                    placeholder="Enter category title"
-                                    value={payload.title}
+                                    placeholder="Enter category name"
+                                    value={payload.name}
                                     aria-describedby="title-help"
-                                    tooltip="Category title"
+                                    tooltip="Category name"
                                     tooltipOptions={{ ...tooltipOptions }}
                                     disabled={loading}
-                                    onChange={(e) => payloadHandler(payload, e.target.value, 'title', (updateValue) => {
+                                    onChange={(e) => payloadHandler(payload, e.target.value, 'name', (updateValue) => {
                                         setPayload(updateValue);
                                     })}
                                 />
                             </div>
-                            <ValidationMessage field="title" />
+                            <ValidationMessage field="name" />
                         </div>
 
-                        <div className="col-12 md:col-4 lg:col-4 my-3">
-                            <label htmlFor="email" className='input-label'>Level</label>
+                        <div className="col-12 md:col-3 lg:col-3 mt-3">
+                            <label htmlFor="icon" className='input-label'> Icon </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText
-                                    id="level"
+                                    type='file'
+                                    id="icon"
                                     className="p-inputtext-sm"
-                                    keyfilter={'int'}
-                                    aria-describedby="level-help"
-                                    placeholder="Enter category level"
-                                    value={payload.level}
-                                    tooltip="Category level"
+                                    aria-describedby="title-help"
+                                    tooltip="Category icon"
                                     tooltipOptions={{ ...tooltipOptions }}
                                     disabled={loading}
-                                    onChange={(e) => payloadHandler(payload, e.target.value, 'level', (updateValue) => {
+                                    onChange={(e) => payloadHandler(payload, e.target.files[0], 'icon', (updateValue) => {
                                         setPayload(updateValue);
                                     })}
                                 />
                             </div>
-                            <ValidationMessage field="level" />
+                            <ValidationMessage field="icon" />
                         </div>
 
-                        {
-                            categoryList?.length > 0 && (
-                                <div className="col-12 md:col-4 lg:col-4 my-3">
-                                <label htmlFor="phone" className='input-label'> Category </label>
-                                <div className="p-inputgroup mt-2">
-                                <Dropdown 
-                                value={payload.category_id} 
-                                onChange={(e) => payloadHandler(payload, e.value, 'category_id', (updateValue) => {
-                                    setPayload(updateValue);
-                                })}
-                                options={categoryList} 
-                                placeholder="Select a category" 
-                                disabled={loading}
-                                className="p-inputtext-sm" 
+                        <div className="col-12 md:col-3 lg:col-3 mt-3">
+                            <label htmlFor="appType" className='input-label'> App Type </label>
+                            <div className="p-inputgroup mt-2">
+                                <Dropdown
+                                    inputId="role"
+                                    name="role"
+                                    autoComplete="admin role"
+                                    value={payload.app_type}
+                                    placeholder='Choose App Type'
+                                    onChange={(e) => payloadHandler(payload, e.value, 'app_type', (updateValue) => {
+                                        setPayload(updateValue);
+                                    })}
+                                    options={appType}
+                                    disabled={loading}
+                                    className="p-inputtext-sm"
                                 />
-                                </div>
-                                <ValidationMessage field="phone" />
                             </div>
-                            )
-                        }
+                            <ValidationMessage field="app_type" />
+                        </div>
 
-                        <div className="col-12 md:col-4 lg:col-4 my-3">
+                        <div className="col-12 md:col-3 lg:col-3 mt-3">
                             <label htmlFor="password" className='input-label'> Description </label>
                             <div className="p-inputgroup mt-2">
                                 <InputText
@@ -165,7 +153,7 @@ const CategoryCreate = () => {
                             <ValidationMessage field="description" />
                         </div>
 
-                        <div className="col-12">
+                        <div className="col-12 mt-3">
                             <div className="flex flex-row justify-content-end align-items-center">
                                 <Button
                                     className="mx-2"

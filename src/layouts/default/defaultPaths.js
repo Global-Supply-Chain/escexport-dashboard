@@ -16,17 +16,29 @@ export const items = [
     },
     {
         key: "2",
+        label: "menu_category",
+        icon: "pi pi-fw pi-list",
+        url: paths.category
+    },
+    {
+        key: "3",
+        label: "menu_item",
+        icon: "pi pi-fw pi-box",
+        url: paths.item
+    },
+    {
+        key: "3",
         label: "menu_user",
         icon: "pi pi-fw pi-user",
         children: [
             {
-                key: "2-1",
+                key: "3-1",
                 label: "menu_list",
                 icon: "pi pi-fw pi-list",
                 url: paths.user
             },
             {
-                key: "2-2",
+                key: "3-2",
                 label: "menu_create",
                 icon: "pi pi-fw pi-plus",
                 url: paths.userCreate
