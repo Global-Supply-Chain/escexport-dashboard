@@ -2,50 +2,33 @@ import { paginateOptions } from "../../constants/config";
 
 export const categoryPayload = {
   create: {
-    title: "",
-    level: "",
-    main_category_id: "",
-    description: "",
+    name: "",
     icon: "",
+    app_type: "",
+
   },
   update: {
-    title: "",
-    level: "",
-    category_id: "",
-    description: "",
+    name: "",
     icon: "",
+    app_type: "",
+    description: "",
     status: "",
   },
-  subCategoryColumns: [
-    { field: "id", header: "ID", sortable: true, show: true },
-    { field: "main_category_name", header: "Main Category", sortable: true, show: true },
-    { field: "icon", header: "Icon", show: true },
-    { field: "title", header: "Title", sortable: true, show: true },
-    { field: "level", header: "Level", sortable: true, show: true },
-    { field: "status", header: "Status", sortable: true, show: true },
+  categoryColumns: [
+    { field: "icon", header: "Icon", show: true, width: 100 },
+    { field: "name", header: "Name", sortable: true, show: true, width: 200 },
+    { field: "description", header: "Description", sortable: true, show: true, width: 200 },
+    { field: "app_type", header: "App Type", sortable: true, show: true, width: 200 },
+    { field: "status", header: "Status", sortable: true, show: true, width: 200 },
   ],
-  mainCategoryColumns: [
-    { field: "id", header: "ID", sortable: true, show: true },
-    { field: "icon", header: "Icon", show: true },
-    { field: "title", header: "Title", sortable: true, show: true },
-    { field: "status", header: "Status", sortable: true, show: true },
-  ],
-  subCategoryPaginateParams: {
+  categoryPaginateParams: {
     page: 1,
     per_page: paginateOptions.rows,
-    columns: "id,title,level,description,status",
+    columns: "id,name,app_type,description,status",
     search: "",
     order: "id",
     sort: "DESC",
-  },
-  mainCategoryPaginateParams: {
-    page: 1,
-    per_page: paginateOptions.rows,
-    columns: "id,title,status",
-    search: "",
-    order: "id",
-    sort: "DESC",
-    filter: "level",
-    value: "0"
-  },
+    filter: "",
+    value: ""
+  }
 };

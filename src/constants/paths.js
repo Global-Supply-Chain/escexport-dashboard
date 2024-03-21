@@ -31,8 +31,8 @@ export const paths = {
     userDetail : "user/:id",
 
     category: "/category",
-    createMainCategory: "/category/new",
-    updateMainCategory: "/category/:id",
+    createCategory: "/category/new",
+    updateCategory: "/category/:id",
     subCategory: "category/:id/level/:level",
     
     item: "/item",

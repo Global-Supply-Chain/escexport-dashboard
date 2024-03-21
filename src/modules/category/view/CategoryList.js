@@ -1,9 +1,8 @@
 import React from "react";
 import { BreadCrumb } from "../../../shares/BreadCrumb";
-import { MainCategoryTable } from "../list/MainCategoryTable";
-import { Card } from "primereact/card";
+import { CategoryTable } from "../list/CategoryTable";
 
-export const MainCategoryList = () => {
+export const CategoryList = () => {
   return (
     <div className=" grid">
       <div className="col-12">
@@ -11,7 +10,7 @@ export const MainCategoryList = () => {
       </div>
 
       <div className="col-12">
-          <MainCategoryTable />
+          <CategoryTable />
       </div>
     </div>
   );
