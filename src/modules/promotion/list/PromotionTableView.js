@@ -238,13 +238,31 @@ const PromotionTableView = () => {
                             sortable
                             body={(value) => {
                                 switch (col.field) {
-                                    case "id":
+                                    case "title":
                                       return (
                                         <NavigateId
-                                          url={`${paths.promotion}/${value[col.field]}`}
+                                          url={`${paths.promotion}/${value["id"]}`}
                                           value={value[col.field]}
                                         />
                                       );
+                                    case "image":
+                                        return(
+                                            <img 
+                                                src={value[col.field] ? `${endpoints.image}/${value[col.field].image}` : ""} 
+                                                alt='' 
+                                                title='' 
+                                                width={"80px"}
+                                                height={"80px"}
+                                            />
+                                        )
+                                    case "start_date":
+                                        return(
+                                            <span> {moment(value[col.field]).format("MM-DD-YYYY")} </span>
+                                        )
+                                    case "end_date":
+                                            return(
+                                                <span> {moment(value[col.field]).format("MM-DD-YYYY")} </span>
+                                            )
                                     case "status":
                                       return <Status status={value[col.field]} />;
                                     default:

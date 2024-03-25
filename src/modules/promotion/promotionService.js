@@ -1,5 +1,5 @@
 import { endpoints } from "../../constants/endpoints";
-import { getRequest, postRequest, putRequest } from "../../helpers/api";
+import { getRequest, postRequest } from "../../helpers/api";
 import { httpServiceHandler } from "../../helpers/handler";
 import { updateNotification } from "../../shares/shareSlice";
 import { index, update } from "./promotionSlice";
@@ -39,7 +39,7 @@ export const promotionService = {
         return response;
     },
     update: async (dispatch, id, payload) => {
-        const response = await putRequest(`${endpoints.promotion}/${id}`, payload);
+        const response = await postRequest(`${endpoints.promotion}/${id}`, payload);
         await httpServiceHandler(dispatch, response);
 
         if(response.status === 200) {
