@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { endpoints } from "../constants/endpoints";
 
-export const ImageUpload = ({ preview, onSelect }) => {
+export const Thumbnail = ({ preview, onSelect }) => {
 
     const [src, setSrc] = useState(preview);
     const [payload, setPayload] = useState(null);
@@ -31,18 +31,22 @@ export const ImageUpload = ({ preview, onSelect }) => {
     return (
         <>
             <div
-                className=" custom-profile"
+                className=" custom-thumbnail"
                 onClick={() => {
                     document.getElementById("profile").click();
                 }}
             >
-                {!src && <span className={'pi pi-user'}></span>}
+                {!src && <span className={'pi pi-image'}></span>}
                 {src && (
                     <img
                         src={src}
                         width={100}
                         height={100}
-                        style={{ borderRadius: '50%' }}
+                        style={{ 
+                            borderRadius: '10px',
+                            width: '100%',
+                            height: '100%'
+                        }}
 
                         alt='preview'
                         title='preview image'

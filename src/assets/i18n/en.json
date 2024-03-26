@@ -171,5 +171,7 @@
     "search" : "Search",
     "app_type" : "Application Type",
     "promotion_start_date" : "Promotion Start Date",
-    "promotion_end_date" : "Promotion End Date"
+    "promotion_end_date" : "Promotion End Date",
+    "thumbnail_photo" : "Thumbnail Photo",
+    "product_photo" : "Product Photo"
 }

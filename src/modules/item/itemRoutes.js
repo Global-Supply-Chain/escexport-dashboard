@@ -14,6 +14,7 @@ export const itemRoutes = [
                 breadcrumbs: [
                     { label: "Dashboard", url: paths.dashboard },
                     { label: "List", url: paths.item },
+                    { label: "Create", url: paths.itemCreate }
                 ],
                 role: ['ADMINISTRATOR']
             }
