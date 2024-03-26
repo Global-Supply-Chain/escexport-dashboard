@@ -171,5 +171,7 @@
     "search" : "ရှာဖွေရန်",
     "app_type" : "app မျိုးအစားရွေးရန်",
     "promotion_start_date": "ပရိုမိုးရှင်းစတင်သည့်ရက်စွဲ",
-    "promotion_end_date": "ပရိုမိုးရှင်းပြီးဆုံးသည့်ရက်စွဲ"
+    "promotion_end_date": "ပရိုမိုးရှင်းပြီးဆုံးသည့်ရက်စွဲ",
+    "thumbnail_photo" : "ပုံသေးဓာတ်ပုံ",
+    "product_photo" : "ထုတ်ကုန်ဓာတ်ပုံ"
 }

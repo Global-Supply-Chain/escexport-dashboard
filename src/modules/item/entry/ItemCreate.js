@@ -20,6 +20,7 @@ import { AppEditor } from "../../../shares/AppEditor";
 import { getRequest } from "../../../helpers/api";
 import { endpoints } from "../../../constants/endpoints";
 import { FormMainAction } from "../../../shares/FormMainAction";
+import { Thumbnail } from "../../../shares/Thumbnail";
 
 const ItemCreate = () => {
   const [loading, setLoading] = useState(false);
@@ -131,15 +132,19 @@ const ItemCreate = () => {
 
   /**
    * Create item
-   * payload [category_id,name,code,description,content,price,sell_price,out_of_stock]
+   * payload [category_id,name,code,description,content,price,sell_price]
    * **/
   const handleItemClick = async () => {
     setLoading(false);
     const {
       category_id,
-      out_of_stock,
       shop_id,
       name,
+      thumbnail_photo,
+      product_photo,
+      item_code,
+      item_color,
+      item_size,
       description,
       code,
       instock,
@@ -150,16 +155,16 @@ const ItemCreate = () => {
     const formData = new FormData();
 
     selectPhoto.map((value, index) => {
-      formData.append(`images[${index}]`, value);
+      formData.append(`product_photo[${index}]`, value);
       return value;
     });
 
+    formData.append("thumbnail_photo", thumbnail_photo);
+    formData.append("item_code", item_code);
+    formData.append("item_color", item_color);
+    formData.append("item_size", item_size);
     formData.append("content", content);
     formData.append("category_id", category_id);
-    formData.append(
-      "out_of_stock",
-      out_of_stock === "true" ? Number(0) : Number(1)
-    );
     formData.append("sell_price", sell_price);
     formData.append("price", price);
     formData.append("description", description);
@@ -167,7 +172,6 @@ const ItemCreate = () => {
     formData.append("instock", instock);
     formData.append("name", name);
     formData.append("shop_id", shop_id);
-    formData.append("method", "PUT");
 
     await itemService.store(dispatch, formData);
     setLoading(false);
@@ -184,7 +188,7 @@ const ItemCreate = () => {
     if (result.status === 200) {
       const formatData = result.data?.map((category) => {
         return {
-          label: category?.title,
+          label: category?.name,
           value: category?.id,
         };
       });
@@ -237,7 +241,19 @@ const ItemCreate = () => {
           <Loading loading={loading} />
 
           <div className=" grid">
+
             <div className=" col-12">
+              <h3 className=" thumbnail-title">{translate.thumbnail_photo}</h3>
+              <Thumbnail
+                preview={payload.thumbnail_photo ? payload.thumbnail_photo.image : null}
+                onSelect={(e) => payloadHandler(payload, e, 'thumbnail_photo', (updateValue) => {
+                  setPayload(updateValue);
+                })}
+              />
+            </div>
+
+            <div className=" col-12">
+              <h3 className=" thumbnail-title">{translate.product_photo}</h3>
               <FileUpload
                 ref={fileUploadRef}
                 multiple
@@ -362,14 +378,14 @@ const ItemCreate = () => {
                     payloadHandler(
                       payload,
                       e.target.value,
-                      "code",
+                      "item_code",
                       (updateValue) => {
                         setPayload(updateValue);
                       }
                     )
                   }
                 />
-                <ValidationMessage field={"code"} />
+                <ValidationMessage field={"item_code"} />
               </div>
             </div>
 
@@ -499,37 +515,6 @@ const ItemCreate = () => {
                   }
                 />
                 <ValidationMessage field={"instock"} />
-              </div>
-            </div>
-
-            <div className=" col-12 md:col-6 lg:col-4 py-3">
-              <div className="flex flex-column gap-2">
-                <label htmlFor="out_of_stock" className=" text-black">
-                  {translate.outstock}
-                </label>
-                <Checkbox
-                  className="p-inputtext-sm text-black"
-                  inputId="out_of_stock"
-                  name="out of stock"
-                  autoComplete="out of stock"
-                  aria-describedby="out_of_stock-help"
-                  tooltip="Item sell price"
-                  tooltipOptions={{ ...tooltipOptions }}
-                  placeholder="Enter item sell price"
-                  disabled={loading}
-                  checked={payload.out_of_stock}
-                  onChange={(e) =>
-                    payloadHandler(
-                      payload,
-                      e.checked,
-                      "out_of_stock",
-                      (updateValue) => {
-                        setPayload(updateValue);
-                      }
-                    )
-                  }
-                />
-                <ValidationMessage field={"out_of_stock"} />
               </div>
             </div>
 
