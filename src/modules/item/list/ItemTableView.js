@@ -24,6 +24,7 @@ import { Card } from 'primereact/card';
 import { NavigateId } from '../../../shares/NavigateId';
 import { ExportExcel } from "../../../shares/export";
 import { ImportExcel } from '../../../shares/import';
+import { Avatar } from 'primereact/avatar';
 
 const ItemTableView = () => {
 
@@ -221,6 +222,157 @@ const ItemTableView = () => {
         )
     }
 
+    const SizeRender = ({ dataSource, size, index }) => {
+
+        const style = {
+            width: '50px',
+            height: '50px',
+            borderRadius: '50%',
+            backgroundColor: '#EA2B4A',
+            color : '#fff',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'absolute',
+            left: `${index * 20}px`,
+            top: '50%',
+            transform: 'translateY(-50%)',
+            zIndex: `${index * 20}`
+        }
+
+        return <>
+            <div
+                style={style}
+            >
+                {size}
+            </div>
+            {
+                dataSource?.length > 3 && (
+                    <div
+                        style={{
+                            width: '50px',
+                            height: '50px',
+                            position: 'absolute',
+                            left: '60px',
+                            top: '50%',
+                            transform: 'translateY(-50%)',
+                            zIndex: index * 20,
+                            background: '#DDDDDD',
+                            color: "#000",
+                            borderRadius: '50%',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}
+                    >
+                        <span>+{dataSource?.length - 3}</span>
+                    </div>
+                )
+            }
+        </>
+
+    }
+
+    const ColorRender = ({ dataSource, color, index }) => {
+
+        const style = {
+            width: '50px',
+            height: '50px',
+            borderRadius: '50%',
+            backgroundColor: `${color}`,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'absolute',
+            left: `${index * 20}px`,
+            top: '50%',
+            transform: 'translateY(-50%)',
+            zIndex: `${index * 20}`
+        }
+
+        return <>
+            <div
+                style={style}
+            >
+            </div>
+            {
+                dataSource?.length > 3 && (
+                    <div
+                        style={{
+                            width: '50px',
+                            height: '50px',
+                            position: 'absolute',
+                            left: '60px',
+                            top: '50%',
+                            transform: 'translateY(-50%)',
+                            zIndex: index * 20,
+                            background: '#DDDDDD',
+                            color: "#000",
+                            borderRadius: '50%',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}
+                    >
+                        <span>+{dataSource?.length - 3}</span>
+                    </div>
+                )
+            }
+        </>
+
+    }
+
+    /** Render - Column Icon Field
+    * @returns
+    */
+    const IconRender = ({ dataSource, image, isProduct = false, index }) => {
+        const style = {
+            position: isProduct ? 'absolute' : 'relative',
+            left: isProduct ? `${index * 20}px` : 0,
+            top: isProduct ? '50%' : 0,
+            transform: isProduct ? 'translateY(-50%)' : 'none',
+            zIndex: isProduct ? `${index * 20}` : 0
+        };
+
+        return (
+            <div className=' relative'>
+                <Avatar
+                    key={index}
+                    className="category-icon"
+                    style={style}
+                    icon="pi pi-image"
+                    shape="circle"
+                    image={image ? `${endpoints.image}/${image?.image}` : null}
+                />
+                {
+                    dataSource?.length > 3 && (
+                        <div
+                            style={{
+                                width: '50px',
+                                height: '50px',
+                                position: 'absolute',
+                                left: '60px',
+                                top: '50%',
+                                transform: 'translateY(-50%)',
+                                zIndex: index * 20,
+                                background: '#DDDDDD',
+                                color: "#000",
+                                borderRadius: '50%',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}
+                        >
+                            <span>+{dataSource?.length - 3}</span>
+                        </div>
+                    )
+                }
+
+            </div>
+        );
+    };
+
+
     return (
         <Card
             title={translate.item_list}
@@ -257,18 +409,61 @@ const ItemTableView = () => {
                                                 value={value[col.field]}
                                             />
                                         );
+                                    case "thumbnail_photo":
+                                        return <IconRender image={value[col.field]} />;
+                                    case "product_photo":
+                                        return <Card
+                                            style={{
+                                                width: '100%',
+                                                height: '100% !important',
+                                                display: 'block',
+                                                position: 'relative',
+                                                boxShadow: 'none',
+                                            }}
+                                        >
+                                            {value[col.field]?.slice(0, 3).map((img, imgIndex) => (
+                                                <IconRender
+                                                    key={`product_photo_${index}_${imgIndex}`}
+                                                    image={img}
+                                                    isProduct={true}
+                                                    index={imgIndex}
+                                                    dataSource={value[col.field]}
+                                                />
+                                            ))}
+                                        </Card>
+
+                                    case "item_color":
+                                        return <div className=' relative'>
+                                            {value[col.field]?.slice(0, 3).map((color, index) => {
+                                                return <ColorRender
+                                                        color={color}
+                                                        index={index}
+                                                        dataSource={value[col.field]}
+                                                       />
+                                            })}
+                                        </div>
+                                    case "item_size":
+                                        return <div className=' relative'>
+                                            {value[col.field]?.slice(0, 3).map((size, index) => {
+                                            return <SizeRender 
+                                                        dataSource={value[col.field]}
+                                                        size={size}
+                                                        index={index}
+                                                   />
+                                        })}
+                                        </div>
                                     case "status":
                                         return <Status status={value[col.field]} />;
-                                    case 'out_of_stock':
-                                        if (value[col.field] === 1) {
-                                            return (<Badge value={'Instock'} severity={'success'}></Badge>)
-                                        } else {
-                                            return (<Badge value={'Outstock'} severity={'danger'}></Badge>)
-                                        }
+                                    case "description":
+                                        return <span>{value[col.field] === null ? 'no content' : value[col.field]}</span>
+                                    case "price":
+                                        return <span>{value[col.field] === null ? 'no content' : value[col.field]}</span>
                                     case "content":
-                                        return <div
-                                            dangerouslySetInnerHTML={{ __html: value[col.field] }}
-                                        />
+                                        return <div>
+                                            {value[col.field] === null ? 'no content' : <div
+                                                dangerouslySetInnerHTML={{ __html: value[col.field] }}
+                                            />}
+                                        </div>
                                     default:
                                         return value[col.field];
                                 }

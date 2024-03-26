@@ -171,5 +171,7 @@
     "search" : "搜索",
     "app_type" : "应用类型",
     "promotion_start_date" : "促销开始日期",
-    "promotion_end_date" : "促销结束日期"
+    "promotion_end_date" : "促销结束日期",
+    "thumbnail_photo" : "缩略图",
+    "product_photo" : "产品照片"
 }
