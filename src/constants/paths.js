@@ -10,6 +10,18 @@ export const paths = {
     countryCreate: "/country/new",
     countryDetail: "/country/:id",
 
+    city: "/city",
+    cityCreate: "/city/new",
+    cityDetail: "/city/:id",
+
+    township: "/township",
+    townshipCreate: "/township/new",
+    townshipDetail: "/township/:id",
+
+    regionAndState: "/regionAndState",
+    regionAndStateCreate: "/regionAndState/new",
+    regionAndStateDetail: "/regionAndState/:id",
+
     promotion: "/promotion",
     promotionCreate: "/promotion/new",
     promotionDetail: "/promotion/:id",
