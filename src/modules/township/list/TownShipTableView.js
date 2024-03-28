@@ -236,10 +236,10 @@ export const TownShipTableView = () => {
                             sortable
                             body={(value) => {
                                 switch (col.field) {
-                                    case "id":
+                                    case "name":
                                         return (
                                             <NavigateId
-                                                url={`${paths.city}/${value[col.field]}`}
+                                                url={`${paths.township}/${value['id']}`}
                                                 value={value[col.field]}
                                             />
                                         );

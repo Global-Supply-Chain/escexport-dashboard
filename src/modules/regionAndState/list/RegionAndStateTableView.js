@@ -236,10 +236,10 @@ export const RegionAndStateTableView = () => {
                             sortable
                             body={(value) => {
                                 switch (col.field) {
-                                    case "id":
+                                    case "name":
                                         return (
                                             <NavigateId
-                                                url={`${paths.regionAndState}/${value[col.field]}`}
+                                                url={`${paths.regionAndState}/${value['id']}`}
                                                 value={value[col.field]}
                                             />
                                         );

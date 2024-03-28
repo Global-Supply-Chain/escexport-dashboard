@@ -11,7 +11,6 @@ export const regionAndStatePayload = {
         country_id : ""
     },
     columns: [
-        { field: "id", header: "ID", sortable: true, show: true },
         { field: "name", header: "Name", sortable: true, show: true },
         { field: "country_name", header: "Country", sortable: true, show: true },
         { field: "status", header: "Status", show: true }
