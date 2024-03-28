@@ -19,6 +19,7 @@ import discountSlice from "./modules/discount/discountSlice";
 import memberCardSlice from "./modules/memberCard/memberCardSlice"
 import memberSlice from "./modules/member/memberSlice";
 import memberOrderSlice from "./modules/memberOrder/memberOrderSlice";
+import countrySlice from "./modules/country/countrySlice";
 
 export const stores = configureStore({
    reducer: {
@@ -41,7 +42,8 @@ export const stores = configureStore({
     discount: discountSlice,
     memberCard: memberCardSlice,
     member: memberSlice,
-    memberOrder: memberOrderSlice
+    memberOrder: memberOrderSlice,
+    country: countrySlice
    },
    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
       serializableCheck: false

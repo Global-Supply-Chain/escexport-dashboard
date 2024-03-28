@@ -22,6 +22,7 @@ import { discountRoutes } from "./modules/discount/discountRoutes";
 import { memberCardRoutes } from "./modules/memberCard/memberCardRoute";
 import { memberRoutes } from "./modules/member/memberRoute";
 import { memberOrderRoutes } from "./modules/memberOrder/memberOrderRoute";
+import { countryRoutes } from "./modules/country/countryRoutes";
 
 export const routers = createBrowserRouter([
     {
@@ -47,7 +48,8 @@ export const routers = createBrowserRouter([
             ...memberRoutes,
             ...memberOrderRoutes,
             ...authorizationRoute,
-            ...settingRoutes
+            ...settingRoutes,
+            ...countryRoutes
         ]
     },
     {

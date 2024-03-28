@@ -27,18 +27,49 @@ export const items = [
         url: paths.item
     },
     {
-        key: "3",
+        key: '4',
+        label: 'menu_member',
+        icon: 'pi pi-fw pi-user-plus',
+        children: [
+            {
+                key: '4-1',
+                label: 'menu_members',
+                icon: 'pi pi-fw pi-list',
+                url: paths.member
+            },
+            {
+                key: '4-2',
+                label: 'menu_member_card',
+                icon: 'pi pi-fw pi-id-card',
+                url: paths.memberCard
+            },
+            {
+                key: '3-3',
+                label: 'menu_discount',
+                icon: 'pi pi-fw pi-money-bill',
+                url: paths.discount
+            },
+            {
+                key: '3-4',
+                label: 'menu_member_order',
+                icon: 'pi pi-fw pi-shopping-bag',
+                url: paths.memberOrder
+            },
+        ]
+    },
+    {
+        key: "5",
         label: "menu_user",
         icon: "pi pi-fw pi-user",
         children: [
             {
-                key: "3-1",
+                key: "5-1",
                 label: "menu_list",
                 icon: "pi pi-fw pi-list",
                 url: paths.user
             },
             {
-                key: "3-2",
+                key: "5-2",
                 label: "menu_create",
                 icon: "pi pi-fw pi-plus",
                 url: paths.userCreate
@@ -65,53 +96,35 @@ export const items = [
     //     ]
     // },
     {
-        key: '3',
-        label: 'menu_member',
-        icon: 'pi pi-fw pi-user-plus',
-        children: [
-            {
-                key: '3-1',
-                label: 'menu_members',
-                icon: 'pi pi-fw pi-list',
-                url: paths.member
-            },
-            {
-                key: '3-2',
-                label: 'menu_member_card',
-                icon: 'pi pi-fw pi-id-card',
-                url: paths.memberCard
-            },
-            {
-                key: '3-3',
-                label: 'menu_discount',
-                icon: 'pi pi-fw pi-money-bill',
-                url: paths.discount
-            },
-            {
-                key: '3-4',
-                label: 'menu_member_order',
-                icon: 'pi pi-fw pi-shopping-bag',
-                url: paths.memberOrder
-            },
-        ]
-    },
-    {
-        key: '4',
+        key: '6',
         label: 'menu_administrator',
         icon: 'pi pi-fw pi-users',
         children: [
             {
-                key: '4-1',
+                key: '6-1',
                 label: 'menu_list',
                 icon: 'pi pi-fw pi-list',
                 url: paths.admin
             },
             {
-                key: '4-2',
+                key: '6-2',
                 label: 'menu_create',
                 icon: 'pi pi-fw pi-plus',
                 url: paths.adminCreate
             }
+        ]
+    },
+    {
+        key: '7',
+        label: 'menu_location',
+        icon: 'pi pi-fw pi-flag',
+        children: [
+            {
+                key: '7-1',
+                label: 'menu_country',
+                icon: 'pi pi-fw pi-list',
+                url: paths.country
+            },
         ]
     },
     // {
