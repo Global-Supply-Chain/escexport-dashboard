@@ -144,7 +144,7 @@ export const CountryUpdate = () => {
 
                             <FormMainAction
                                 cancel={translate.cancel}
-                                onCancel={() => navigate(paths.region)}
+                                onCancel={() => navigate(paths.country)}
                                 submit={translate.submit}
                                 onSubmit={submitCountryCreate}
                                 loading={loading}

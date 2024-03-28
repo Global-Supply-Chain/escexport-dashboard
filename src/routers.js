@@ -23,6 +23,9 @@ import { memberCardRoutes } from "./modules/memberCard/memberCardRoute";
 import { memberRoutes } from "./modules/member/memberRoute";
 import { memberOrderRoutes } from "./modules/memberOrder/memberOrderRoute";
 import { countryRoutes } from "./modules/country/countryRoutes";
+import { regionAndStateRoutes } from "./modules/regionAndState/regionAndStateRoutes";
+import { cityRoutes } from "./modules/city/cityRoutes";
+import { townshipRoutes } from "./modules/township/townshipRoutes";
 
 export const routers = createBrowserRouter([
     {
@@ -49,7 +52,10 @@ export const routers = createBrowserRouter([
             ...memberOrderRoutes,
             ...authorizationRoute,
             ...settingRoutes,
-            ...countryRoutes
+            ...countryRoutes,
+            ...regionAndStateRoutes,
+            ...cityRoutes,
+            ...townshipRoutes
         ]
     },
     {

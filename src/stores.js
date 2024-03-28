@@ -20,6 +20,9 @@ import memberCardSlice from "./modules/memberCard/memberCardSlice"
 import memberSlice from "./modules/member/memberSlice";
 import memberOrderSlice from "./modules/memberOrder/memberOrderSlice";
 import countrySlice from "./modules/country/countrySlice";
+import regionAndStateSlice from "./modules/regionAndState/regionAndStateSlice";
+import citySlice from "./modules/city/citySlice";
+import townshipSlice from "./modules/township/townshipSlice";
 
 export const stores = configureStore({
    reducer: {
@@ -43,7 +46,10 @@ export const stores = configureStore({
     memberCard: memberCardSlice,
     member: memberSlice,
     memberOrder: memberOrderSlice,
-    country: countrySlice
+    country: countrySlice,
+    regionAndState: regionAndStateSlice,
+    city: citySlice,
+    township: townshipSlice
    },
    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
       serializableCheck: false

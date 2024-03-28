@@ -125,6 +125,24 @@ export const items = [
                 icon: 'pi pi-fw pi-list',
                 url: paths.country
             },
+            {
+                key: '7-2',
+                label: 'menu_region_and_state',
+                icon: 'pi pi-fw pi-list',
+                url: paths.regionAndState
+            },
+            {
+                key: '7-3',
+                label: 'menu_city',
+                icon: 'pi pi-fw pi-list',
+                url: paths.city
+            },
+            {
+                key: '7-4',
+                label: 'menu_township',
+                icon: 'pi pi-fw pi-list',
+                url: paths.township
+            },
         ]
     },
     // {
