@@ -620,3 +620,23 @@ h1,h2,h3,h4,h5,h6{
     font-size: 50px;
     color : #dee2e6
 }
+
+.p-inputgroup-addon {
+    height: 40px !important;
+}
+
+.p-colorpicker {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.p-colorpicker .p-inputtext {
+    width: 50px;
+    height: 40px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.p-multiselect {
+    height: 40px;
+}

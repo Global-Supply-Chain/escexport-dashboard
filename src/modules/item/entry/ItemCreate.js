@@ -8,7 +8,7 @@ import { ValidationMessage } from "../../../shares/ValidationMessage";
 import { BreadCrumb } from "../../../shares/BreadCrumb";
 import { InputText } from "primereact/inputtext";
 import { tooltipOptions } from "../../../constants/config";
-import { Checkbox } from "primereact/checkbox";
+import { ColorPicker } from 'primereact/colorpicker';
 import { Button } from "primereact/button";
 import { paths } from "../../../constants/paths";
 import { useNavigate } from "react-router-dom";
@@ -21,6 +21,7 @@ import { getRequest } from "../../../helpers/api";
 import { endpoints } from "../../../constants/endpoints";
 import { FormMainAction } from "../../../shares/FormMainAction";
 import { Thumbnail } from "../../../shares/Thumbnail";
+import { MultiSelect } from 'primereact/multiselect';
 
 const ItemCreate = () => {
   const [loading, setLoading] = useState(false);
@@ -29,6 +30,8 @@ const ItemCreate = () => {
   const [payload, setPayload] = useState(itemPayload.create);
   const [content, setContent] = useState("");
   const [selectPhoto, setSelectPhoto] = useState([]);
+  const [color, setColor] = useState([]);
+  const [pickColor, setPickColor] = useState();
   const fileUploadRef = useRef(null);
 
   const dispatch = useDispatch();
@@ -130,6 +133,27 @@ const ItemCreate = () => {
       "custom-cancel-btn p-button-danger p-button-rounded p-button-outlined",
   };
 
+  const countryTemplate = (option) => {
+    return (
+      <div className="flex align-items-center">
+        <div>
+
+        </div>
+        <div>{option.name}</div>
+      </div>
+    );
+  };
+
+  const panelFooterTemplate = () => {
+    const length = payload.item_color ? payload.item_color.length : 0;
+
+    return (
+      <div className="py-2 px-3">
+        <b>{length}</b> item{length > 1 ? 's' : ''} selected.
+      </div>
+    );
+  };
+
   /**
    * Create item
    * payload [category_id,name,code,description,content,price,sell_price]
@@ -226,6 +250,8 @@ const ItemCreate = () => {
   useEffect(() => {
     loadingCategoryData();
   }, [loadingCategoryData]);
+  
+  console.log(color);
 
   return (
     <div className=" grid">
@@ -386,6 +412,49 @@ const ItemCreate = () => {
                   }
                 />
                 <ValidationMessage field={"item_code"} />
+              </div>
+            </div>
+
+            <div className=" col-12 md:col-6 lg:col-4 py-3">
+              <div className="flex flex-column gap-2">
+                <label htmlFor="color" className=" text-black">
+                  {translate.color}
+                </label>
+                <div className="p-inputgroup flex-1">
+                  <ColorPicker 
+                    value={pickColor}
+                    onChange={(e) => setPickColor(e.value)}  
+                  />
+                  <MultiSelect
+                    className="p-inputtext-sm text-black"
+                    id="color"
+                    name="color"
+                    optionLabel="name"
+                    autoComplete="item color"
+                    aria-describedby="color-help"
+                    tooltip="Item color"
+                    options={color}
+                    itemTemplate={countryTemplate} 
+                    panelFooterTemplate={panelFooterTemplate}
+                    display="chip"
+                    tooltipOptions={{ ...tooltipOptions }}
+                    placeholder="Enter item color"
+                    disabled={loading}
+                    rows={5}
+                    cols={30}
+                    onChange={(e) =>
+                      payloadHandler(
+                        payload,
+                        e.target.value,
+                        "item_color",
+                        (updateValue) => {
+                          setPayload(updateValue);
+                        }
+                      )
+                    }
+                  />
+                </div>
+                <ValidationMessage field={"item_color"} />
               </div>
             </div>
 

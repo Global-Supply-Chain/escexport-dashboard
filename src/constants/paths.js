@@ -6,6 +6,10 @@ export const paths = {
     adminCreate: "/admin/new",
     adminLogout: "/auth/login",
 
+    country: "/country",
+    countryCreate: "/country/new",
+    countryDetail: "/country/:id",
+
     promotion: "/promotion",
     promotionCreate: "/promotion/new",
     promotionDetail: "/promotion/:id",

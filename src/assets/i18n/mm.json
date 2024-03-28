@@ -24,6 +24,7 @@
     "menu_role": "အခန်းကဏ္ဍ",
     "menu_permission": "ခွင့်ပြုချက်",
     "menu_setting": "ဆက်တင်",
+    "menu_country" : "တိုင်းပြည်",
     "setting_card_title": "ဆက်တင်",
     "setting_card_sub_title": "ဆက်တင်ကို စီမံခန့်ခွဲသူကသာ ထိန်းချုပ်နိုင်သည်",
     "change_language": "ဘာသာစကားပြောင်းလဲခြင်း",
@@ -173,5 +174,10 @@
     "promotion_start_date": "ပရိုမိုးရှင်းစတင်သည့်ရက်စွဲ",
     "promotion_end_date": "ပရိုမိုးရှင်းပြီးဆုံးသည့်ရက်စွဲ",
     "thumbnail_photo" : "ပုံသေးဓာတ်ပုံ",
-    "product_photo" : "ထုတ်ကုန်ဓာတ်ပုံ"
+    "product_photo" : "ထုတ်ကုန်ဓာတ်ပုံ",
+    "color" : "အရောင်",
+    "country_create" : "နိုင်ငံဖန်တီးတယ်။",
+    "country_update" : "နိုင်ငံ update",
+    "country_code" : "နိုင်ငံကုဒ်",
+    "mobile_prefix" : "မိုဘိုင်း prefix"
 }

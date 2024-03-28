@@ -24,6 +24,7 @@
     "menu_role": "角色",
     "menu_permission": "允许",
     "menu_setting": "环境",
+    "menu_country": "国家",
     "setting_card_title": "环境",
     "setting_card_sub_title": "设置只能由管理员控制",
     "change_language": "改变语言",
@@ -173,5 +174,10 @@
     "promotion_start_date" : "促销开始日期",
     "promotion_end_date" : "促销结束日期",
     "thumbnail_photo" : "缩略图",
-    "product_photo" : "产品照片"
+    "product_photo" : "产品照片",
+    "color" : "颜色",
+    "country_create" : "国家创造",
+    "country_update" : "国家更新",
+    "country_code" : "国家代码",
+    "mobile_prefix" : "手机号码区号"
 }

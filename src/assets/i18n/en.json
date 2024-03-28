@@ -24,6 +24,8 @@
     "menu_role": "Role",
     "menu_permission": "Permission",
     "menu_setting": "Setting",
+    "menu_country": "Country",
+    "menu_location": "Location",
     "setting_card_title": "Setting",
     "setting_card_sub_title": "Setting can only control by administrator",
     "change_language": "Change Language",
@@ -173,5 +175,10 @@
     "promotion_start_date" : "Promotion Start Date",
     "promotion_end_date" : "Promotion End Date",
     "thumbnail_photo" : "Thumbnail Photo",
-    "product_photo" : "Product Photo"
+    "product_photo" : "Product Photo",
+    "color" : "Color",
+    "country_create" : "Country Create",
+    "country_update" : "Country Update",
+    "country_code" : "Country Code",
+    "mobile_prefix" : "Mobile Prefix"
 }

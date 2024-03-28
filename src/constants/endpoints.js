@@ -22,6 +22,8 @@ export const endpoints = {
     delivery: "delivery-address",
     order: "order",
     faq: "faq",
+    location: "location",
+    country: "location/country",
     region: "region",
     shop: "shop",
     count: "count",
