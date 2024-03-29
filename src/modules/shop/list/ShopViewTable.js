@@ -22,6 +22,7 @@ import { FilterByDate } from "../../../shares/FilterByDate";
 import { Card } from "primereact/card";
 import { NavigateId } from "../../../shares/NavigateId";
 import { ExportExcel } from "../../../shares/export";
+import { Avatar } from "primereact/avatar";
 
 export const ShopViewTable = () => {
 
@@ -149,9 +150,23 @@ export const ShopViewTable = () => {
         loadingData();
     }, [loadingData]);
 
+    /** Render - Column Icon Field
+    * @returns
+    */
+    const IconRender = ({ dataSource }) => {
+        return (
+            <Avatar
+                className="category-icon"
+                icon="pi pi-image"
+                shape="circle"
+                image={dataSource ? `${endpoints.image}/${dataSource.image}` : null}
+            />
+        );
+    };
+
     /**
- * Table Footer Render
- * **/
+    * Table Footer Render
+    * **/
     const FooterRender = () => {
         return (
             <div className=' flex items-center justify-content-between'>
@@ -245,6 +260,18 @@ export const ShopViewTable = () => {
                                                 value={value[col.field]}
                                             />
                                         );
+                                    case "country":
+                                        return <span>{value[col.field].name}</span>
+                                    case "region_or_state":
+                                        return <span>{value[col.field].name}</span>
+                                    case "city":
+                                        return <span>{value[col.field].name}</span>
+                                    case "township":
+                                        return <span>{value[col.field].name}</span>
+                                    case "shop_logo":
+                                        return <IconRender dataSource={value[col.field]} />
+                                    case "cover_photo":
+                                        return <IconRender dataSource={value[col.field]} />
                                     case "status":
                                         return <Status status={value[col.field]} />;
                                     case "region":

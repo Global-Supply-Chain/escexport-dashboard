@@ -31,7 +31,7 @@ export const shopService = {
     },
 
     update: async (dispatch, id, payload) => {
-        const response = await putRequest(`${endpoints.shop}/${id}`, payload);
+        const response = await postRequest(`${endpoints.shop}/${id}`, payload);
         await httpServiceHandler(dispatch, response);
 
         if(response.status === 200) {

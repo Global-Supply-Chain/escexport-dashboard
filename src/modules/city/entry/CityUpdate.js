@@ -12,7 +12,6 @@ import { Loading } from '../../../shares/Loading';
 import { FormMainAction } from '../../../shares/FormMainAction';
 import { Dropdown } from 'primereact/dropdown';
 import { generalStatus } from '../../../helpers/StatusHandler';
-import { formBuilder } from '../../../helpers/formBuilder';
 import { cityPayload } from '../cityPayload';
 import { cityService } from '../cityService';
 import { regionAndStateService } from '../../regionAndState/regionAndStateService';
@@ -79,8 +78,7 @@ export const CityUpdate = () => {
 
     const submitCityUpdate = async () => {
         setLoading(true);
-        const form = formBuilder(payload, cityPayload.update)
-        await cityService.update(dispatch, params.id, form);
+        await cityService.update(dispatch, params.id, payload);
         setLoading(false);
     }
 

@@ -33,7 +33,7 @@ export const Thumbnail = ({ preview, onSelect }) => {
             <div
                 className=" custom-thumbnail"
                 onClick={() => {
-                    document.getElementById("profile").click();
+                    document.getElementById("thumbnail").click();
                 }}
             >
                 {!src && <span className={'pi pi-image'}></span>}
@@ -53,7 +53,7 @@ export const Thumbnail = ({ preview, onSelect }) => {
                     />
                 )}
                 <input
-                    id="profile"
+                    id="thumbnail"
                     type="file"
                     accept="image/*"
                     className=" hidden"

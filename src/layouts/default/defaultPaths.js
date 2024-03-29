@@ -145,6 +145,12 @@ export const items = [
             },
         ]
     },
+    {
+        key: "8",
+        label: "menu_shop",
+        icon: "pi pi-fw pi-shopping-bag",
+        url: paths.shop
+    },
     // {
     //     key: '4',
     //     label: 'menu_category',

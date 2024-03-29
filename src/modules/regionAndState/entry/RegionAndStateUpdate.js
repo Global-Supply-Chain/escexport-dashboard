@@ -15,7 +15,6 @@ import { regionAndStateService } from '../regionAndStateService';
 import { countryService } from '../../country/countryService';
 import { Dropdown } from 'primereact/dropdown';
 import { generalStatus } from '../../../helpers/StatusHandler';
-import { formBuilder } from '../../../helpers/formBuilder';
 
 export const RegionAndStateUpdate = () => {
 
@@ -79,8 +78,7 @@ export const RegionAndStateUpdate = () => {
 
     const submitRegionAndStateUpdate = async () => {
         setLoading(true);
-        const form = formBuilder(payload, regionAndStatePayload.update)
-        await regionAndStateService.update(dispatch,params.id, form);
+        await regionAndStateService.update(dispatch,params.id, payload);
         setLoading(false);
     }
 

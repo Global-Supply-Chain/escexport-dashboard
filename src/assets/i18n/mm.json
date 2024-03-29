@@ -191,7 +191,9 @@
     "city_list" : "မြို့စာရင်း",
     "city_create" : "မြို့ဖန်တီးရန်",
     "city_update" : "မြို့ update",
+    "township" : "မြို့",
     "township_list" : "မြို့နယ်စာရင်း",
     "township_create" : "မြို့နယ်ဖန်တီးရန်",
-    "township_update" : "မြို့နယ်အဆင့်မြှင့်တင်ရန်"
+    "township_update" : "မြို့နယ်အဆင့်မြှင့်တင်ရန်",
+    "cover_photo": "မျက်နှာဖုံးဓာတ်ပုံ"
 }
