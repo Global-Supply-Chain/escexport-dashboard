@@ -11,16 +11,17 @@ export const shopRoutes = [
         path: paths.shop,
         element: <ShopList />,
         loader : () => {
-            const role = getData(keys.ROLE);
-            const permission = getData(keys.PERMISSION);
-            const per = permission.filter((per) => per === "SHOP_INDEX");
+            // const role = getData(keys.ROLE);
+            // const permission = getData(keys.PERMISSION);
+            // const per = permission.filter((per) => per === "SHOP_INDEX");
             return{
                 breadcrumbs: [
                     { label: "Dashboard", url: paths.dashboard },
                     { label: "List", url: paths.shop },
+                    { label: "Create", url: paths.shopCreate },
                 ],
-                role: role,
-                permission: per
+                // role: role,
+                // permission: per
             }
         },
         

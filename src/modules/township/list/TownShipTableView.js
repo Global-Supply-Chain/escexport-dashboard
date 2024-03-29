@@ -243,6 +243,8 @@ export const TownShipTableView = () => {
                                                 value={value[col.field]}
                                             />
                                         );
+                                    case "city":
+                                        return <span>{value[col.field].name}</span>
                                     case "status":
                                         return <Status status={value[col.field]} />;
                                     default:

@@ -192,7 +192,9 @@
     "city_list" : "City List",
     "city_create" : "City Create",
     "city_update" : "City Update",
+    "township" : "Township",
     "township_list" : "Township List",
     "township_create" : "Township Create",
-    "township_update" : "Township Update"
+    "township_update" : "Township Update",
+    "cover_photo": "Cover photo"
 }

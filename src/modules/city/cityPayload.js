@@ -12,7 +12,7 @@ export const cityPayload = {
     },
     columns: [
         { field: "name", header: "Name", sortable: true, show: true },
-        { field: "region_or_state_name", header: "Region Or State", sortable: true, show: true },
+        { field: "region_or_state", header: "Region Or State", sortable: true, show: true },
         { field: "status", header: "Status", show: true }
     ],
     paginateParams: {

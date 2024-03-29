@@ -12,7 +12,7 @@ export const regionAndStatePayload = {
     },
     columns: [
         { field: "name", header: "Name", sortable: true, show: true },
-        { field: "country_name", header: "Country", sortable: true, show: true },
+        { field: "country", header: "Country", sortable: true, show: true },
         { field: "status", header: "Status", show: true }
     ],
     paginateParams: {

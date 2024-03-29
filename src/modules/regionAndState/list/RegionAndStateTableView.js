@@ -243,6 +243,8 @@ export const RegionAndStateTableView = () => {
                                                 value={value[col.field]}
                                             />
                                         );
+                                    case "country":
+                                        return <span>{value[col.field].name}</span>    
                                     case "status":
                                         return <Status status={value[col.field]} />;
                                     default:
