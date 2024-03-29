@@ -236,13 +236,15 @@ export const CityTableView = () => {
                             sortable
                             body={(value) => {
                                 switch (col.field) {
-                                    case "id":
+                                    case "name":
                                         return (
                                             <NavigateId
-                                                url={`${paths.city}/${value[col.field]}`}
+                                                url={`${paths.city}/${value['id']}`}
                                                 value={value[col.field]}
                                             />
                                         );
+                                    case "region_or_state":
+                                        return <span>{value[col.field].name}</span>
                                     case "status":
                                         return <Status status={value[col.field]} />;
                                     default:

@@ -191,7 +191,9 @@
     "city_list" : "城市列表",
     "city_create" : "城市创造",
     "city_update" : "城市更新",
+    "township" : "乡",
     "township_list" : "乡镇名单",
     "township_create" : "乡镇创建",
-    "township_update" : "乡镇更新"
+    "township_update" : "乡镇更新",
+    "cover_photo" : "封面照片"
 }

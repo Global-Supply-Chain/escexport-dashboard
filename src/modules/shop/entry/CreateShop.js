@@ -11,29 +11,60 @@ import { paths } from '../../../constants/paths'
 import { useNavigate } from 'react-router-dom'
 import { shopService } from '../shopService'
 import { shopPayload } from '../shopPayload'
-import { regionService } from '../../region/regionService'
 import { Loading } from '../../../shares/Loading'
 import { FormMainAction } from '../../../shares/FormMainAction'
+import { countryService } from '../../country/countryService'
+import { regionAndStateService } from '../../regionAndState/regionAndStateService'
+import { cityService } from '../../city/cityService'
+import { townshipService } from '../../township/townshipService'
+import { AppEditor } from '../../../shares/AppEditor'
+import { ImageUpload } from '../../../shares/ImageUpload'
+import { Thumbnail } from '../../../shares/Thumbnail'
+import { formBuilder } from '../../../helpers/formBuilder'
+import { getRequest } from '../../../helpers/api'
+import { endpoints } from '../../../constants/endpoints'
+
+const filterStatus = {
+    filter: "status",
+    value: "ACTIVE"
+}
 
 export const CreateShop = () => {
 
     const [loading, setLoading] = useState(false);
     const [payload, setPayload] = useState(shopPayload.create);
+    const [countryList, setCountry] = useState([]);
     const [regionList, setRegionList] = useState([]);
+    const [cityList, setCity] = useState([]);
+    const [townshipList, setTownship] = useState([]);
+    const [desc, setDesc] = useState();
+    const [appType, setAppType] = useState([]);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { translate } = useSelector(state => state.setting);
 
-    /**
-    * Loading region Data
-    */
-    const loadingRegionData = useCallback(async () => {
+
+    /** 
+     * Loading country data 
+     * */
+    const loadingData = useCallback(async () => {
         setLoading(true);
 
-        const result = await regionService.index(dispatch);
-        if (result.status === 200) {
-            const formatData = result.data?.map((region) => {
+        const country = await countryService.index(dispatch, filterStatus);
+        if (country.status === 200) {
+            const formatData = country.data?.map((country) => {
+                return {
+                    label: country?.name,
+                    value: country?.id
+                }
+            })
+            setCountry(formatData);
+        }
+
+        const region = await regionAndStateService.index(dispatch, filterStatus);
+        if (region.status === 200) {
+            const formatData = region.data?.map((region) => {
                 return {
                     label: region?.name,
                     value: region?.id
@@ -42,18 +73,50 @@ export const CreateShop = () => {
             setRegionList(formatData);
         }
 
+        const city = await cityService.index(dispatch, filterStatus);
+        if (city.status === 200) {
+            const formatData = city.data?.map((city) => {
+                return {
+                    label: city?.name,
+                    value: city?.id
+                }
+            })
+            setCity(formatData);
+        }
+
+        const township = await townshipService.index(dispatch, filterStatus);
+        if (township.status === 200) {
+            const formatData = township.data?.map((township) => {
+                return {
+                    label: township?.name,
+                    value: township?.id
+                }
+            })
+            setTownship(formatData);
+        }
+
+        const appTypeStatus = await getRequest(`${endpoints.status}?type=apptype`);
+        if (appTypeStatus.status === 200) {
+            setAppType(appTypeStatus.data.apptype);
+        };
+
         setLoading(false);
-    }, [dispatch]);
+
+    }, [dispatch])
+
 
     const submitShopCreate = async () => {
         setLoading(true);
-        await shopService.store(payload,dispatch);
+        const updatePayload = { ...payload };
+        updatePayload.description = desc;
+        const form = formBuilder(updatePayload, shopPayload.create)
+        await shopService.store(form, dispatch);
         setLoading(false);
     }
 
     useEffect(() => {
-        loadingRegionData()
-    }, [loadingRegionData])
+        loadingData()
+    }, [loadingData])
 
     return (
         <div className=' grid'>
@@ -72,16 +135,59 @@ export const CreateShop = () => {
 
                     <div className=' grid'>
 
+                        <div className='col-12 flex align-items-center justify-content-center'>
+                            <div className='w-full flex flex-column justify-content-center align-items-center'>
+                                <ImageUpload
+                                    preview={payload.shop_logo ? payload.shop_logo.image : null}
+                                    onSelect={(e) => payloadHandler(payload, e, 'shop_logo', (updateValue) => {
+                                        setPayload(updateValue);
+                                    })}
+                                />
+                                <ValidationMessage field={'shop_logo'} />
+                            </div>
+                        </div>
+
+                        <div className=" col-12">
+                            <h3 className=" thumbnail-title">{translate.cover_photo}</h3>
+                            <Thumbnail
+                                preview={payload.cover_photo ? payload.cover_photo.image : null}
+                                onSelect={(e) => payloadHandler(payload, e, 'cover_photo', (updateValue) => {
+                                    setPayload(updateValue);
+                                })}
+                            />
+                        </div>
+
                         <div className="col-12 md:col-4 lg:col-4 py-3">
-                            <label htmlFor="region" className='input-label'>{translate.region} (required*) </label>
+                            <label htmlFor="country" className='input-label text-black'>{translate.country} <span>(required*)</span> </label>
+                            <div className="p-inputgroup mt-2">
+                                <Dropdown
+                                    inputId='country'
+                                    autoComplete='country name'
+                                    name='country'
+                                    filter
+                                    value={payload.country_id}
+                                    onChange={(e) => payloadHandler(payload, e.value, 'country_id', (updateValue) => {
+                                        setPayload(updateValue);
+                                    })}
+                                    options={countryList}
+                                    placeholder="Select a country"
+                                    disabled={loading}
+                                    className="p-inputtext-sm"
+                                />
+                            </div>
+                            <ValidationMessage field="region_or_state_id" />
+                        </div>
+
+                        <div className="col-12 md:col-4 lg:col-4 py-3">
+                            <label htmlFor="region" className='input-label text-black'>{translate.region} <span>(required*)</span> </label>
                             <div className="p-inputgroup mt-2">
                                 <Dropdown
                                     inputId='region'
                                     autoComplete='region name'
                                     name='region'
                                     filter
-                                    value={payload.region_id}
-                                    onChange={(e) => payloadHandler(payload, e.value, 'region_id', (updateValue) => {
+                                    value={payload.region_or_state_id}
+                                    onChange={(e) => payloadHandler(payload, e.value, 'region_or_state_id', (updateValue) => {
                                         setPayload(updateValue);
                                     })}
                                     options={regionList}
@@ -90,7 +196,70 @@ export const CreateShop = () => {
                                     className="p-inputtext-sm"
                                 />
                             </div>
-                            <ValidationMessage field="region_id" />
+                            <ValidationMessage field="region_or_state_id" />
+                        </div>
+
+                        <div className="col-12 md:col-4 lg:col-4 py-3">
+                            <label htmlFor="city" className='input-label text-black'>{translate.city} <span>(required*)</span> </label>
+                            <div className="p-inputgroup mt-2">
+                                <Dropdown
+                                    inputId='city'
+                                    autoComplete='city name'
+                                    name='city'
+                                    filter
+                                    value={payload.city_id}
+                                    onChange={(e) => payloadHandler(payload, e.value, 'city_id', (updateValue) => {
+                                        setPayload(updateValue);
+                                    })}
+                                    options={cityList}
+                                    placeholder="Select a city"
+                                    disabled={loading}
+                                    className="p-inputtext-sm"
+                                />
+                            </div>
+                            <ValidationMessage field="city_id" />
+                        </div>
+
+                        <div className="col-12 md:col-4 lg:col-4 py-3">
+                            <label htmlFor="township" className='input-label text-black'>{translate.township} <span>(required*)</span> </label>
+                            <div className="p-inputgroup mt-2">
+                                <Dropdown
+                                    inputId='township'
+                                    autoComplete='township name'
+                                    name='township'
+                                    filter
+                                    value={payload.township_id}
+                                    onChange={(e) => payloadHandler(payload, e.value, 'township_id', (updateValue) => {
+                                        setPayload(updateValue);
+                                    })}
+                                    options={townshipList}
+                                    placeholder="Select a township"
+                                    disabled={loading}
+                                    className="p-inputtext-sm"
+                                />
+                            </div>
+                            <ValidationMessage field="township_id" />
+                        </div>
+
+                        <div className="col-12 md:col-4 lg:col-4 py-3">
+                            <label htmlFor="apptype" className='input-label text-black'>{translate.township} <span>(required*)</span> </label>
+                            <div className="p-inputgroup mt-2">
+                                <Dropdown
+                                    inputId='apptype'
+                                    autoComplete='app type name'
+                                    name='app type'
+                                    filter
+                                    value={payload.app_type}
+                                    onChange={(e) => payloadHandler(payload, e.value, 'app_type', (updateValue) => {
+                                        setPayload(updateValue);
+                                    })}
+                                    options={appType}
+                                    placeholder="Select a app type"
+                                    disabled={loading}
+                                    className="p-inputtext-sm"
+                                />
+                            </div>
+                            <ValidationMessage field="app_type" />
                         </div>
 
                         <div className="col-12 md:col-4 lg:col-4 py-3">
@@ -137,6 +306,27 @@ export const CreateShop = () => {
                             <ValidationMessage field="phone" />
                         </div>
 
+                        <div className=" col-12 md:col-6 lg:col-4 py-3">
+                            <div className="flex flex-column gap-2">
+                                <label htmlFor="email" className=" text-black"> {translate.email} <span> (required*) </span></label>
+                                <InputText
+                                    className="p-inputtext-sm text-black"
+                                    keyfilter={"email"}
+                                    id="email"
+                                    name="email"
+                                    aria-describedby="email-help"
+                                    tooltip={translate.email}
+                                    tooltipOptions={{ ...tooltipOptions }}
+                                    placeholder={translate.email}
+                                    disabled={loading}
+                                    onChange={(e) => payloadHandler(payload, e.target.value, "email", (updateValue) => {
+                                        setPayload(updateValue);
+                                    })}
+                                />
+                                <ValidationMessage field={"email"} />
+                            </div>
+                        </div>
+
                         <div className="col-12 md:col-4 lg:col-4 py-3">
                             <label htmlFor="address" className='input-label'>{translate.address}</label>
                             <div className="p-inputgroup mt-2">
@@ -181,7 +371,15 @@ export const CreateShop = () => {
                             </div>
                         </div>
 
-                        <FormMainAction 
+                        <div className=" col-12 py-3">
+                            <div className="flex flex-column gap-2">
+                                <span className=" text-black">{translate.description} </span>
+                                <AppEditor onChange={(e) => setDesc(e)} />
+                                <ValidationMessage field={"description"} />
+                            </div>
+                        </div>
+
+                        <FormMainAction
                             cancel={translate.cancel}
                             onCancel={() => navigate(paths.shop)}
                             submit={translate.submit}
