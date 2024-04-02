@@ -23,6 +23,7 @@ import { Thumbnail } from '../../../shares/Thumbnail'
 import { formBuilder } from '../../../helpers/formBuilder'
 import { getRequest } from '../../../helpers/api'
 import { endpoints } from '../../../constants/endpoints'
+import { generalStatus } from '../../../helpers/StatusHandler'
 
 const filterStatus = {
     filter: "status",
@@ -39,6 +40,7 @@ export const UpdateShop = () => {
     const [townshipList, setTownship] = useState([]);
     const [desc, setDesc] = useState();
     const [appType, setAppType] = useState([]);
+    const [status, setStatus] = useState([]);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -122,10 +124,21 @@ export const UpdateShop = () => {
         loadingData()
     }, [loadingData])
 
+    /**
+    * Return general status
+    * @returns {Array} Array that contain general status ACTIVE,DISABLE and DELETE
+    * **/
     useEffect(() => {
-      if(shop){
-        setPayload(shop)
-      }
+        generalStatus().then((data) => {
+            setStatus(data)
+        }).catch((error) => console.log(error))
+
+    }, [])
+
+    useEffect(() => {
+        if (shop) {
+            setPayload(shop)
+        }
     }, [shop])
 
     return (
@@ -375,6 +388,27 @@ export const UpdateShop = () => {
                                     })}
                                 />
                                 <ValidationMessage field={"location"} />
+                            </div>
+                        </div>
+
+                        <div className=' col-12 md:col-6 lg:col-4 py-3'>
+                            <div className="flex flex-column gap-2">
+                                <label htmlFor="status" className=' text-black'>{translate.status}</label>
+                                <Dropdown
+                                    inputId='status'
+                                    name="status"
+                                    autoComplete='item status'
+                                    options={status}
+                                    placeholder="Select a general status"
+                                    disabled={loading}
+                                    value={payload.status}
+                                    className="p-inputtext-sm text-black"
+                                    onChange={(e) => payloadHandler(payload, e.value, 'status', (updateValue) => {
+                                        setPayload(updateValue);
+                                    })}
+                                />
+
+                                <ValidationMessage field={"status"} />
                             </div>
                         </div>
 

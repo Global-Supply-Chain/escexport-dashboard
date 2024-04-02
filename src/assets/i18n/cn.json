@@ -28,6 +28,7 @@
     "menu_region_and_state" : "菜单区域和状态",
     "menu_city" : "菜单城市",
     "menu_township" : "菜单乡",
+    "menu_location" : "地点",
     "setting_card_title": "环境",
     "setting_card_sub_title": "设置只能由管理员控制",
     "change_language": "改变语言",
