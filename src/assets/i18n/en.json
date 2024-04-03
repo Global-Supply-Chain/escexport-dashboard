@@ -180,6 +180,7 @@
     "thumbnail_photo" : "Thumbnail Photo",
     "product_photo" : "Product Photo",
     "color" : "Color",
+    "size" : "Size",
     "country" : "Country",
     "country_create" : "Country Create",
     "country_update" : "Country Update",
