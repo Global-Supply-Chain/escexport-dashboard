@@ -279,7 +279,7 @@ const ItemTableView = () => {
             width: '50px',
             height: '50px',
             borderRadius: '50%',
-            backgroundColor: `${color}`,
+            backgroundColor: `#${color}`,
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',

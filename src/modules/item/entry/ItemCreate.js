@@ -23,6 +23,37 @@ import { FormMainAction } from "../../../shares/FormMainAction";
 import { Thumbnail } from "../../../shares/Thumbnail";
 import { MultiSelect } from 'primereact/multiselect';
 
+const itemSizes = [
+  {
+    name: "X SMALL",
+    code: "xs"
+  },
+  {
+    name: "SMALL",
+    code: "sm"
+  },
+  {
+    name: "MEDIUM",
+    code: "md"
+  },
+  {
+    name: "X LARGE",
+    code: "xl"
+  },
+  {
+    name: "2X LARGE",
+    code: "2xl"
+  },
+  {
+    name: "3X LARGE",
+    code: "3xl"
+  },
+  {
+    name: "4X LARGE",
+    code: "4xl"
+  }
+]
+
 const ItemCreate = () => {
   const [loading, setLoading] = useState(false);
   const [categoryList, setCategoryList] = useState([]);
@@ -30,8 +61,7 @@ const ItemCreate = () => {
   const [payload, setPayload] = useState(itemPayload.create);
   const [content, setContent] = useState("");
   const [selectPhoto, setSelectPhoto] = useState([]);
-  const [color, setColor] = useState([]);
-  const [pickColor, setPickColor] = useState();
+  const [pickColor, setPickColor] = useState([]);
   const fileUploadRef = useRef(null);
 
   const dispatch = useDispatch();
@@ -135,11 +165,12 @@ const ItemCreate = () => {
 
   const countryTemplate = (option) => {
     return (
-      <div className="flex align-items-center">
-        <div>
-
-        </div>
-        <div>{option.name}</div>
+      <div style={{
+        width: '30px',
+        height: '30px',
+        borderRadius: '10px',
+        backgroundColor: `#${option?.code}`
+      }}>
       </div>
     );
   };
@@ -178,15 +209,29 @@ const ItemCreate = () => {
 
     const formData = new FormData();
 
+    const filterColor = payload.item_color.map((color) => {
+      return color.code
+    })
+
+    const filterSize = payload.item_size.map((size) => {
+      return size.code;
+    })
+
     selectPhoto.map((value, index) => {
       formData.append(`product_photo[${index}]`, value);
       return value;
     });
 
+    filterColor.map((value, index) => {
+      formData.append(`item_color[${index}]`, value);
+    });
+
+    filterSize.map((value, index) => {
+      formData.append(`item_size[${index}]`, value);
+    });
+
     formData.append("thumbnail_photo", thumbnail_photo);
     formData.append("item_code", item_code);
-    formData.append("item_color", item_color);
-    formData.append("item_size", item_size);
     formData.append("content", content);
     formData.append("category_id", category_id);
     formData.append("sell_price", sell_price);
@@ -250,8 +295,8 @@ const ItemCreate = () => {
   useEffect(() => {
     loadingCategoryData();
   }, [loadingCategoryData]);
-  
-  console.log(color);
+
+  console.log(pickColor);
 
   return (
     <div className=" grid">
@@ -421,9 +466,15 @@ const ItemCreate = () => {
                   {translate.color}
                 </label>
                 <div className="p-inputgroup flex-1">
-                  <ColorPicker 
+                  <ColorPicker
                     value={pickColor}
-                    onChange={(e) => setPickColor(e.value)}  
+                    onChange={(e) => {
+                      const newValue = e.value;
+                      setPickColor(prevColor => [...prevColor, {
+                        name: newValue,
+                        code: newValue
+                      }]);
+                    }}
                   />
                   <MultiSelect
                     className="p-inputtext-sm text-black"
@@ -433,16 +484,16 @@ const ItemCreate = () => {
                     autoComplete="item color"
                     aria-describedby="color-help"
                     tooltip="Item color"
-                    options={color}
-                    itemTemplate={countryTemplate} 
+                    options={pickColor}
+                    itemTemplate={countryTemplate}
                     panelFooterTemplate={panelFooterTemplate}
-                    display="chip"
+                    filter
                     tooltipOptions={{ ...tooltipOptions }}
                     placeholder="Enter item color"
                     disabled={loading}
-                    rows={5}
-                    cols={30}
-                    onChange={(e) =>
+                    value={payload.item_color ? payload.item_color : ''}
+                    onChange={(e) => {
+                      console.log(e.target.value)
                       payloadHandler(
                         payload,
                         e.target.value,
@@ -452,10 +503,33 @@ const ItemCreate = () => {
                         }
                       )
                     }
+                    }
                   />
                 </div>
                 <ValidationMessage field={"item_color"} />
               </div>
+            </div>
+
+            <div className="col-12 md:col-4 lg:col-4 py-3">
+              <label htmlFor='size' className='input-label'> {translate.size} </label>
+              <div className="p-inputgroup mt-2">
+                <MultiSelect
+                  inputId='size'
+                  value={payload ? payload.item_size : null}
+                  onChange={(e) => {
+                    payloadHandler(payload, e.value, 'item_size', (updateValue) => {
+                      setPayload(updateValue);
+                    })
+                  }}
+                  filter
+                  optionLabel="name"
+                  options={itemSizes}
+                  placeholder="Select a item size"
+                  disabled={loading}
+                  className="p-inputtext-sm"
+                />
+              </div>
+              <ValidationMessage field="item_size" />
             </div>
 
             <div className=" col-12 md:col-6 lg:col-4 py-3">

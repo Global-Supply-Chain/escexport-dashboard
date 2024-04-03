@@ -180,6 +180,7 @@
     "thumbnail_photo" : "缩略图",
     "product_photo" : "产品照片",
     "color" : "颜色",
+    "size" : "尺寸",
     "country" : "国家",
     "country_create" : "国家创造",
     "country_update" : "国家更新",
