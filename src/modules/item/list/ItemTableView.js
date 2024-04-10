@@ -11,7 +11,6 @@ import { paths } from '../../../constants/paths';
 import { datetime } from '../../../helpers/datetime';
 import { Search } from '../../../shares/Search';
 import { Button } from 'primereact/button';
-import { Badge } from 'primereact/badge';
 import { Paginator } from 'primereact/paginator';
 import { setPaginate } from '../itemSlice';
 import { getRequest } from '../../../helpers/api';
@@ -436,6 +435,7 @@ const ItemTableView = () => {
                                         return <div className=' relative'>
                                             {value[col.field]?.slice(0, 3).map((color, index) => {
                                                 return <ColorRender
+                                                        key={`color_${index}`}
                                                         color={color}
                                                         index={index}
                                                         dataSource={value[col.field]}
@@ -446,6 +446,7 @@ const ItemTableView = () => {
                                         return <div className=' relative'>
                                             {value[col.field]?.slice(0, 3).map((size, index) => {
                                             return <SizeRender 
+                                                        key={`size_${index}`}
                                                         dataSource={value[col.field]}
                                                         size={size}
                                                         index={index}
