@@ -33,7 +33,7 @@ export const promotionPayload = {
         order: "id",
         sort: "DESC",
         filter: "status",
-        value : "ACTIVE",
+        value : "",
         start_date: "",
         end_date: ""
     }
