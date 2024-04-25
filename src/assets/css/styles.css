@@ -640,3 +640,37 @@ h1,h2,h3,h4,h5,h6{
 .p-multiselect {
     height: 40px;
 }
+
+
+/** Components **/
+/** Color Picker **/
+.multi-color-picker > .p-colorpicker,
+.multi-color-picker > .p-inputtext {
+    height: 48px!important;
+}
+
+.color-circle-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.color-circle {
+    width: 50px;
+    height: 50px;
+    background-color: gold;
+    border-radius: 50%;
+    margin-left: 10px;
+    margin-right: 10px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.color-circle > span {
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+}
