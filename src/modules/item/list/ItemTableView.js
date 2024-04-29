@@ -223,6 +223,8 @@ const ItemTableView = () => {
 
     const SizeRender = ({ dataSource, size, index }) => {
 
+        console.log(dataSource);
+
         const style = {
             width: '50px',
             height: '50px',
@@ -273,12 +275,11 @@ const ItemTableView = () => {
     }
 
     const ColorRender = ({ dataSource, color, index }) => {
-
         const style = {
             width: '50px',
             height: '50px',
             borderRadius: '50%',
-            backgroundColor: `#${color}`,
+            backgroundColor: `${color}`,
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',

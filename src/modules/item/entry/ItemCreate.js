@@ -24,6 +24,37 @@ import { Thumbnail } from "../../../shares/Thumbnail";
 import { MultiSelect } from 'primereact/multiselect';
 import { MultiColorPicker } from "../../../shares/MultiColorPicker";
 
+const itemSizes = [
+  {
+    name: "X SMALL",
+    code: "xs"
+  },
+  {
+    name: "SMALL",
+    code: "sm"
+  },
+  {
+    name: "MEDIUM",
+    code: "md"
+  },
+  {
+    name: "X LARGE",
+    code: "xl"
+  },
+  {
+    name: "2X LARGE",
+    code: "2xl"
+  },
+  {
+    name: "3X LARGE",
+    code: "3xl"
+  },
+  {
+    name: "4X LARGE",
+    code: "4xl"
+  }
+]
+
 const ItemCreate = () => {
   const [loading, setLoading] = useState(false);
   const [categoryList, setCategoryList] = useState([]);
@@ -179,6 +210,12 @@ const ItemCreate = () => {
     } = payload;
 
     const formData = new FormData();
+    // console.log(item_size);
+    item_size.map((size, index) => {
+      // console.log(size);
+      formData.append(`item_size[${index}]`, size.code);
+    });
+    return;
 
     selectPhoto.map((value, index) => {
       formData.append(`product_photo[${index}]`, value);
@@ -187,8 +224,12 @@ const ItemCreate = () => {
 
     formData.append("thumbnail_photo", thumbnail_photo);
     formData.append("item_code", item_code);
-    formData.append("item_color", item_color);
-    formData.append("item_size", item_size);
+    item_color.map((color,index) => {
+      formData.append(`item_color[${index}]`, color);
+    });
+    item_size.map((size, index) => {
+      formData.append(`item_size[${index}]`, size);
+    });
     formData.append("content", content);
     formData.append("category_id", category_id);
     formData.append("sell_price", sell_price);
@@ -250,7 +291,7 @@ const ItemCreate = () => {
   useEffect(() => {
     loadingCategoryData();
   }, [loadingCategoryData]);
-  
+
 
   return (
     <div className=" grid">
@@ -416,13 +457,13 @@ const ItemCreate = () => {
 
             <div className="col-12 md:col-12 lg:col-12 py-3">
               <MultiColorPicker onChange={(e) => payloadHandler(
-                      payload,
-                      e,
-                      "item_color",
-                      (updateValue) => {
-                        setPayload(updateValue);
-                      }
-                    )}
+                payload,
+                e,
+                "item_color",
+                (updateValue) => {
+                  setPayload(updateValue);
+                }
+              )}
               />
             </div>
 
@@ -459,6 +500,28 @@ const ItemCreate = () => {
                 <ValidationMessage field={"item_color"} />
               </div>
             </div> */}
+
+            <div className="col-12 md:col-4 lg:col-4 py-3">
+              <label htmlFor='size' className='input-label'> {translate.size} </label>
+              <div className="p-inputgroup mt-2">
+                <MultiSelect
+                  inputId='size'
+                  value={payload ? payload.item_size : null}
+                  onChange={(e) => {
+                    payloadHandler(payload, e.value, 'item_size', (updateValue) => {
+                      setPayload(updateValue);
+                    })
+                  }}
+                  filter
+                  optionLabel="name"
+                  options={itemSizes}
+                  placeholder="Select a item size"
+                  disabled={loading}
+                  className="p-inputtext-sm"
+                />
+              </div>
+              <ValidationMessage field="item_size" />
+            </div>
 
             <div className=" col-12 md:col-6 lg:col-4 py-3">
               <div className="flex flex-column gap-2">

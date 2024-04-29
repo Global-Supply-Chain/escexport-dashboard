@@ -393,7 +393,7 @@ export const UpdateShop = () => {
 
                         <div className=' col-12 md:col-6 lg:col-4 py-3'>
                             <div className="flex flex-column gap-2">
-                                <label htmlFor="status" className=' text-black'>{translate.status}</label>
+                                <label htmlFor="status" className=' text-black'>{translate.status} <span>(required*)</span></label>
                                 <Dropdown
                                     inputId='status'
                                     name="status"
@@ -402,7 +402,7 @@ export const UpdateShop = () => {
                                     placeholder="Select a general status"
                                     disabled={loading}
                                     value={payload.status}
-                                    className="p-inputtext-sm text-black"
+                                    className="p-inputtext-sm"
                                     onChange={(e) => payloadHandler(payload, e.value, 'status', (updateValue) => {
                                         setPayload(updateValue);
                                     })}
