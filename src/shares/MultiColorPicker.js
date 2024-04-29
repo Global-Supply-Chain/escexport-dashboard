@@ -6,23 +6,28 @@ import { useCallback, useEffect, useRef, useState } from "react"
 export const MultiColorPicker = ({ onChange }) => {
 
     const [color, setColor] = useState("#000000");
-    const [colors, setColors] = useState([]);
+    let [colors, setColors] = useState([]);
 
-    const updateColor = () => {
-        const updateColors = colors;
-        updateColors.push(`#${color}`);
-        setColors(updateColors);
+    const updateColor = useCallback(() => {
+        if(color){
+            setColors(prevColors => [...prevColors, `#${color}`]);
+        }
+    }, [color])
+
+    const filterColor = (color) => {
+        const updateColor = colors.filter(col => col !== color);
+        setColors(updateColor);
     }
 
     const watchColors = useCallback(() => {
         if (colors) {
             onChange(colors);
         }
-    }, [colors, onChange]);
+    }, [colors]);
 
     useEffect(() => {
-        watchColors()
-    }, [watchColors]);
+        watchColors();
+    }, [colors]);
 
     return (
         <div className="grid">
@@ -57,7 +62,12 @@ export const MultiColorPicker = ({ onChange }) => {
                 <div className="color-circle-wrapper">
                     {colors.length > 0 && colors.map((color, index) => {
                         return (
-                            <div key={`color_circle_id_${index}`} className="color-circle" style={{ backgroundColor: `${color}` }}>
+                            <div 
+                                key={`color_circle_id_${index}`} 
+                                className="color-circle cursor-pointer" 
+                                style={{ backgroundColor: `${color}` }}
+                                onClick={() => filterColor(color)}
+                            >
                                 <span className="pi pi-times"></span>
                             </div>
                         )

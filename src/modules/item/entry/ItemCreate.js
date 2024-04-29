@@ -415,7 +415,15 @@ const ItemCreate = () => {
             </div>
 
             <div className="col-12 md:col-12 lg:col-12 py-3">
-              <MultiColorPicker onChange={(e) => console.log(e)}/>
+              <MultiColorPicker onChange={(e) => payloadHandler(
+                      payload,
+                      e,
+                      "item_color",
+                      (updateValue) => {
+                        setPayload(updateValue);
+                      }
+                    )}
+              />
             </div>
 
             {/* <div className=" col-12 md:col-6 lg:col-4 py-3">
