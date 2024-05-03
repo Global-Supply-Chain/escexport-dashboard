@@ -110,7 +110,12 @@ export const CreateShop = () => {
         const updatePayload = { ...payload };
         updatePayload.description = desc;
         const form = formBuilder(updatePayload, shopPayload.create)
-        await shopService.store(form, dispatch);
+        const result = await shopService.store(form, dispatch);
+
+        if(result.status === 200){
+            navigate(`${paths.shop}/${result.data.id}`);
+        }
+
         setLoading(false);
     }
 
@@ -242,7 +247,7 @@ export const CreateShop = () => {
                         </div>
 
                         <div className="col-12 md:col-4 lg:col-4 py-3">
-                            <label htmlFor="apptype" className='input-label text-black'>{translate.township} <span>(required*)</span> </label>
+                            <label htmlFor="apptype" className='input-label text-black'>{translate.app_type} <span>(required*)</span> </label>
                             <div className="p-inputgroup mt-2">
                                 <Dropdown
                                     inputId='apptype'

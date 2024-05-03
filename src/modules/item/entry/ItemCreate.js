@@ -24,6 +24,37 @@ import { Thumbnail } from "../../../shares/Thumbnail";
 import { MultiSelect } from 'primereact/multiselect';
 import { MultiColorPicker } from "../../../shares/MultiColorPicker";
 
+const itemSizes = [
+  {
+    name: "X SMALL",
+    code: "xs"
+  },
+  {
+    name: "SMALL",
+    code: "sm"
+  },
+  {
+    name: "MEDIUM",
+    code: "md"
+  },
+  {
+    name: "X LARGE",
+    code: "xl"
+  },
+  {
+    name: "2X LARGE",
+    code: "2xl"
+  },
+  {
+    name: "3X LARGE",
+    code: "3xl"
+  },
+  {
+    name: "4X LARGE",
+    code: "4xl"
+  }
+]
+
 const ItemCreate = () => {
   const [loading, setLoading] = useState(false);
   const [categoryList, setCategoryList] = useState([]);
@@ -187,8 +218,13 @@ const ItemCreate = () => {
 
     formData.append("thumbnail_photo", thumbnail_photo);
     formData.append("item_code", item_code);
-    formData.append("item_color", item_color);
-    formData.append("item_size", item_size);
+    item_color.map((color,index) => {
+      formData.append(`item_color[${index}]`, color);
+    });
+    formData.append(`item_size`, JSON.stringify(item_size));
+    // item_size.map((size, index) => {
+    //   formData.append(`item_size[${index}]`, size);
+    // });
     formData.append("content", content);
     formData.append("category_id", category_id);
     formData.append("sell_price", sell_price);
@@ -250,7 +286,7 @@ const ItemCreate = () => {
   useEffect(() => {
     loadingCategoryData();
   }, [loadingCategoryData]);
-  
+
 
   return (
     <div className=" grid">
@@ -305,7 +341,7 @@ const ItemCreate = () => {
                   name="item category"
                   filter
                   autoComplete="item category"
-                  value={payload.category_id}
+                  value={payload.category_id ? payload.category_id : ''}
                   onChange={(e) =>
                     payloadHandler(
                       payload,
@@ -335,7 +371,7 @@ const ItemCreate = () => {
                   name="shop item"
                   filter
                   autoComplete="shop item"
-                  value={payload.shop_id}
+                  value={payload.shop_id ? payload.shop_id : ''}
                   onChange={(e) =>
                     payloadHandler(
                       payload,
@@ -364,6 +400,7 @@ const ItemCreate = () => {
                   className="p-inputtext-sm text-black"
                   id="name"
                   name="name"
+                  value={payload.name ? payload.name : ''}
                   autoComplete="item name"
                   aria-describedby="name-help"
                   tooltip="User full name"
@@ -394,6 +431,7 @@ const ItemCreate = () => {
                   className="p-inputtext-sm text-black"
                   id="code"
                   name="code"
+                  value={payload ? payload.code : ''}
                   aria-describedby="code-help"
                   tooltip="Item code"
                   tooltipOptions={{ ...tooltipOptions }}
@@ -416,13 +454,13 @@ const ItemCreate = () => {
 
             <div className="col-12 md:col-12 lg:col-12 py-3">
               <MultiColorPicker onChange={(e) => payloadHandler(
-                      payload,
-                      e,
-                      "item_color",
-                      (updateValue) => {
-                        setPayload(updateValue);
-                      }
-                    )}
+                payload,
+                e,
+                "item_color",
+                (updateValue) => {
+                  setPayload(updateValue);
+                }
+              )}
               />
             </div>
 
@@ -460,6 +498,28 @@ const ItemCreate = () => {
               </div>
             </div> */}
 
+            <div className="col-12 md:col-4 lg:col-4 py-3">
+              <label htmlFor='size' className='input-label'> {translate.size} </label>
+              <div className="p-inputgroup mt-2">
+                <MultiSelect
+                  inputId='size'
+                  value={payload ? payload.item_size : ''}
+                  onChange={(e) => {
+                    payloadHandler(payload, e.value, 'item_size', (updateValue) => {
+                      setPayload(updateValue);
+                    })
+                  }}
+                  filter
+                  optionLabel="name"
+                  options={itemSizes}
+                  placeholder="Select a item size"
+                  disabled={loading}
+                  className="p-inputtext-sm"
+                />
+              </div>
+              <ValidationMessage field="item_size" />
+            </div>
+
             <div className=" col-12 md:col-6 lg:col-4 py-3">
               <div className="flex flex-column gap-2">
                 <label htmlFor="description" className=" text-black">
@@ -469,6 +529,7 @@ const ItemCreate = () => {
                   className="p-inputtext-sm text-black"
                   id="description"
                   name="description"
+                  value={payload.description ? payload.description : ''}
                   autoComplete="item description"
                   aria-describedby="description-help"
                   tooltip="Item description"
@@ -501,6 +562,7 @@ const ItemCreate = () => {
                   className="p-inputtext-sm text-black"
                   id="price"
                   name="price"
+                  value={payload.price ? payload.price : ''}
                   autoComplete="item price"
                   keyfilter={"num"}
                   aria-describedby="price-help"
@@ -534,6 +596,7 @@ const ItemCreate = () => {
                   className="p-inputtext-sm text-black"
                   id="sell_price"
                   name="item sell price"
+                  value={payload.sell_price ? payload.sell_price : ''}
                   autoComplete="item sell price"
                   aria-describedby="sell_price-help"
                   tooltip="Item sell price"
@@ -566,6 +629,7 @@ const ItemCreate = () => {
                   className="p-inputtext-sm text-black"
                   id="instock"
                   name="item instcok"
+                  value={payload.instock ? payload.instock : ''}
                   autoComplete="item instock"
                   aria-describedby="instock-help"
                   tooltip="Item instock"

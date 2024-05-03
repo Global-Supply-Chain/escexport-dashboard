@@ -33,7 +33,7 @@ export const TownShipTableView = () => {
 
     const first = useRef(0);
     const total = useRef(0);
-    const regionStatus = useRef(['ALL']);
+    const townshipStatus = useRef(['ALL']);
     const columns = useRef(townshipPayload.columns);
     const showColumns = useRef(columns?.current?.filter(col => col.show === true));
 
@@ -137,7 +137,7 @@ export const TownShipTableView = () => {
         );
 
         if (regionStatusResponse.status === 200) {
-            regionStatus.current = regionStatus.current.concat(
+            townshipStatus.current = townshipStatus.current.concat(
                 regionStatusResponse.data.general
             );
         }
@@ -186,14 +186,14 @@ export const TownShipTableView = () => {
         return (
             <div className="w-full flex flex-column md:flex-row justify-content-between md:justify-content-start align-items-start md:align-items-center gap-3">
                 <Search
-                    tooltipLabel={"search region by name"}
-                    placeholder={"Search region"}
+                    tooltipLabel={"search township by name"}
+                    placeholder={"Search township"}
                     onSearch={(e) => onSearchChange(e)}
                     label={translate.press_enter_key_to_search}                
                 />
 
                 <FilterByStatus
-                    status={regionStatus.current}
+                    status={townshipStatus.current}
                     onFilter={(e) => onFilter(e)}
                     label={translate.filter_by}
                 />
@@ -221,7 +221,7 @@ export const TownShipTableView = () => {
                 onSort={onSort}
                 sortMode={paginateOptions.sortMode}
                 loading={loading}
-                emptyMessage="No city found."
+                emptyMessage="No township found."
                 globalFilterFields={townshipPayload.columns}
                 header={<HeaderRender />}
                 footer={<FooterRender />}
@@ -244,7 +244,7 @@ export const TownShipTableView = () => {
                                             />
                                         );
                                     case "city":
-                                        return <span>{value[col.field].name}</span>
+                                        return <span>{value[col.field] && value[col.field].name}</span>
                                     case "status":
                                         return <Status status={value[col.field]} />;
                                     default:
