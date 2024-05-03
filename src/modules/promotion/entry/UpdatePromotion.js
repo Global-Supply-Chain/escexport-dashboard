@@ -11,7 +11,6 @@ import { Image } from 'primereact/image';
 import { ValidationMessage } from '../../../shares/ValidationMessage';
 import { InputText } from 'primereact/inputtext';
 import { payloadHandler } from '../../../helpers/handler';
-import { uploadFile } from '../../../helpers/uploadFile';
 import { tooltipOptions } from '../../../constants/config';
 import { paths } from '../../../constants/paths';
 import { Dropdown } from 'primereact/dropdown';
@@ -20,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { FormMainAction } from '../../../shares/FormMainAction';
 import { getRequest } from '../../../helpers/api';
 import { formBuilder } from '../../../helpers/formBuilder';
+import { PromotionItemView } from '../list/PromotionItemView';
 
 const UpdatePromotion = () => {
 
@@ -71,7 +71,7 @@ const UpdatePromotion = () => {
   useEffect(() => {
     if (promotion) {
       setSrc(`${endpoints.image}/${promotion.image?.image}`);
-      let updatePayload = {...promotion};
+      let updatePayload = { ...promotion };
       delete updatePayload.image;
       setPayload(updatePayload);
     }
@@ -86,14 +86,11 @@ const UpdatePromotion = () => {
 
       <div className="col-12">
         <Card title={translate.promotion_update}>
-
           <Loading loading={loading} />
-
-          <div className="grid">
             <div className="grid">
               <div className=' col-12 md:col-4 lg:col-4 py-3'>
                 <div className="flex flex-column gap-2">
-                  <label htmlFor="title" className=' text-black'>{translate.title}</label>
+                  <label htmlFor="title" className='text-black'> {translate.title} </label>
                   <InputText
                     className="p-inputtext-sm text-black"
                     id="title"
@@ -192,7 +189,7 @@ const UpdatePromotion = () => {
                 </div>
               </div>
 
-              <div className=" col-12 md:col-12 lg:col-12 py-3">
+              <div className=" col-12 md:col-4 lg:col-4 py-3">
                 <div className=" flex flex-column gap-2">
                   <label htmlFor="promotion" className='text-black'>{translate.promotion_image}</label>
                   <InputText
@@ -203,22 +200,21 @@ const UpdatePromotion = () => {
                     type="file"
                     accept="image/*"
                     onChange={async (e) => {
-                      const result = await uploadFile.image(dispatch, e.target.files[0], 'PROMOTION_IMAGE');
-                      if (result.status === 200) {
-                        const objectUrl = URL.createObjectURL(e.target.files[0]);
-                        setSrc(objectUrl);
-                        payloadHandler(payload, e.target.files[0], 'image', (updateValue) => {
-                          setPayload(updateValue);
-                        });
-                      }
+                      const objectUrl = URL.createObjectURL(e.target.files[0]);
+                      setSrc(objectUrl);
+                      payloadHandler(payload, e.target.files[0], 'image', (updateValue) => {
+                        setPayload(updateValue);
+                      });
                     }}
                   />
                   <ValidationMessage field={'image'} />
                 </div>
+              </div>
 
-                <div className="col-12 flex justify-content-center align-items-centerc mt-3">
+              <div className=" col-12 md:col-8 lg:col-8 py-3">
+                <div className="flex justify-content-center align-items-centerc mt-3">
                   {src && (
-                    <Image preview width="100%" height="100%" className="img-promo" src={src} />
+                    <Image preview width="100%" height="200px" className="img-promo" src={src} />
                   )}
                 </div>
               </div>
@@ -231,8 +227,11 @@ const UpdatePromotion = () => {
                 loading={loading}
               />
             </div>
-          </div>
         </Card>
+      </div>
+
+      <div className='col-12'>
+        <PromotionItemView />
       </div>
     </div>
   )
