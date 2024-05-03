@@ -223,8 +223,6 @@ const ItemTableView = () => {
 
     const SizeRender = ({ dataSource, size, index }) => {
 
-        console.log(dataSource);
-
         const style = {
             width: '50px',
             height: '50px',
@@ -445,19 +443,21 @@ const ItemTableView = () => {
                                         </div>
                                     case "item_size":
                                         return <div className=' relative'>
-                                            {value[col.field]?.slice(0, 3).map((size, index) => {
-                                            return <SizeRender 
+                                            {value[col.field] && JSON.parse(value[col.field])?.slice(0, 3).map((size, index) => {
+                                            return (
+                                                <SizeRender 
                                                         key={`size_${index}`}
-                                                        dataSource={value[col.field]}
-                                                        size={size}
+                                                        dataSource={JSON.parse(value[col.field])}
+                                                        size={size.code}
                                                         index={index}
                                                    />
+                                            )
                                         })}
                                         </div>
                                     case "status":
                                         return <Status status={value[col.field]} />;
                                     case "description":
-                                        return <span>{value[col.field] === null ? 'no content' : value[col.field]}</span>
+                                        return <span>{value[col.field] === null ? 'no content' : value[col.field]?.length > 20 ? value[col.field].substring(0,20)+'...' : value[col.field]}</span>
                                     case "price":
                                         return <span>{value[col.field] === null ? 'no content' : value[col.field]}</span>
                                     case "content":

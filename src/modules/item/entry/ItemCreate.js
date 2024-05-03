@@ -210,12 +210,6 @@ const ItemCreate = () => {
     } = payload;
 
     const formData = new FormData();
-    // console.log(item_size);
-    item_size.map((size, index) => {
-      // console.log(size);
-      formData.append(`item_size[${index}]`, size.code);
-    });
-    return;
 
     selectPhoto.map((value, index) => {
       formData.append(`product_photo[${index}]`, value);
@@ -227,9 +221,10 @@ const ItemCreate = () => {
     item_color.map((color,index) => {
       formData.append(`item_color[${index}]`, color);
     });
-    item_size.map((size, index) => {
-      formData.append(`item_size[${index}]`, size);
-    });
+    formData.append(`item_size`, JSON.stringify(item_size));
+    // item_size.map((size, index) => {
+    //   formData.append(`item_size[${index}]`, size);
+    // });
     formData.append("content", content);
     formData.append("category_id", category_id);
     formData.append("sell_price", sell_price);
@@ -346,7 +341,7 @@ const ItemCreate = () => {
                   name="item category"
                   filter
                   autoComplete="item category"
-                  value={payload.category_id}
+                  value={payload.category_id ? payload.category_id : ''}
                   onChange={(e) =>
                     payloadHandler(
                       payload,
@@ -376,7 +371,7 @@ const ItemCreate = () => {
                   name="shop item"
                   filter
                   autoComplete="shop item"
-                  value={payload.shop_id}
+                  value={payload.shop_id ? payload.shop_id : ''}
                   onChange={(e) =>
                     payloadHandler(
                       payload,
@@ -405,6 +400,7 @@ const ItemCreate = () => {
                   className="p-inputtext-sm text-black"
                   id="name"
                   name="name"
+                  value={payload.name ? payload.name : ''}
                   autoComplete="item name"
                   aria-describedby="name-help"
                   tooltip="User full name"
@@ -435,6 +431,7 @@ const ItemCreate = () => {
                   className="p-inputtext-sm text-black"
                   id="code"
                   name="code"
+                  value={payload ? payload.code : ''}
                   aria-describedby="code-help"
                   tooltip="Item code"
                   tooltipOptions={{ ...tooltipOptions }}
@@ -506,7 +503,7 @@ const ItemCreate = () => {
               <div className="p-inputgroup mt-2">
                 <MultiSelect
                   inputId='size'
-                  value={payload ? payload.item_size : null}
+                  value={payload ? payload.item_size : ''}
                   onChange={(e) => {
                     payloadHandler(payload, e.value, 'item_size', (updateValue) => {
                       setPayload(updateValue);
@@ -532,6 +529,7 @@ const ItemCreate = () => {
                   className="p-inputtext-sm text-black"
                   id="description"
                   name="description"
+                  value={payload.description ? payload.description : ''}
                   autoComplete="item description"
                   aria-describedby="description-help"
                   tooltip="Item description"
@@ -564,6 +562,7 @@ const ItemCreate = () => {
                   className="p-inputtext-sm text-black"
                   id="price"
                   name="price"
+                  value={payload.price ? payload.price : ''}
                   autoComplete="item price"
                   keyfilter={"num"}
                   aria-describedby="price-help"
@@ -597,6 +596,7 @@ const ItemCreate = () => {
                   className="p-inputtext-sm text-black"
                   id="sell_price"
                   name="item sell price"
+                  value={payload.sell_price ? payload.sell_price : ''}
                   autoComplete="item sell price"
                   aria-describedby="sell_price-help"
                   tooltip="Item sell price"
@@ -629,6 +629,7 @@ const ItemCreate = () => {
                   className="p-inputtext-sm text-black"
                   id="instock"
                   name="item instcok"
+                  value={payload.instock ? payload.instock : ''}
                   autoComplete="item instock"
                   aria-describedby="instock-help"
                   tooltip="Item instock"
