@@ -38,7 +38,7 @@ export const MultiColorPicker = ({ onChange, prevValue = null }) => {
     return (
         <div className="grid">
             <div className="col-12">
-                <label className="text-black"> Color Setting </label>
+                <label className="text-black">Color Setting</label>
             </div>
 
             <div className="col-12 md:col-3 lg:col-3">
