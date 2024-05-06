@@ -41,7 +41,7 @@ export const itemService = {
         return response;
     },
     update: async (dispatch,id,payload) => {
-        const response = await putRequest(`${endpoints.item}/${id}`,payload);
+        const response = await postRequest(`${endpoints.item}/${id}`,payload);
         await httpServiceHandler(dispatch,response);
 
         if(response.status === 200) {
