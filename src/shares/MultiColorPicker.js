@@ -3,7 +3,7 @@ import { ColorPicker } from "primereact/colorpicker";
 import { InputText } from "primereact/inputtext";
 import { useCallback, useEffect, useRef, useState } from "react"
 
-export const MultiColorPicker = ({ onChange }) => {
+export const MultiColorPicker = ({ onChange, prevValue = null }) => {
 
     const [color, setColor] = useState("#000000");
     let [colors, setColors] = useState([]);
@@ -28,6 +28,12 @@ export const MultiColorPicker = ({ onChange }) => {
     useEffect(() => {
         watchColors();
     }, [colors]);
+
+    useEffect(() => {
+        if(prevValue.length > 0){
+            setColors(prevValue)
+        }
+    }, [])
 
     return (
         <div className="grid">
