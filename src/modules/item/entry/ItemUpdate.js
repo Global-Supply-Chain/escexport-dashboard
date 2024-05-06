@@ -7,7 +7,6 @@ import { payloadHandler } from "../../../helpers/handler";
 import { ValidationMessage } from "../../../shares/ValidationMessage";
 import { InputText } from "primereact/inputtext";
 import { tooltipOptions } from "../../../constants/config";
-import { ColorPicker } from 'primereact/colorpicker';
 import { Button } from "primereact/button";
 import { paths } from "../../../constants/paths";
 import { useNavigate, useParams } from "react-router-dom";
@@ -21,6 +20,8 @@ import { endpoints } from "../../../constants/endpoints";
 import { FormMainAction } from "../../../shares/FormMainAction";
 import { Thumbnail } from "../../../shares/Thumbnail";
 import { MultiSelect } from 'primereact/multiselect';
+import { MultiColorPicker } from "../../../shares/MultiColorPicker";
+import { generalStatus } from "../../../helpers/StatusHandler";
 
 const itemSizes = [
   {
@@ -60,8 +61,8 @@ const ItemUpdate = () => {
   const [payload, setPayload] = useState(itemPayload.create);
   const [content, setContent] = useState("");
   const [selectPhoto, setSelectPhoto] = useState([]);
-  const [pickColor, setPickColor] = useState([]);
   const fileUploadRef = useRef(null);
+  const [status, setStatus] = useState([]);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -71,7 +72,7 @@ const ItemUpdate = () => {
   const { translate } = useSelector(state => state.setting);
 
   const onTemplateSelect = useCallback((e) => {
-        setSelectPhoto(e.files);
+    setSelectPhoto(e.files);
   }, [payload.product_photo]);
 
   const onTemplateRemove = (file, callback) => {
@@ -164,28 +165,6 @@ const ItemUpdate = () => {
       "custom-cancel-btn p-button-danger p-button-rounded p-button-outlined",
   };
 
-  const countryTemplate = (option) => {
-    return (
-      <div style={{
-        width: '30px',
-        height: '30px',
-        borderRadius: '10px',
-        backgroundColor: `#${option?.code}`
-      }}>
-      </div>
-    );
-  };
-
-  const panelFooterTemplate = () => {
-    const length = payload.item_color ? payload.item_color.length : 0;
-
-    return (
-      <div className="py-2 px-3">
-        <b>{length}</b> item{length > 1 ? 's' : ''} selected.
-      </div>
-    );
-  };
-
   /**
    * Create item
    * payload [category_id,name,code,description,content,price,sell_price]
@@ -206,44 +185,34 @@ const ItemUpdate = () => {
       instock,
       price,
       sell_price,
+      status
     } = payload;
 
     const formData = new FormData();
 
-    const filterColor = payload.item_color.map((color) => {
-      return color.code
-    })
-
-    const filterSize = payload.item_size.map((size) => {
-      return size.code;
-    })
-
     selectPhoto.map((value, index) => {
       formData.append(`product_photo[${index}]`, value);
-      return value;
     });
 
-    filterColor.map((value, index) => {
+    item_color.map((value, index) => {
       formData.append(`item_color[${index}]`, value);
     });
 
-    filterSize.map((value, index) => {
-      formData.append(`item_size[${index}]`, value);
-    });
-
-    formData.append("thumbnail_photo", thumbnail_photo);
+    formData.append("thumbnail_photo", typeof thumbnail_photo !== 'object' ? thumbnail_photo : null);
     formData.append("item_code", item_code);
     formData.append("content", content);
     formData.append("category_id", category_id);
     formData.append("sell_price", sell_price);
+    formData.append('item_size', JSON.stringify(item_size))
     formData.append("price", price);
     formData.append("description", description);
     formData.append("code", code);
     formData.append("instock", instock);
     formData.append("name", name);
     formData.append("shop_id", shop_id);
+    formData.append("status", status);
 
-    await itemService.store(dispatch, formData);
+    await itemService.update(dispatch, params.id, formData);
     setLoading(false);
   };
 
@@ -296,6 +265,13 @@ const ItemUpdate = () => {
   }, [dispatch, params.id])
 
   useEffect(() => {
+    generalStatus().then((data) => {
+      setStatus(data)
+    }).catch((error) => console.log(error))
+
+  }, [])
+
+  useEffect(() => {
     loadingShopData();
   }, [loadingShopData]);
 
@@ -308,12 +284,12 @@ const ItemUpdate = () => {
   }, [loadingData])
 
   useEffect(() => {
-    if(item){
-        setPayload(item);
+    if (item) {
+      const sizeFormat = { ...item };
+      sizeFormat.item_size = JSON.parse(sizeFormat.item_size)
+      setPayload(sizeFormat);
     }
   }, [item])
-
-  console.log(payload);
 
   return (
     <div className=" grid">
@@ -476,54 +452,16 @@ const ItemUpdate = () => {
               </div>
             </div>
 
-            <div className=" col-12 md:col-6 lg:col-4 py-3">
-              <div className="flex flex-column gap-2">
-                <label htmlFor="color" className=" text-black">
-                  {translate.color}
-                </label>
-                <div className="p-inputgroup flex-1">
-                  <ColorPicker
-                    value={pickColor}
-                    onChange={(e) => {
-                      const newValue = e.value;
-                      setPickColor(prevColor => [...prevColor, {
-                        name: newValue,
-                        code: newValue
-                      }]);
-                    }}
-                  />
-                  <MultiSelect
-                    className="p-inputtext-sm text-black"
-                    id="color"
-                    name="color"
-                    optionLabel="name"
-                    autoComplete="item color"
-                    aria-describedby="color-help"
-                    tooltip="Item color"
-                    options={pickColor}
-                    itemTemplate={countryTemplate}
-                    panelFooterTemplate={panelFooterTemplate}
-                    filter
-                    tooltipOptions={{ ...tooltipOptions }}
-                    placeholder="Enter item color"
-                    disabled={loading}
-                    value={payload.item_color ? payload.item_color : ''}
-                    onChange={(e) => {
-                      console.log(e.target.value)
-                      payloadHandler(
-                        payload,
-                        e.target.value,
-                        "item_color",
-                        (updateValue) => {
-                          setPayload(updateValue);
-                        }
-                      )
-                    }
-                    }
-                  />
-                </div>
-                <ValidationMessage field={"item_color"} />
-              </div>
+            <div className="col-12 md:col-12 lg:col-12 py-3">
+              <MultiColorPicker prevValue={payload.item_color} onChange={(e) => payloadHandler(
+                payload,
+                e,
+                "item_color",
+                (updateValue) => {
+                  setPayload(updateValue);
+                }
+              )}
+              />
             </div>
 
             <div className="col-12 md:col-4 lg:col-4 py-3">
@@ -678,6 +616,24 @@ const ItemUpdate = () => {
                   }
                 />
                 <ValidationMessage field={"instock"} />
+              </div>
+            </div>
+
+            <div className=' col-12 md:col-3 lg:col-3 py-3'>
+              <div className="flex flex-column gap-2">
+                <label htmlFor="phone" className='text-black'>Status</label>
+                <Dropdown
+                  options={status}
+                  placeholder="Select a general status"
+                  disabled={loading}
+                  value={payload.status}
+                  className="p-inputtext-sm"
+                  onChange={(e) => payloadHandler(payload, e.value, 'status', (updateValue) => {
+                    setPayload(updateValue);
+                  })}
+                />
+
+                <ValidationMessage field={"status"} />
               </div>
             </div>
 
