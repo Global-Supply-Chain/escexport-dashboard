@@ -5,7 +5,7 @@ export const categoryPayload = {
     name: "",
     icon: "",
     app_type: "",
-
+    description: ""
   },
   update: {
     name: "",
