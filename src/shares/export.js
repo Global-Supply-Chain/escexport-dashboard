@@ -12,7 +12,7 @@ export const ExportExcel = ({url, disabled}) => {
         document.body.appendChild(iframe);
 
         try {
-            const response = await fetch(baseURL +'/'+ url, {
+            const response = await fetch(baseURL +'/dashboard/'+ url, {
                 method: 'POST',
                 headers: {
                     'authorization': `Bearer ${getData(keys.API_TOKEN)}`,
