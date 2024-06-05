@@ -28,7 +28,7 @@ const CategoryCreate = () => {
 
     const submitCategoryCreate = async () => {
         setLoading(true);
-
+        
         const formData = formBuilder(payload, categoryPayload.create);
         const result = await categoryService.store(formData, dispatch);
 

@@ -22,7 +22,8 @@ export const userPayload = {
         dob: moment().format("YYYY/MM/DD"),
         occupation: "",
         position: "",
-        address: ""
+        address: "",
+        client_type: 'GSC_EXPORT'
     },
     columns: [
         { field: "name", header: "Full Name", sortable: true, show: true, with: "250px" },

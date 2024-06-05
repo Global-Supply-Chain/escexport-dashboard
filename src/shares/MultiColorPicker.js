@@ -30,7 +30,7 @@ export const MultiColorPicker = ({ onChange, prevValue = null }) => {
     }, [colors]);
 
     useEffect(() => {
-        if(prevValue.length > 0){
+        if(prevValue !== null && prevValue.length > 0){
             setColors(prevValue)
         }
     }, [])
