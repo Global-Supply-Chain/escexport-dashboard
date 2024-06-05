@@ -231,7 +231,7 @@ const UpdatePromotion = () => {
       </div>
 
       <div className='col-12'>
-        <PromotionItemView />
+        <PromotionItemView id={params.id} />
       </div>
     </div>
   )
