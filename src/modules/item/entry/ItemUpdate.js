@@ -58,7 +58,7 @@ const ItemUpdate = () => {
   const [loading, setLoading] = useState(false);
   const [categoryList, setCategoryList] = useState([]);
   const [shopList, setShopList] = useState([]);
-  const [payload, setPayload] = useState(itemPayload.create);
+  const [payload, setPayload] = useState(itemPayload.update);
   const [content, setContent] = useState("");
   const [selectPhoto, setSelectPhoto] = useState([]);
   const fileUploadRef = useRef(null);
@@ -203,7 +203,7 @@ const ItemUpdate = () => {
     formData.append("content", content);
     formData.append("category_id", category_id);
     formData.append("sell_price", sell_price);
-    formData.append('item_size', JSON.stringify(item_size))
+    formData.append('item_size', JSON.stringify(item_size.split(',')))
     formData.append("price", price);
     formData.append("description", description);
     formData.append("code", code);
@@ -286,7 +286,8 @@ const ItemUpdate = () => {
   useEffect(() => {
     if (item) {
       const sizeFormat = { ...item };
-      sizeFormat.item_size = JSON.parse(sizeFormat.item_size)
+      // console.log(JSON.parse(sizeFormat.item_size).join(','));
+      sizeFormat.item_size = JSON.parse(sizeFormat.item_size).join(',')
       setPayload(sizeFormat);
     }
   }, [item])
@@ -467,20 +468,29 @@ const ItemUpdate = () => {
             <div className="col-12 md:col-4 lg:col-4 py-3">
               <label htmlFor='size' className='input-label'> {translate.size} </label>
               <div className="p-inputgroup mt-2">
-                <MultiSelect
-                  inputId='size'
-                  value={payload ? payload.item_size : null}
-                  onChange={(e) => {
-                    payloadHandler(payload, e.value, 'item_size', (updateValue) => {
-                      setPayload(updateValue);
-                    })
-                  }}
-                  filter
-                  optionLabel="name"
-                  options={itemSizes}
-                  placeholder="Select a item size"
+                <InputText
+                  className="p-inputtext-sm text-black"
+                  id="size"
+                  name="size"
+                  autoComplete="item size"
+                  aria-describedby="item-size-help"
+                  tooltip="Item size"
+                  tooltipOptions={{ ...tooltipOptions }}
+                  placeholder="Enter item size"
                   disabled={loading}
-                  className="p-inputtext-sm"
+                  rows={5}
+                  cols={30}
+                  value={payload.item_size ? payload.item_size : ''}
+                  onChange={(e) =>
+                    payloadHandler(
+                      payload,
+                      e.target.value,
+                      "item_size",
+                      (updateValue) => {
+                        setPayload(updateValue);
+                      }
+                    )
+                  }
                 />
               </div>
               <ValidationMessage field="item_size" />

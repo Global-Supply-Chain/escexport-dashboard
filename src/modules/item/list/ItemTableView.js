@@ -448,7 +448,7 @@ const ItemTableView = () => {
                                                 <SizeRender 
                                                         key={`size_${index}`}
                                                         dataSource={JSON.parse(value[col.field])}
-                                                        size={size.code}
+                                                        size={size}
                                                         index={index}
                                                    />
                                             )
