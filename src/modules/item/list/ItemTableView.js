@@ -229,7 +229,7 @@ const ItemTableView = () => {
             borderRadius: '10px',
             backgroundColor: '#fff',
             border: "1px solid #EA2B4A",
-            color : '#EA2B4A',
+            color: '#EA2B4A',
             padding: "3px 5px",
             position: 'absolute',
             left: `${index * 20}px`,
@@ -242,7 +242,7 @@ const ItemTableView = () => {
             <div
                 style={style}
             >
-                {size}
+                {size?.length > 2 ? size.substring(0,2) + " ..." : size}
             </div>
             {
                 dataSource?.length > 3 && (
@@ -432,37 +432,40 @@ const ItemTableView = () => {
                                         return <div className=' relative'>
                                             {value[col.field]?.slice(0, 3).map((color, index) => {
                                                 return <ColorRender
-                                                        key={`color_${index}`}
-                                                        color={color}
-                                                        index={index}
-                                                        dataSource={value[col.field]}
-                                                       />
+                                                    key={`color_${index}`}
+                                                    color={color}
+                                                    index={index}
+                                                    dataSource={value[col.field]}
+                                                />
                                             })}
                                         </div>
                                     case "item_size":
                                         return <div className=' relative'>
                                             {value[col.field] && JSON.parse(value[col.field])?.slice(0, 3).map((size, index) => {
-                                            return (
-                                                <SizeRender 
+                                                return (
+                                                    <SizeRender
                                                         key={`size_${index}`}
                                                         dataSource={JSON.parse(value[col.field])}
                                                         size={size}
                                                         index={index}
-                                                   />
-                                            )
-                                        })}
+                                                    />
+                                                )
+                                            })}
                                         </div>
                                     case "status":
                                         return <Status status={value[col.field]} />;
                                     case "description":
-                                        return <span>{value[col.field] === null ? 'no content' : value[col.field]?.length > 20 ? value[col.field].substring(0,20)+'...' : value[col.field]}</span>
+                                        return <span>{value[col.field] === null ? 'no content' : value[col.field]?.length > 20 ? value[col.field].substring(0, 20) + '...' : value[col.field]}</span>
                                     case "price":
                                         return <span>{value[col.field] === null ? 'no content' : value[col.field]}</span>
                                     case "content":
                                         return <div>
-                                            {value[col.field] === null ? 'no content' : <div
+                                            {value[col.field] === null ? 'no content' : value[col.field].length > 20 ? <div
+                                                dangerouslySetInnerHTML={{ __html: value[col.field].substring(0, 20) + " ..." }}
+                                            /> : <div
                                                 dangerouslySetInnerHTML={{ __html: value[col.field] }}
-                                            />}
+                                            />
+                                            }
                                         </div>
                                     default:
                                         return value[col.field];
