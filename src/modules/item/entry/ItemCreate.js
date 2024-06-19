@@ -218,10 +218,10 @@ const ItemCreate = () => {
 
     formData.append("thumbnail_photo", thumbnail_photo);
     formData.append("item_code", item_code);
-    item_color.map((color,index) => {
+    item_color.map((color, index) => {
       formData.append(`item_color[${index}]`, color);
     });
-    formData.append(`item_size`, JSON.stringify(item_size));
+    formData.append(`item_size`, JSON.stringify(item_size.split(',')));
     // item_size.map((size, index) => {
     //   formData.append(`item_size[${index}]`, size);
     // });
@@ -501,20 +501,29 @@ const ItemCreate = () => {
             <div className="col-12 md:col-4 lg:col-4 py-3">
               <label htmlFor='size' className='input-label'> {translate.size} </label>
               <div className="p-inputgroup mt-2">
-                <MultiSelect
-                  inputId='size'
-                  value={payload ? payload.item_size : ''}
-                  onChange={(e) => {
-                    payloadHandler(payload, e.value, 'item_size', (updateValue) => {
-                      setPayload(updateValue);
-                    })
-                  }}
-                  filter
-                  optionLabel="name"
-                  options={itemSizes}
-                  placeholder="Select a item size"
+                <InputText
+                  className="p-inputtext-sm text-black"
+                  id="size"
+                  name="size"
+                  value={payload.item_size ? payload.item_size : ''}
+                  autoComplete="item size"
+                  aria-describedby="item size-help"
+                  tooltip="Item size"
+                  tooltipOptions={{ ...tooltipOptions }}
+                  placeholder="Enter item size"
                   disabled={loading}
-                  className="p-inputtext-sm"
+                  rows={5}
+                  cols={30}
+                  onChange={(e) =>
+                    payloadHandler(
+                      payload,
+                      e.target.value,
+                      "item_size",
+                      (updateValue) => {
+                        setPayload(updateValue);
+                      }
+                    )
+                  }
                 />
               </div>
               <ValidationMessage field="item_size" />
