@@ -33,7 +33,7 @@ export const MultiColorPicker = ({ onChange, prevValue = null }) => {
         if(prevValue !== null && prevValue.length > 0){
             setColors(prevValue)
         }
-    }, [])
+    }, [prevValue])
 
     return (
         <div className="grid">

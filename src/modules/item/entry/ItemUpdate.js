@@ -454,7 +454,9 @@ const ItemUpdate = () => {
             </div>
 
             <div className="col-12 md:col-12 lg:col-12 py-3">
-              <MultiColorPicker prevValue={payload.item_color} onChange={(e) => payloadHandler(
+              <MultiColorPicker 
+              prevValue={payload.item_color} 
+              onChange={(e) => payloadHandler(
                 payload,
                 e,
                 "item_color",
