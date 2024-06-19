@@ -224,14 +224,13 @@ const ItemTableView = () => {
     const SizeRender = ({ dataSource, size, index }) => {
 
         const style = {
-            width: '50px',
-            height: '50px',
-            borderRadius: '50%',
-            backgroundColor: '#EA2B4A',
-            color : '#fff',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
+            width: 'auto',
+            height: 'auto',
+            borderRadius: '10px',
+            backgroundColor: '#fff',
+            border: "1px solid #EA2B4A",
+            color : '#EA2B4A',
+            padding: "3px 5px",
             position: 'absolute',
             left: `${index * 20}px`,
             top: '50%',
@@ -249,19 +248,18 @@ const ItemTableView = () => {
                 dataSource?.length > 3 && (
                     <div
                         style={{
-                            width: '50px',
-                            height: '50px',
+                            width: 'auto',
+                            height: 'auto',
                             position: 'absolute',
                             left: '60px',
                             top: '50%',
                             transform: 'translateY(-50%)',
                             zIndex: index * 20,
-                            background: '#DDDDDD',
-                            color: "#000",
-                            borderRadius: '50%',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center'
+                            background: '#EA2B4A',
+                            borderRadius: '10px',
+                            border: '1px solid #EA2B4A',
+                            color: "#fff",
+                            padding: "3px 5px"
                         }}
                     >
                         <span>+{dataSource?.length - 3}</span>
