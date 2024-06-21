@@ -264,7 +264,7 @@ const ItemCreate = () => {
     setLoading(true);
 
     const result = await getRequest(
-      `${endpoints.shop}?filter=status,value=ACTIVE`
+      `${endpoints.shop}?filter=status&value=ACTIVE`
     );
     if (result.status === 200) {
       const formatData = result.data?.map((shop) => {

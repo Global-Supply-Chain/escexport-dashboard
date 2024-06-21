@@ -222,7 +222,7 @@ const ItemUpdate = () => {
   const loadingCategoryData = useCallback(async () => {
     setLoading(true);
     const result = await getRequest(
-      `${endpoints.category}?filter=status,value=ACTIVE`
+      `${endpoints.category}?filter=status&value=ACTIVE`
     );
     if (result.status === 200) {
       const formatData = result.data?.map((category) => {
@@ -243,7 +243,7 @@ const ItemUpdate = () => {
     setLoading(true);
 
     const result = await getRequest(
-      `${endpoints.shop}?filter=status,value=ACTIVE`
+      `${endpoints.shop}?filter=status&value=ACTIVE`
     );
     if (result.status === 200) {
       const formatData = result.data?.map((shop) => {

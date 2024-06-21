@@ -25,7 +25,7 @@ export const CreatePromotionItem = ({id, setStatus}) => {
     const dispatch = useDispatch();
 
     const initLoading = useCallback(async () => {
-        const result = await getRequest(`${endpoints.item}?status=ACTIVE`);
+        const result = await getRequest(`${endpoints.item}?filter=status&value=ACTIVE`);
         if(result.status === 200){
             const formatData = result.data.map((item) => {
                 return {
